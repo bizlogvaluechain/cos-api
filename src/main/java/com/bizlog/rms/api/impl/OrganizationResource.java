@@ -9,22 +9,19 @@ import com.bizlog.rms.repository.OrganizationRepository;
 import com.bizlog.rms.service.OrganizationService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 public class OrganizationResource implements OrganizationAPI {
 
-    @Autowired
-    private GenericMapper mapper;
-
-    @Autowired
-    private OrganizationService organizationService;
-
-    @Autowired
-    private OrganizationRepository organizationRepository;
+    private final GenericMapper mapper;
+    private final OrganizationService organizationService;
+    private final OrganizationRepository organizationRepository;
 
     @Transactional
     @Override
