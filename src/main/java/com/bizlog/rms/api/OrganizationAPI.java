@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface OrganizationAPI {
 
     @PostMapping
-    public ResponseEntity<OrganizationDTO> create(@RequestBody OrganizationDTO organizationDTO);
+    ResponseEntity<OrganizationDTO> create(@RequestBody OrganizationDTO organizationDTO);
 
     @GetMapping("/{id}")
     ResponseEntity<OrganizationDTO> getById(Long id);

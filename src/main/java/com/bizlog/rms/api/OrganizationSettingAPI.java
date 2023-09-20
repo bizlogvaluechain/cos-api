@@ -6,8 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RequestMapping(value = "/api/v1/org/{orgId}/organization-setting")
 public interface OrganizationSettingAPI extends BaseAPI<OrganizationSettingDTO, OrganizationSettingDTO> {
 

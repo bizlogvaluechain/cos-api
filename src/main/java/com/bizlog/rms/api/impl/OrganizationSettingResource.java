@@ -57,7 +57,8 @@ public class OrganizationSettingResource
     }
 
     @Override
-    public ResponseEntity<PageResponse<OrganizationSettingDTO>> search(Long orgId, Map<String, String> map, Pageable pageable) {
+    public ResponseEntity<PageResponse<OrganizationSettingDTO>> search(Long orgId, Map<String, String> map,
+            Pageable pageable) {
         return null;
     }
 

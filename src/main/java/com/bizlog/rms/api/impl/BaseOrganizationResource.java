@@ -36,7 +36,6 @@ public abstract class BaseOrganizationResource<V extends BaseOrganizationEntity,
     @Autowired
     private OrganizationRepository organizationRepository;
 
-
     public BaseOrganizationResource(BaseOrganizationRepository<V, Long> baseOrganizationRepository) {
         this.baseOrganizationRepository = baseOrganizationRepository;
     }
@@ -94,6 +93,7 @@ public abstract class BaseOrganizationResource<V extends BaseOrganizationEntity,
     public ResponseEntity<O> get(Long orgId, Long id) {
         Organization org = organizationRepository.findById(orgId)
                 .orElseThrow(() -> new ResourceNotFoundException("Org not found", "id", orgId));
+        log.info("Org: {}", org);
         preValidate(orgId, null, OperationType.GET);
 
         validate(orgId, null, null, OperationType.GET);
@@ -130,6 +130,7 @@ public abstract class BaseOrganizationResource<V extends BaseOrganizationEntity,
     public ResponseEntity<Void> delete(Long orgId, Long id) {
         Organization org = organizationRepository.findById(orgId)
                 .orElseThrow(() -> new ResourceNotFoundException("Org not found", "id", orgId));
+        log.info("Org: {}", org);
         preValidate(orgId, null, OperationType.DELETE);
         validate(orgId, null, null, OperationType.DELETE);
         // other logic if any
