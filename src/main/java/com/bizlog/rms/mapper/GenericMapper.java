@@ -1,21 +1,21 @@
 package com.bizlog.rms.mapper;
 
-import com.bizlog.rms.dto.OrganizationDTO;
-import com.bizlog.rms.dto.OrganizationSettingDTO;
-import com.bizlog.rms.entities.Organization;
-import com.bizlog.rms.entities.OrganizationSetting;
+import com.bizlog.rms.dto.ClientDTO;
+import com.bizlog.rms.dto.ClientSettingDTO;
+import com.bizlog.rms.entities.ClientSetting;
+import com.bizlog.rms.entities.Client;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface GenericMapper {
 
-    OrganizationDTO toDTO(Organization entity);
+    ClientDTO toDTO(Client entity);
 
-    Organization toEntity(OrganizationDTO dto);
+    Client toEntity(ClientDTO dto);
 
-    OrganizationSettingDTO toDTO(OrganizationSetting entity);
+    ClientSettingDTO toDTO(ClientSetting entity);
 
-    OrganizationSetting toEntity(OrganizationSettingDTO dto);
+    ClientSetting toEntity(ClientSettingDTO dto);
 
 }

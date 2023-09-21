@@ -7,6 +7,6 @@ public class BaseDTO {
 
     public Long id;
 
-    public Long organizationId;
+    public Long clientId;
 
 }

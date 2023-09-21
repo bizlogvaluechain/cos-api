@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrganizationSettingDTO extends BaseDTO {
+public class ClientSettingDTO extends BaseDTO {
 
     private int ticketLimitPerDay;
 
