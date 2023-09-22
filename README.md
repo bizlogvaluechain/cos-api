@@ -1,2 +1,2 @@
-# rms-api
-Retailer management service
+# customer onboarding api
+Customer onboarding service  
