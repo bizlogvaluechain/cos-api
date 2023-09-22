@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
- @Slf4j
+
+@Slf4j
 @RestController
 public class ClientSettingResource extends BaseClientResource<ClientSetting, ClientSettingDTO, ClientSettingDTO>
         implements ClientSettingAPI {

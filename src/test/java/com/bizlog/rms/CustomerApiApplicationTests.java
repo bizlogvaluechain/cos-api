@@ -22,7 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 class CustomerApiApplicationTests {
 
-
     @Autowired
     private ClientRepository clientRepository;
 
@@ -30,47 +29,45 @@ class CustomerApiApplicationTests {
     private MockMvc mockMvc;
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         DataLoaderUtil.getClients().forEach(clientRepository::save);
     }
 
     @AfterEach
-    void afterEach(){
+    void afterEach() {
         clientRepository.deleteAll();
     }
 
     @Test
     void should_not_retrieve_with_invalid_user_id() throws Exception {
-        this.mockMvc.perform(get("/api/v1/client/{id}", 0))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
+        this.mockMvc.perform(get("/api/v1/client/{id}", 0)).andDo(print()).andExpect(status().is4xxClientError());
     }
 
-//    @Test
-//    void should_retrieve_one_user() throws Exception {
-//        this.mockMvc.perform(get("/api/v1/client/{id}", 0))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(APPLICATION_JSON))
-//                .andExpect(jsonPath("$.id").value(1))
-//                .andExpect(jsonPath("$.name").value("IDP"));
-//    }
+    // @Test
+    // void should_retrieve_one_user() throws Exception {
+    // this.mockMvc.perform(get("/api/v1/client/{id}", 0))
+    // .andDo(print())
+    // .andExpect(status().isOk())
+    // .andExpect(content().contentType(APPLICATION_JSON))
+    // .andExpect(jsonPath("$.id").value(1))
+    // .andExpect(jsonPath("$.name").value("IDP"));
+    // }
 
-//
-//    @Test
-//    void should_retrieve_all_users() throws Exception {
-//        this.mockMvc.perform(get("/api/client"))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(APPLICATION_JSON))
-//                .andExpect(jsonPath("$").isArray())
-//                .andExpect(jsonPath("$", hasSize(5)))
-//                .andExpect(jsonPath("$.[0].id").value(1))
-//                .andExpect(jsonPath("$.[1].id").value(2))
-//                .andExpect(jsonPath("$.[2].id").value(3))
-//                .andExpect(jsonPath("$.[3].id").value(4))
-//                .andExpect(jsonPath("$.[4].id").value(5));
-//    }
-
+    //
+    // @Test
+    // void should_retrieve_all_users() throws Exception {
+    // this.mockMvc.perform(get("/api/client"))
+    // .andDo(print())
+    // .andExpect(status().isOk())
+    // .andExpect(content().contentType(APPLICATION_JSON))
+    // .andExpect(jsonPath("$").isArray())
+    // .andExpect(jsonPath("$", hasSize(5)))
+    // .andExpect(jsonPath("$.[0].id").value(1))
+    // .andExpect(jsonPath("$.[1].id").value(2))
+    // .andExpect(jsonPath("$.[2].id").value(3))
+    // .andExpect(jsonPath("$.[3].id").value(4))
+    // .andExpect(jsonPath("$.[4].id").value(5));
+    // }
 
 }
+

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class DataLoaderUtil {
 
-    public static List<Client> getClients(){
+    public static List<Client> getClients() {
 
         Client client = new Client();
         client.setId(1L);
