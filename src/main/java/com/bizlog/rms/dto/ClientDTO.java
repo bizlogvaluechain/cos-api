@@ -6,12 +6,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import java.util.Set;
-
 @Data
-public class OrganizationDTO {
+public class ClientDTO {
 
-    @NotNull(message = "id should not be null")
     private Long id;
 
     @NotBlank(message = "name should not be null")
