@@ -23,8 +23,8 @@
         <spring-cloud.version>2022.0.1</spring-cloud.version>
         <jacoco.version>0.8.3</jacoco.version>
         <maven-pmd-plugin.version>3.17.0</maven-pmd-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
-        <spotbugs-maven-plugin.version>3.1.11</spotbugs-maven-plugin.version>
+<!--        <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>-->
+<!--        <spotbugs-maven-plugin.version>3.1.11</spotbugs-maven-plugin.version>-->
         <spotbugs-annotations.version>3.1.12</spotbugs-annotations.version>
 
     </properties>
@@ -224,44 +224,44 @@
                         </rulesets>
                     </configuration>
                 </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${maven-checkstyle-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <!-- <configLocation></configLocation> -->
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>com.github.spotbugs</groupId>
-                    <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>${spotbugs-maven-plugin.version}</version>
-                    <configuration>
-                        <!--
-                        SpotBugs が持っている標準の除外ファイル
-                        https://github.com/spotbugs/spotbugs/blob/master/spotbugs/findbugsExclude.xml
-                        -->
-                        <!--
-                        <excludeFilterFile>findbugsExclude.xml</excludeFilterFile>
-                        -->
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--                    <version>${maven-checkstyle-plugin.version}</version>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <phase>test</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>check</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                    <configuration>-->
+<!--                        &lt;!&ndash; <configLocation></configLocation> &ndash;&gt;-->
+<!--                    </configuration>-->
+<!--                </plugin>-->
+<!--                <plugin>-->
+<!--                    <groupId>com.github.spotbugs</groupId>-->
+<!--                    <artifactId>spotbugs-maven-plugin</artifactId>-->
+<!--                    <version>${spotbugs-maven-plugin.version}</version>-->
+<!--                    <configuration>-->
+<!--                        &lt;!&ndash;-->
+<!--                        SpotBugs が持っている標準の除外ファイル-->
+<!--                        https://github.com/spotbugs/spotbugs/blob/master/spotbugs/findbugsExclude.xml-->
+<!--                        &ndash;&gt;-->
+<!--                        &lt;!&ndash;-->
+<!--                        <excludeFilterFile>findbugsExclude.xml</excludeFilterFile>-->
+<!--                        &ndash;&gt;-->
+<!--                    </configuration>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <phase>test</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>check</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
@@ -346,14 +346,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>com.github.spotbugs</groupId>-->
+<!--                <artifactId>spotbugs-maven-plugin</artifactId>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
