@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "organization_setting", uniqueConstraints = @UniqueConstraint(columnNames = { "id", "org_id" }))
-public class OrganizationSetting extends BaseOrganizationEntity {
+@Table(name = "client_setting", uniqueConstraints = @UniqueConstraint(columnNames = { "id", "client_id" }))
+public class ClientSetting extends BaseClientEntity {
 
     @Column(name = "ticketLimitPerDay", nullable = false)
     private int ticketLimitPerDay;

@@ -10,9 +10,9 @@ import java.util.Objects;
 
 @MappedSuperclass
 @Data
-public class BaseOrganizationEntity {
+public class BaseClientEntity {
 
-    public static final String ORG_ID = "org_id";
+    public static final String CLIENT_ID = "client_id";
 
     @Column(name = "id", nullable = false)
     @Id
@@ -21,17 +21,17 @@ public class BaseOrganizationEntity {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = ORG_ID, nullable = false, updatable = false)
-    public Organization organization;
+    @JoinColumn(name = CLIENT_ID, nullable = false, updatable = false)
+    public Client client;
 
-    @JsonProperty("organizationId")
-    public Long getOrganizationId() {
-        if (Objects.nonNull(organization)) {
-            if (HibernateProxy.class.isInstance(organization)) {
-                String s = ((HibernateProxy) organization).getHibernateLazyInitializer().getIdentifier().toString();
+    @JsonProperty("clientId")
+    public Long getclientId() {
+        if (Objects.nonNull(client)) {
+            if (HibernateProxy.class.isInstance(client)) {
+                String s = ((HibernateProxy) client).getHibernateLazyInitializer().getIdentifier().toString();
                 return Long.getLong(s);
             }
-            return organization.getId();
+            return client.getId();
         }
         return null;
     }

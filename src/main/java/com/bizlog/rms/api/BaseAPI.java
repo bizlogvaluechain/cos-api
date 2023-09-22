@@ -9,15 +9,15 @@ import java.util.Map;
 
 public interface BaseAPI<I extends BaseDTO, O extends BaseDTO> {
 
-    ResponseEntity<O> create(Long orgId, I inputDTO);
+    ResponseEntity<O> create(Long clientId, I inputDTO);
 
-    ResponseEntity<O> getById(Long orgId, Long id);
+    ResponseEntity<O> getById(Long clientId, Long id);
 
-    ResponseEntity<PageResponse<O>> getAll(Long orgId, Pageable pageable);
+    ResponseEntity<PageResponse<O>> getAll(Long clientId, Pageable pageable);
 
-    ResponseEntity<O> update(Long orgId, Long id, I inputDTO);
+    ResponseEntity<O> update(Long clientId, Long id, I inputDTO);
 
-    ResponseEntity<Void> delete(Long orgId, Long id);
+    ResponseEntity<Void> delete(Long clientId, Long id);
 
-    ResponseEntity<PageResponse<O>> search(Long orgId, Map<String, String> map, Pageable pageable);
+    ResponseEntity<PageResponse<O>> search(Long clientId, Map<String, String> map, Pageable pageable);
 }

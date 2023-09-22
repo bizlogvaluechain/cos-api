@@ -7,9 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class OrganizationDTO {
+public class ClientDTO {
 
-    @NotNull(message = "id should not be null")
     private Long id;
 
     @NotBlank(message = "name should not be null")
