@@ -5,7 +5,7 @@ import com.bizlog.rms.api.UserAPI;
 import com.bizlog.rms.dto.users.UserDTO;
 import com.bizlog.rms.entities.users.User;
 import com.bizlog.rms.exception.ResourceNotFoundException;
-import com.bizlog.rms.repository.BaseOrganizationRepository;
+import com.bizlog.rms.repository.BaseClientRepository;
 import com.bizlog.rms.repository.UserRepository;
 import com.bizlog.rms.service.impl.UserService;
 import jakarta.validation.Valid;
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-public class UserResource extends BaseOrganizationResource<User, UserDTO, UserDTO> implements UserAPI {
+public class UserResource extends BaseClientResource<User, UserDTO, UserDTO> implements UserAPI {
     private final UserService userService;
     private final UserRepository userRepository;
 
-    public UserResource(BaseOrganizationRepository baseOrganizationRepository, UserService userService,
+    public UserResource(BaseClientRepository baseClientRepository, UserService userService,
                         UserRepository userRepository) {
-        super(baseOrganizationRepository);
+        super(baseClientRepository);
         this.userRepository = userRepository;
         this.userService = userService;
     }

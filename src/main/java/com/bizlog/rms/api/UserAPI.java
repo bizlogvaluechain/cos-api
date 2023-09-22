@@ -1,6 +1,5 @@
 package com.bizlog.rms.api;
 
-import com.bizlog.rms.dto.OrganizationDTO;
 import com.bizlog.rms.dto.users.UserDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

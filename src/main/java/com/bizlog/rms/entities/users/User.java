@@ -1,5 +1,5 @@
 package com.bizlog.rms.entities.users;
-import com.bizlog.rms.entities.BaseOrganizationEntity;
+import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -11,7 +11,7 @@ import java.util.Set;
 @Table(name = "users")
 @Data
 @ToString
-public class User extends BaseOrganizationEntity {
+public class User extends BaseClientEntity {
 
 
     @Column(name = "first_name")
