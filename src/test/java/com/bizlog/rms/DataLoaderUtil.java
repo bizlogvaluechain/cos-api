@@ -13,4 +13,9 @@ public class DataLoaderUtil {
         client.setName("IDP");
         return List.of(client);
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }
