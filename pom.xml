@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.bizlog</groupId>
-    <artifactId>rms-api</artifactId>
+    <artifactId>cos-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>rms-api</name>
+    <name>cos-api</name>
     <description>Bizlog Retails logistic management application</description>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -69,6 +69,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
