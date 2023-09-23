@@ -8,7 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.aMapWithSize;
 import static org.hamcrest.Matchers.hasSize;
@@ -18,9 +25,29 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Testcontainers
 @AutoConfigureMockMvc
 @SpringBootTest
 class CustomerApiApplicationTests {
+
+    // @DynamicPropertySource
+    // static void kafkaProperties(DynamicPropertyRegistry registry) {
+    // // registry.add("spring.kafka.bootstrap-servers", kafkaContainer::getBootstrapServers);
+    // registry.add("spring.datasource.url", () -> mySQLContainer.getJdbcUrl());
+    // registry.add("spring.datasource.driverClassName", () -> mySQLContainer.getDriverClassName());
+    // registry.add("spring.datasource.username", () -> mySQLContainer.getUsername());
+    // registry.add("spring.datasource.password", () -> mySQLContainer.getPassword());
+    // registry.add("spring.flyway.enabled", () -> "true");
+    // }
+    //
+    //
+    // @Container
+    // static MySQLContainer mySQLContainer = new MySQLContainer<>(DockerImageName.parse("mysql:8.0-debian"));
+    //
+    // static {
+    //// MY_SQL_CONTAINER = new MySQLContainer("mysql:latest");
+    // mySQLContainer.start();
+    // }
 
     @Autowired
     private ClientRepository clientRepository;
