@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RMSApiApplication {
+public class COSApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RMSApiApplication.class, args);
+        SpringApplication.run(COSApiApplication.class, args);
     }
 
 }
