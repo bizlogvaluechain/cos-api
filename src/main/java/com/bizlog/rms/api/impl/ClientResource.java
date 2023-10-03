@@ -10,10 +10,12 @@ import com.bizlog.rms.service.ClientService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class ClientResource implements ClientAPI {
@@ -33,9 +35,11 @@ public class ClientResource implements ClientAPI {
 
     @Override
     public ResponseEntity<ClientDTO> getById(@PathVariable Long id) {
+        log.info("Request received to get client by id:{}", id);
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", id));
         ClientDTO clientDTO = mapper.toDTO(client);
+        log.info("Request processed successfully. ");
         return ResponseEntity.ok().body(clientDTO);
     }
 
