@@ -18,6 +18,4 @@ public interface BaseAPI<I extends BaseDTO, O extends BaseDTO> {
     ResponseEntity<O> update(Long clientId, Long id, I inputDTO);
 
     ResponseEntity<Void> delete(Long clientId, Long id);
-
-    ResponseEntity<PageResponse<O>> search(Long clientId, Map<String, String> map, Pageable pageable);
 }

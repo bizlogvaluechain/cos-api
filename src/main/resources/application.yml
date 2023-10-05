@@ -20,7 +20,7 @@ spring:
     #url: ${mysql.url:jdbc:mysql://gatnix-mysql-db.cbzi61rt89sh.us-east-1.rds.amazonaws.com:3306/gatnix-db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
     url: ${mysql.url:jdbc:mysql://localhost:3306/rl_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
     user: "root"
-    password: "root"
+    password: "7569034512"
     driver-class-name: com.mysql.cj.jdbc.Driver
     enabled: false
 
@@ -39,7 +39,7 @@ spring:
     #url: ${mysql.url:jdbc:mysql://gatnix-mysql-db.cbzi61rt89sh.us-east-1.rds.amazonaws.com:3306/gatnix-db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
     url: ${mysql.url:jdbc:mysql://localhost:3306/rl_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
     username: "root"
-    password: "root"
+    password: "7569034512"
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       auto-commit: false

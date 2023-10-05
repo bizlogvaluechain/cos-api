@@ -57,11 +57,12 @@ public class ClientSettingResource extends BaseClientResource<ClientSetting, Cli
         return super.delete(clientId, id);
     }
 
-    @Override
+
     public ResponseEntity<PageResponse<ClientSettingDTO>> search(Long clientId, Map<String, String> map,
-            Pageable pageable) {
+                                                                 Pageable pageable) {
         return null;
     }
+
 
     @Override
     protected ClientSetting toEntity(ClientSettingDTO dto) {
