@@ -73,4 +73,5 @@ public class ClientSettingResource extends BaseClientResource<ClientSetting, Cli
     protected ClientSettingDTO toDTO(ClientSetting entity) {
         return getMapper().toDTO(entity);
     }
+
 }
