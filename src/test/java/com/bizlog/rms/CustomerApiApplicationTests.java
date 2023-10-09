@@ -34,9 +34,14 @@ class CustomerApiApplicationTests {
     }
 
     @Test
-    void should_not_retrieve_with_invalid_user_id() throws Exception {
+    void should_retrieve_with_valid_user_id() throws Exception {
         this.mockMvc.perform(get("/api/v1/client/{id}", 1))
                 .andDo(print()).andExpect(status().isOk());
     }
 
+     @Test
+    void should_not_retrieve_with_invalid_user_id() throws Exception {
+        this.mockMvc.perform(get("/api/v1/client/{id}", 11))
+                .andDo(print()).andExpect(status().isNotFound());
+    }
 }
