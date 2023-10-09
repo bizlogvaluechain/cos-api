@@ -9,7 +9,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "customer_info", uniqueConstraints = @UniqueConstraint(columnNames = { "id", "client_id" }))
-public class CustomerInfo extends BaseClientEntity{
+public class CustomerInfo extends BaseClientEntity {
     @Column(name = "registeredEntity", nullable = false)
     private String registeredEntity;
     @Column(name = "entityType", nullable = false)

@@ -14,10 +14,9 @@ public class S3Resource {
     @Autowired
     private S3Service s3Service;
 
-    @PostMapping(value = "/{type}/upload",
-            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public String uploadFileToS3(@PathVariable("type") String type , @RequestParam("file") MultipartFile file) {
+    @PostMapping(value = "/{type}/upload", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public String uploadFileToS3(@PathVariable("type") String type, @RequestParam("file") MultipartFile file) {
         log.info("upload controller start................");
         String s3Key = s3Service.uploadFileToS3(file);
         return "File uploaded to S3 with key: " + s3Key;

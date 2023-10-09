@@ -8,7 +8,6 @@ import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.CustomerInfo;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface GenericMapper {
@@ -20,8 +19,8 @@ public interface GenericMapper {
     ClientSettingDTO toDTO(ClientSetting entity);
 
     ClientSetting toEntity(ClientSettingDTO dto);
-    CustomerInfoDTO toDTO(CustomerInfo entity);
 
+    CustomerInfoDTO toDTO(CustomerInfo entity);
 
     CustomerInfo toEntity(CustomerInfoDTO dto);
 

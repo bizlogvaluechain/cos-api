@@ -1,17 +1,13 @@
 package com.bizlog.rms.api.impl;
 
-import com.bizlog.rms.api.ClientSettingAPI;
 import com.bizlog.rms.api.CustomerInfoAPI;
-import com.bizlog.rms.dto.ClientSettingDTO;
 import com.bizlog.rms.dto.CustomerInfoDTO;
 import com.bizlog.rms.dto.PageResponse;
-import com.bizlog.rms.entities.ClientSetting;
 import com.bizlog.rms.entities.CustomerInfo;
 import com.bizlog.rms.repository.BaseClientRepository;
 import com.bizlog.rms.service.S3Service;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,24 +21,27 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-public class CustomerInfoResource extends BaseClientResource<CustomerInfo, CustomerInfoDTO, CustomerInfoDTO> implements CustomerInfoAPI {
+public class CustomerInfoResource extends BaseClientResource<CustomerInfo, CustomerInfoDTO, CustomerInfoDTO>
+        implements CustomerInfoAPI {
 
     private final S3Service s3Service;
+
     public CustomerInfoResource(BaseClientRepository<CustomerInfo, Long> clientSettingRepository, S3Service s3Service) {
         super(clientSettingRepository);
         this.s3Service = s3Service;
     }
+
     @Transactional
     @Override
-    public ResponseEntity<CustomerInfoDTO> create(@PathVariable Long clientId, @RequestBody @Valid CustomerInfoDTO customerInfoDTO,
-                                                  @RequestParam("gstFile") MultipartFile gstFile,
-                                                  @RequestParam("panFile") MultipartFile panFile,
-                                                  @RequestParam("msmeFile") MultipartFile msmeFile) {
+    public ResponseEntity<CustomerInfoDTO> create(@PathVariable Long clientId,
+            @RequestBody @Valid CustomerInfoDTO customerInfoDTO, @RequestParam("gstFile") MultipartFile gstFile,
+            @RequestParam("panFile") MultipartFile panFile, @RequestParam("msmeFile") MultipartFile msmeFile) {
         createResourceInS3(customerInfoDTO, gstFile, panFile, msmeFile);
         return super.create(clientId, customerInfoDTO);
     }
 
-    private void createResourceInS3(CustomerInfoDTO customerInfoDTO, MultipartFile gstFile, MultipartFile panFile, MultipartFile msmeFile) {
+    private void createResourceInS3(CustomerInfoDTO customerInfoDTO, MultipartFile gstFile, MultipartFile panFile,
+            MultipartFile msmeFile) {
         String gsts3Key = s3Service.uploadFileToS3(gstFile);
         String pans3Key = s3Service.uploadFileToS3(panFile);
         String msmes3Key = s3Service.uploadFileToS3(msmeFile);
@@ -59,14 +58,14 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
 
     @Override
     public ResponseEntity<CustomerInfoDTO> getById(@PathVariable Long clientId,
-                                                    @PathVariable("id") Long customerInfoId) {
+            @PathVariable("id") Long customerInfoId) {
         return super.get(clientId, customerInfoId);
     }
 
     @Transactional
     @Override
     public ResponseEntity<CustomerInfoDTO> update(@PathVariable Long clientId, @PathVariable("id") Long id,
-                                                   @RequestBody @Valid CustomerInfoDTO customerInfoDTO) {
+            @RequestBody @Valid CustomerInfoDTO customerInfoDTO) {
         return super.update(clientId, id, customerInfoDTO);
     }
 
@@ -78,7 +77,7 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
 
     @Override
     public ResponseEntity<PageResponse<CustomerInfoDTO>> search(Long clientId, Map<String, String> map,
-                                                                 Pageable pageable) {
+            Pageable pageable) {
         return null;
     }
 
@@ -91,6 +90,5 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
     protected CustomerInfoDTO toDTO(CustomerInfo entity) {
         return getMapper().toDTO(entity);
     }
-
 
 }
