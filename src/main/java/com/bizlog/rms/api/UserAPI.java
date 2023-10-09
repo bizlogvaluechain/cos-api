@@ -7,8 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
-
 @RequestMapping("/api/v1/{clientId}")
 public interface UserAPI {
 
@@ -22,15 +20,15 @@ public interface UserAPI {
     ResponseEntity<PageResponse<UserDTO>> getAll(Long clientId, Pageable pageable);
 
     @PutMapping("/{id}")
-        ResponseEntity<UserDTO> update(Long Id, Long id, UserDTO userDTO);
+    ResponseEntity<UserDTO> update(Long Id, Long id, UserDTO userDTO);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
 
     @PostMapping("/roles")
-    public ResponseEntity<String> createRole(Role role);
+    ResponseEntity<String> createRole(Role role);
 
     @GetMapping("/users")
-    public ResponseEntity<PageResponse<UserDTO>> findUserByRole(@PathVariable Long clientId, @RequestParam String role,
+    ResponseEntity<PageResponse<UserDTO>> findUserByRole(@PathVariable Long clientId, @RequestParam String role,
             Pageable pageable);
 }

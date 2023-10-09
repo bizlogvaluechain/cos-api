@@ -54,7 +54,6 @@ public class TATActivityResource extends BaseClientResource<TATActivity, TATActi
         return super.delete(clientId, id);
     }
 
-
     @Override
     protected TATActivity toEntity(TATActivityDTO dto) {
         return getMapper().toEntity(dto);

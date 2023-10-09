@@ -25,18 +25,15 @@ public class SOPActivityResource extends BaseClientResource<SOPActivity, SOPActi
 
     @Transactional
     @Override
-    public ResponseEntity<SOPActivityDTO> create(
-            @PathVariable Long clientId,
-            @RequestBody @Valid
-            SOPActivityDTO sopActivityDTO) {
+    public ResponseEntity<SOPActivityDTO> create(@PathVariable Long clientId,
+            @RequestBody @Valid SOPActivityDTO sopActivityDTO) {
         sopActivityDTO.setClientId(clientId);
         return super.create(clientId, sopActivityDTO);
     }
 
-
-
     @Override
-    public ResponseEntity<SOPActivityDTO> update(@PathVariable Long clientId, Long id,  @RequestBody @Valid SOPActivityDTO sopActivityDTO) {
+    public ResponseEntity<SOPActivityDTO> update(@PathVariable Long clientId, Long id,
+            @RequestBody @Valid SOPActivityDTO sopActivityDTO) {
         return super.update(clientId, id, sopActivityDTO);
     }
 
@@ -51,15 +48,11 @@ public class SOPActivityResource extends BaseClientResource<SOPActivity, SOPActi
         return super.getAllConfig(clientId, pageable);
     }
 
-
-
     @Transactional
     @Override
     public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
-
-
 
     @Override
     protected SOPActivity toEntity(SOPActivityDTO dto) {

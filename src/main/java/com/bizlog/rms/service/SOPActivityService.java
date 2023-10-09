@@ -1,4 +1,5 @@
 package com.bizlog.rms.service;
+
 import com.bizlog.rms.dto.Specifications.SOPActivityDTO;
 import com.bizlog.rms.entities.Specifications.SOPActivity;
 import com.bizlog.rms.mapper.GenericMapper;
@@ -21,8 +22,7 @@ public class SOPActivityService {
 
     @Transactional
     public SOPActivityDTO createSOPActivity(SOPActivityDTO sopActivityDTO) {
-        SOPActivity
-                sopActivity = sopActivityMapper.toEntity(sopActivityDTO);
+        SOPActivity sopActivity = sopActivityMapper.toEntity(sopActivityDTO);
         SOPActivity savedSOPActivity = sopActivityRepository.save(sopActivity);
         return sopActivityMapper.toDTO(savedSOPActivity);
     }

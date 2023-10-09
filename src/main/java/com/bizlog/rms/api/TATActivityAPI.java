@@ -13,6 +13,7 @@ public interface TATActivityAPI extends BaseAPI<TATActivityDTO, TATActivityDTO> 
 
     @GetMapping("/{id}")
     ResponseEntity<TATActivityDTO> getById(Long clientId, Long id);
+
     @GetMapping
     ResponseEntity<PageResponse<TATActivityDTO>> getAll(Long clientId, Pageable pageable);
 

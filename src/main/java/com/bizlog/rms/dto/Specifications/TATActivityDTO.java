@@ -18,7 +18,7 @@ public class TATActivityDTO extends BaseDTO {
     private List<String> intraCity;
     @ElementCollection
     @NotEmpty(message = "outOfDelivery should not be empty")
-    private  List<String> outOfDelivery;
+    private List<String> outOfDelivery;
     @ElementCollection
     @NotEmpty(message = "nonServicibleArea should not be empty")
     private List<String> nonServicibleArea;

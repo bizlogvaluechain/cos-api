@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -53,11 +52,13 @@ public class UserResource extends BaseClientResource<User, UserDTO, UserDTO> imp
         UserDTO userDTO = getMapper().toDTO(user);
         return ResponseEntity.ok().body(userDTO);
     }
+
     @Override
     public ResponseEntity<PageResponse<UserDTO>> getAll(@PathVariable Long clientId, Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
     }
+
     @Transactional
     @Override
     public ResponseEntity<UserDTO> create(@Valid @RequestBody UserDTO userDTO) {
@@ -91,7 +92,6 @@ public class UserResource extends BaseClientResource<User, UserDTO, UserDTO> imp
         return ResponseEntity.noContent().build();
     }
 
-
     @Override
     public ResponseEntity<PageResponse<UserDTO>> findUserByRole(@PathVariable Long clientId, @RequestParam String role,
             Pageable pageable) {
@@ -101,12 +101,12 @@ public class UserResource extends BaseClientResource<User, UserDTO, UserDTO> imp
         PageResponse<UserDTO> pageResponse = new PageResponse<>(meta, outPutDTO);
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
+
     @Override
     public ResponseEntity<String> createRole(@RequestBody Role role) {
         Role savedRole = roleRepository.save(role);
         return ResponseEntity.status(HttpStatus.CREATED).body("Role created with ID: " + savedRole.getId());
     }
-
 
     @Override
     protected User toEntity(UserDTO dto) {
