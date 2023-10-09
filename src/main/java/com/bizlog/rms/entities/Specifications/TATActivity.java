@@ -11,10 +11,16 @@ import java.util.List;
 @Table(name = "TAT")
 @Data
 public class TATActivity extends BaseClientEntity {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tatActivity")
-    private List<TATSpecifications> intraCity;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tatActivity")
-    private List<TATSpecifications> outOfDelivery;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tatActivity")
-    private List<TATSpecifications> nonServicibleArea;
+    @Column(name = "intraCity",nullable = false)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> intraCity;
+
+    @Column(name = "outOfDelivery",nullable = false)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> outOfDelivery;
+
+    @Column(name = "nonServicibleArea",nullable = false)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> nonServicibleArea;
+
 }

@@ -2,9 +2,9 @@ package com.bizlog.rms.entities.Specifications;
 
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
+
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,21 +13,35 @@ import java.util.List;
 @Data
 public class SOPActivity extends BaseClientEntity {
 
+    @Column(name = "activityStartDate",nullable = false)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Date> activityStartDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sopActivity")
-    private List<SOPSpecification> activityStartDate;
+    @Column(name = "activityEndDate",nullable = false)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Date> activityEndDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sopActivity")
-    private List<SOPSpecification> activityEndDate;
+    @Column(name = "activityDetail",nullable = false)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> activityDetail;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sopActivity")
-    private List<SOPSpecification> activityDetail;
+    @Column(name = "volumeOfTicketsPerSowSop",nullable = false)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> volumeOfTicketsPerSowSop;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sopActivity")
-    private List<SOPSpecification> volumeOfTicketsPerSowSop;
+    @Column(name = "volumeOfProductsPerSowSop",nullable = false)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> volumeOfProductsPerSowSop;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sopActivity")
-    private List<SOPSpecification> volumeOfProductsPerSowSop;
+    @Column(name = "operationsNeededOnOurHolidays",nullable = false)
+    private Boolean operationsNeededOnOurHolidays;
+
+    @Column(name = "operationsNeededOnYourHolidays",nullable = false)
+    private Boolean operationsNeededOnYourHolidays;
+
+    @Column(name = "operationsNeededOnStatutoryHolidays",nullable = false)
+    private Boolean operationsNeededOnStatutoryHolidays;
+
 
 
 }

@@ -1,6 +1,9 @@
 package com.bizlog.rms.dto.Specifications;
 
 import com.bizlog.rms.dto.BaseDTO;
+import jakarta.persistence.ElementCollection;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,14 +16,32 @@ import java.util.List;
 @NoArgsConstructor
 public class SOPActivityDTO extends BaseDTO {
 
-    private List<SOPSpecificationDTO> activityStartDate;
-    private List<SOPSpecificationDTO> activityEndDate;
-    private List<SOPSpecificationDTO> activityDetail;
-    private List<SOPSpecificationDTO> volumeOfTicketsPerSowSop;
-    private List<SOPSpecificationDTO> volumeOfProductsPerSowSop;
-//    private Date activityStartDate;
-//    private Date activityEndDate;
-//    private String activityDetail;
-//    private String volumeOfTicketsPerSowSop;
-//    private String volumeOfProductsPerSowSop;
+    @ElementCollection
+    @NotEmpty(message = "activityStartDate should not be empty")
+    private List<Date> activityStartDate;
+
+    @ElementCollection
+    @NotEmpty(message = "activityEndDate should not be empty")
+    private List<Date> activityEndDate;
+
+    @ElementCollection
+    @NotEmpty(message = "activityDetail should not be empty")
+    private List<String> activityDetail;
+
+    @ElementCollection
+    @NotEmpty(message = "volumeOfTicketsPerSowSop should not be empty")
+    private List<String> volumeOfTicketsPerSowSop;
+
+    @ElementCollection
+    @NotEmpty(message = "volumeOfProductsPerSowSop should not be empty")
+    private List<String> volumeOfProductsPerSowSop;
+
+    @NotNull
+    private Boolean operationsNeededOnOurHolidays;
+
+    @NotNull
+    private Boolean operationsNeededOnYourHolidays;
+
+    @NotNull
+    private Boolean operationsNeededOnStatutoryHolidays;
 }

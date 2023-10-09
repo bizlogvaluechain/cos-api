@@ -3,16 +3,12 @@ package com.bizlog.rms.mapper;
 import com.bizlog.rms.dto.ClientDTO;
 import com.bizlog.rms.dto.ClientSettingDTO;
 import com.bizlog.rms.dto.Specifications.SOPActivityDTO;
-import com.bizlog.rms.dto.Specifications.SOPSpecificationDTO;
 import com.bizlog.rms.dto.Specifications.TATActivityDTO;
-import com.bizlog.rms.dto.Specifications.TATSpecificationDTO;
 import com.bizlog.rms.dto.users.UserDTO;
 import com.bizlog.rms.entities.ClientSetting;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.Specifications.SOPActivity;
-import com.bizlog.rms.entities.Specifications.SOPSpecification;
 import com.bizlog.rms.entities.Specifications.TATActivity;
-import com.bizlog.rms.entities.Specifications.TATSpecifications;
 import com.bizlog.rms.entities.users.User;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -39,13 +35,5 @@ public interface GenericMapper {
     TATActivityDTO toDTO(TATActivity entity);
 
     TATActivity toEntity(TATActivityDTO dto);
-
-    SOPSpecificationDTO toDTO(SOPSpecification entity);
-
-    SOPSpecification toEntity(SOPSpecificationDTO dto);
-
-    TATSpecificationDTO toDTO(TATSpecifications entity);
-
-    TATSpecifications toEntity(TATSpecificationDTO dto);
 
 }

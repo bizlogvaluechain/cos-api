@@ -1,7 +1,6 @@
 package com.bizlog.rms.api;
 
 import com.bizlog.rms.dto.PageResponse;
-import com.bizlog.rms.dto.Specifications.SOPActivityDTO;
 import com.bizlog.rms.dto.Specifications.TATActivityDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
