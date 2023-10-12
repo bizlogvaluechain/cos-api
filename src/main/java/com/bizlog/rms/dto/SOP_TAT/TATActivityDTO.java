@@ -1,4 +1,4 @@
-package com.bizlog.rms.dto.Specifications;
+package com.bizlog.rms.dto.SOP_TAT;
 
 import com.bizlog.rms.dto.BaseDTO;
 import jakarta.persistence.ElementCollection;

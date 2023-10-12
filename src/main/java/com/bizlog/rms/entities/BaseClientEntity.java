@@ -3,13 +3,17 @@ package com.bizlog.rms.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
 
 @MappedSuperclass
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BaseClientEntity {
 
     public static final String CLIENT_ID = "client_id";
@@ -34,10 +38,6 @@ public class BaseClientEntity {
             return client.getId();
         }
         return null;
-    }
-
-    public Long getId() {
-        return id;
     }
 
 }

@@ -1,11 +1,13 @@
 package com.bizlog.rms.entities.Specifications;
 
+import com.bizlog.rms.dto.SOP_TAT.subLists.MajorActivites;
+import com.bizlog.rms.dto.SOP_TAT.subLists.MinorActivites;
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -13,25 +15,28 @@ import java.util.List;
 @Data
 public class SOPActivity extends BaseClientEntity {
 
-    @Column(name = "activityStartDate", nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<Date> activityStartDate;
+    @Column(name = "activityStartDate")
+    private LocalDate activityStartDate;
 
-    @Column(name = "activityEndDate", nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<Date> activityEndDate;
+    @Column(name = "activityEndDate")
+    private LocalDate activityEndDate;
 
     @Column(name = "activityDetail", nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> activityDetail;
+    private String activityDetail;
+
+    @Column(name = "majorActivites", nullable = false)
+    @ElementCollection(targetClass = MajorActivites.class, fetch = FetchType.EAGER)
+    private List<MajorActivites> majorActivites;
+
+    @Column(name = "minorActivites", nullable = false)
+    @ElementCollection(targetClass = MinorActivites.class, fetch = FetchType.EAGER)
+    private List<MinorActivites> minorActivites;
 
     @Column(name = "volumeOfTicketsPerSowSop", nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> volumeOfTicketsPerSowSop;
+    private String volumeOfTicketsPerSowSop;
 
     @Column(name = "volumeOfProductsPerSowSop", nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> volumeOfProductsPerSowSop;
+    private String volumeOfProductsPerSowSop;
 
     @Column(name = "operationsNeededOnOurHolidays", nullable = false)
     private Boolean operationsNeededOnOurHolidays;

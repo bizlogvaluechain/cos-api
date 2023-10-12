@@ -1,0 +1,65 @@
+package com.bizlog.rms.api.impl;
+
+import com.bizlog.rms.api.FrequencyAPI;
+import com.bizlog.rms.dto.PageResponse;
+import com.bizlog.rms.dto.frequency.FrequencyDTO;
+import com.bizlog.rms.entities.frequency.Frequency;
+import com.bizlog.rms.repository.BaseClientRepository;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@Slf4j
+public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDTO, FrequencyDTO>
+        implements FrequencyAPI {
+    public FrequencyResource(BaseClientRepository<Frequency, Long> baseClientRepository) {
+        super(baseClientRepository);
+    }
+
+    @Transactional
+    @Override
+    public ResponseEntity<FrequencyDTO> create(@PathVariable Long clientId,
+            @RequestBody @Valid FrequencyDTO frequencyDTO) {
+        frequencyDTO.setClientId(clientId);
+        return super.create(clientId, frequencyDTO);
+    }
+
+    @Override
+    public ResponseEntity<FrequencyDTO> update(@PathVariable Long clientId, Long id,
+            @RequestBody @Valid FrequencyDTO frequencyDTO) {
+        return super.update(clientId, id, frequencyDTO);
+    }
+
+    @Override
+    public ResponseEntity<FrequencyDTO> getById(@PathVariable Long clientId, Long id) {
+        return super.get(clientId, id);
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<FrequencyDTO>> getAll(@PathVariable Long clientId, Pageable pageable) {
+        log.info("get all data");
+        return super.getAllConfig(clientId, pageable);
+    }
+
+    @Transactional
+    @Override
+    public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
+        return super.delete(clientId, id);
+    }
+
+    @Override
+    protected FrequencyDTO toDTO(Frequency entity) {
+        return getMapper().toDTO(entity);
+    }
+
+    @Override
+    protected Frequency toEntity(FrequencyDTO dto) {
+        return getMapper().toEntity(dto);
+    }
+}
