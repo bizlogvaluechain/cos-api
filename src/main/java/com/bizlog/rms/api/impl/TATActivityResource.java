@@ -2,7 +2,7 @@ package com.bizlog.rms.api.impl;
 
 import com.bizlog.rms.api.TATActivityAPI;
 import com.bizlog.rms.dto.PageResponse;
-import com.bizlog.rms.dto.Specifications.TATActivityDTO;
+import com.bizlog.rms.dto.SOP_TAT.TATActivityDTO;
 import com.bizlog.rms.entities.Specifications.TATActivity;
 import com.bizlog.rms.repository.BaseClientRepository;
 import jakarta.validation.Valid;
