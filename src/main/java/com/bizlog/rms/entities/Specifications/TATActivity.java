@@ -17,7 +17,7 @@ public class TATActivity extends BaseClientEntity {
     private String tatForLastMile;
 
     @Column(name = "tatBreachDueTo")
-    @ElementCollection(targetClass = TATBreachDueTo.class,fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = TATBreachDueTo.class, fetch = FetchType.EAGER)
     private List<TATBreachDueTo> tatBreachDueTo;
 
     @Column(name = "tatForLinehaul")
