@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,7 +14,7 @@ public class Frequency extends BaseClientEntity {
     @Column(name = "ticketsVolume", nullable = false)
     private String ticketsVolume;
     @Column(name = "onboardingDate", nullable = false)
-    private Date onboardingDate;
+    private LocalDateTime onboardingDate;
     @Column(name = "dayStartTime", nullable = false)
     private LocalDateTime dayStartTime;
     @Column(name = "dayEndTime", nullable = false)
@@ -24,6 +23,5 @@ public class Frequency extends BaseClientEntity {
     @ElementCollection(targetClass = HolidayApplicable.class, fetch = FetchType.EAGER)
     private List<HolidayApplicable> holidayApplicable;
     @Column(name = "onlyWorkdays", nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<Boolean> onlyWorkdays;
+    private Boolean onlyWorkdays;
 }

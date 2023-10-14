@@ -23,32 +23,34 @@ public class TicketCreationConfigResource
     }
 
     @Override
-    public ResponseEntity<TicketCreationConfigDTO> getById(Long clientId, Long id) {
+    public ResponseEntity<TicketCreationConfigDTO> getById(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<TicketCreationConfigDTO>> getAll(Long clientId, Pageable pageable) {
+    public ResponseEntity<PageResponse<TicketCreationConfigDTO>> getAll(@PathVariable("clientId") Long clientId,
+            Pageable pageable) {
         return super.getAllConfig(clientId, pageable);
     }
 
     @Transactional
     @Override
-    public ResponseEntity<TicketCreationConfigDTO> create(@PathVariable Long clientId,
+    public ResponseEntity<TicketCreationConfigDTO> create(@PathVariable("clientId") Long clientId,
             @RequestBody @Valid TicketCreationConfigDTO ticketCreationConfigDTO) {
         ticketCreationConfigDTO.setClientId(clientId);
         return super.create(clientId, ticketCreationConfigDTO);
     }
 
     @Override
-    public ResponseEntity<TicketCreationConfigDTO> update(@PathVariable Long clientId, Long id,
-            @RequestBody @Valid TicketCreationConfigDTO ticketCreationConfigDTO) {
+    public ResponseEntity<TicketCreationConfigDTO> update(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id, @RequestBody @Valid TicketCreationConfigDTO ticketCreationConfigDTO) {
         return super.update(clientId, id, ticketCreationConfigDTO);
     }
 
     @Transactional
     @Override
-    public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
 

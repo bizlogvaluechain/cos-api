@@ -24,32 +24,33 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
 
     @Transactional
     @Override
-    public ResponseEntity<FrequencyDTO> create(@PathVariable Long clientId,
+    public ResponseEntity<FrequencyDTO> create(@PathVariable("clientId") Long clientId,
             @RequestBody @Valid FrequencyDTO frequencyDTO) {
         frequencyDTO.setClientId(clientId);
         return super.create(clientId, frequencyDTO);
     }
 
     @Override
-    public ResponseEntity<FrequencyDTO> update(@PathVariable Long clientId, Long id,
+    public ResponseEntity<FrequencyDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
             @RequestBody @Valid FrequencyDTO frequencyDTO) {
         return super.update(clientId, id, frequencyDTO);
     }
 
     @Override
-    public ResponseEntity<FrequencyDTO> getById(@PathVariable Long clientId, Long id) {
+    public ResponseEntity<FrequencyDTO> getById(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<FrequencyDTO>> getAll(@PathVariable Long clientId, Pageable pageable) {
+    public ResponseEntity<PageResponse<FrequencyDTO>> getAll(@PathVariable("clientId") Long clientId,
+            Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
     }
 
     @Transactional
     @Override
-    public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
 

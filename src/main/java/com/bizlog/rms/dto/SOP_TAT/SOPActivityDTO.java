@@ -17,31 +17,10 @@ import java.util.List;
 @NoArgsConstructor
 public class SOPActivityDTO extends BaseDTO {
 
-    private LocalDate activityStartDate;
-
-    private LocalDate activityEndDate;
-
-    @NotEmpty(message = "activityDetail should not be empty")
-    private String activityDetail;
-
     @NotEmpty(message = "majorActivites should not be empty")
     private List<MajorActivites> majorActivites;
 
     @NotEmpty(message = "minorActivites should not be empty")
     private List<MinorActivites> minorActivites;
 
-    @NotEmpty(message = "volumeOfTicketsPerSowSop should not be empty")
-    private String volumeOfTicketsPerSowSop;
-
-    @NotEmpty(message = "volumeOfProductsPerSowSop should not be empty")
-    private String volumeOfProductsPerSowSop;
-
-    @NotNull
-    private Boolean operationsNeededOnOurHolidays;
-
-    @NotNull
-    private Boolean operationsNeededOnYourHolidays;
-
-    @NotNull
-    private Boolean operationsNeededOnStatutoryHolidays;
 }

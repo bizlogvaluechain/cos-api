@@ -25,32 +25,34 @@ public class SOPActivityResource extends BaseClientResource<SOPActivity, SOPActi
 
     @Transactional
     @Override
-    public ResponseEntity<SOPActivityDTO> create(@PathVariable Long clientId,
+    public ResponseEntity<SOPActivityDTO> create(@PathVariable("clientId") Long clientId,
             @RequestBody @Valid SOPActivityDTO sopActivityDTO) {
         sopActivityDTO.setClientId(clientId);
         return super.create(clientId, sopActivityDTO);
     }
 
     @Override
-    public ResponseEntity<SOPActivityDTO> update(@PathVariable Long clientId, Long id,
+    public ResponseEntity<SOPActivityDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
             @RequestBody @Valid SOPActivityDTO sopActivityDTO) {
         return super.update(clientId, id, sopActivityDTO);
     }
 
     @Override
-    public ResponseEntity<SOPActivityDTO> getById(@PathVariable Long clientId, Long id) {
+    public ResponseEntity<SOPActivityDTO> getById(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<SOPActivityDTO>> getAll(@PathVariable Long clientId, Pageable pageable) {
+    public ResponseEntity<PageResponse<SOPActivityDTO>> getAll(@PathVariable("clientId") Long clientId,
+            Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
     }
 
     @Transactional
     @Override
-    public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
 

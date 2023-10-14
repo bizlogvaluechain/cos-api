@@ -24,32 +24,34 @@ public class NotificationResource extends BaseClientResource<Notification, Notif
 
     @Transactional
     @Override
-    public ResponseEntity<NotificationDTO> create(@PathVariable Long clientId,
+    public ResponseEntity<NotificationDTO> create(@PathVariable("clientId") Long clientId,
             @RequestBody @Valid NotificationDTO notificationDTO) {
         notificationDTO.setClientId(clientId);
         return super.create(clientId, notificationDTO);
     }
 
     @Override
-    public ResponseEntity<NotificationDTO> update(@PathVariable Long clientId, Long id,
+    public ResponseEntity<NotificationDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
             @RequestBody @Valid NotificationDTO notificationDTO) {
         return super.update(clientId, id, notificationDTO);
     }
 
     @Override
-    public ResponseEntity<NotificationDTO> getById(@PathVariable Long clientId, Long id) {
+    public ResponseEntity<NotificationDTO> getById(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<NotificationDTO>> getAll(@PathVariable Long clientId, Pageable pageable) {
+    public ResponseEntity<PageResponse<NotificationDTO>> getAll(@PathVariable("clientId") Long clientId,
+            Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
     }
 
     @Transactional
     @Override
-    public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
 

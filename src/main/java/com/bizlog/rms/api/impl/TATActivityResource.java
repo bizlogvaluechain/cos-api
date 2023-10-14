@@ -27,30 +27,33 @@ public class TATActivityResource extends BaseClientResource<TATActivity, TATActi
 
     @Transactional
     @Override
-    public ResponseEntity<TATActivityDTO> create(@PathVariable Long clientId, @Valid TATActivityDTO tatActivityDTO) {
+    public ResponseEntity<TATActivityDTO> create(@PathVariable("clientId") Long clientId,
+            @Valid TATActivityDTO tatActivityDTO) {
         return super.create(clientId, tatActivityDTO);
     }
 
     @Override
-    public ResponseEntity<TATActivityDTO> getById(@PathVariable Long clientId, Long id) {
+    public ResponseEntity<TATActivityDTO> getById(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<TATActivityDTO>> getAll(@PathVariable Long clientId, Pageable pageable) {
+    public ResponseEntity<PageResponse<TATActivityDTO>> getAll(@PathVariable("clientId") Long clientId,
+            Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
     }
 
     @Override
-    public ResponseEntity<TATActivityDTO> update(@PathVariable Long clientId, @PathVariable("id") Long id,
+    public ResponseEntity<TATActivityDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
             @RequestBody @Valid TATActivityDTO tatActivityDTO) {
         return super.update(clientId, id, tatActivityDTO);
     }
 
     @Transactional
     @Override
-    public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
 
