@@ -91,6 +91,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     }
 
     public ResponseEntity<O> get(Long clientId, Long id) {
+        log.info("Request recived to process with client id: {} and id:{} ", clientId, id);
         Client client = clientRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
         log.info("Client: {}", client);

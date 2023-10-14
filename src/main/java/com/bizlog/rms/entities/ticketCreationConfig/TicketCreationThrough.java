@@ -8,5 +8,5 @@ import lombok.Data;
 public class TicketCreationThrough {
     private String Excel;
     private String Api;
-    private String Foprm;
+    private String Form;
 }

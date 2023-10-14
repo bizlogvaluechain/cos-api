@@ -1,5 +1,6 @@
 package com.bizlog.rms.entities.Specifications;
 
+import com.bizlog.rms.dto.SOP_TAT.subLists.TATBreachDueTo;
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -9,16 +10,20 @@ import java.util.List;
 @Table(name = "TAT")
 @Data
 public class TATActivity extends BaseClientEntity {
-    @Column(name = "intraCity", nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> intraCity;
+    @Column(name = "tatForFirstMile")
+    private String tatForFirstMile;
 
-    @Column(name = "outOfDelivery", nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> outOfDelivery;
+    @Column(name = "tatForLastMile")
+    private String tatForLastMile;
 
-    @Column(name = "nonServicibleArea", nullable = false)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> nonServicibleArea;
+    @Column(name = "tatBreachDueTo")
+    @ElementCollection(targetClass = TATBreachDueTo.class, fetch = FetchType.EAGER)
+    private List<TATBreachDueTo> tatBreachDueTo;
+
+    @Column(name = "tatForLinehaul")
+    private String tatForLinehaul;
+
+    @Column(name = "numberOfReshedules")
+    private String numberOfReshedules;
 
 }

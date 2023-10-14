@@ -24,32 +24,33 @@ public class LocationResource extends BaseClientResource<Location, LocationDTO, 
 
     @Transactional
     @Override
-    public ResponseEntity<LocationDTO> create(@PathVariable Long clientId,
+    public ResponseEntity<LocationDTO> create(@PathVariable("clientId") Long clientId,
             @RequestBody @Valid LocationDTO locationDTO) {
         locationDTO.setClientId(clientId);
         return super.create(clientId, locationDTO);
     }
 
     @Override
-    public ResponseEntity<LocationDTO> update(@PathVariable Long clientId, Long id,
+    public ResponseEntity<LocationDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
             @RequestBody @Valid LocationDTO locationDTO) {
         return super.update(clientId, id, locationDTO);
     }
 
     @Override
-    public ResponseEntity<LocationDTO> getById(@PathVariable Long clientId, Long id) {
+    public ResponseEntity<LocationDTO> getById(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<LocationDTO>> getAll(@PathVariable Long clientId, Pageable pageable) {
+    public ResponseEntity<PageResponse<LocationDTO>> getAll(@PathVariable("clientId") Long clientId,
+            Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
     }
 
     @Transactional
     @Override
-    public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
 

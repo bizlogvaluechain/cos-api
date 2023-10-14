@@ -26,32 +26,34 @@ public class ProductInformationResource
 
     @Transactional
     @Override
-    public ResponseEntity<ProductInformationDTO> create(@PathVariable Long clientId,
+    public ResponseEntity<ProductInformationDTO> create(@PathVariable("clientId") Long clientId,
             @RequestBody @Valid ProductInformationDTO productInformationDTO) {
         productInformationDTO.setClientId(clientId);
         return super.create(clientId, productInformationDTO);
     }
 
     @Override
-    public ResponseEntity<ProductInformationDTO> update(@PathVariable Long clientId, Long id,
-            @RequestBody @Valid ProductInformationDTO productInformationDTO) {
+    public ResponseEntity<ProductInformationDTO> update(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id, @RequestBody @Valid ProductInformationDTO productInformationDTO) {
         return super.update(clientId, id, productInformationDTO);
     }
 
     @Override
-    public ResponseEntity<ProductInformationDTO> getById(@PathVariable Long clientId, Long id) {
+    public ResponseEntity<ProductInformationDTO> getById(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<ProductInformationDTO>> getAll(@PathVariable Long clientId, Pageable pageable) {
+    public ResponseEntity<PageResponse<ProductInformationDTO>> getAll(@PathVariable("clientId") Long clientId,
+            Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
     }
 
     @Transactional
     @Override
-    public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
 

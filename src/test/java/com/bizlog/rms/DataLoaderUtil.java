@@ -1,15 +1,174 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Specifications.SOPActivity;
+import com.bizlog.rms.entities.Specifications.TATActivity;
+import com.bizlog.rms.entities.escalationMatrix.EscalationMatrix;
+import com.bizlog.rms.entities.frequency.Frequency;
+import com.bizlog.rms.entities.frequency.HolidayApplicable;
+import com.bizlog.rms.entities.location.Charge;
+import com.bizlog.rms.entities.location.Location;
+import com.bizlog.rms.entities.location.ServiceType;
+import com.bizlog.rms.entities.notification.Notification;
+import com.bizlog.rms.entities.productInformation.ProductInformation;
+import com.bizlog.rms.entities.productInformation.ProductSize;
+import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationBasedOn;
+import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationConfig;
+import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationThrough;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataLoaderUtil {
 
     public static List<Client> getClients() {
         Client client = new Client();
+        client.setId(1L);
         client.setName("IDP");
         return List.of(client);
+    }
+
+    public static Client getClient() {
+        Client client = new Client();
+        client.setId(1L);
+        client.setName("IDP");
+        return client;
+    }
+
+    public static List<Location> getLocations(Client client) {
+        Charge charge = new Charge();
+        charge.setDeliverableArea(10L);
+        charge.setNonDeliverableArea(10L);
+        charge.setOutDeliverableArea(10L);
+
+        ServiceType serviceType = new ServiceType();
+        serviceType.setDeliverableArea("yes");
+        serviceType.setOutDeliverableArea("yes");
+        serviceType.setNonDeliverableArea("yes");
+
+        Location location = new Location();
+        location.setId(1L);
+        location.setClient(client);
+        List<Charge> charges = new ArrayList<>();
+        charges.add(charge);
+        location.setCharge(charges);
+        location.setBizlogLocationMaster("IDP");
+        List<ServiceType> serviceTypes = new ArrayList<>();
+        serviceTypes.add(serviceType);
+        location.setServiceType(serviceTypes);
+        location.setSelectStates("AP");
+        location.setSelectCities("viz");
+        return List.of(location);
+    }
+
+    public static List<Frequency> getFrequency(Client client) {
+        HolidayApplicable holidayApplicable = new HolidayApplicable();
+        holidayApplicable.setBizlogHolidays(true);
+        holidayApplicable.setPublicHolidays(true);
+        holidayApplicable.setClientHolidaays(false);
+        Frequency frequency = new Frequency();
+        frequency.setId(1L);
+        frequency.setClient(client);
+        frequency.setDayEndTime(LocalDateTime.of(2023, 10, 12, 0, 0));
+        frequency.setDayStartTime(LocalDateTime.of(2023, 10, 12, 0, 0));
+        frequency.setOnboardingDate(LocalDateTime.of(2023, 10, 12, 0, 0));
+        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
+        holidayApplicables.add(holidayApplicable);
+        frequency.setHolidayApplicable(holidayApplicables);
+        frequency.setOnlyWorkdays(true);
+        frequency.setOnlyWorkdays(true);
+        frequency.setTicketsVolume("100");
+        return List.of(frequency);
+    }
+
+    public static List<EscalationMatrix> getEscalationMatrix(Client client) {
+        EscalationMatrix escalationMatrix = new EscalationMatrix();
+        escalationMatrix.setId(1L);
+        escalationMatrix.setClient(client);
+        escalationMatrix.setAccountContactInfo("IDP");
+        escalationMatrix.setItContactInfo("IDP");
+        escalationMatrix.setBusinessContactInfo("IDP");
+        escalationMatrix.setOpsContactInfo("IDP");
+        escalationMatrix.setEmergencyContactInfo("IDP");
+        return List.of(escalationMatrix);
+    }
+
+    public static List<Notification> getNotification(Client client) {
+        Notification notification = new Notification();
+        notification.setId(1L);
+        notification.setClient(client);
+        notification.setIsSmsRequired(false);
+        notification.setIsReportAlertsRequired(true);
+        notification.setIsEmailRequired(true);
+        notification.setIsAlertNeededForNegativeCases(false);
+        notification.setIsTicketScansRequired(true);
+        return List.of(notification);
+    }
+
+    public static List<ProductInformation> getProductInformation(Client client) {
+        ProductSize productSize = new ProductSize();
+        productSize.setLarge("yes");
+        productSize.setMini("no");
+        productSize.setMedium("yes");
+        productSize.setXLarge("no");
+        productSize.setSmall("no");
+
+        ProductInformation productInformation = new ProductInformation();
+        productInformation.setId(1L);
+        productInformation.setClient(client);
+        productInformation.setProductCategory("electronics");
+
+        List<ProductSize> productSizes = new ArrayList<>();
+        productSizes.add(productSize);
+
+        productInformation.setProductSize(productSizes);
+        productInformation.setIsProductInformationRequiredForTicketCreation(false);
+        productInformation.setProductSubCategory("mobiles");
+        productInformation.setIsInventoryNeeded(false);
+        productInformation.setIsPackingNeeded(true);
+        productInformation.setIsVehicleNeeded(true);
+        productInformation.setIsWareHousingNeeded(true);
+        return List.of(productInformation);
+    }
+
+    public static List<SOPActivity> getSOPActivity(Client client) {
+        SOPActivity sopActivity = new SOPActivity();
+        sopActivity.setId(1L);
+        sopActivity.setClient(client);
+        return List.of(sopActivity);
+    }
+
+    public static List<TATActivity> getTATActivity(Client client) {
+        TATActivity tatActivity = new TATActivity();
+        tatActivity.setId(1L);
+        tatActivity.setClient(client);
+        return List.of(tatActivity);
+    }
+
+    public static List<TicketCreationConfig> getTicketCreationConfig(Client client) {
+        TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
+        ticketCreationThrough.setApi("API");
+        ticketCreationThrough.setExcel("Excel");
+        ticketCreationThrough.setForm("form");
+
+        TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
+        ticketCreationBasedOn.setAwbNumber("AWB");
+        ticketCreationBasedOn.setInvoiceNumber("invoice");
+        ticketCreationBasedOn.setComplaintNumber("complaint");
+        ticketCreationBasedOn.setOrderNumber("order");
+
+        TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
+        ticketCreationConfig.setId(1L);
+        ticketCreationConfig.setClient(client);
+        List<TicketCreationThrough> ticketCreationThroughs = new ArrayList<>();
+        ticketCreationThroughs.add(ticketCreationThrough);
+        ticketCreationConfig.setTicketCreationThrough(ticketCreationThroughs);
+        List<TicketCreationBasedOn> ticketCreationBasedOns = new ArrayList<>();
+        ticketCreationBasedOns.add(ticketCreationBasedOn);
+        ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
+
+        return List.of(ticketCreationConfig);
     }
 
     @Override

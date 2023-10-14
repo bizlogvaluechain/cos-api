@@ -24,32 +24,34 @@ public class EscalationMatrixResource extends
 
     @Transactional
     @Override
-    public ResponseEntity<EscalationMatrixDTO> create(@PathVariable Long clientId,
+    public ResponseEntity<EscalationMatrixDTO> create(@PathVariable("clientId") Long clientId,
             @RequestBody @Valid EscalationMatrixDTO escalationMatrixDTO) {
         escalationMatrixDTO.setClientId(clientId);
         return super.create(clientId, escalationMatrixDTO);
     }
 
     @Override
-    public ResponseEntity<EscalationMatrixDTO> update(@PathVariable Long clientId, Long id,
-            @RequestBody @Valid EscalationMatrixDTO escalationMatrixDTO) {
+    public ResponseEntity<EscalationMatrixDTO> update(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id, @RequestBody @Valid EscalationMatrixDTO escalationMatrixDTO) {
         return super.update(clientId, id, escalationMatrixDTO);
     }
 
     @Override
-    public ResponseEntity<EscalationMatrixDTO> getById(@PathVariable Long clientId, Long id) {
+    public ResponseEntity<EscalationMatrixDTO> getById(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<EscalationMatrixDTO>> getAll(@PathVariable Long clientId, Pageable pageable) {
+    public ResponseEntity<PageResponse<EscalationMatrixDTO>> getAll(@PathVariable("clientId") Long clientId,
+            Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
     }
 
     @Transactional
     @Override
-    public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
 
