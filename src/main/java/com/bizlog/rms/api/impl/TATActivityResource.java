@@ -45,10 +45,13 @@ public class TATActivityResource extends BaseClientResource<TATActivity, TATActi
         return super.getAllConfig(clientId, pageable);
     }
 
+
+
+
     @Override
-    public ResponseEntity<TATActivityDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
-            @RequestBody @Valid TATActivityDTO tatActivityDTO) {
-        return super.update(clientId, id, tatActivityDTO);
+    public ResponseEntity<TATActivityDTO> update(@PathVariable("clientId") Long clientId,@PathVariable("id") Long id,
+                                                 @RequestBody @Valid TATActivityDTO tatActivityDTO) {
+        return super.update( clientId,id, tatActivityDTO);
     }
 
     @Transactional

@@ -3,23 +3,24 @@ package com.bizlog.rms.dto.SOP_TAT.subLists;
 import jakarta.persistence.Embeddable;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Embeddable
 public class MinorActivites {
 
-    private String qC;
+    public List<String> qC;
 
-    private String imageCapture;
+    public List<String> imageCapture;
 
-    private String signatureCapture;
+    public List<String> signatureCapture;
 
-    private String oTPValidation;
+    public List<String> oTPValidation;
 
-    private String evaluation;
+    public List<String> evaluation;
 
-    private String segregation;
+    public List<String> segregation;
 
-    private String grouping;
-    private String grading;
+    public List<String> grading;
 
 }

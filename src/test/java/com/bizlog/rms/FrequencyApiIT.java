@@ -33,7 +33,8 @@ public class FrequencyApiIT extends BaseApiTest {
     private FrequencyRepository frequencyRepository;
 
     @Autowired
-   private ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
+
     @BeforeEach
     void beforeEach() {
         Client client = DataLoaderUtil.getClient();
@@ -64,51 +65,51 @@ public class FrequencyApiIT extends BaseApiTest {
                 .andExpect(status().isNotFound());
     }
 
-//    @Test
-//    void should_create_new_frequency() throws Exception {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.registerModule(new JavaTimeModule());
-//        int clientId = 1;
-//        HolidayApplicable holidayApplicable = new HolidayApplicable();
-//        holidayApplicable.setBizlogHolidays(true);
-//        holidayApplicable.setPublicHolidays(true);
-//        holidayApplicable.setClientHolidaays(false);
-//        Frequency frequency = new Frequency();
-//        frequency.setDayEndTime(LocalDateTime.of(2023, 10, 13, 0, 0));
-//        frequency.setDayStartTime(LocalDateTime.of(2023, 10, 13, 0, 0));
-//        frequency.setOnboardingDate(LocalDateTime.of(2023, 10, 13, 0, 0));
-//        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-//        holidayApplicables.add(holidayApplicable);
-//        frequency.setHolidayApplicable(holidayApplicables);
-//        frequency.setOnlyWorkdays(true);
-//        frequency.setOnlyWorkdays(true);
-//        frequency.setTicketsVolume("100");
-//        this.mockMvc
-//                .perform(post("/api/v1/{clientId}/frequency", clientId).contentType(MediaType.APPLICATION_JSON)
-//                        .content(new ObjectMapper().writeValueAsString(frequency)))
-//                .andDo(print()).andExpect(status().is2xxSuccessful());
-//    }
-//
-//    @Test
-//    void should_not_create_new_frequency() throws Exception {
-//        int clientId = 11;
-//        HolidayApplicable holidayApplicable = new HolidayApplicable();
-//        holidayApplicable.setBizlogHolidays(true);
-//        holidayApplicable.setPublicHolidays(true);
-//        holidayApplicable.setClientHolidaays(false);
-//        Frequency frequency = new Frequency();
-//        frequency.setDayEndTime(LocalDateTime.of(2023, 10, 12, 0, 0));
-//        frequency.setDayStartTime(LocalDateTime.of(2023, 10, 12, 0, 0));
-//        frequency.setOnboardingDate(LocalDateTime.of(2023, 10, 12, 0, 0));
-//        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-//        holidayApplicables.add(holidayApplicable);
-//        frequency.setHolidayApplicable(holidayApplicables);
-//        frequency.setOnlyWorkdays(true);
-//        frequency.setOnlyWorkdays(true);
-//        frequency.setTicketsVolume("100");
-//        this.mockMvc
-//                .perform(post("/api/v1/{clientId}/frequency", clientId).contentType(MediaType.APPLICATION_JSON)
-//                        .content(new ObjectMapper().writeValueAsString(frequency)))
-//                .andDo(print()).andExpect(status().isNotFound());
-//    }
+    // @Test
+    // void should_create_new_frequency() throws Exception {
+    // ObjectMapper objectMapper = new ObjectMapper();
+    // objectMapper.registerModule(new JavaTimeModule());
+    // int clientId = 1;
+    // HolidayApplicable holidayApplicable = new HolidayApplicable();
+    // holidayApplicable.setBizlogHolidays(true);
+    // holidayApplicable.setPublicHolidays(true);
+    // holidayApplicable.setClientHolidaays(false);
+    // Frequency frequency = new Frequency();
+    // frequency.setDayEndTime(LocalDateTime.of(2023, 10, 13, 0, 0));
+    // frequency.setDayStartTime(LocalDateTime.of(2023, 10, 13, 0, 0));
+    // frequency.setOnboardingDate(LocalDateTime.of(2023, 10, 13, 0, 0));
+    // List<HolidayApplicable> holidayApplicables = new ArrayList<>();
+    // holidayApplicables.add(holidayApplicable);
+    // frequency.setHolidayApplicable(holidayApplicables);
+    // frequency.setOnlyWorkdays(true);
+    // frequency.setOnlyWorkdays(true);
+    // frequency.setTicketsVolume("100");
+    // this.mockMvc
+    // .perform(post("/api/v1/{clientId}/frequency", clientId).contentType(MediaType.APPLICATION_JSON)
+    // .content(new ObjectMapper().writeValueAsString(frequency)))
+    // .andDo(print()).andExpect(status().is2xxSuccessful());
+    // }
+    //
+    // @Test
+    // void should_not_create_new_frequency() throws Exception {
+    // int clientId = 11;
+    // HolidayApplicable holidayApplicable = new HolidayApplicable();
+    // holidayApplicable.setBizlogHolidays(true);
+    // holidayApplicable.setPublicHolidays(true);
+    // holidayApplicable.setClientHolidaays(false);
+    // Frequency frequency = new Frequency();
+    // frequency.setDayEndTime(LocalDateTime.of(2023, 10, 12, 0, 0));
+    // frequency.setDayStartTime(LocalDateTime.of(2023, 10, 12, 0, 0));
+    // frequency.setOnboardingDate(LocalDateTime.of(2023, 10, 12, 0, 0));
+    // List<HolidayApplicable> holidayApplicables = new ArrayList<>();
+    // holidayApplicables.add(holidayApplicable);
+    // frequency.setHolidayApplicable(holidayApplicables);
+    // frequency.setOnlyWorkdays(true);
+    // frequency.setOnlyWorkdays(true);
+    // frequency.setTicketsVolume("100");
+    // this.mockMvc
+    // .perform(post("/api/v1/{clientId}/frequency", clientId).contentType(MediaType.APPLICATION_JSON)
+    // .content(new ObjectMapper().writeValueAsString(frequency)))
+    // .andDo(print()).andExpect(status().isNotFound());
+    // }
 }

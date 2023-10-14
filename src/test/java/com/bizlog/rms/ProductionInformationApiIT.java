@@ -63,6 +63,7 @@ public class ProductionInformationApiIT extends BaseApiTest {
         this.mockMvc.perform(get("/api/v1/{clientId}/product-information/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
+
     @Test
     void should_create_new_productInformation() throws Exception {
         int clientId = 1;
@@ -87,8 +88,9 @@ public class ProductionInformationApiIT extends BaseApiTest {
         productInformation.setIsVehicleNeeded(true);
         productInformation.setIsWareHousingNeeded(true);
         this.mockMvc
-                .perform(post("/api/v1/{clientId}/product-information", clientId).contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(productInformation)))
+                .perform(
+                        post("/api/v1/{clientId}/product-information", clientId).contentType(MediaType.APPLICATION_JSON)
+                                .content(new ObjectMapper().writeValueAsString(productInformation)))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 
@@ -116,8 +118,9 @@ public class ProductionInformationApiIT extends BaseApiTest {
         productInformation.setIsVehicleNeeded(true);
         productInformation.setIsWareHousingNeeded(true);
         this.mockMvc
-                .perform(post("/api/v1/{clientId}/product-information", clientId).contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(productInformation)))
+                .perform(
+                        post("/api/v1/{clientId}/product-information", clientId).contentType(MediaType.APPLICATION_JSON)
+                                .content(new ObjectMapper().writeValueAsString(productInformation)))
                 .andDo(print()).andExpect(status().isNotFound());
     }
 }
