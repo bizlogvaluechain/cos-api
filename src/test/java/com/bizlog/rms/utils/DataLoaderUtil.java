@@ -1,4 +1,4 @@
-package com.bizlog.rms;
+package com.bizlog.rms.utils;
 
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.Specifications.SOPActivity;
