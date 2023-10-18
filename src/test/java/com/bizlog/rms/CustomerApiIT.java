@@ -1,6 +1,8 @@
 package com.bizlog.rms;
 
+import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.repository.ClientRepository;
+import com.bizlog.rms.utils.DataLoaderUtil;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,11 +14,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@AutoConfigureMockMvc
-@SpringBootTest
-@ActiveProfiles("test")
-class CustomerApiApplicationTests {
+class CustomerApiIT extends BaseApiTest{
 
+    public static final String CLIENT_URL = "/api/v1/client";
     @Autowired
     private ClientRepository clientRepository;
 
@@ -35,11 +35,18 @@ class CustomerApiApplicationTests {
 
     @Test
     void should_retrieve_with_valid_user_id() throws Exception {
-        this.mockMvc.perform(get("/api/v1/client/{id}", 1)).andDo(print()).andExpect(status().isOk());
+        Client client = clientRepository.findById(1L).orElseThrow();
+        String expected = toJson(client).orElse("");
+        this.mockMvc.perform(get(CLIENT_URL+"/{id}", 1))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(expected));
     }
 
     @Test
     void should_not_retrieve_with_invalid_user_id() throws Exception {
-        this.mockMvc.perform(get("/api/v1/client/{id}", 11)).andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc.perform(get(CLIENT_URL+"/{id}", 11))
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
 }

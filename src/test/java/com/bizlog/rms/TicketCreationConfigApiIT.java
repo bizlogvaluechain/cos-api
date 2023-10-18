@@ -1,14 +1,11 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.entities.Client;
-import com.bizlog.rms.entities.productInformation.ProductInformation;
-import com.bizlog.rms.entities.productInformation.ProductSize;
 import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationBasedOn;
 import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationConfig;
 import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationThrough;
-import com.bizlog.rms.repository.ClientRepository;
-import com.bizlog.rms.repository.TATActivityRepository;
 import com.bizlog.rms.repository.TicketCreationConfigRepository;
+import com.bizlog.rms.utils.DataLoaderUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +24,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc
-@SpringBootTest
-@ActiveProfiles("test")
 public class TicketCreationConfigApiIT extends BaseApiTest {
 
     @Autowired
