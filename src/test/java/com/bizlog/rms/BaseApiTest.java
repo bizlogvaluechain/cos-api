@@ -1,8 +1,12 @@
 package com.bizlog.rms;
 
+import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.ClientRepository;
+import com.bizlog.rms.utils.DataLoaderUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +18,7 @@ import java.util.Optional;
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
+@Data
 public class BaseApiTest {
 
     @Autowired
@@ -21,6 +26,16 @@ public class BaseApiTest {
 
     @Autowired
     public MockMvc mockMvc;
+
+    @Autowired
+    GenericMapper mapper;
+
+    private Client client = null;
+
+    void beforeEach(){
+        client = DataLoaderUtil.getClient();
+        client = clientRepository.save(client);
+    }
 
     public static Optional<String> toJson(Object obj) {
         try {

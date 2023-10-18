@@ -1,5 +1,6 @@
 package com.bizlog.rms;
 
+import com.bizlog.rms.dto.escalationMatrix.EscalationMatrixDTO;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.escalationMatrix.EscalationMatrix;
 import com.bizlog.rms.repository.EscalationMatrixRepository;
@@ -11,10 +12,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 public class EscalationMatrixApiIT extends BaseApiTest {
 
@@ -23,9 +27,8 @@ public class EscalationMatrixApiIT extends BaseApiTest {
 
     @BeforeEach
     void beforeEach() {
-        Client client = DataLoaderUtil.getClient();
-        client = clientRepository.save(client);
-        DataLoaderUtil.getEscalationMatrix(client).forEach(escalationMatrixRepository::save);
+        super.beforeEach();
+        DataLoaderUtil.getEscalationMatrix(getClient()).forEach(escalationMatrixRepository::save);
     }
 
     @AfterEach
@@ -76,7 +79,62 @@ public class EscalationMatrixApiIT extends BaseApiTest {
         escalationMatrix.setEmergencyContactInfo("IDP");
         this.mockMvc
                 .perform(post("/api/v1/{clientId}/escalation-matrix", clientId).contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(escalationMatrix)))
+                        .content(toJson(escalationMatrix).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
     }
+
+    @Test
+    void should_update_existing_escalationMatrix() throws Exception {
+        int clientId = 1;
+        long id = 2;
+
+        EscalationMatrix initialEscalationMatrix = new EscalationMatrix();
+        initialEscalationMatrix.setAccountContactInfo("InitialAccountInfo");
+        initialEscalationMatrix.setItContactInfo("InitialItInfo");
+        initialEscalationMatrix.setBusinessContactInfo("InitialBusinessInfo");
+        initialEscalationMatrix.setOpsContactInfo("InitialOpsInfo");
+        initialEscalationMatrix.setEmergencyContactInfo("InitialEmergencyInfo");
+        initialEscalationMatrix.setClient(getClient());
+        initialEscalationMatrix = escalationMatrixRepository.save(initialEscalationMatrix);
+
+        EscalationMatrixDTO updatedEscalationMatrix = getMapper().toDTO(initialEscalationMatrix);
+        updatedEscalationMatrix.setAccountContactInfo("UpdatedAccountInfo");
+        updatedEscalationMatrix.setItContactInfo("UpdatedItInfo");
+        updatedEscalationMatrix.setBusinessContactInfo("UpdatedBusinessInfo");
+        updatedEscalationMatrix.setOpsContactInfo("UpdatedOpsInfo");
+        updatedEscalationMatrix.setEmergencyContactInfo("UpdatedEmergencyInfo");
+        this.mockMvc
+                .perform(put("/api/v1/{clientId}/escalation-matrix/{id}", clientId, id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(updatedEscalationMatrix).orElse("")))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(toJson(updatedEscalationMatrix).orElse("")));
+
+    }
+
+    @Test
+    void should_not_update_nonexistent_escalationMatrix() throws Exception {
+
+        int clientId = 11;
+        int nonexistentEscalationMatrixId = 999; // An ID that doesn't exist
+
+        // Prepare the updated EscalationMatrix
+        EscalationMatrix updatedEscalationMatrix = new EscalationMatrix();
+        updatedEscalationMatrix.setAccountContactInfo("UpdatedAccountInfo");
+        updatedEscalationMatrix.setItContactInfo("UpdatedItInfo");
+        updatedEscalationMatrix.setBusinessContactInfo("UpdatedBusinessInfo");
+        updatedEscalationMatrix.setOpsContactInfo("UpdatedOpsInfo");
+        updatedEscalationMatrix.setEmergencyContactInfo("UpdatedEmergencyInfo");
+
+        // Perform the PUT request to update the EscalationMatrix
+        this.mockMvc
+                .perform(put("/api/v1/{clientId}/escalation-matrix/{id}", clientId, nonexistentEscalationMatrixId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(updatedEscalationMatrix)))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+
 }

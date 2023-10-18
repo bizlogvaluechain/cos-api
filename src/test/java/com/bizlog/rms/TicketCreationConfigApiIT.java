@@ -58,34 +58,34 @@ public class TicketCreationConfigApiIT extends BaseApiTest {
         this.mockMvc.perform(get("/api/v1/{clientId}/ticket-creation-config/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
-    // @Test
-    // void should_create_new_productInformation() throws Exception {
-    // int clientId = 1;
-    // TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
-    // ticketCreationThrough.setApi("API");
-    // ticketCreationThrough.setExcel("Excel");
-    // ticketCreationThrough.setForm("form");
-    //
-    // TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
-    // ticketCreationBasedOn.setAwbNumber("AWB");
-    // ticketCreationBasedOn.setInvoiceNumber("invoice");
-    // ticketCreationBasedOn.setComplaintNumber("complaint");
-    // ticketCreationBasedOn.setOrderNumber("order");
-    //
-    // TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
-    //
-    // List<TicketCreationThrough> ticketCreationThroughs = new ArrayList<>();
-    // ticketCreationThroughs.add(ticketCreationThrough);
-    // ticketCreationConfig.setTicketCreationThrough(ticketCreationThroughs);
-    // List<TicketCreationBasedOn> ticketCreationBasedOns = new ArrayList<>();
-    // ticketCreationBasedOns.add(ticketCreationBasedOn);
-    // ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
-    //
-    // this.mockMvc
-    // .perform(post("/api/v1/{clientId}/ticket-creation-config", clientId).contentType(MediaType.APPLICATION_JSON)
-    // .content(new ObjectMapper().writeValueAsString(ticketCreationThrough)))
-    // .andDo(print()).andExpect(status().is2xxSuccessful());
-    // }
+//     @Test
+//     void should_create_new_productInformation() throws Exception {
+//     int clientId = 1;
+//     TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
+//     ticketCreationThrough.setApi("API");
+//     ticketCreationThrough.setExcel("Excel");
+//     ticketCreationThrough.setForm("form");
+//
+//     TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
+//     ticketCreationBasedOn.setAwbNumber("AWB");
+//     ticketCreationBasedOn.setInvoiceNumber("invoice");
+//     ticketCreationBasedOn.setComplaintNumber("complaint");
+//     ticketCreationBasedOn.setOrderNumber("order");
+//
+//     TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
+//
+//     List<TicketCreationThrough> ticketCreationThroughs = new ArrayList<>();
+//     ticketCreationThroughs.add(ticketCreationThrough);
+//     ticketCreationConfig.setTicketCreationThrough(ticketCreationThroughs);
+//     List<TicketCreationBasedOn> ticketCreationBasedOns = new ArrayList<>();
+//     ticketCreationBasedOns.add(ticketCreationBasedOn);
+//     ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
+//
+//     this.mockMvc
+//     .perform(post("/api/v1/{clientId}/ticket-creation-config", clientId).contentType(MediaType.APPLICATION_JSON)
+//     .content(toJson(ticketCreationThrough).orElse("")))
+//     .andDo(print()).andExpect(status().is2xxSuccessful());
+//     }
 
     @Test
     void should_not_create_new_productInformation() throws Exception {
@@ -113,7 +113,7 @@ public class TicketCreationConfigApiIT extends BaseApiTest {
         this.mockMvc
                 .perform(post("/api/v1/{clientId}/ticket-creation-config", clientId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(ticketCreationThrough)))
+                        .content(toJson(ticketCreationThrough).orElse("")))
                 .andDo(print()).andExpect(status().isBadRequest());
     }
 }
