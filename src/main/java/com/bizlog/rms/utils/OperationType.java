@@ -1,5 +1,5 @@
 package com.bizlog.rms.utils;
 
 public enum OperationType {
-    CREATE, UPDATE, DELETE, GET;
+    CREATE, UPDATE, DELETE, GET
 }
