@@ -1,5 +1,6 @@
 package com.bizlog.rms;
 
+import com.bizlog.rms.dto.SOP_TAT.TATActivityDTO;
 import com.bizlog.rms.dto.SOP_TAT.subLists.TATBreachDueTo;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.Specifications.TATActivity;
@@ -18,9 +19,9 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class TATActivityApiIT extends BaseApiTest {
@@ -29,15 +30,14 @@ public class TATActivityApiIT extends BaseApiTest {
 
     @BeforeEach
     void beforeEach() {
-        Client client = DataLoaderUtil.getClient();
-        client = clientRepository.save(client);
-        DataLoaderUtil.getTATActivity(client).forEach(tatActivityRepository::save);
+        super.beforeEach();
+        DataLoaderUtil.getTATActivity(getClient()).forEach(tatActivityRepository::save);
     }
 
     @AfterEach
     void afterEach() {
-        clientRepository.deleteAll();
         tatActivityRepository.deleteAll();
+        clientRepository.deleteAll();
 
     }
 
@@ -45,7 +45,7 @@ public class TATActivityApiIT extends BaseApiTest {
     void should_retrieve_with_valid_user_id() throws Exception {
         int clientId = 1;
         int id = 1;
-        this.mockMvc.perform(get("/api/v1/{clientId}/sop/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/{clientId}/tatActivities/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -53,7 +53,7 @@ public class TATActivityApiIT extends BaseApiTest {
     void should_not_retrieve_with_invalid_user_id() throws Exception {
         int clientId = 11;
         int id = 11;
-        this.mockMvc.perform(get("/api/v1/{clientId}/sop/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/{clientId}/tatActivities/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -76,9 +76,77 @@ public class TATActivityApiIT extends BaseApiTest {
 
         tatActivity.setTatBreachDueTo(tatBreachDueToList);
 
-        this.mockMvc
-                .perform(post("/api/v1/{clientId}/tatActivities",clientId).contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(tatActivity).orElse("")))
-                .andDo(print()).andExpect(status().is2xxSuccessful());
+        this.mockMvc.perform(post("/api/v1/{clientId}/tatActivities", clientId).contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(tatActivity).orElse(""))).andDo(print()).andExpect(status().is2xxSuccessful());
+    }
+    @Test
+    void should_update_existing_tatActivity() throws Exception {
+        int clientId = 1;
+        int id =2;
+        TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
+        tatBreachDueTo.setBizlog("abcdef");
+        tatBreachDueTo.setCustomer("abcdef");
+        tatBreachDueTo.setThirdPartyLogistics("abcdef");
+
+        TATActivity initialTatActivity = new TATActivity();
+        initialTatActivity.setTatForFirstMile("abcdef");
+        initialTatActivity.setTatForLastMile("abcdef");
+        initialTatActivity.setTatForLinehaul("abcdef");
+        initialTatActivity.setClient(getClient());
+        initialTatActivity.setNumberOfReshedules("5");
+
+        List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
+        tatBreachDueToList.add(tatBreachDueTo);
+
+        initialTatActivity.setTatBreachDueTo(tatBreachDueToList);
+        initialTatActivity = tatActivityRepository.save(initialTatActivity);
+
+        TATActivityDTO updatedTatActivity  = getMapper().toDTO(initialTatActivity);
+        updatedTatActivity.setTatForFirstMile("pqrst");
+        updatedTatActivity.setTatForLastMile("pqrst");
+        updatedTatActivity.setTatForLinehaul("xyz");
+        updatedTatActivity.setNumberOfReshedules("3");
+        this.mockMvc.perform(put("/api/v1/{clientId}/tatActivities/{id}", clientId,id).contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(updatedTatActivity).orElse(""))).andDo(print()).andExpect(status().isOk()).andExpect(content().json(toJson(updatedTatActivity).orElse("")));
+    }
+
+    @Test
+    void should_not_update_existing_tatActivity() throws Exception {
+        int clientId = 12;
+        int id =21;
+        TATActivity updatedTatActivity  = new TATActivity();
+        updatedTatActivity.setTatForFirstMile("pqrst");
+        updatedTatActivity.setTatForLastMile("pqrst");
+        updatedTatActivity.setTatForLinehaul("xyz");
+        updatedTatActivity.setNumberOfReshedules("3");
+        this.mockMvc.perform(put("/api/v1/{clientId}/tatActivities/{id}", clientId,id).contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(updatedTatActivity).orElse(""))).andDo(print()).andExpect(status().isNotFound());
+    }
+
+    @Test
+    void should_delete_existing_tatActivity() throws Exception {
+
+        TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
+        tatBreachDueTo.setBizlog("abcdef");
+        tatBreachDueTo.setCustomer("abcdef");
+        tatBreachDueTo.setThirdPartyLogistics("abcdef");
+
+        TATActivity tatActivity = new TATActivity();
+        tatActivity.setTatForFirstMile("abcdef");
+        tatActivity.setTatForLastMile("abcdef");
+        tatActivity.setTatForLinehaul("abcdef");
+        tatActivity.setNumberOfReshedules("5");
+
+        List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
+        tatBreachDueToList.add(tatBreachDueTo);
+
+        tatActivity.setTatBreachDueTo(tatBreachDueToList);
+        Client client = getClient();
+        tatActivity.setClient(client);
+        tatActivity = tatActivityRepository.save(tatActivity);
+
+        this.mockMvc.perform(delete("/api/v1/{clientId}/tatActivities/{id}", client.getId(),tatActivity.getId()))
+                .andDo(print())
+                .andExpect(status().isNoContent());
     }
 }

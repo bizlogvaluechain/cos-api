@@ -1,5 +1,6 @@
 package com.bizlog.rms;
 
+import com.bizlog.rms.dto.locationService.LocationDTO;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.location.Charge;
 import com.bizlog.rms.entities.location.Location;
@@ -19,9 +20,9 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class LocationApiIT extends BaseApiTest {
@@ -30,9 +31,8 @@ public class LocationApiIT extends BaseApiTest {
 
     @BeforeEach
     void beforeEach() {
-        Client client = DataLoaderUtil.getClient();
-        client = clientRepository.save(client);
-        DataLoaderUtil.getLocations(client).forEach(locationRepository::save);
+        super.beforeEach();
+        DataLoaderUtil.getLocations(getClient()).forEach(locationRepository::save);
     }
 
     @AfterEach
@@ -114,5 +114,93 @@ public class LocationApiIT extends BaseApiTest {
                 .perform(post("/api/v1/{clientId}/notification", clientId).contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(location)))
                 .andDo(print()).andExpect(status().isNotFound());
+    }
+
+
+
+    @Test
+    void should_update_existing_location() throws Exception {
+        int clientId = 1;
+        long id = 1;
+        Charge charge = new Charge();
+        charge.setDeliverableArea(10L);
+        charge.setNonDeliverableArea(15L);
+        charge.setOutDeliverableArea(1L);
+
+        ServiceType serviceType = new ServiceType();
+        serviceType.setDeliverableArea("yes");
+        serviceType.setOutDeliverableArea("yes");
+        serviceType.setNonDeliverableArea("yes");
+
+        Location initialLocation = new Location();
+        List<Charge> charges = new ArrayList<>();
+        charges.add(charge);
+        initialLocation.setCharge(charges);
+        initialLocation.setBizlogLocationMaster("ppl");
+        List<ServiceType> serviceTypes = new ArrayList<>();
+        serviceTypes.add(serviceType);
+        initialLocation.setServiceType(serviceTypes);
+        initialLocation.setSelectStates("up");
+        initialLocation.setSelectCities("goa");
+        initialLocation.setClient(getClient());
+        initialLocation = locationRepository.save(initialLocation);
+
+        LocationDTO updatedLocation = getMapper().toDTO(initialLocation);
+        updatedLocation.setBizlogLocationMaster("up");
+        updatedLocation.setSelectStates("bihar");
+        updatedLocation.setSelectCities("patna");
+
+        this.mockMvc
+                .perform(put("/api/v1/{clientId}/location/{id}", clientId, id).contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(updatedLocation).orElse("")))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().json(toJson(updatedLocation).orElse("")));
+    }
+
+    @Test
+    void should_not_update_existing_location() throws Exception {
+        int clientId = 11;
+        long id = 199;
+
+        Location updatedLocation = new Location();
+        updatedLocation.setBizlogLocationMaster("up");
+        updatedLocation.setSelectStates("bihar");
+        updatedLocation.setSelectCities("patna");
+
+        this.mockMvc
+                .perform(put("/api/v1/{clientId}/location/{id}", clientId, id).contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(updatedLocation).orElse("")))
+                .andDo(print()).andExpect(status().isNotFound());
+    }
+
+    @Test
+    void should_delete_existing_location() throws Exception {
+        Charge charge = new Charge();
+        charge.setDeliverableArea(10L);
+        charge.setNonDeliverableArea(10L);
+        charge.setOutDeliverableArea(10L);
+
+        ServiceType serviceType = new ServiceType();
+        serviceType.setDeliverableArea("yes");
+        serviceType.setOutDeliverableArea("yes");
+        serviceType.setNonDeliverableArea("yes");
+
+        Location location = new Location();
+        List<Charge> charges = new ArrayList<>();
+        charges.add(charge);
+        location.setCharge(charges);
+        location.setBizlogLocationMaster("IDP");
+        List<ServiceType> serviceTypes = new ArrayList<>();
+        serviceTypes.add(serviceType);
+        location.setServiceType(serviceTypes);
+        location.setSelectStates("AP");
+        Client client = getClient();
+        location.setClient(client);
+        location.setSelectCities("viz");
+        location =locationRepository.save(location);
+        this.mockMvc
+                .perform(delete("/api/v1/{clientId}/location/{id}", client.getId(),location.getId()))
+                    .andDo(print())
+                .andExpect(status().isNoContent());
     }
 }

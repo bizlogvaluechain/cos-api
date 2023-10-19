@@ -16,9 +16,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 
 public class EscalationMatrixApiIT extends BaseApiTest {
 
@@ -77,10 +74,9 @@ public class EscalationMatrixApiIT extends BaseApiTest {
         escalationMatrix.setBusinessContactInfo("IDP");
         escalationMatrix.setOpsContactInfo("IDP");
         escalationMatrix.setEmergencyContactInfo("IDP");
-        this.mockMvc
-                .perform(post("/api/v1/{clientId}/escalation-matrix", clientId).contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(escalationMatrix).orElse("")))
-                .andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc.perform(post("/api/v1/{clientId}/escalation-matrix", clientId)
+                .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrix).orElse(""))).andDo(print())
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -105,10 +101,8 @@ public class EscalationMatrixApiIT extends BaseApiTest {
         updatedEscalationMatrix.setEmergencyContactInfo("UpdatedEmergencyInfo");
         this.mockMvc
                 .perform(put("/api/v1/{clientId}/escalation-matrix/{id}", clientId, id)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(updatedEscalationMatrix).orElse("")))
-                .andDo(print())
-                .andExpect(status().isOk())
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedEscalationMatrix).orElse("")))
+                .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updatedEscalationMatrix).orElse("")));
 
     }
@@ -117,9 +111,8 @@ public class EscalationMatrixApiIT extends BaseApiTest {
     void should_not_update_nonexistent_escalationMatrix() throws Exception {
 
         int clientId = 11;
-        int nonexistentEscalationMatrixId = 999; // An ID that doesn't exist
+        int nonexistentEscalationMatrixId = 999;
 
-        // Prepare the updated EscalationMatrix
         EscalationMatrix updatedEscalationMatrix = new EscalationMatrix();
         updatedEscalationMatrix.setAccountContactInfo("UpdatedAccountInfo");
         updatedEscalationMatrix.setItContactInfo("UpdatedItInfo");
@@ -131,10 +124,38 @@ public class EscalationMatrixApiIT extends BaseApiTest {
         this.mockMvc
                 .perform(put("/api/v1/{clientId}/escalation-matrix/{id}", clientId, nonexistentEscalationMatrixId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(updatedEscalationMatrix)))
-                .andDo(print())
-                .andExpect(status().isNotFound());
+                        .content(toJson(updatedEscalationMatrix).orElse("")))
+                .andDo(print()).andExpect(status().isNotFound());
     }
 
+    @Test
+    void should_delete_existing_escalationMatrix() throws Exception {
+        EscalationMatrix escalationMatrix = new EscalationMatrix();
+        escalationMatrix.setAccountContactInfo("ToDeleteAccountInfo");
+        escalationMatrix.setItContactInfo("ToDeleteItInfo");
+        escalationMatrix.setBusinessContactInfo("ToDeleteBusinessInfo");
+        escalationMatrix.setOpsContactInfo("ToDeleteOpsInfo");
+        escalationMatrix.setEmergencyContactInfo("ToDeleteEmergencyInfo");
+        Client client = getClient();
+        escalationMatrix.setClient(client);
+        escalationMatrix = escalationMatrixRepository.save(escalationMatrix);
+
+
+        this.mockMvc.perform(delete("/api/v1/{clientId}/escalation-matrix/{id}",
+                        client.getId(), escalationMatrix.getId())).andDo(print())
+                .andExpect(status().isNoContent());
+
+    }
+
+    @Test
+    void should_not_delete_nonexistent_escalationMatrix() throws Exception {
+        int clientId = 11;
+        int nonexistentEscalationMatrixId = 999; // An ID that doesn't exist
+
+        // Perform the DELETE request to delete a non-existent EscalationMatrix
+        this.mockMvc
+                .perform(delete("/api/v1/{clientId}/escalation-matrix/{id}", clientId, nonexistentEscalationMatrixId))
+                .andDo(print()).andExpect(status().isNotFound());
+    }
 
 }

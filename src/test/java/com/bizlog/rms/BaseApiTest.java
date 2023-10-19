@@ -32,7 +32,7 @@ public class BaseApiTest {
 
     private Client client = null;
 
-    void beforeEach(){
+    void beforeEach() {
         client = DataLoaderUtil.getClient();
         client = clientRepository.save(client);
     }
@@ -44,7 +44,7 @@ public class BaseApiTest {
             objectMapper.registerModule(simpleModule);
             String jsonInString = objectMapper.writeValueAsString(obj);
             return Optional.of(jsonInString);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
