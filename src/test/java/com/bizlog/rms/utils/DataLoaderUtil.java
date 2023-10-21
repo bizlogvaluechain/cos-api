@@ -1,5 +1,8 @@
 package com.bizlog.rms.utils;
 
+import com.bizlog.rms.dto.SOP_TAT.subLists.MajorActivites;
+import com.bizlog.rms.dto.SOP_TAT.subLists.MinorActivites;
+import com.bizlog.rms.dto.SOP_TAT.subLists.TATBreachDueTo;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.Specifications.SOPActivity;
 import com.bizlog.rms.entities.Specifications.TATActivity;
@@ -18,6 +21,7 @@ import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationThrough;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DataLoaderUtil {
@@ -33,6 +37,13 @@ public class DataLoaderUtil {
         Client client = new Client();
         client.setId(1L);
         client.setName("IDP");
+        client.setName("JOHN");
+        client.setDescription("DEVELOPEMENT");
+        client.setEmail("abc@gmail.com");
+        client.setPhoneNumber("7698524598");
+        client.setDomainName("abcdefghi");
+        client.setActive(true);
+        client.setType("abcde");
         return client;
     }
 
@@ -133,16 +144,49 @@ public class DataLoaderUtil {
     }
 
     public static List<SOPActivity> getSOPActivity(Client client) {
+        MajorActivites majorActivites = new MajorActivites();
+        majorActivites.setSPS(Collections.singletonList("IDP"));
+        majorActivites.setMultiProductShipment(Collections.singletonList("IDP"));
+        majorActivites.setLessThanTruckLoad(Collections.singletonList("IDP"));
+        majorActivites.setLinehaul(Collections.singletonList("IDP"));
+        majorActivites.setFullTruckLoad(Collections.singletonList("IDP"));
+
+        MinorActivites minorActivites = new MinorActivites();
+        minorActivites.setOTPValidation(Collections.singletonList("Yes"));
+        minorActivites.setQC(Collections.singletonList("Yes"));
+        minorActivites.setGrading(Collections.singletonList("yes"));
+        minorActivites.setSegregation(Collections.singletonList("Yes"));
+        minorActivites.setEvaluation(Collections.singletonList("yes"));
+        minorActivites.setSignatureCapture(Collections.singletonList("yes"));
+        minorActivites.setImageCapture(Collections.singletonList("yes"));
+
         SOPActivity sopActivity = new SOPActivity();
         sopActivity.setId(1L);
         sopActivity.setClient(client);
+        List<MajorActivites> majorActivitesList = new ArrayList<>();
+        sopActivity.setMajorActivites(majorActivitesList);
+        List<MinorActivites> minorActivitesList = new ArrayList<>();
+        sopActivity.setMinorActivites(minorActivitesList);
         return List.of(sopActivity);
     }
 
     public static List<TATActivity> getTATActivity(Client client) {
+
+        TATBreachDueTo tatBreachDueTo= new TATBreachDueTo();
+        tatBreachDueTo.setCustomer("yes");
+        tatBreachDueTo.setBizlog("no");
+        tatBreachDueTo.setThirdPartyLogistics("yes");
+
         TATActivity tatActivity = new TATActivity();
         tatActivity.setId(1L);
         tatActivity.setClient(client);
+        tatActivity.setTatForFirstMile("55");
+        tatActivity.setTatForLastMile("165");
+        List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
+        tatActivity.setTatBreachDueTo(tatBreachDueToList);
+        tatActivity.setTatForLinehaul("abc");
+        tatActivity.setNumberOfReshedules("5");
+
         return List.of(tatActivity);
     }
 
@@ -162,10 +206,10 @@ public class DataLoaderUtil {
         ticketCreationConfig.setId(1L);
         ticketCreationConfig.setClient(client);
         List<TicketCreationThrough> ticketCreationThroughs = new ArrayList<>();
-        ticketCreationThroughs.add(ticketCreationThrough);
+      //  ticketCreationThroughs.add(ticketCreationThrough);
         ticketCreationConfig.setTicketCreationThrough(ticketCreationThroughs);
         List<TicketCreationBasedOn> ticketCreationBasedOns = new ArrayList<>();
-        ticketCreationBasedOns.add(ticketCreationBasedOn);
+      //  ticketCreationBasedOns.add(ticketCreationBasedOn);
         ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
 
         return List.of(ticketCreationConfig);
