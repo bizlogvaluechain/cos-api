@@ -172,7 +172,7 @@ public class DataLoaderUtil {
 
     public static List<TATActivity> getTATActivity(Client client) {
 
-        TATBreachDueTo tatBreachDueTo= new TATBreachDueTo();
+        TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
         tatBreachDueTo.setCustomer("yes");
         tatBreachDueTo.setBizlog("no");
         tatBreachDueTo.setThirdPartyLogistics("yes");
@@ -206,10 +206,10 @@ public class DataLoaderUtil {
         ticketCreationConfig.setId(1L);
         ticketCreationConfig.setClient(client);
         List<TicketCreationThrough> ticketCreationThroughs = new ArrayList<>();
-      //  ticketCreationThroughs.add(ticketCreationThrough);
+        // ticketCreationThroughs.add(ticketCreationThrough);
         ticketCreationConfig.setTicketCreationThrough(ticketCreationThroughs);
         List<TicketCreationBasedOn> ticketCreationBasedOns = new ArrayList<>();
-      //  ticketCreationBasedOns.add(ticketCreationBasedOn);
+        // ticketCreationBasedOns.add(ticketCreationBasedOn);
         ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
 
         return List.of(ticketCreationConfig);

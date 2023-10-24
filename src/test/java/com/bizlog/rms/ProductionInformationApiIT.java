@@ -179,7 +179,6 @@ public class ProductionInformationApiIT extends BaseApiTest {
 
     }
 
-
     @Test
     void should_delete_existing_productInformation() throws Exception {
 
@@ -205,13 +204,10 @@ public class ProductionInformationApiIT extends BaseApiTest {
         productInformation.setIsWareHousingNeeded(true);
         Client client = getClient();
         productInformation.setClient(client);
-        productInformation= productInformatiomRepository.save(productInformation);
-        this.mockMvc
-                .perform(
-                        delete("/api/v1/{clientId}/product-information/{id}", client.getId(),productInformation.getId()))
-                .andDo(print())
-                .andExpect(status().isNoContent());
+        productInformation = productInformatiomRepository.save(productInformation);
+        this.mockMvc.perform(
+                delete("/api/v1/{clientId}/product-information/{id}", client.getId(), productInformation.getId()))
+                .andDo(print()).andExpect(status().isNoContent());
     }
-
 
 }

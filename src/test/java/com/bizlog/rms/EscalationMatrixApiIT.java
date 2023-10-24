@@ -123,8 +123,7 @@ public class EscalationMatrixApiIT extends BaseApiTest {
         // Perform the PUT request to update the EscalationMatrix
         this.mockMvc
                 .perform(put("/api/v1/{clientId}/escalation-matrix/{id}", clientId, nonexistentEscalationMatrixId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(updatedEscalationMatrix).orElse("")))
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedEscalationMatrix).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
     }
 
@@ -140,10 +139,9 @@ public class EscalationMatrixApiIT extends BaseApiTest {
         escalationMatrix.setClient(client);
         escalationMatrix = escalationMatrixRepository.save(escalationMatrix);
 
-
-        this.mockMvc.perform(delete("/api/v1/{clientId}/escalation-matrix/{id}",
-                        client.getId(), escalationMatrix.getId())).andDo(print())
-                .andExpect(status().isNoContent());
+        this.mockMvc
+                .perform(delete("/api/v1/{clientId}/escalation-matrix/{id}", client.getId(), escalationMatrix.getId()))
+                .andDo(print()).andExpect(status().isNoContent());
 
     }
 

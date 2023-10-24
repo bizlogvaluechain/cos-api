@@ -79,10 +79,11 @@ public class TATActivityApiIT extends BaseApiTest {
         this.mockMvc.perform(post("/api/v1/{clientId}/tatActivities", clientId).contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(tatActivity).orElse(""))).andDo(print()).andExpect(status().is2xxSuccessful());
     }
+
     @Test
     void should_update_existing_tatActivity() throws Exception {
         int clientId = 1;
-        int id =2;
+        int id = 2;
         TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
         tatBreachDueTo.setBizlog("abcdef");
         tatBreachDueTo.setCustomer("abcdef");
@@ -101,26 +102,31 @@ public class TATActivityApiIT extends BaseApiTest {
         initialTatActivity.setTatBreachDueTo(tatBreachDueToList);
         initialTatActivity = tatActivityRepository.save(initialTatActivity);
 
-        TATActivityDTO updatedTatActivity  = getMapper().toDTO(initialTatActivity);
+        TATActivityDTO updatedTatActivity = getMapper().toDTO(initialTatActivity);
         updatedTatActivity.setTatForFirstMile("pqrst");
         updatedTatActivity.setTatForLastMile("pqrst");
         updatedTatActivity.setTatForLinehaul("xyz");
         updatedTatActivity.setNumberOfReshedules("3");
-        this.mockMvc.perform(put("/api/v1/{clientId}/tatActivities/{id}", clientId,id).contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(updatedTatActivity).orElse(""))).andDo(print()).andExpect(status().isOk()).andExpect(content().json(toJson(updatedTatActivity).orElse("")));
+        this.mockMvc
+                .perform(put("/api/v1/{clientId}/tatActivities/{id}", clientId, id)
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().json(toJson(updatedTatActivity).orElse("")));
     }
 
     @Test
     void should_not_update_existing_tatActivity() throws Exception {
         int clientId = 12;
-        int id =21;
-        TATActivity updatedTatActivity  = new TATActivity();
+        int id = 21;
+        TATActivity updatedTatActivity = new TATActivity();
         updatedTatActivity.setTatForFirstMile("pqrst");
         updatedTatActivity.setTatForLastMile("pqrst");
         updatedTatActivity.setTatForLinehaul("xyz");
         updatedTatActivity.setNumberOfReshedules("3");
-        this.mockMvc.perform(put("/api/v1/{clientId}/tatActivities/{id}", clientId,id).contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(updatedTatActivity).orElse(""))).andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc
+                .perform(put("/api/v1/{clientId}/tatActivities/{id}", clientId, id)
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
+                .andDo(print()).andExpect(status().isNotFound());
     }
 
     @Test
@@ -145,8 +151,7 @@ public class TATActivityApiIT extends BaseApiTest {
         tatActivity.setClient(client);
         tatActivity = tatActivityRepository.save(tatActivity);
 
-        this.mockMvc.perform(delete("/api/v1/{clientId}/tatActivities/{id}", client.getId(),tatActivity.getId()))
-                .andDo(print())
-                .andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/api/v1/{clientId}/tatActivities/{id}", client.getId(), tatActivity.getId()))
+                .andDo(print()).andExpect(status().isNoContent());
     }
 }

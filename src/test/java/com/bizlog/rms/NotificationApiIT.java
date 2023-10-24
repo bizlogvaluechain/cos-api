@@ -125,6 +125,7 @@ public class NotificationApiIT extends BaseApiTest {
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateNotification).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
     }
+
     @Test
     void should_delete_existing_notification() throws Exception {
         Notification notification = new Notification();
@@ -136,8 +137,7 @@ public class NotificationApiIT extends BaseApiTest {
         Client client = getClient();
         notification.setClient(client);
         notification = notificationRepository.save(notification);
-        this.mockMvc.perform(delete("/api/v1/{clientId}/notification/{id}", client.getId(),notification.getId()))
-                .andDo(print())
-                .andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/api/v1/{clientId}/notification/{id}", client.getId(), notification.getId()))
+                .andDo(print()).andExpect(status().isNoContent());
     }
 }

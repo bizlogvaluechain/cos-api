@@ -17,7 +17,6 @@ class ClientApiIT extends BaseApiTest {
     @Autowired
     private ClientRepository clientRepository;
 
-
     @BeforeEach
     void beforeEach() {
         super.beforeEach();

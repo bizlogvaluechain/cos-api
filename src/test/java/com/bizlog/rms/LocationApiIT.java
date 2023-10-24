@@ -116,8 +116,6 @@ public class LocationApiIT extends BaseApiTest {
                 .andDo(print()).andExpect(status().isNotFound());
     }
 
-
-
     @Test
     void should_update_existing_location() throws Exception {
         int clientId = 1;
@@ -167,10 +165,9 @@ public class LocationApiIT extends BaseApiTest {
         updatedLocation.setSelectStates("bihar");
         updatedLocation.setSelectCities("patna");
 
-        this.mockMvc
-                .perform(put("/api/v1/{clientId}/location/{id}", clientId, id).contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(updatedLocation).orElse("")))
-                .andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc.perform(put("/api/v1/{clientId}/location/{id}", clientId, id)
+                .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedLocation).orElse(""))).andDo(print())
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -197,10 +194,8 @@ public class LocationApiIT extends BaseApiTest {
         Client client = getClient();
         location.setClient(client);
         location.setSelectCities("viz");
-        location =locationRepository.save(location);
-        this.mockMvc
-                .perform(delete("/api/v1/{clientId}/location/{id}", client.getId(),location.getId()))
-                    .andDo(print())
-                .andExpect(status().isNoContent());
+        location = locationRepository.save(location);
+        this.mockMvc.perform(delete("/api/v1/{clientId}/location/{id}", client.getId(), location.getId()))
+                .andDo(print()).andExpect(status().isNoContent());
     }
 }
