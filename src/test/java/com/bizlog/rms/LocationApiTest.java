@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class LocationApiIT extends BaseApiTest {
+public class LocationApiTest extends BaseApiTest {
     @Autowired
     private LocationRepository locationRepository;
 

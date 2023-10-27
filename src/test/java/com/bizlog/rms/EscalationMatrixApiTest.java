@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class EscalationMatrixApiIT extends BaseApiTest {
+public class EscalationMatrixApiTest extends BaseApiTest {
 
     @Autowired
     private EscalationMatrixRepository escalationMatrixRepository;

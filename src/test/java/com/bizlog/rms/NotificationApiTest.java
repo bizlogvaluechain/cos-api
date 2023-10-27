@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class NotificationApiIT extends BaseApiTest {
+public class NotificationApiTest extends BaseApiTest {
     @Autowired
     private NotificationRepository notificationRepository;
 

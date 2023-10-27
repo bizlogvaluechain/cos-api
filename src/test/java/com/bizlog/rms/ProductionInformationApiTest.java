@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ProductionInformationApiIT extends BaseApiTest {
+public class ProductionInformationApiTest extends BaseApiTest {
     @Autowired
     private ProductInformatiomRepository productInformatiomRepository;
 

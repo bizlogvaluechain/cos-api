@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class TicketCreationConfigApiIT extends BaseApiTest {
+public class TicketCreationConfigApiTest extends BaseApiTest {
 
     @Autowired
     private TicketCreationConfigRepository ticketCreationConfigRepository;

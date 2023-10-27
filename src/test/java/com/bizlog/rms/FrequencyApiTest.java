@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class FrequencyApiIT extends BaseApiTest {
+public class FrequencyApiTest extends BaseApiTest {
 
     @Autowired
     private FrequencyRepository frequencyRepository;
