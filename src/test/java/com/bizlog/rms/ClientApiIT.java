@@ -28,12 +28,12 @@ class ClientApiIT extends BaseApiTest {
         clientRepository.deleteAll();
     }
 
-     @Test
-     void should_retrieve_with_valid_user_id() throws Exception {
-     Client client = clientRepository.findById(1L).orElseThrow();
-//     String expected = toJson(client).orElse("");
-     this.mockMvc.perform(get(CLIENT_URL + "/{id}", 1)).andDo(print()).andExpect(status().isOk());
-     }
+    @Test
+    void should_retrieve_with_valid_user_id() throws Exception {
+        Client client = clientRepository.findAll().get(0);
+        // String expected = toJson(client).orElse("");
+        this.mockMvc.perform(get(CLIENT_URL + "/{id}", client.getId())).andDo(print()).andExpect(status().isOk());
+    }
 
     @Test
     void should_not_retrieve_with_invalid_user_id() throws Exception {

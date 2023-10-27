@@ -42,8 +42,8 @@ public class SOPActivityApiIT extends BaseApiTest {
 
     @Test
     void should_retrieve_with_valid_user_id() throws Exception {
-        int clientId = 1;
-        int id = 1;
+        Long clientId = sopActivityRepository.findAll().get(0).getclientId();
+        Long id = sopActivityRepository.findAll().get(0).getId();
         this.mockMvc.perform(get("/api/v1/{clientId}/sop/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }

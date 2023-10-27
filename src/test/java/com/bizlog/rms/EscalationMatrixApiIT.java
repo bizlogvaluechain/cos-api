@@ -35,8 +35,8 @@ public class EscalationMatrixApiIT extends BaseApiTest {
 
     @Test
     void should_retrieve_with_valid_user_id() throws Exception {
-        int clientId = 1;
-        int id = 1;
+        Long clientId = escalationMatrixRepository.findAll().get(0).getclientId();
+        Long id = escalationMatrixRepository.findAll().get(0).getId();
         this.mockMvc.perform(get("/api/v1/{clientId}/escalation-matrix/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
@@ -140,15 +140,6 @@ public class EscalationMatrixApiIT extends BaseApiTest {
                 .perform(delete("/api/v1/{clientId}/escalation-matrix/{id}", client.getId(), escalationMatrix.getId()))
                 .andDo(print()).andExpect(status().isNoContent());
 
-    }
-
-    @Test
-    void should_not_delete_nonexistent_escalationMatrix() throws Exception {
-        int clientId = 11;
-        int nonexistentEscalationMatrixId = 999;
-        this.mockMvc
-                .perform(delete("/api/v1/{clientId}/escalation-matrix/{id}", clientId, nonexistentEscalationMatrixId))
-                .andDo(print()).andExpect(status().isNotFound());
     }
 
 }

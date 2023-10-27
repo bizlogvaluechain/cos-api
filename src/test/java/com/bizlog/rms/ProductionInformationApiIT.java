@@ -41,8 +41,8 @@ public class ProductionInformationApiIT extends BaseApiTest {
 
     @Test
     void should_retrieve_with_valid_user_id() throws Exception {
-        int clientId = 1;
-        int id = 1;
+        Long clientId = productInformatiomRepository.findAll().get(0).getclientId();
+        Long id = productInformatiomRepository.findAll().get(0).getId();
         this.mockMvc.perform(get("/api/v1/{clientId}/product-information/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }

@@ -31,8 +31,8 @@ public class FrequencyApiIT extends BaseApiTest {
 
     @Test
     void should_retrieve_with_valid_user_id() throws Exception {
-        int clientId = 1;
-        int id = 1;
+        Long clientId = frequencyRepository.findAll().get(0).getclientId();
+        Long id = frequencyRepository.findAll().get(0).getId();
         this.mockMvc.perform(get("/api/v1/{clientId}/frequency/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
