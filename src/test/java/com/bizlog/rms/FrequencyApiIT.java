@@ -1,7 +1,5 @@
 package com.bizlog.rms;
 
-import com.bizlog.rms.entities.Client;
-
 import com.bizlog.rms.repository.FrequencyRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -9,15 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 public class FrequencyApiIT extends BaseApiTest {
 
     @Autowired
     private FrequencyRepository frequencyRepository;
-
 
     @BeforeEach
     void beforeEach() {

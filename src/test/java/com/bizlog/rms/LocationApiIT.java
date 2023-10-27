@@ -12,10 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +57,7 @@ public class LocationApiIT extends BaseApiTest {
 
     @Test
     void should_create_new_location() throws Exception {
-        int clientId = 1;
+        Client client = getClient();
         Charge charge = new Charge();
         charge.setDeliverableArea(10L);
         charge.setNonDeliverableArea(10L);
@@ -82,7 +79,7 @@ public class LocationApiIT extends BaseApiTest {
         location.setSelectStates("AP");
         location.setSelectCities("viz");
         this.mockMvc
-                .perform(post("/api/v1/{clientId}/location", clientId).contentType(MediaType.APPLICATION_JSON)
+                .perform(post("/api/v1/{clientId}/location", client.getId()).contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(location)))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
@@ -116,12 +113,8 @@ public class LocationApiIT extends BaseApiTest {
                 .andDo(print()).andExpect(status().isNotFound());
     }
 
-
-
     @Test
     void should_update_existing_location() throws Exception {
-        int clientId = 1;
-        long id = 1;
         Charge charge = new Charge();
         charge.setDeliverableArea(10L);
         charge.setNonDeliverableArea(15L);
@@ -142,7 +135,8 @@ public class LocationApiIT extends BaseApiTest {
         initialLocation.setServiceType(serviceTypes);
         initialLocation.setSelectStates("up");
         initialLocation.setSelectCities("goa");
-        initialLocation.setClient(getClient());
+        Client client = getClient();
+        initialLocation.setClient(client);
         initialLocation = locationRepository.save(initialLocation);
 
         LocationDTO updatedLocation = getMapper().toDTO(initialLocation);
@@ -151,8 +145,8 @@ public class LocationApiIT extends BaseApiTest {
         updatedLocation.setSelectCities("patna");
 
         this.mockMvc
-                .perform(put("/api/v1/{clientId}/location/{id}", clientId, id).contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(updatedLocation).orElse("")))
+                .perform(put("/api/v1/{clientId}/location/{id}", client.getId(), initialLocation.getId())
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedLocation).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updatedLocation).orElse("")));
     }
@@ -167,10 +161,9 @@ public class LocationApiIT extends BaseApiTest {
         updatedLocation.setSelectStates("bihar");
         updatedLocation.setSelectCities("patna");
 
-        this.mockMvc
-                .perform(put("/api/v1/{clientId}/location/{id}", clientId, id).contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(updatedLocation).orElse("")))
-                .andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc.perform(put("/api/v1/{clientId}/location/{id}", clientId, id)
+                .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedLocation).orElse(""))).andDo(print())
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -197,10 +190,16 @@ public class LocationApiIT extends BaseApiTest {
         Client client = getClient();
         location.setClient(client);
         location.setSelectCities("viz");
-        location =locationRepository.save(location);
-        this.mockMvc
-                .perform(delete("/api/v1/{clientId}/location/{id}", client.getId(),location.getId()))
-                    .andDo(print())
-                .andExpect(status().isNoContent());
+        location = locationRepository.save(location);
+        this.mockMvc.perform(delete("/api/v1/{clientId}/location/{id}", client.getId(), location.getId()))
+                .andDo(print()).andExpect(status().isNoContent());
+    }
+
+    @Test
+    void should_not_delete_nonexistent_location() throws Exception {
+        int clientId = 11;
+        int nonexistentId = 999;
+        this.mockMvc.perform(delete("/api/v1/{clientId}/location/{id}", clientId, nonexistentId)).andDo(print())
+                .andExpect(status().isNotFound());
     }
 }
