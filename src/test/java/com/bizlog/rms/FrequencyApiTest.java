@@ -1,23 +1,26 @@
 package com.bizlog.rms;
 
-import com.bizlog.rms.entities.Client;
-
 import com.bizlog.rms.repository.FrequencyRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-public class FrequencyApiIT extends BaseApiTest {
+
+@AutoConfigureMockMvc
+@SpringBootTest
+@ActiveProfiles("test")
+public class FrequencyApiTest extends BaseApiTest {
 
     @Autowired
     private FrequencyRepository frequencyRepository;
-
 
     @BeforeEach
     void beforeEach() {
@@ -34,8 +37,8 @@ public class FrequencyApiIT extends BaseApiTest {
 
     @Test
     void should_retrieve_with_valid_user_id() throws Exception {
-        int clientId = 1;
-        int id = 1;
+        Long clientId = frequencyRepository.findAll().get(0).getclientId();
+        Long id = frequencyRepository.findAll().get(0).getId();
         this.mockMvc.perform(get("/api/v1/{clientId}/frequency/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }

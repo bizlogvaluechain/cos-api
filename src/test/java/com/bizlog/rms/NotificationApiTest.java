@@ -16,13 +16,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.bizlog.rms.utils.DataLoaderUtil.getNotification;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class NotificationApiIT extends BaseApiTest {
+@AutoConfigureMockMvc
+@SpringBootTest
+@ActiveProfiles("test")
+public class NotificationApiTest extends BaseApiTest {
     @Autowired
     private NotificationRepository notificationRepository;
 
@@ -41,8 +43,8 @@ public class NotificationApiIT extends BaseApiTest {
 
     @Test
     void should_retrieve_with_valid_user_id() throws Exception {
-        int clientId = 1;
-        int id = 1;
+        Long clientId = notificationRepository.findAll().get(0).getclientId();
+        Long id = notificationRepository.findAll().get(0).getId();
         this.mockMvc.perform(get("/api/v1/{clientId}/notification/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
@@ -57,15 +59,16 @@ public class NotificationApiIT extends BaseApiTest {
 
     @Test
     void should_create_new_notification() throws Exception {
-        int clientId = 1;
+        Client client = getClient();
         Notification notification = new Notification();
         notification.setIsEmailRequired(true);
         notification.setIsSmsRequired(false);
         notification.setIsTicketScansRequired(false);
         notification.setIsReportAlertsRequired(true);
         notification.setIsAlertNeededForNegativeCases(false);
-        this.mockMvc.perform(post("/api/v1/{clientId}/notification", clientId).contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(notification).orElse(""))).andDo(print()).andExpect(status().is2xxSuccessful());
+        this.mockMvc.perform(post("/api/v1/{clientId}/notification", client.getId())
+                .contentType(MediaType.APPLICATION_JSON).content(toJson(notification).orElse(""))).andDo(print())
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
@@ -85,15 +88,15 @@ public class NotificationApiIT extends BaseApiTest {
 
     @Test
     void should_update_existing_notification() throws Exception {
-        int clientId = 1;
-        long id = 1;
+
         Notification initialNotification = new Notification();
         initialNotification.setIsEmailRequired(true);
         initialNotification.setIsSmsRequired(false);
         initialNotification.setIsTicketScansRequired(false);
         initialNotification.setIsReportAlertsRequired(true);
         initialNotification.setIsAlertNeededForNegativeCases(false);
-        initialNotification.setClient(getClient());
+        Client client = getClient();
+        initialNotification.setClient(client);
         initialNotification = notificationRepository.save(initialNotification);
 
         NotificationDTO updateNotification = getMapper().toDTO(initialNotification);
@@ -103,7 +106,7 @@ public class NotificationApiIT extends BaseApiTest {
         updateNotification.setIsReportAlertsRequired(false);
         updateNotification.setIsAlertNeededForNegativeCases(true);
         this.mockMvc
-                .perform(put("/api/v1/{clientId}/notification/{id}", clientId, id)
+                .perform(put("/api/v1/{clientId}/notification/{id}", client.getId(), initialNotification.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateNotification).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updateNotification).orElse("")));
@@ -125,6 +128,7 @@ public class NotificationApiIT extends BaseApiTest {
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateNotification).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
     }
+
     @Test
     void should_delete_existing_notification() throws Exception {
         Notification notification = new Notification();
@@ -136,8 +140,15 @@ public class NotificationApiIT extends BaseApiTest {
         Client client = getClient();
         notification.setClient(client);
         notification = notificationRepository.save(notification);
-        this.mockMvc.perform(delete("/api/v1/{clientId}/notification/{id}", client.getId(),notification.getId()))
-                .andDo(print())
-                .andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/api/v1/{clientId}/notification/{id}", client.getId(), notification.getId()))
+                .andDo(print()).andExpect(status().isNoContent());
+    }
+
+    @Test
+    void should_not_delete_nonexistent_notification() throws Exception {
+        int clientId = 11;
+        int nonexistentId = 999;
+        this.mockMvc.perform(delete("/api/v1/{clientId}/notification/{id}", clientId, nonexistentId)).andDo(print())
+                .andExpect(status().isNotFound());
     }
 }

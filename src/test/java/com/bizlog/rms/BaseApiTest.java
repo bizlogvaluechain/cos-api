@@ -15,9 +15,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
 
-@AutoConfigureMockMvc
-@SpringBootTest
-@ActiveProfiles("test")
+//@AutoConfigureMockMvc
+//@SpringBootTest
+//@ActiveProfiles("test")
 @Data
 public class BaseApiTest {
 
