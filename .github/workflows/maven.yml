@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: "COS API Testing"
+name: "Unit and Integration Testing"
 on:
   push:
     branches: [ "main" ]
