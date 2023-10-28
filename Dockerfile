@@ -10,8 +10,8 @@
 FROM eclipse-temurin:17-jdk-alpine
 
 # Set the current working directory inside the image
-#WORKDIR /app
-WORKDIR /
+WORKDIR /app
+#WORKDIR /
 
 # Copy maven executable to the image
 COPY mvnw .
@@ -32,6 +32,9 @@ COPY src src
 RUN ./mvnw clean package -DskipTests
 #RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
+RUN ls -lrt
+COPY target/*.jar app.jar
+
 #### Stage 2: A minimal docker image with command to run the app
 #FROM openjdk:8-jre-alpine
 FROM eclipse-temurin:17-jre-alpine
@@ -42,8 +45,8 @@ FROM eclipse-temurin:17-jre-alpine
 #COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 #COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 #COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-RUN ls -lrt
-COPY target/*.jar app.jar
+#RUN ls -lrt
+#COPY target/*.jar app.jar
 
 #ENTRYPOINT ["java","-cp","app:app/lib/*","com.bizlog.rms.COSApiApplication"]
 ENTRYPOINT ["java","-jar","app.jar"]
