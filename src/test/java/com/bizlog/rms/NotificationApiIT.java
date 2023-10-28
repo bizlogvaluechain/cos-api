@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-public class NotificationApiTest extends BaseApiTest {
+public class NotificationApiIT extends BaseApiIT {
     @Autowired
     private NotificationRepository notificationRepository;
 

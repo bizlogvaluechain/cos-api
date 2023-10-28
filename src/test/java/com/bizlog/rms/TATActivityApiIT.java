@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-public class TATActivityApiTest extends BaseApiTest {
+public class TATActivityApiIT extends BaseApiIT {
     @Autowired
     private TATActivityRepository tatActivityRepository;
 

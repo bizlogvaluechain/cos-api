@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-public class EscalationMatrixApiTest extends BaseApiTest {
+public class EscalationMatrixApiIT extends BaseApiIT {
 
     @Autowired
     private EscalationMatrixRepository escalationMatrixRepository;

@@ -8,9 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
@@ -19,7 +16,7 @@ import java.util.Optional;
 //@SpringBootTest
 //@ActiveProfiles("test")
 @Data
-public class BaseApiTest {
+public class BaseApiIT {
 
     @Autowired
     public ClientRepository clientRepository;

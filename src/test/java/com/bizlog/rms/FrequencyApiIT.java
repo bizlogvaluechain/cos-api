@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-public class FrequencyApiTest extends BaseApiTest {
+public class FrequencyApiIT extends BaseApiIT {
 
     @Autowired
     private FrequencyRepository frequencyRepository;

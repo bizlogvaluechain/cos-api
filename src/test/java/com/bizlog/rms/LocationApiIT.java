@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-public class LocationApiTest extends BaseApiTest {
+public class LocationApiIT extends BaseApiIT {
     @Autowired
     private LocationRepository locationRepository;
 

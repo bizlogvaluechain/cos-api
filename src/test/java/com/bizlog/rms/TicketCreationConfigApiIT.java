@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-public class TicketCreationConfigApiTest extends BaseApiTest {
+public class TicketCreationConfigApiIT extends BaseApiIT {
 
     @Autowired
     private TicketCreationConfigRepository ticketCreationConfigRepository;

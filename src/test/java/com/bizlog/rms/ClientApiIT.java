@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class ClientApiTest extends BaseApiTest {
+class ClientApiIT extends BaseApiIT {
 
     public static final String CLIENT_URL = "/api/v1/client";
     @Autowired

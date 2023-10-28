@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-public class ProductionInformationApiTest extends BaseApiTest {
+public class ProductionInformationApiIT extends BaseApiIT {
     @Autowired
     private ProductInformatiomRepository productInformatiomRepository;
 

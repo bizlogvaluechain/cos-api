@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-public class SOPActivityApiTest extends BaseApiTest {
+public class SOPActivityApiIT extends BaseApiIT {
     @Autowired
     private SOPActivityRepository sopActivityRepository;
 
