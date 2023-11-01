@@ -18,7 +18,7 @@ spring:
 
   flyway:
     #url: ${mysql.url:jdbc:mysql://gatnix-mysql-db.cbzi61rt89sh.us-east-1.rds.amazonaws.com:3306/gatnix-db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
-    url: ${mysql.url:jdbc:mysql://localhost:3306/rl_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    url: ${mysql.url:jdbc:mysql://mysql:3307/cos_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
     user: "root"
     password: "root"
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -37,7 +37,7 @@ spring:
 
   datasource:
     #url: ${mysql.url:jdbc:mysql://gatnix-mysql-db.cbzi61rt89sh.us-east-1.rds.amazonaws.com:3306/gatnix-db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
-    url: ${mysql.url:jdbc:mysql://localhost:3306/rl_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    url: ${mysql.url:jdbc:mysql://mysql:3307/cos_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
     username: "root"
     password: "root"
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -70,7 +70,7 @@ stripe:
     secret: ${STRIPE_SKEY:sk_test_51LeP5ZSTEbgQpy2wcWh9NByZsgonJqfKVkGxZitaX14DY2QEnkseKIydc9ehbv6p7Gy8yK8Ec2UbAUi6onJSPpCK00QXjAzyhk}
 
 server:
-  port: 8081
+  port: 8084
   compression:
     enabled: false
   undertow:

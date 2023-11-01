@@ -3,15 +3,15 @@
 #VOLUME /tmp
 #COPY target/*.jar app.jar
 #ENTRYPOINT ["java","-jar","app.jar"]
-#EXPOSE 8091
+#EXPOSE 8084
 
 #### Stage 1: Build the application
 #FROM openjdk:8-jdk-alpine as build
 FROM eclipse-temurin:17-jdk-alpine
 
 # Set the current working directory inside the image
-WORKDIR /app
-#WORKDIR /
+#WORKDIR /app
+WORKDIR /
 
 # Copy maven executable to the image
 COPY mvnw .
@@ -50,4 +50,4 @@ FROM eclipse-temurin:17-jre-alpine
 
 #ENTRYPOINT ["java","-cp","app:app/lib/*","com.bizlog.rms.COSApiApplication"]
 ENTRYPOINT ["java","-jar","app.jar"]
-EXPOSE 8081
+EXPOSE 8084
