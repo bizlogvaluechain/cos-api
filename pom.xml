@@ -26,7 +26,9 @@
 <!--        <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>-->
 <!--        <spotbugs-maven-plugin.version>3.1.11</spotbugs-maven-plugin.version>-->
         <spotbugs-annotations.version>3.1.12</spotbugs-annotations.version>
-
+        <logstash-logback-encoder.version>6.1</logstash-logback-encoder.version>
+        <dockerfile-maven-plugin.version>1.4.10</dockerfile-maven-plugin.version>
+        <docker.image.prefix>cos-api</docker.image.prefix>
     </properties>
     <dependencies>
         <dependency>
@@ -157,6 +159,13 @@
             <artifactId>spotbugs-annotations</artifactId>
             <version>${spotbugs-annotations.version}</version>
             <optional>true</optional>
+        </dependency>
+
+        <!-- Logback encoder for Logstash -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${logstash-logback-encoder.version}</version>
         </dependency>
 
     </dependencies>
@@ -335,8 +344,30 @@
 <!--                    </executions>-->
 <!--                </plugin>-->
 
+                <!-- Dockerfile from Spotify -->
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>dockerfile-maven-plugin</artifactId>
+                    <version>${dockerfile-maven-plugin.version}</version>
+                    <configuration>
+                        <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
         </pluginManagement>
+
+
+
 
         <plugins>
             <plugin>
@@ -431,6 +462,25 @@
 <!--                    </execution>-->
 <!--                </executions>-->
 <!--            </plugin>-->
+
+            <!-- Dockerfile from Spotify -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>${dockerfile-maven-plugin.version}</version>
+                <configuration>
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
         </plugins>
     </build>
