@@ -17,10 +17,9 @@ spring:
       ddl-auto: update
 
   flyway:
-    #url: ${mysql.url:jdbc:mysql://gatnix-mysql-db.cbzi61rt89sh.us-east-1.rds.amazonaws.com:3306/gatnix-db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
-    url: ${mysql.url:jdbc:mysql://mysql:3307/cos_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
-    user: "root"
-    password: "root"
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3307/cos_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${SPRING_DATASOURCE_USERNAME:bizlog}
+    password: ${SPRING_DATASOURCE_PASSWORD:bizlog}
     driver-class-name: com.mysql.cj.jdbc.Driver
     enabled: false
 
@@ -36,10 +35,9 @@ spring:
       port: ${redis.port:6379}
 
   datasource:
-    #url: ${mysql.url:jdbc:mysql://gatnix-mysql-db.cbzi61rt89sh.us-east-1.rds.amazonaws.com:3306/gatnix-db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
-    url: ${mysql.url:jdbc:mysql://mysql:3307/cos_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
-    username: "root"
-    password: "root"
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3307/cos_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${SPRING_DATASOURCE_USERNAME:bizlog}
+    password: ${SPRING_DATASOURCE_PASSWORD:bizlog}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       auto-commit: false
@@ -83,3 +81,21 @@ springdoc:
   swagger-ui:
     disable-swagger-default-url: true
     groups-order: DESC
+
+elasticsearch:
+  cluster-name: spring-boot-cluster
+  host: localhost
+  port: 9300
+
+logging:
+  file:
+    name: Springboot-Elk.log
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS,Europe/Istanbul
+  logback:
+    rollingpolicy:
+      file-name-pattern: Springboot-Elk-%d{yyyy-MM-dd}.%i.log
+      clean-history-on-start: true
+      max-file-size: 100KB
+      total-size-cap: 1MB
+      max-history: 14
