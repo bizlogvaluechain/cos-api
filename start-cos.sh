@@ -1,0 +1,1 @@
+nohup java -jar cos-api.jar > cos-log.txt
