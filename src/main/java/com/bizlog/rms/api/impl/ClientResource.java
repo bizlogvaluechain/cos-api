@@ -38,7 +38,7 @@ public class ClientResource implements ClientAPI {
 
     @Override
     public ResponseEntity<Boolean> isClientExist(@PathVariable("id") Long id) {
-        boolean isClientExist = clientRepository.existById(id);
+        boolean isClientExist = clientRepository.existsById(id);
         return ResponseEntity.ok().body(isClientExist);
     }
 

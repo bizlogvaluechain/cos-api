@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {
-    boolean existById(Long id);
+    boolean existsById(Long id);
 }
