@@ -8,6 +8,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {
-    @Query("SELECT client.id FROM Client client")
-    List<Long> getClientIds();
+    boolean existById(Long id);
 }
