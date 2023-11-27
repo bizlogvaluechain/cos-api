@@ -6,7 +6,10 @@ services:
     command: -f /etc/logstash/conf.d/
     volumes:
       - ./elk/logstash/:/etc/logstash/conf.d/
-      - ./Springboot-Elk.log:/tmp/logs/Springboot-Elk.log
+#      - ./Springboot-Elk:/tmp/logs/Springboot-Elk.%{+YYYY-MM-dd}.log
+#      - app-log:/tmp/logs
+      - "C:/kmss_workspace/cos-api:/tmp/logs"
+#      - app-log:/tmp/logs
     ports:
       - "5044:5044"
     environment:
@@ -60,6 +63,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: cos-api
+  #  volumes:
+ #     - app-logs:./Springboot-Elk:/tmp/logs/Springboot-Elk.%{+YYYY-MM-dd}.log
     depends_on:
       - db
       - logstash
@@ -94,7 +99,7 @@ services:
 # Volumes
 volumes:
   db-data:
-
+  app-logs:
 
 networks:
   elk:

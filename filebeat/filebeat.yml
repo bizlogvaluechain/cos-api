@@ -1,3 +1,4 @@
+
 filebeat.inputs:
   - type: docker
     enabled: true
@@ -16,11 +17,10 @@ filebeat.config.modules:
 output.logstash:
   hosts: ["logstash:5044"]
 
-log files:
 logging.level: info
 logging.to_files: false
 logging.to_syslog: false
-loggins.metrice.enabled: false
+logging.metrics.enabled: false
 logging.files:
   path: /var/log/filebeat
   name: filebeat
