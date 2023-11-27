@@ -7,7 +7,6 @@ services:
     volumes:
       - ./elk/logstash/:/etc/logstash/conf.d/
 #      - ./Springboot-Elk:/tmp/logs/Springboot-Elk.%{+YYYY-MM-dd}.log
-#      - app-log:/tmp/logs
       - "C:/kmss_workspace/cos-api:/tmp/logs"
 #      - app-log:/tmp/logs
     ports:
