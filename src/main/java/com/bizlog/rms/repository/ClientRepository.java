@@ -1,7 +1,6 @@
 package com.bizlog.rms.repository;
 
 import com.bizlog.rms.entities.Client;
-import feign.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
