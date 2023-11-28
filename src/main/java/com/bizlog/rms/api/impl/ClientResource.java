@@ -9,7 +9,6 @@ import com.bizlog.rms.repository.ClientRepository;
 import com.bizlog.rms.service.ClientService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

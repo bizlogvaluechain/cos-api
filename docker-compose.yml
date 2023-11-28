@@ -1,70 +1,103 @@
-version: '3'
+version: '3.8'
 services:
-  zookeeper:
-    image: wurstmeister/zookeeper
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.15.2
+    user: root
+    command: -f /etc/logstash/conf.d/
+    volumes:
+      - ./elk/logstash/:/etc/logstash/conf.d/
+ #     - ./cos-api:/tmp/logs
+      - "C:/kmss_workspace/cos-api:/tmp/logs"
     ports:
-      - "2181:2181"
-    expose:
-      - 2181
-  zipkin:
-    image: openzipkin/zipkin:2
+      - "5044:5044"
     environment:
-      - STORAGE_TYPE=mem
-      # - SCRIBE_ENABLED=false # Uncomment to disable scribe
-      # - SELF_TRACING_ENABLED=true # Uncomment to enable self-tracing
-      # - JAVA_OPTS=-Dlogging.level.zipkin=DEBUG # Uncomment to enable debug logging
-    ports:
-      - 9411:9411 # Port used for the Zipkin UI and HTTP Api
-    expose:
-      - 9411
-  mysql:
-    image: mysql:8.0
-    ports:
-      - 3307:3307
-    expose:
-      - 3307
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_PASSWORD=root
-      - MYSQL_DATABASE=cos_db
-      - MYSQL_TCP_PORT=3307
-  kafka:
-    image: wurstmeister/kafka
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     depends_on:
-      - zookeeper
+      - elasticsearch
+    networks:
+      - elk
+
+  filebeat:
+    build:
+      context: ./filebeat
+      dockerfile: Dockerfile
+    links:
+      - "logstash:logstash"
+    volumes:
+      - /var/run/docker.sock:/host_docker/docker.sock
+      - /var/lib/docker:/host_docker/var/lib/docker
+    depends_on:
+      - logstash
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.15.2
+    user: root
+    volumes:
+      - ./elk/kibana/:/usr/share/kibana/config/
     ports:
-      - "9092:9092"
-    expose:
-      - 9092
-      - 9093
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    entrypoint: ["./bin/kibana", "--allow-root"]
+    networks:
+      - elk
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    user: root
+    volumes:
+      - ./elk/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - "9200:9200"
+      - "9300:9300"
     environment:
-      KAFKA_ADVERTISED_PORT: 9092
-      KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_CREATE_TOPICS: "bizlog_data:1:1"
-  s3:
-    image: adobe/s3mock
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elk
+
+  app:
+    image: 'cos-api:latest'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cos-api
+  #  volumes:
+ #     - app-logs:./Springboot-Elk:/tmp/logs/Springboot-Elk.%{+YYYY-MM-dd}.log
+    depends_on:
+      - db
+      - logstash
+      - kibana
+      - elasticsearch
     ports:
-      - "9090:9090"
-    expose:
-      - 9090
+      - '8084:8084'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/cos_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Turkey
+      - SPRING_DATASOURCE_USERNAME=bizlog
+      - SPRING_DATASOURCE_PASSWORD=bizlog
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - elk
+
+  db:
+    container_name: db
+    image: 'mysql:latest'
+    ports:
+      - "3307:3307"
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - elk
+
+# Volumes
+volumes:
+  db-data:
   cos-api:
-    image: cos-api:latest
-    depends_on:
-      - zookeeper
-      - zipkin
-      - kafka
-      - mysql
-      - s3
-    ports:
-      - 8084:8084
-    environment:
-      DB_HOST_PORT: mysql:3306
-      DB_USERNAME: root
-      DB_PASSWORD: root
-      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-      AWS_S3_ENDPOINT_HOST: s3
-      AWS_S3_ENDPOINT_PORT: 9090
-      ZIPKIN_SERVER: http://zipkin:9411/
+
+networks:
+  elk:
