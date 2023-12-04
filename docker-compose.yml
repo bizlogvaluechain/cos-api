@@ -6,7 +6,7 @@ services:
     command: -f /etc/logstash/conf.d/
     volumes:
       - ./elk/logstash/:/etc/logstash/conf.d/
- #     - ./cos-api:/tmp/logs
+  #    - ./cos-api:/tmp/logs
       - "C:/kmss_workspace/cos-api:/tmp/logs"
     ports:
       - "5044:5044"
@@ -61,8 +61,6 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: cos-api
-  #  volumes:
- #     - app-logs:./Springboot-Elk:/tmp/logs/Springboot-Elk.%{+YYYY-MM-dd}.log
     depends_on:
       - db
       - logstash
@@ -82,7 +80,7 @@ services:
     container_name: db
     image: 'mysql:latest'
     ports:
-      - "3307:3307"
+      - "3307:3306"
     restart: always
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -94,10 +92,45 @@ services:
     networks:
       - elk
 
+#  prometheus:
+#    image: prom/prometheus:v2.42.0
+#    container_name: prometheus
+#    volumes:
+#      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+#    ports:
+#      - "9090:9090"
+#    healthcheck:
+#      test: [ "CMD", "nc", "-z", "localhost", "9090" ]
+#    networks:
+#      - elk
+
+
+  grafana:
+    image: grafana/grafana:9.3.6
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_DATABASE_TYPE=mysql
+      - GF_DATABASE_HOST=db
+      - GF_DATABASE_NAME=${MYSQL_DATABASE}
+      - GF_DATABASE_USER=${MYSQL_USER}
+      - GF_DATABASE_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - db
+    networks:
+      - elk
+
+
+
+
 # Volumes
 volumes:
   db-data:
-  cos-api:
 
 networks:
   elk:
+    driver: bridge

@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class ClientDTO {
 
@@ -32,4 +34,6 @@ public class ClientDTO {
     private Boolean active;
 
     private String type;
+
+    private LocalDateTime dateOfOnboarding;
 }

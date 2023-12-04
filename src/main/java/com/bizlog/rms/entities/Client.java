@@ -3,6 +3,8 @@ package com.bizlog.rms.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "client")
 @Data
@@ -33,5 +35,8 @@ public class Client {
 
     @Column(name = "type")
     private String type;
+
+    @Column(name = "dateOfOnboarding")
+    private LocalDateTime dateOfOnboarding;
 
 }

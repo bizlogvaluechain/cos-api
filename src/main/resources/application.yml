@@ -17,7 +17,7 @@ spring:
       ddl-auto: update
 
   flyway:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/cos_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3307/cos_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
     username: ${SPRING_DATASOURCE_USERNAME:bizlog}
     password: ${SPRING_DATASOURCE_PASSWORD:bizlog}
 #    username: "root"
@@ -37,7 +37,7 @@ spring:
       port: ${redis.port:6379}
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/cos_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3307}/cos_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
     username: ${SPRING_DATASOURCE_USERNAME:bizlog}
     password: ${SPRING_DATASOURCE_PASSWORD:bizlog}
 #    username: "root"
@@ -104,3 +104,9 @@ logging:
       max-file-size: 100KB
       total-size-cap: 1MB
       max-history: 14
+
+
+  # Enable management endpoints
+  management.endpoints.web.exposure.include : *
+  management.endpoint.health.show-details : always
+  management.health.probes.enabled : true
