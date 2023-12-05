@@ -44,6 +44,7 @@ public class DataLoaderUtil {
         client.setDomainName("abcdefghi");
         client.setActive(true);
         client.setType("abcde");
+        client.setDateOfOnboarding(LocalDateTime.of(2023, 10, 12, 0, 0));
         return client;
     }
 

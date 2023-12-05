@@ -37,8 +37,8 @@ public class ClientResource implements ClientAPI {
 
     @Override
     public ResponseEntity<Boolean> checkClientId(@PathVariable("id") Long id) {
-        List<Long> clientIds=clientRepository.getClientIds();
-        if(clientIds.contains(id)){
+        List<Long> clientIds = clientRepository.getClientIds();
+        if (clientIds.contains(id)) {
             return ResponseEntity.ok().body(true);
         }
         return ResponseEntity.ok().body(false);
