@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDateTime;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -56,6 +58,7 @@ class ClientApiTest extends BaseApiTest {
         client.setDomainName("abcdefghi");
         client.setActive(true);
         client.setType("abcde");
+        client.setDateOfOnboarding(LocalDateTime.of(2023, 10, 12, 0, 0));
         this.mockMvc
                 .perform(post(CLIENT_URL).contentType(MediaType.APPLICATION_JSON).content(toJson(client).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
