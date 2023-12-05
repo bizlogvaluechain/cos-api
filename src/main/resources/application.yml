@@ -107,6 +107,6 @@ logging:
 
 
   # Enable management endpoints
-  management.endpoints.web.exposure.include : *
+  management.endpoints.web.exposure.include : "*"
   management.endpoint.health.show-details : always
   management.health.probes.enabled : true
