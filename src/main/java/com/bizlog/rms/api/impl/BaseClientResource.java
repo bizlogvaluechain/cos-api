@@ -9,17 +9,22 @@ import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.BaseClientRepository;
 import com.bizlog.rms.repository.ClientRepository;
 import com.bizlog.rms.utils.OperationType;
+import com.bizlog.rms.utils.ProjectionRow;
+import com.bizlog.rms.utils.ProjectionsUtil;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Tuple;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -30,6 +35,11 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
     @Autowired
     private GenericMapper mapper;
+
+
+
+    @Autowired
+    private EntityManager entityManager;
 
     private final BaseClientRepository<V, Long> baseClientRepository;
 
@@ -83,7 +93,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         entity.setClient(client);
         validate(clientId, payloadDTO, entity, OperationType.UPDATE);
         // other logic if any
-        prePersist(clientId, payloadDTO, OperationType.UPDATE);
+        prePersist(clientId,  payloadDTO, OperationType.UPDATE);
         V updatedEntity = getBaseClientRepository().save(entity);
         postPersist(clientId, payloadDTO, OperationType.UPDATE);
         O outPutDTO = toDTO(updatedEntity);
@@ -119,6 +129,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
 
+
     public Map<String, Object> getMetaData(Page<V> pageData) {
         Map<String, Object> meta = new HashMap<>();
         meta.put("totalElements", pageData.getTotalElements());
@@ -139,6 +150,123 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         getBaseClientRepository().deleteById(id);
         postPersist(clientId, null, OperationType.DELETE);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+
+    public ResponseEntity<PageResponse<O>> search(Long clientId, Map<String, String> searchCriteria,
+                                                  Optional<Set<String>> attributesOpt, Pageable pageable) {
+        PageResponse<O> pageResponse;
+        if (attributesOpt.isPresent() && !attributesOpt.get().isEmpty()) {
+            pageResponse = getBaseDataWithSearchSpecAndRequiredAttr(searchCriteria, attributesOpt, pageable);
+        } else {
+            pageResponse = getBaseDataWithSearchSpec(searchCriteria, pageable);
+        }
+
+        return new ResponseEntity<>(Objects.requireNonNull(pageResponse), HttpStatus.OK);
+    }
+
+    private PageResponse<O> getBaseDataWithSearchSpec(Map<String, String> searchCriteria,
+                                                                              Pageable pageable) {
+
+        Specification<V> dynamicQuery = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            for (Map.Entry<String, String> entry : searchCriteria.entrySet()) {
+                String columnName = entry.getKey();
+                String columnValue = entry.getValue();
+                if (columnName.equals("page") || columnName.equals("size") || columnName.equals("attributes")
+                        || columnName.equals("userId")) {
+                    continue;
+                }
+                Path<String> columnPath = root.get(columnName);
+
+                // Check if the value is numeric, and use equality predicate
+                if (isNumeric(columnValue)) {
+                    predicates.add(criteriaBuilder.equal(columnPath, Double.parseDouble(columnValue)));
+
+                    log.info("1coloum value",columnValue);
+                } else {
+                    // Otherwise, use like predicate for string values
+                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower(columnPath), "%" + columnValue.toLowerCase() + "%"));
+                    log.info("2coloum value",columnValue);
+
+                }
+            }
+            return criteriaBuilder.or(predicates.toArray(new Predicate[0]));
+        };
+        Page<V> pageData = baseClientRepository.findAll(dynamicQuery, pageable);
+        List<O> outPutDTO = pageData.getContent().stream().map(this::toDTO).collect(Collectors.toList());
+        Map<String, Object> meta = getMetaData(pageData);
+        return  new PageResponse<>(meta, outPutDTO);
+    }
+
+    private PageResponse<O> getBaseDataWithSearchSpecAndRequiredAttr(Map<String, String> searchCriteria,
+                                                                                             Optional<Set<String>> attributesOpt, Pageable pageable) {
+        Specification<V> dynamicQuerySpec = (rootSpec, query, criteriaBuilderSpec) -> {
+
+            List<Predicate> predicates = new ArrayList<>();
+            for (Map.Entry<String, String> entry : searchCriteria.entrySet()) {
+                String columnName = entry.getKey();
+                String columnValue = entry.getValue();
+                if (columnName.equals("page") || columnName.equals("size") || columnName.equals("attributes")
+                        || columnName.equals("userId")) {
+                    continue;
+                }
+                Path<String> columnPath = rootSpec.get(columnName);
+                if (isNumeric(columnValue)) {
+                    predicates.add(criteriaBuilderSpec.equal(columnPath, Double.parseDouble(columnValue)));
+                    log.info("3coloum value",columnValue);
+
+                } else {
+                    // Otherwise, use like predicate for string values
+                    predicates.add(criteriaBuilderSpec.like(criteriaBuilderSpec.lower(columnPath),
+                            "%" + columnValue.toLowerCase() + "%"));
+                    log.info("4coloum value",columnValue);
+
+                }
+            }
+            predicates.forEach(query::where);
+
+            return criteriaBuilderSpec.or(predicates.toArray(new Predicate[0]));
+        };
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createTupleQuery();
+        Root<BaseClientEntity> root = criteriaQuery.from(BaseClientEntity.class);
+
+        attributesOpt.ifPresent(attributes -> {
+            List<Selection<?>> selectionList = ProjectionsUtil.getSelectionList(root, attributes);
+
+            criteriaQuery.multiselect(selectionList);
+        });
+
+        criteriaQuery.where(dynamicQuerySpec.toPredicate((Root<V>) root, criteriaQuery, criteriaBuilder));
+
+        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("priority")));
+
+        TypedQuery<Tuple> typedQuery = entityManager.createQuery(criteriaQuery);
+        typedQuery.setFirstResult((int) pageable.getOffset());
+        typedQuery.setMaxResults(pageable.getPageSize());
+
+        List<ProjectionRow> projectionRowList = ProjectionsUtil.convert(typedQuery.getResultList());
+//        List<O> outPutDTO = projectionRowList.stream()
+//                .<I>map(this::toDTO)
+//                .collect(Collectors.toList());
+        List<O> outPutDTO = projectionRowList.stream().map(projectionRow->toDTO(projectionRow)).collect(Collectors.toList());
+        Map<String, Object> meta = new HashMap<>();
+        return  new PageResponse<>(meta, outPutDTO);
+    }
+
+
+
+
+    private boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
 }

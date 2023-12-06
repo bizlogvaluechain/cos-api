@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 @Slf4j
 @RestController
 public class CustomerInfoResource extends BaseClientResource<CustomerInfo, CustomerInfoDTO, CustomerInfoDTO>
@@ -52,6 +56,11 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
     public ResponseEntity<PageResponse<CustomerInfoDTO>> getAll(@PathVariable Long clientId, Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<CustomerInfoDTO>> search(Long clientId, Map<String, String> searchCriteria, Optional<Set<String>> attributesOpt, Pageable pageable) {
+        return null;
     }
 
     @Override

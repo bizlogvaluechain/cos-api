@@ -21,13 +21,15 @@ services:
     build:
       context: ./filebeat
       dockerfile: Dockerfile
-    links:
-      - "logstash:logstash"
+#    links:
+#      - "logstash:logstash"
     volumes:
       - /var/run/docker.sock:/host_docker/docker.sock
       - /var/lib/docker:/host_docker/var/lib/docker
     depends_on:
       - logstash
+    networks:
+      - elk
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.15.2

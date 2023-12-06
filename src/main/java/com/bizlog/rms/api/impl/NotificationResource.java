@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 @RestController
 @Slf4j
 public class NotificationResource extends BaseClientResource<Notification, NotificationDTO, NotificationDTO>
@@ -47,6 +51,11 @@ public class NotificationResource extends BaseClientResource<Notification, Notif
             Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<NotificationDTO>> search(Long clientId, Map<String, String> searchCriteria, Optional<Set<String>> attributesOpt, Pageable pageable) {
+        return null;
     }
 
     @Transactional

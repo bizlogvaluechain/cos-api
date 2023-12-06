@@ -13,6 +13,20 @@ datasources:
       connMaxLifetime: 14400
     secureJsonData:
       password: bizlog
+
+
+  - name: MySQL
+    type: mysql
+    url: host.docker.internal:3307
+    user: bizlog
+    jsonData:
+      database: tms_db
+      maxOpenConns: 100
+      maxIdleConns: 100
+      maxIdleConnsAuto: true
+      connMaxLifetime: 14400
+    secureJsonData:
+      password: bizlog
 #  - name: Prometheus
 #    type: prometheus
 #    access: proxy
