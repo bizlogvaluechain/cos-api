@@ -147,12 +147,6 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
     public ResponseEntity<PageResponse<O>> search(Long clientId, Map<String, String> searchCriteria,
             Pageable pageable) {
-        log.debug("Request to fetch entities for clientId {} and pageable {}", clientId, pageable);
-        clientRepository.findById(clientId)
-                .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
-        preValidate(clientId, null, OperationType.GET);
-
-        validate(clientId, null, null, OperationType.GET);
         PageResponse<O> pageResponse = getBaseDataWithSearchSpec(searchCriteria, pageable);
         return new ResponseEntity<>(Objects.requireNonNull(pageResponse), HttpStatus.OK);
     }
