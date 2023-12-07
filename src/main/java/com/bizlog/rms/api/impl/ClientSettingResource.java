@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 @Slf4j
 @RestController
@@ -41,7 +39,7 @@ public class ClientSettingResource extends BaseClientResource<ClientSetting, Cli
     }
 
     @Override
-    public ResponseEntity<PageResponse<ClientSettingDTO>> search(Long clientId, Map<String, String> searchCriteria, Optional<Set<String>> attributesOpt, Pageable pageable) {
+    public ResponseEntity<PageResponse<ClientSettingDTO>> search(Long clientId, Map<String, String> searchCriteria, Pageable pageable) {
         return null;
     }
 

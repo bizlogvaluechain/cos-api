@@ -43,8 +43,8 @@ public class TicketCreationConfigResource
 
     @Override
     public ResponseEntity<PageResponse<TicketCreationConfigDTO>> search(@PathVariable Long clientId, @RequestParam Map<String, String> searchCriteria,
-                                                                        @RequestParam("attributes") Optional<Set<String>> attributesOpt, Pageable pageable) {
-        return super.search(clientId, searchCriteria, attributesOpt, pageable);
+                                                                       Pageable pageable) {
+        return super.search(clientId, searchCriteria, pageable);
     }
 
     @Transactional

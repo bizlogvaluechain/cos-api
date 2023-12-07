@@ -6,8 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 public interface BaseAPI<I extends BaseDTO, O extends BaseDTO> {
 
@@ -17,7 +15,7 @@ public interface BaseAPI<I extends BaseDTO, O extends BaseDTO> {
 
     ResponseEntity<PageResponse<O>> getAll(Long clientId, Pageable pageable);
 
-    ResponseEntity<PageResponse<O>> search(Long clientId, Map<String,String> searchCriteria, Optional<Set<String>> attributesOpt, Pageable pageable);
+    ResponseEntity<PageResponse<O>> search(Long clientId, Map<String,String> searchCriteria, Pageable pageable);
 
     ResponseEntity<O> update(Long clientId, Long id, I inputDTO);
 
