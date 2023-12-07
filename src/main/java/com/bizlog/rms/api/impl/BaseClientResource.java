@@ -35,8 +35,6 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     @Autowired
     private GenericMapper mapper;
 
-
-
     private final BaseClientRepository<V, Long> baseClientRepository;
 
     @Autowired
@@ -66,7 +64,6 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         return null;
     }
 
-
     public ResponseEntity<O> create(Long clientId, I payloadDTO) {
         Client client = clientRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("  Client not found", "id", clientId));
@@ -90,7 +87,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         entity.setClient(client);
         validate(clientId, payloadDTO, entity, OperationType.UPDATE);
         // other logic if any
-        prePersist(clientId,  payloadDTO, OperationType.UPDATE);
+        prePersist(clientId, payloadDTO, OperationType.UPDATE);
         V updatedEntity = getBaseClientRepository().save(entity);
         postPersist(clientId, payloadDTO, OperationType.UPDATE);
         O outPutDTO = toDTO(updatedEntity);
@@ -126,7 +123,6 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
 
-
     public Map<String, Object> getMetaData(Page<V> pageData) {
         Map<String, Object> meta = new HashMap<>();
         meta.put("totalElements", pageData.getTotalElements());
@@ -149,17 +145,15 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
-
     public ResponseEntity<PageResponse<O>> search(Long clientId, Map<String, String> searchCriteria,
-                                                  Pageable pageable) {
+            Pageable pageable) {
         log.debug("Request to fetch entities for clientId {} and pageable {}", clientId, pageable);
-        Client client = clientRepository.findById(clientId)
+        clientRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
         preValidate(clientId, null, OperationType.GET);
 
         validate(clientId, null, null, OperationType.GET);
-        PageResponse<O> pageResponse =getBaseDataWithSearchSpec(searchCriteria, pageable);
+        PageResponse<O> pageResponse = getBaseDataWithSearchSpec(searchCriteria, pageable);
         return new ResponseEntity<>(Objects.requireNonNull(pageResponse), HttpStatus.OK);
     }
 
@@ -170,7 +164,8 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
                 String columnName = entry.getKey();
                 String columnValue = entry.getValue();
 
-                if (columnName.equals("page") || columnName.equals("size") || columnName.equals("attributes") || columnName.equals("userId")) {
+                if (columnName.equals("page") || columnName.equals("size") || columnName.equals("attributes")
+                        || columnName.equals("userId")) {
                     continue;
                 }
 
@@ -178,9 +173,11 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
                 Class<?> attributeType = columnPath.getJavaType();
                 if (attributeType.equals(String.class)) {
-                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower((Path<String>) columnPath), "%" + columnValue.toLowerCase() + "%"));
+                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower((Path<String>) columnPath),
+                            "%" + columnValue.toLowerCase() + "%"));
                 } else if (attributeType.equals(Boolean.class)) {
-                    predicates.add(criteriaBuilder.equal((Path<Boolean>) columnPath, Boolean.parseBoolean(columnValue)));
+                    predicates
+                            .add(criteriaBuilder.equal((Path<Boolean>) columnPath, Boolean.parseBoolean(columnValue)));
                 } else if (attributeType.equals(LocalDate.class)) {
                     LocalDate dateValue = LocalDate.parse(columnValue);
                     predicates.add(criteriaBuilder.equal((Path<LocalDate>) columnPath, dateValue));

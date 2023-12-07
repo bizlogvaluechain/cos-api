@@ -24,10 +24,10 @@ public class TicketCreationConfigResource
         extends BaseClientResource<TicketCreationConfig, TicketCreationConfigDTO, TicketCreationConfigDTO>
         implements TicketCreationConfigAPI {
 
-    public TicketCreationConfigResource(BaseClientRepository<TicketCreationConfig, Long> ticketCreationConfigRepository) {
+    public TicketCreationConfigResource(
+            BaseClientRepository<TicketCreationConfig, Long> ticketCreationConfigRepository) {
         super(ticketCreationConfigRepository);
     }
-
 
     @Override
     public ResponseEntity<TicketCreationConfigDTO> getById(@PathVariable("clientId") Long clientId,
@@ -42,8 +42,8 @@ public class TicketCreationConfigResource
     }
 
     @Override
-    public ResponseEntity<PageResponse<TicketCreationConfigDTO>> search(@PathVariable Long clientId, @RequestParam Map<String, String> searchCriteria,
-                                                                       Pageable pageable) {
+    public ResponseEntity<PageResponse<TicketCreationConfigDTO>> search(@PathVariable Long clientId,
+            @RequestParam Map<String, String> searchCriteria, Pageable pageable) {
         return super.search(clientId, searchCriteria, pageable);
     }
 

@@ -24,7 +24,6 @@ import com.bizlog.rms.entities.notification.Notification;
 import com.bizlog.rms.entities.productInformation.ProductInformation;
 import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationConfig;
 import com.bizlog.rms.entities.users.User;
-import com.bizlog.rms.utils.ProjectionRow;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 

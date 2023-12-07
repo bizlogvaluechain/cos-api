@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
-
 @Slf4j
 @RestController
 public class CustomerInfoResource extends BaseClientResource<CustomerInfo, CustomerInfoDTO, CustomerInfoDTO>
@@ -58,7 +57,8 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
     }
 
     @Override
-    public ResponseEntity<PageResponse<CustomerInfoDTO>> search(Long clientId, Map<String, String> searchCriteria, Pageable pageable) {
+    public ResponseEntity<PageResponse<CustomerInfoDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Pageable pageable) {
         return null;
     }
 
@@ -80,7 +80,6 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
     public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
-
 
     @Override
     protected CustomerInfo toEntity(CustomerInfoDTO dto) {

@@ -52,8 +52,9 @@ public class NotificationResource extends BaseClientResource<Notification, Notif
     }
 
     @Override
-    public ResponseEntity<PageResponse<NotificationDTO>> search(Long clientId, Map<String, String> searchCriteria, Pageable pageable) {
-        return super.search(clientId, searchCriteria,  pageable);
+    public ResponseEntity<PageResponse<NotificationDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Pageable pageable) {
+        return super.search(clientId, searchCriteria, pageable);
     }
 
     @Transactional

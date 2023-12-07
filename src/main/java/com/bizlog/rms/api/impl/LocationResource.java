@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-
 @RestController
 @Slf4j
 public class LocationResource extends BaseClientResource<Location, LocationDTO, LocationDTO> implements LocationAPI {
@@ -52,7 +51,8 @@ public class LocationResource extends BaseClientResource<Location, LocationDTO, 
     }
 
     @Override
-    public ResponseEntity<PageResponse<LocationDTO>> search(Long clientId, Map<String, String> searchCriteria, Pageable pageable) {
+    public ResponseEntity<PageResponse<LocationDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Pageable pageable) {
         return super.search(clientId, searchCriteria, pageable);
     }
 

@@ -52,8 +52,6 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
         return super.getAllConfig(clientId, pageable);
     }
 
-
-
     @Transactional
     @Override
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
@@ -61,7 +59,8 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
     }
 
     @Override
-    public ResponseEntity<PageResponse<FrequencyDTO>> search(Long clientId, Map<String, String> searchCriteria, Optional<Set<String>> attributesOpt, Pageable pageable) {
+    public ResponseEntity<PageResponse<FrequencyDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Optional<Set<String>> attributesOpt, Pageable pageable) {
         return super.search(clientId, searchCriteria, pageable);
     }
 

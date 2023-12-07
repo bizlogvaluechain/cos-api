@@ -24,9 +24,10 @@ public interface EscalationMatrixAPI extends BaseAPI<EscalationMatrixDTO, Escala
 
     @PutMapping("/{id}")
     ResponseEntity<EscalationMatrixDTO> update(Long Id, Long id, EscalationMatrixDTO escalationMatrixDTO);
-    @GetMapping("/search")
-    ResponseEntity<PageResponse<EscalationMatrixDTO>> search(Long clientId, Map<String,String> searchCriteria, Optional<Set<String>> attributesOpt, Pageable pageable);
 
+    @GetMapping("/search")
+    ResponseEntity<PageResponse<EscalationMatrixDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Optional<Set<String>> attributesOpt, Pageable pageable);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);

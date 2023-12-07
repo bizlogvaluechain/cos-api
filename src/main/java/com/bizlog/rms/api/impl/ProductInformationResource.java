@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-
 @RestController
 @Slf4j
 public class ProductInformationResource
@@ -55,7 +54,8 @@ public class ProductInformationResource
     }
 
     @Override
-    public ResponseEntity<PageResponse<ProductInformationDTO>> search(Long clientId, Map<String, String> searchCriteria, Pageable pageable) {
+    public ResponseEntity<PageResponse<ProductInformationDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Pageable pageable) {
         return super.search(clientId, searchCriteria, pageable);
     }
 

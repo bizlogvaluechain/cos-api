@@ -53,8 +53,9 @@ public class SOPActivityResource extends BaseClientResource<SOPActivity, SOPActi
     }
 
     @Override
-    public ResponseEntity<PageResponse<SOPActivityDTO>> search(Long clientId, Map<String, String> searchCriteria, Pageable pageable) {
-        return super.search(clientId, searchCriteria,  pageable);
+    public ResponseEntity<PageResponse<SOPActivityDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Pageable pageable) {
+        return super.search(clientId, searchCriteria, pageable);
     }
 
     @Transactional

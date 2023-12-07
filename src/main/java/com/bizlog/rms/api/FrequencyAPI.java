@@ -28,6 +28,7 @@ public interface FrequencyAPI extends BaseAPI<FrequencyDTO, FrequencyDTO> {
     ResponseEntity<Void> delete(Long clientId, Long id);
 
     @GetMapping("/search")
-    ResponseEntity<PageResponse<FrequencyDTO>> search(Long clientId, Map<String,String> searchCriteria,Optional<Set<String>> attributesOpt, Pageable pageable);
+    ResponseEntity<PageResponse<FrequencyDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Optional<Set<String>> attributesOpt, Pageable pageable);
 
 }
