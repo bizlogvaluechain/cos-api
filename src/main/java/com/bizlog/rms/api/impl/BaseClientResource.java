@@ -2,6 +2,7 @@ package com.bizlog.rms.api.impl;
 
 import com.bizlog.rms.dto.BaseDTO;
 import com.bizlog.rms.dto.PageResponse;
+
 import com.bizlog.rms.entities.BaseClientEntity;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.exception.ResourceNotFoundException;
@@ -9,11 +10,7 @@ import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.BaseClientRepository;
 import com.bizlog.rms.repository.ClientRepository;
 import com.bizlog.rms.utils.OperationType;
-import com.bizlog.rms.utils.ProjectionRow;
-import com.bizlog.rms.utils.ProjectionsUtil;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Tuple;
-import jakarta.persistence.TypedQuery;
+
 import jakarta.persistence.criteria.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +21,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -38,8 +37,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
 
 
-    @Autowired
-    private EntityManager entityManager;
+
 
     private final BaseClientRepository<V, Long> baseClientRepository;
 
@@ -69,6 +67,15 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     protected O toDTO(V entity) {
         return null;
     }
+
+//    protected ProjectionRow toEntity(ProjectionRowDTO projectionRowDTO)
+//    {
+//        return getMapper().toEntity(projectionRowDTO);
+//    }
+//    protected ProjectionRowDTO toDTO(ProjectionRow projectionRow)
+//    {
+//        return getMapper().toDTO(projectionRow);
+//    }
 
     public ResponseEntity<O> create(Long clientId, I payloadDTO) {
         Client client = clientRepository.findById(clientId)
@@ -154,8 +161,14 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
 
 
-    public ResponseEntity<PageResponse<O>> search(Long clientId, Map<String, String> searchCriteria,
-                                                  Optional<Set<String>> attributesOpt, Pageable pageable) {
+    public ResponseEntity<PageResponse<O>> search(Long clientId, Map<String, String> searchCriteria, Optional<Set<String>> attributesOpt,
+                                                  Pageable pageable) {
+        log.debug("Request to fetch entities for clientId {} and pageable {}", clientId, pageable);
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
+        preValidate(clientId, null, OperationType.GET);
+
+        validate(clientId, null, null, OperationType.GET);
         PageResponse<O> pageResponse;
         if (attributesOpt.isPresent() && !attributesOpt.get().isEmpty()) {
             pageResponse = getBaseDataWithSearchSpecAndRequiredAttr(searchCriteria, attributesOpt, pageable);
@@ -166,107 +179,240 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         return new ResponseEntity<>(Objects.requireNonNull(pageResponse), HttpStatus.OK);
     }
 
-    private PageResponse<O> getBaseDataWithSearchSpec(Map<String, String> searchCriteria,
-                                                                              Pageable pageable) {
+    private PageResponse<O> getBaseDataWithSearchSpec(Map<String, String> searchCriteria, Pageable pageable) {
+        Specification<V> dynamicQuery = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            for (Map.Entry<String, String> entry : searchCriteria.entrySet()) {
+                String columnName = entry.getKey();
+                String columnValue = entry.getValue();
+
+                if (columnName.equals("page") || columnName.equals("size") || columnName.equals("attributes") || columnName.equals("userId")) {
+                    continue;
+                }
+
+                Path<?> columnPath = root.get(columnName);
+
+                // Determine the type of the attribute using the metamodel
+                Class<?> attributeType = columnPath.getJavaType();
+
+                // Use different predicates based on the attribute type
+                if (attributeType.equals(String.class)) {
+                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower((Path<String>) columnPath), "%" + columnValue.toLowerCase() + "%"));
+                } else if (attributeType.equals(Boolean.class)) {
+                    predicates.add(criteriaBuilder.equal((Path<Boolean>) columnPath, Boolean.parseBoolean(columnValue)));
+                } else if (attributeType.equals(LocalDate.class)) {
+                    LocalDate dateValue = LocalDate.parse(columnValue);
+                    predicates.add(criteriaBuilder.equal((Path<LocalDate>) columnPath, dateValue));
+                } else if (attributeType.equals(ZonedDateTime.class)) {
+                    ZonedDateTime zonedDateTime = ZonedDateTime.parse(columnValue);
+                    predicates.add(criteriaBuilder.equal((Path<ZonedDateTime>) columnPath, zonedDateTime));
+                } else if (attributeType.equals(Integer.class) || attributeType.equals(Long.class)) {
+                    predicates.add(criteriaBuilder.equal((Path<Number>) columnPath, Long.parseLong(columnValue)));
+                }
+            }
+
+            return criteriaBuilder.or(predicates.toArray(new Predicate[0]));
+        };
+
+        Page<V> pageData = baseClientRepository.findAll(dynamicQuery, pageable);
+        List<O> outPutDTO = pageData.getContent().stream().map(this::toDTO).collect(Collectors.toList());
+        Map<String, Object> meta = getMetaData(pageData);
+        return new PageResponse<>(meta, outPutDTO);
+    }
+
+    private PageResponse<O> getBaseDataWithSearchSpecAndRequiredAttr(
+            Map<String, String> searchCriteria,
+            Optional<Set<String>> fieldsOpt,
+            Pageable pageable) {
 
         Specification<V> dynamicQuery = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             for (Map.Entry<String, String> entry : searchCriteria.entrySet()) {
                 String columnName = entry.getKey();
                 String columnValue = entry.getValue();
-                if (columnName.equals("page") || columnName.equals("size") || columnName.equals("attributes")
-                        || columnName.equals("userId")) {
+
+                if (columnName.equals("page") || columnName.equals("size") || columnName.equals("attributes") || columnName.equals("userId")) {
                     continue;
                 }
-                Path<String> columnPath = root.get(columnName);
 
-                // Check if the value is numeric, and use equality predicate
-                if (isNumeric(columnValue)) {
-                    predicates.add(criteriaBuilder.equal(columnPath, Double.parseDouble(columnValue)));
+                Path<?> columnPath = root.get(columnName);
 
-                    log.info("1coloum value",columnValue);
-                } else {
-                    // Otherwise, use like predicate for string values
-                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower(columnPath), "%" + columnValue.toLowerCase() + "%"));
-                    log.info("2coloum value",columnValue);
+                Class<?> attributeType = columnPath.getJavaType();
 
+                // Use different predicates based on the attribute type
+                if (attributeType.equals(String.class)) {
+                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower((Path<String>) columnPath), "%" + columnValue.toLowerCase() + "%"));
+                } else if (attributeType.equals(Boolean.class)) {
+                    predicates.add(criteriaBuilder.equal((Path<Boolean>) columnPath, Boolean.parseBoolean(columnValue)));
+                } else if (attributeType.equals(LocalDate.class)) {
+                    LocalDate dateValue = LocalDate.parse(columnValue);
+                    predicates.add(criteriaBuilder.equal((Path<LocalDate>) columnPath, dateValue));
+                } else if (attributeType.equals(ZonedDateTime.class)) {
+                    ZonedDateTime zonedDateTime = ZonedDateTime.parse(columnValue);
+                    predicates.add(criteriaBuilder.equal((Path<ZonedDateTime>) columnPath, zonedDateTime));
+                } else if (attributeType.equals(Integer.class) || attributeType.equals(Long.class)) {
+                    // Assuming both Integer and Long can be treated as numeric
+                    predicates.add(criteriaBuilder.equal((Path<Number>) columnPath, Long.parseLong(columnValue)));
                 }
             }
+
             return criteriaBuilder.or(predicates.toArray(new Predicate[0]));
         };
+
         Page<V> pageData = baseClientRepository.findAll(dynamicQuery, pageable);
-        List<O> outPutDTO = pageData.getContent().stream().map(this::toDTO).collect(Collectors.toList());
-        Map<String, Object> meta = getMetaData(pageData);
-        return  new PageResponse<>(meta, outPutDTO);
-    }
 
-    private PageResponse<O> getBaseDataWithSearchSpecAndRequiredAttr(Map<String, String> searchCriteria,
-                                                                                             Optional<Set<String>> attributesOpt, Pageable pageable) {
-        Specification<V> dynamicQuerySpec = (rootSpec, query, criteriaBuilderSpec) -> {
-
-            List<Predicate> predicates = new ArrayList<>();
-            for (Map.Entry<String, String> entry : searchCriteria.entrySet()) {
-                String columnName = entry.getKey();
-                String columnValue = entry.getValue();
-                if (columnName.equals("page") || columnName.equals("size") || columnName.equals("attributes")
-                        || columnName.equals("userId")) {
-                    continue;
-                }
-                Path<String> columnPath = rootSpec.get(columnName);
-                if (isNumeric(columnValue)) {
-                    predicates.add(criteriaBuilderSpec.equal(columnPath, Double.parseDouble(columnValue)));
-                    log.info("3coloum value",columnValue);
-
-                } else {
-                    // Otherwise, use like predicate for string values
-                    predicates.add(criteriaBuilderSpec.like(criteriaBuilderSpec.lower(columnPath),
-                            "%" + columnValue.toLowerCase() + "%"));
-                    log.info("4coloum value",columnValue);
-
-                }
-            }
-            predicates.forEach(query::where);
-
-            return criteriaBuilderSpec.or(predicates.toArray(new Predicate[0]));
-        };
-
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createTupleQuery();
-        Root<BaseClientEntity> root = criteriaQuery.from(BaseClientEntity.class);
-
-        attributesOpt.ifPresent(attributes -> {
-            List<Selection<?>> selectionList = ProjectionsUtil.getSelectionList(root, attributes);
-
-            criteriaQuery.multiselect(selectionList);
-        });
-
-        criteriaQuery.where(dynamicQuerySpec.toPredicate((Root<V>) root, criteriaQuery, criteriaBuilder));
-
-        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("priority")));
-
-        TypedQuery<Tuple> typedQuery = entityManager.createQuery(criteriaQuery);
-        typedQuery.setFirstResult((int) pageable.getOffset());
-        typedQuery.setMaxResults(pageable.getPageSize());
-
-        List<ProjectionRow> projectionRowList = ProjectionsUtil.convert(typedQuery.getResultList());
-//        List<O> outPutDTO = projectionRowList.stream()
-//                .<I>map(this::toDTO)
-//                .collect(Collectors.toList());
-        List<O> outPutDTO = projectionRowList.stream().map(projectionRow->toDTO(projectionRow)).collect(Collectors.toList());
-        Map<String, Object> meta = new HashMap<>();
-        return  new PageResponse<>(meta, outPutDTO);
-    }
-
-
-
-
-    private boolean isNumeric(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
+        List<O> outPutDTO;
+        if (fieldsOpt.isPresent() && !fieldsOpt.get().isEmpty()) {
+            Set<String> fieldsToSelect = fieldsOpt.get();
+            outPutDTO = pageData.getContent().stream()
+                    .map(entity -> createDTOWithSelectedFields(entity, fieldsToSelect))
+                    .collect(Collectors.toList());
+        } else {
+            outPutDTO = pageData.getContent().stream().map(this::toDTO).collect(Collectors.toList());
         }
+
+        Map<String, Object> meta = getMetaData(pageData);
+        return new PageResponse<>(meta, outPutDTO);
     }
+
+    private O createDTOWithSelectedFields(V entity, Set<String> fieldsToSelect) {
+
+        return toDTOWithSelectedFields(entity, fieldsToSelect);
+    }
+
+    private O toDTOWithSelectedFields(V entity, Set<String> fieldsToSelect) {
+
+        return null;
+    }
+
+
+//    private  PageResponse<O> getBaseDataWithSearchSpecAndRequiredAttr(
+//            Map<String, String> searchCriteria,
+//            Optional<Set<String>> attributesOpt,
+//            Pageable pageable,
+//            Function<ProjectionRow, O> toDTOFunction) {
+//
+//        Specification<V> dynamicQuerySpec = (rootSpec, query, criteriaBuilderSpec) -> {
+//            List<Predicate> predicates = new ArrayList<>();
+//            for (Map.Entry<String, String> entry : searchCriteria.entrySet()) {
+//                String columnName = entry.getKey();
+//                String columnValue = entry.getValue();
+//                if (columnName.equals("page") || columnName.equals("size") || columnName.equals("attributes")
+//                        || columnName.equals("userId")) {
+//                    continue;
+//                }
+//                Path<String> columnPath = rootSpec.get(columnName);
+//
+//                try {
+//                    if (isNumeric(columnValue)) {
+//                        predicates.add(criteriaBuilderSpec.equal(columnPath, columnValue));
+//                        log.info("Numeric value for column: {}", columnValue);
+//                    } else {
+//                        predicates.add(criteriaBuilderSpec.like(criteriaBuilderSpec.lower(columnPath),
+//                                "%" + columnValue.toLowerCase() + "%"));
+//                        log.info("String value for column: {}", columnValue);
+//                    }
+//                } catch (NumberFormatException e) {
+//                    log.warn("Invalid numeric value for column: {}", columnValue);
+//                    // Handle the error or log additional information as needed
+//                    // You might choose to skip this column or take alternative actions
+//                }
+//            }
+//
+//            predicates.forEach(query::where);
+//
+//            return criteriaBuilderSpec.or(predicates.toArray(new Predicate[0]));
+//        };
+//
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createTupleQuery();
+//        Root<BaseClientEntity> root = criteriaQuery.from(BaseClientEntity.class);
+//
+//        attributesOpt.ifPresent(attributes -> {
+//            List<Selection<?>> selectionList = ProjectionsUtil.getSelectionList(root, attributes);
+//            criteriaQuery.multiselect(selectionList);
+//        });
+//
+//        criteriaQuery.where(dynamicQuerySpec.toPredicate((Root<V>) root, criteriaQuery, criteriaBuilder));
+//
+//        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("priority")));
+//
+//        TypedQuery<Tuple> typedQuery = entityManager.createQuery(criteriaQuery);
+//        typedQuery.setFirstResult((int) pageable.getOffset());
+//        typedQuery.setMaxResults(pageable.getPageSize());
+//
+//        List<ProjectionRow> projectionRowList = ProjectionsUtil.convert(typedQuery.getResultList());
+//        List<O> outPutDTO = projectionRowList.stream().map(toDTOFunction).collect(Collectors.toList());
+//
+//        Map<String, Object> meta = new HashMap<>();
+//        return new PageResponse<>(meta, outPutDTO);
+//    }
+
+
+
+//    private PageResponse<O> getBaseDataWithSearchSpecAndRequiredAttr(Map<String, String> searchCriteria,
+//                                                                     Optional<Set<String>> attributesOpt, Pageable pageable) {
+//        Specification<V> dynamicQuerySpec = (rootSpec, query, criteriaBuilderSpec) -> {
+//
+//            List<Predicate> predicates = new ArrayList<>();
+//            for (Map.Entry<String, String> entry : searchCriteria.entrySet()) {
+//                String columnName = entry.getKey();
+//                String columnValue = entry.getValue();
+//                if (columnName.equals("page") || columnName.equals("size") || columnName.equals("attributes")
+//                        || columnName.equals("userId")) {
+//                    continue;
+//                }
+//                Path<String> columnPath = rootSpec.get(columnName);
+//                if (isNumeric(columnValue)) {
+//                    predicates.add(criteriaBuilderSpec.equal(columnPath, Double.parseDouble(columnValue)));
+//                    log.info("3coloum value",columnValue);
+//
+//                } else {
+//                    // Otherwise, use like predicate for string values
+//                    predicates.add(criteriaBuilderSpec.like(criteriaBuilderSpec.lower(columnPath),
+//                            "%" + columnValue.toLowerCase() + "%"));
+//                    log.info("4coloum value",columnValue);
+//
+//                }
+//            }
+//            predicates.forEach(query::where);
+//
+//            return criteriaBuilderSpec.or(predicates.toArray(new Predicate[0]));
+//        };
+//
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createTupleQuery();
+//        Root<BaseClientEntity> root = criteriaQuery.from(BaseClientEntity.class);  // here entity.class
+//
+//        attributesOpt.ifPresent(attributes -> {
+//            List<Selection<?>> selectionList = ProjectionsUtil.getSelectionList(root, attributes);
+//            criteriaQuery.multiselect(selectionList);
+//        });
+//
+//        criteriaQuery.where(dynamicQuerySpec.toPredicate((Root<V>) root, criteriaQuery, criteriaBuilder));
+//
+//        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("priority")));
+//
+//        TypedQuery<Tuple> typedQuery = entityManager.createQuery(criteriaQuery);
+//        typedQuery.setFirstResult((int) pageable.getOffset());
+//        typedQuery.setMaxResults(pageable.getPageSize());
+//
+//        List<ProjectionRow> projectionRowList = ProjectionsUtil.convert(typedQuery.getResultList());
+//        List<O> outPutDTO = projectionRowList.stream()
+//                .map(this::<V>toDTO)
+//                .collect(Collectors.toList());
+//
+//        Map<String, Object> meta = new HashMap<>();
+//        return new PageResponse<>(meta, outPutDTO);
+//    }
+//
+//    private boolean isNumeric(String str) {
+//        try {
+//            Double.parseDouble(str);
+//            return true;
+//        } catch (NumberFormatException e) {
+//            return false;
+//        }
+//    }
 
 }

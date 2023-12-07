@@ -51,7 +51,7 @@ public class TATActivityResource extends BaseClientResource<TATActivity, TATActi
 
     @Override
     public ResponseEntity<PageResponse<TATActivityDTO>> search(Long clientId, Map<String, String> searchCriteria, Optional<Set<String>> attributesOpt, Pageable pageable) {
-        return null;
+        return super.search(clientId, searchCriteria, attributesOpt, pageable);
     }
 
     @Override

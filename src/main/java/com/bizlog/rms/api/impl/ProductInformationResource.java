@@ -57,7 +57,7 @@ public class ProductInformationResource
 
     @Override
     public ResponseEntity<PageResponse<ProductInformationDTO>> search(Long clientId, Map<String, String> searchCriteria, Optional<Set<String>> attributesOpt, Pageable pageable) {
-        return null;
+        return super.search(clientId, searchCriteria, attributesOpt, pageable);
     }
 
     @Transactional

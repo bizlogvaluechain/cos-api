@@ -82,11 +82,6 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
         return super.delete(clientId, id);
     }
 
-    // @Override
-    // public ResponseEntity<PageResponse<CustomerInfoDTO>> search(Long clientId, Map<String, String> map,
-    // Pageable pageable) {
-    // return null;
-    // }
 
     @Override
     protected CustomerInfo toEntity(CustomerInfoDTO dto) {

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -53,8 +54,8 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
     }
 
     @Override
-    public ResponseEntity<PageResponse<FrequencyDTO>> search(Long clientId, Map<String, String> searchCriteria, Optional<Set<String>> attributesOpt, Pageable pageable) {
-        return null;
+    public ResponseEntity<PageResponse<FrequencyDTO>> search(@PathVariable Long clientId, @RequestParam Map<String, String> searchCriteria,@RequestParam Optional<Set<String>> attributesOpt, Pageable pageable) {
+        return super.search(clientId, searchCriteria, attributesOpt, pageable);
     }
 
     @Transactional

@@ -54,7 +54,7 @@ public class LocationResource extends BaseClientResource<Location, LocationDTO, 
 
     @Override
     public ResponseEntity<PageResponse<LocationDTO>> search(Long clientId, Map<String, String> searchCriteria, Optional<Set<String>> attributesOpt, Pageable pageable) {
-        return null;
+        return super.search(clientId, searchCriteria, attributesOpt, pageable);
     }
 
     @Transactional
