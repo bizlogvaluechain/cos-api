@@ -16,7 +16,7 @@ public interface ClientAPI {
     @GetMapping("/{id}")
     ResponseEntity<ClientDTO> getById(Long id);
 
-    @GetMapping("/checkClientId/{id}")
+    @GetMapping("/is-client-exist/{id}")
     ResponseEntity<Boolean> checkClientId(Long id);
 
 }

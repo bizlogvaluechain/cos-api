@@ -7,7 +7,7 @@ services:
     volumes:
       - ./elk/logstash/:/etc/logstash/conf.d/
   #    - ./cos-api:/tmp/logs
-      - "C:/kmss_workspace/cos-api:/tmp/logs"
+      - "C:/kmss_workspace/cos-api:/tmp/logs "
     ports:
       - "5044:5044"
     environment:
