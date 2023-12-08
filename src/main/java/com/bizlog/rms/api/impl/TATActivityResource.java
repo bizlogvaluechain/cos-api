@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @Slf4j
 @RestController
 
@@ -43,6 +45,12 @@ public class TATActivityResource extends BaseClientResource<TATActivity, TATActi
             Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<TATActivityDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Pageable pageable) {
+        return super.search(clientId, searchCriteria, pageable);
     }
 
     @Override

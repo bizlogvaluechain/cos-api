@@ -5,14 +5,21 @@ import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.escalationMatrix.EscalationMatrixDTO;
 import com.bizlog.rms.entities.escalationMatrix.EscalationMatrix;
 import com.bizlog.rms.repository.BaseClientRepository;
+
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @Slf4j
@@ -34,6 +41,12 @@ public class EscalationMatrixResource extends
     public ResponseEntity<EscalationMatrixDTO> update(@PathVariable("clientId") Long clientId,
             @PathVariable("id") Long id, @RequestBody @Valid EscalationMatrixDTO escalationMatrixDTO) {
         return super.update(clientId, id, escalationMatrixDTO);
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<EscalationMatrixDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Optional<Set<String>> attributesOpt, Pageable pageable) {
+        return super.search(clientId, searchCriteria, pageable);
     }
 
     @Override

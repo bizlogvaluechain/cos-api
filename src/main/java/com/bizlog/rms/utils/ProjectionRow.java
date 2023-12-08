@@ -1,0 +1,12 @@
+package com.bizlog.rms.utils;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.util.Map;
+
+@AllArgsConstructor
+@Data
+public class ProjectionRow {
+    Map<String, String> contents;
+}

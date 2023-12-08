@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
+
 @Slf4j
 @RestController
 public class CustomerInfoResource extends BaseClientResource<CustomerInfo, CustomerInfoDTO, CustomerInfoDTO>
@@ -55,6 +57,12 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
     }
 
     @Override
+    public ResponseEntity<PageResponse<CustomerInfoDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public ResponseEntity<CustomerInfoDTO> getById(@PathVariable Long clientId,
             @PathVariable("id") Long customerInfoId) {
         return super.get(clientId, customerInfoId);
@@ -72,12 +80,6 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
     public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
-
-    // @Override
-    // public ResponseEntity<PageResponse<CustomerInfoDTO>> search(Long clientId, Map<String, String> map,
-    // Pageable pageable) {
-    // return null;
-    // }
 
     @Override
     protected CustomerInfo toEntity(CustomerInfoDTO dto) {

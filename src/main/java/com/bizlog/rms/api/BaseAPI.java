@@ -5,6 +5,8 @@ import com.bizlog.rms.dto.PageResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Map;
+
 public interface BaseAPI<I extends BaseDTO, O extends BaseDTO> {
 
     ResponseEntity<O> create(Long clientId, I inputDTO);
@@ -12,6 +14,8 @@ public interface BaseAPI<I extends BaseDTO, O extends BaseDTO> {
     ResponseEntity<O> getById(Long clientId, Long id);
 
     ResponseEntity<PageResponse<O>> getAll(Long clientId, Pageable pageable);
+
+    ResponseEntity<PageResponse<O>> search(Long clientId, Map<String, String> searchCriteria, Pageable pageable);
 
     ResponseEntity<O> update(Long clientId, Long id, I inputDTO);
 

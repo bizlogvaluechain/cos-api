@@ -7,6 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 @RequestMapping(value = "/api/v1/{clientId}/escalation-matrix")
 public interface EscalationMatrixAPI extends BaseAPI<EscalationMatrixDTO, EscalationMatrixDTO> {
     @PostMapping
@@ -20,6 +24,10 @@ public interface EscalationMatrixAPI extends BaseAPI<EscalationMatrixDTO, Escala
 
     @PutMapping("/{id}")
     ResponseEntity<EscalationMatrixDTO> update(Long Id, Long id, EscalationMatrixDTO escalationMatrixDTO);
+
+    @GetMapping("/search")
+    ResponseEntity<PageResponse<EscalationMatrixDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Optional<Set<String>> attributesOpt, Pageable pageable);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
