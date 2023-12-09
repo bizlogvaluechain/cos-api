@@ -24,10 +24,12 @@ import com.bizlog.rms.entities.notification.Notification;
 import com.bizlog.rms.entities.productInformation.ProductInformation;
 import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationConfig;
 import com.bizlog.rms.entities.users.User;
-import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+import java.util.Map;
+
+@Mapper(componentModel = "spring")
 public interface GenericMapper {
 
     ClientDTO toDTO(Client entity);
@@ -78,4 +80,7 @@ public interface GenericMapper {
 
     LocationDTO toDTO(Location location);
 
+//    @Mapping(target = "ticketsVolume", source = "ticketsVolume")
+    @Mapping(expression = "java(row.get(\"ticketsVolume\"))", target = "ticketsVolume")
+    FrequencyDTO toDTO(Map<String,String> row);
 }
