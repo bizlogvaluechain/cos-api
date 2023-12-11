@@ -13,12 +13,13 @@ import java.util.Map;
 @Service
 public class GenericSearchSpecification<T extends BaseClientEntity> {
 
-    public Specification<T> search(Long clientId, Map<String,String> fieldNamesWithKeyWords) {
+    public Specification<T> search(Long clientId, Map<String, String> fieldNamesWithKeyWords) {
         return (root, query, criteriaBuilder) -> {
             Join<Object, Object> orgJoin = root.join("client");
             List<Predicate> predicates = new ArrayList<>();
-            fieldNamesWithKeyWords.entrySet().stream().forEach(entry ->{
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get(entry.getKey())), "%" + entry.getValue().toLowerCase() + "%"));
+            fieldNamesWithKeyWords.entrySet().stream().forEach(entry -> {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get(entry.getKey())),
+                        "%" + entry.getValue().toLowerCase() + "%"));
             });
             predicates.add(criteriaBuilder.equal(orgJoin.get("id"), clientId));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

@@ -14,7 +14,7 @@ public class SearchCriteria {
     private String operation;
     private String dataOption;
 
-    public SearchCriteria(String filterKey, String operation, Object value){
+    public SearchCriteria(String filterKey, String operation, Object value) {
         super();
         this.filterKey = filterKey;
         this.operation = operation;

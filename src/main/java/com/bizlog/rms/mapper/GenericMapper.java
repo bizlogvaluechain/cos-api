@@ -80,7 +80,7 @@ public interface GenericMapper {
 
     LocationDTO toDTO(Location location);
 
-//    @Mapping(target = "ticketsVolume", source = "ticketsVolume")
+    // @Mapping(target = "ticketsVolume", source = "ticketsVolume")
     @Mapping(expression = "java(row.get(\"ticketsVolume\"))", target = "ticketsVolume")
-    FrequencyDTO toDTO(Map<String,String> row);
+    FrequencyDTO toDTO(Map<String, String> row);
 }

@@ -6,13 +6,11 @@ import cz.jirutka.rsql.parser.ast.LogicalOperator;
 import cz.jirutka.rsql.parser.ast.Node;
 import org.springframework.data.jpa.domain.Specification;
 
-
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GenericRsqlSpecBuilder<T> {
-
 
     public Specification<T> createSpecification(Node node) {
         if (node instanceof LogicalNode) {
@@ -25,11 +23,8 @@ public class GenericRsqlSpecBuilder<T> {
     }
 
     public Specification<T> createSpecification(LogicalNode logicalNode) {
-        List<Specification> specs = logicalNode.getChildren()
-                .stream()
-                .map(node -> createSpecification((Node) node))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        List<Specification> specs = logicalNode.getChildren().stream().map(node -> createSpecification((Node) node))
+                .filter(Objects::nonNull).collect(Collectors.toList());
 
         Specification<T> result = specs.get(0);
         if (logicalNode.getOperator() == LogicalOperator.AND) {
@@ -45,15 +40,9 @@ public class GenericRsqlSpecBuilder<T> {
         return result;
     }
 
-
     public Specification<T> createSpecification(ComparisonNode comparisonNode) {
-        Specification<T> result = Specification.where(
-                new GenericRsqlSpecification<T>(
-                        comparisonNode.getSelector(),
-                        comparisonNode.getOperator(),
-                        comparisonNode.getArguments()
-                )
-        );
+        Specification<T> result = Specification.where(new GenericRsqlSpecification<T>(comparisonNode.getSelector(),
+                comparisonNode.getOperator(), comparisonNode.getArguments()));
         return result;
     }
 }

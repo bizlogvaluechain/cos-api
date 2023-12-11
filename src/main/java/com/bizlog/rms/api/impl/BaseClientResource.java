@@ -75,9 +75,13 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         return null;
     }
 
-    public Class<V> getEntityClass() {return null;}
+    public Class<V> getEntityClass() {
+        return null;
+    }
 
-    public O toDTO(Map<String,String> row){ return null;}
+    public O toDTO(Map<String, String> row) {
+        return null;
+    }
 
     public ResponseEntity<O> create(Long clientId, I payloadDTO) {
         Client client = clientRepository.findById(clientId)
@@ -207,18 +211,17 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         return new PageResponse<>(meta, outPutDTO);
     }
 
-//    @GetMapping("/search")
-//    List<User> search(@RequestParam(value = "search") String search) {
-//        Node rootNode = new RSQLParser().parse(search);
-//        Specification<User> spec = rootNode.accept(new CustomRsqlVisitor<>());
-//        return repository.findAll(spec);
-//    }
+    // @GetMapping("/search")
+    // List<User> search(@RequestParam(value = "search") String search) {
+    // Node rootNode = new RSQLParser().parse(search);
+    // Specification<User> spec = rootNode.accept(new CustomRsqlVisitor<>());
+    // return repository.findAll(spec);
+    // }
 
-    public ResponseEntity<PageResponse<O>> advanceSearch( String search, Optional<Set<String>> attributesOpt,
-                                                  Pageable pageable){
+    public ResponseEntity<PageResponse<O>> advanceSearch(String search, Optional<Set<String>> attributesOpt,
+            Pageable pageable) {
         Node rootNode = new RSQLParser().parse(search);
         Specification<V> dynamicQuerySpec = rootNode.accept(new CustomRsqlVisitor<>());
-
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createTupleQuery();
@@ -239,15 +242,14 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         typedQuery.setMaxResults(pageable.getPageSize());
 
         List<ProjectionRow> projectionRowList = ProjectionsUtil.convert(typedQuery.getResultList());
-        List<O> outPutDTO = projectionRowList.stream().map(x -> x.getContents()).map(this::toDTO).collect(Collectors.toList());
+        List<O> outPutDTO = projectionRowList.stream().map(x -> x.getContents()).map(this::toDTO)
+                .collect(Collectors.toList());
 
-       // Page<V> pageData = baseClientRepository.findAll(dynamicQuerySpec, pageable);
-        //List<O> outPutDTO = pageData.getContent().stream().map(this::toDTO).collect(Collectors.toList());
-        Map<String, Object> meta = new HashMap<>();//getMetaData(pageData);
+        // Page<V> pageData = baseClientRepository.findAll(dynamicQuerySpec, pageable);
+        // List<O> outPutDTO = pageData.getContent().stream().map(this::toDTO).collect(Collectors.toList());
+        Map<String, Object> meta = new HashMap<>();// getMetaData(pageData);
         PageResponse<O> pageResponse = new PageResponse<>(meta, outPutDTO);
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
-
-
 
 }

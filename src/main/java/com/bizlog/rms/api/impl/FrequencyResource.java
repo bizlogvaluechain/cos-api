@@ -66,7 +66,8 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
     }
 
     @Override
-    public ResponseEntity<PageResponse<FrequencyDTO>> advanceSearch(@RequestParam("search") String search, @RequestParam("requiredAttributes")Optional<Set<String>> attributesOpt, Pageable pageable) {
+    public ResponseEntity<PageResponse<FrequencyDTO>> advanceSearch(@RequestParam("search") String search,
+            @RequestParam("requiredAttributes") Optional<Set<String>> attributesOpt, Pageable pageable) {
         return super.advanceSearch(search, attributesOpt, pageable);
     }
 
@@ -84,10 +85,10 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
         return Frequency.class;
     }
 
-    public FrequencyDTO toDTO(Map<String,String> row){
-//        FrequencyDTO dto = new FrequencyDTO();
-//        dto.setTicketsVolume(row.get("ticketsVolume"));
-//        return dto;
+    public FrequencyDTO toDTO(Map<String, String> row) {
+        // FrequencyDTO dto = new FrequencyDTO();
+        // dto.setTicketsVolume(row.get("ticketsVolume"));
+        // return dto;
         return getMapper().toDTO(row);
     }
 }
