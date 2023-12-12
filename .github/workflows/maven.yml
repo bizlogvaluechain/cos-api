@@ -62,6 +62,10 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./target/site/jacoco/jacoco.xml  # Adjust the path based on your project structure
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
 
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
