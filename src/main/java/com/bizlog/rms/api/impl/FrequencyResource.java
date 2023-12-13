@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 @RestController
 @Slf4j
 public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDTO, FrequencyDTO>
@@ -52,6 +56,12 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
     @Override
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<FrequencyDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Optional<Set<String>> attributesOpt, Pageable pageable) {
+        return super.search(clientId, searchCriteria, pageable);
     }
 
     @Override

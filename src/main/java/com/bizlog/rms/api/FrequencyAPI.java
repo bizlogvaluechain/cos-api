@@ -6,6 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 @RequestMapping(value = "/api/v1/{clientId}/frequency")
 public interface FrequencyAPI extends BaseAPI<FrequencyDTO, FrequencyDTO> {
     @PostMapping
@@ -22,4 +26,9 @@ public interface FrequencyAPI extends BaseAPI<FrequencyDTO, FrequencyDTO> {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    @GetMapping("/search")
+    ResponseEntity<PageResponse<FrequencyDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Optional<Set<String>> attributesOpt, Pageable pageable);
+
 }

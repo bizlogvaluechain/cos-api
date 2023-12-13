@@ -2,6 +2,7 @@ package com.bizlog.rms.api.impl;
 
 import com.bizlog.rms.dto.BaseDTO;
 import com.bizlog.rms.dto.PageResponse;
+
 import com.bizlog.rms.entities.BaseClientEntity;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.exception.ResourceNotFoundException;
@@ -9,17 +10,20 @@ import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.BaseClientRepository;
 import com.bizlog.rms.repository.ClientRepository;
 import com.bizlog.rms.utils.OperationType;
+
+import jakarta.persistence.criteria.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -139,6 +143,53 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         getBaseClientRepository().deleteById(id);
         postPersist(clientId, null, OperationType.DELETE);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    public ResponseEntity<PageResponse<O>> search(Long clientId, Map<String, String> searchCriteria,
+            Pageable pageable) {
+        PageResponse<O> pageResponse = getBaseDataWithSearchSpec(searchCriteria, pageable);
+        return new ResponseEntity<>(Objects.requireNonNull(pageResponse), HttpStatus.OK);
+    }
+
+    private PageResponse<O> getBaseDataWithSearchSpec(Map<String, String> searchCriteria, Pageable pageable) {
+        Specification<V> dynamicQuery = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            for (Map.Entry<String, String> entry : searchCriteria.entrySet()) {
+                String columnName = entry.getKey();
+                String columnValue = entry.getValue();
+
+                if (columnName.equals("page") || columnName.equals("size") || columnName.equals("attributes")
+                        || columnName.equals("userId")) {
+                    continue;
+                }
+
+                Path<?> columnPath = root.get(columnName);
+
+                Class<?> attributeType = columnPath.getJavaType();
+                if (attributeType.equals(String.class)) {
+                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower((Path<String>) columnPath),
+                            "%" + columnValue.toLowerCase() + "%"));
+                } else if (attributeType.equals(Boolean.class)) {
+                    predicates
+                            .add(criteriaBuilder.equal((Path<Boolean>) columnPath, Boolean.parseBoolean(columnValue)));
+                } else if (attributeType.equals(LocalDate.class)) {
+                    LocalDate dateValue = LocalDate.parse(columnValue);
+                    predicates.add(criteriaBuilder.equal((Path<LocalDate>) columnPath, dateValue));
+                } else if (attributeType.equals(ZonedDateTime.class)) {
+                    ZonedDateTime zonedDateTime = ZonedDateTime.parse(columnValue);
+                    predicates.add(criteriaBuilder.equal((Path<ZonedDateTime>) columnPath, zonedDateTime));
+                } else if (attributeType.equals(Integer.class) || attributeType.equals(Long.class)) {
+                    predicates.add(criteriaBuilder.equal((Path<Number>) columnPath, Long.parseLong(columnValue)));
+                }
+            }
+
+            return criteriaBuilder.or(predicates.toArray(new Predicate[0]));
+        };
+
+        Page<V> pageData = baseClientRepository.findAll(dynamicQuery, pageable);
+        List<O> outPutDTO = pageData.getContent().stream().map(this::toDTO).collect(Collectors.toList());
+        Map<String, Object> meta = getMetaData(pageData);
+        return new PageResponse<>(meta, outPutDTO);
     }
 
 }

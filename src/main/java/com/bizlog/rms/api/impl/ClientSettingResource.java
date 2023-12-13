@@ -39,6 +39,12 @@ public class ClientSettingResource extends BaseClientResource<ClientSetting, Cli
     }
 
     @Override
+    public ResponseEntity<PageResponse<ClientSettingDTO>> search(Long clientId, Map<String, String> searchCriteria,
+            Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public ResponseEntity<ClientSettingDTO> getById(@PathVariable Long clientId,
             @PathVariable("id") Long clientSetttingId) {
         return super.get(clientId, clientSetttingId);
@@ -55,11 +61,6 @@ public class ClientSettingResource extends BaseClientResource<ClientSetting, Cli
     @Override
     public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
-    }
-
-    public ResponseEntity<PageResponse<ClientSettingDTO>> search(Long clientId, Map<String, String> map,
-            Pageable pageable) {
-        return null;
     }
 
     @Override

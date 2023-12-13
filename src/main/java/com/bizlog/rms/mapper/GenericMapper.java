@@ -77,4 +77,5 @@ public interface GenericMapper {
     Location toEntity(LocationDTO locationDTO);
 
     LocationDTO toDTO(Location location);
+
 }

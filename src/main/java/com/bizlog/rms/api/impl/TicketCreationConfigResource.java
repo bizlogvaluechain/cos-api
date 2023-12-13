@@ -6,20 +6,27 @@ import com.bizlog.rms.dto.SOP_TAT.TicketCreationConfigDTO;
 import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationConfig;
 import com.bizlog.rms.repository.BaseClientRepository;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.*;
+
+@Slf4j
 @RestController
 public class TicketCreationConfigResource
         extends BaseClientResource<TicketCreationConfig, TicketCreationConfigDTO, TicketCreationConfigDTO>
         implements TicketCreationConfigAPI {
 
-    public TicketCreationConfigResource(BaseClientRepository<TicketCreationConfig, Long> baseClientRepository) {
-        super(baseClientRepository);
+    public TicketCreationConfigResource(
+            BaseClientRepository<TicketCreationConfig, Long> ticketCreationConfigRepository) {
+        super(ticketCreationConfigRepository);
     }
 
     @Override
@@ -32,6 +39,12 @@ public class TicketCreationConfigResource
     public ResponseEntity<PageResponse<TicketCreationConfigDTO>> getAll(@PathVariable("clientId") Long clientId,
             Pageable pageable) {
         return super.getAllConfig(clientId, pageable);
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<TicketCreationConfigDTO>> search(@PathVariable Long clientId,
+            @RequestParam Map<String, String> searchCriteria, Pageable pageable) {
+        return super.search(clientId, searchCriteria, pageable);
     }
 
     @Transactional
