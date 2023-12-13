@@ -38,12 +38,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
    #     run: ./mvnw -e -B --settings .github/mvn-settings.xml -Dquickly-ci install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=quarkusio -Dsonar.projectKey=quarkusio_quarkus -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectName=Quarkus -Dsonar.java.libraries=/home/runner/.m2/repository/**/*.jar
-#          run: ./mvnw -e -B -Dquickly-ci install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=quarkusio -Dsonar.projectKey=cos-api -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectName=cos-api -Dsonar.java.libraries=/home/runner/.m2/repository/**/*.jar
-          run: |
-            ./mvnw -e -B -Dquickly-ci install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-            -Dsonar.organization=quarkusio \
-            -Dsonar.projectKey=cos-api \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.projectName=cos-api \
-            -Dsonar.java.libraries=/home/runner/.m2/repository/**/*.jar \
-            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+          run: ./mvnw -e -B -Dquickly-ci install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=quarkusio -Dsonar.projectKey=cos-api -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectName=cos-api -Dsonar.java.libraries=/home/runner/.m2/repository/**/*.jar
+#          run: |
+#            ./mvnw -e -B -Dquickly-ci install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+#            -Dsonar.organization=quarkusio \
+#            -Dsonar.projectKey=cos-api \
+#            -Dsonar.host.url=https://sonarcloud.io \
+#            -Dsonar.projectName=cos-api \
+#            -Dsonar.java.libraries=/home/runner/.m2/repository/**/*.jar \
+#            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
