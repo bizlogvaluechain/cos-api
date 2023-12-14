@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 class ClientApiTest extends BaseApiTest {
 
-    public static final String CLIENT_URL = "/api/v1/client";
+    public static final String CLIENT_URL = "/api/v1/cos/client";
     @Autowired
     private ClientRepository clientRepository;
 

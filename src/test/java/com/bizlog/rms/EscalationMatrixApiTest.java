@@ -43,7 +43,7 @@ public class EscalationMatrixApiTest extends BaseApiTest {
     void should_retrieve_with_valid_user_id() throws Exception {
         Long clientId = escalationMatrixRepository.findAll().get(0).getclientId();
         Long id = escalationMatrixRepository.findAll().get(0).getId();
-        this.mockMvc.perform(get("/api/v1/{clientId}/escalation-matrix/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/escalation-matrix/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -51,7 +51,7 @@ public class EscalationMatrixApiTest extends BaseApiTest {
     void should_not_retrieve_with_invalid_user_id() throws Exception {
         int clientId = 11;
         int id = 11;
-        this.mockMvc.perform(get("/api/v1/{clientId}/escalation-matrix/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/escalation-matrix/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -65,7 +65,7 @@ public class EscalationMatrixApiTest extends BaseApiTest {
         escalationMatrix.setOpsContactInfo("IDP");
         escalationMatrix.setEmergencyContactInfo("IDP");
         this.mockMvc
-                .perform(post("/api/v1/{clientId}/escalation-matrix", client.getId())
+                .perform(post("/api/v1/cos/{clientId}/escalation-matrix", client.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrix).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
@@ -79,7 +79,7 @@ public class EscalationMatrixApiTest extends BaseApiTest {
         escalationMatrix.setBusinessContactInfo("IDP");
         escalationMatrix.setOpsContactInfo("IDP");
         escalationMatrix.setEmergencyContactInfo("IDP");
-        this.mockMvc.perform(post("/api/v1/{clientId}/escalation-matrix", clientId)
+        this.mockMvc.perform(post("/api/v1/cos/{clientId}/escalation-matrix", clientId)
                 .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrix).orElse(""))).andDo(print())
                 .andExpect(status().isNotFound());
     }
@@ -103,7 +103,7 @@ public class EscalationMatrixApiTest extends BaseApiTest {
         updatedEscalationMatrix.setOpsContactInfo("UpdatedOpsInfo");
         updatedEscalationMatrix.setEmergencyContactInfo("UpdatedEmergencyInfo");
         this.mockMvc.perform(
-                put("/api/v1/{clientId}/escalation-matrix/{id}", client.getId(), initialEscalationMatrix.getId())
+                put("/api/v1/cos/{clientId}/escalation-matrix/{id}", client.getId(), initialEscalationMatrix.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedEscalationMatrix).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updatedEscalationMatrix).orElse("")));
@@ -125,7 +125,7 @@ public class EscalationMatrixApiTest extends BaseApiTest {
 
         // Perform the PUT request to update the EscalationMatrix
         this.mockMvc
-                .perform(put("/api/v1/{clientId}/escalation-matrix/{id}", clientId, nonexistentEscalationMatrixId)
+                .perform(put("/api/v1/cos/{clientId}/escalation-matrix/{id}", clientId, nonexistentEscalationMatrixId)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedEscalationMatrix).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
     }
@@ -143,7 +143,7 @@ public class EscalationMatrixApiTest extends BaseApiTest {
         escalationMatrix = escalationMatrixRepository.save(escalationMatrix);
 
         this.mockMvc
-                .perform(delete("/api/v1/{clientId}/escalation-matrix/{id}", client.getId(), escalationMatrix.getId()))
+                .perform(delete("/api/v1/cos/{clientId}/escalation-matrix/{id}", client.getId(), escalationMatrix.getId()))
                 .andDo(print()).andExpect(status().isNoContent());
 
     }

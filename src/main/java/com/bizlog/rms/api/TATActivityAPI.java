@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(value = "/api/v1/{clientId}/tatActivities")
+@RequestMapping(value = "/api/v1/cos/{clientId}/tatActivities")
 public interface TATActivityAPI extends BaseAPI<TATActivityDTO, TATActivityDTO> {
     @PostMapping
     ResponseEntity<TATActivityDTO> create(@PathVariable("clientId") Long clientId,

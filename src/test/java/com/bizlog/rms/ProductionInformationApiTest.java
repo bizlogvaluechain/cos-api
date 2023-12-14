@@ -49,7 +49,7 @@ public class ProductionInformationApiTest extends BaseApiTest {
     void should_retrieve_with_valid_user_id() throws Exception {
         Long clientId = productInformatiomRepository.findAll().get(0).getclientId();
         Long id = productInformatiomRepository.findAll().get(0).getId();
-        this.mockMvc.perform(get("/api/v1/{clientId}/product-information/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/product-information/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -57,7 +57,7 @@ public class ProductionInformationApiTest extends BaseApiTest {
     void should_not_retrieve_with_invalid_user_id() throws Exception {
         int clientId = 11;
         int id = 11;
-        this.mockMvc.perform(get("/api/v1/{clientId}/product-information/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/product-information/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -85,7 +85,7 @@ public class ProductionInformationApiTest extends BaseApiTest {
         productInformation.setIsVehicleNeeded(true);
         productInformation.setIsWareHousingNeeded(true);
         this.mockMvc
-                .perform(post("/api/v1/{clientId}/product-information", client.getId())
+                .perform(post("/api/v1/cos/{clientId}/product-information", client.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(productInformation)))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
@@ -115,7 +115,7 @@ public class ProductionInformationApiTest extends BaseApiTest {
         productInformation.setIsVehicleNeeded(true);
         productInformation.setIsWareHousingNeeded(true);
         this.mockMvc
-                .perform(post("/api/v1/{clientId}/product-information", clientId)
+                .perform(post("/api/v1/cos/{clientId}/product-information", clientId)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(productInformation).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
     }
@@ -155,7 +155,7 @@ public class ProductionInformationApiTest extends BaseApiTest {
         updateProductInformation.setIsVehicleNeeded(true);
 
         this.mockMvc.perform(
-                put("/api/v1/{clientId}/product-information/{id}", client.getId(), initialProductInformation.getId())
+                put("/api/v1/cos/{clientId}/product-information/{id}", client.getId(), initialProductInformation.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateProductInformation).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updateProductInformation).orElse("")));
@@ -175,7 +175,7 @@ public class ProductionInformationApiTest extends BaseApiTest {
         updateProductInformation.setIsVehicleNeeded(true);
 
         this.mockMvc
-                .perform(put("/api/v1/{clientId}/product-information/{id}", clientId, id)
+                .perform(put("/api/v1/cos/{clientId}/product-information/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateProductInformation).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
 
@@ -208,7 +208,7 @@ public class ProductionInformationApiTest extends BaseApiTest {
         productInformation.setClient(client);
         productInformation = productInformatiomRepository.save(productInformation);
         this.mockMvc.perform(
-                delete("/api/v1/{clientId}/product-information/{id}", client.getId(), productInformation.getId()))
+                delete("/api/v1/cos/{clientId}/product-information/{id}", client.getId(), productInformation.getId()))
                 .andDo(print()).andExpect(status().isNoContent());
     }
 
@@ -216,7 +216,7 @@ public class ProductionInformationApiTest extends BaseApiTest {
     void should_not_delete_nonexistent_product_information() throws Exception {
         int clientId = 11;
         int nonexistentId = 999;
-        this.mockMvc.perform(delete("/api/v1/{clientId}/product-information/{id}", clientId, nonexistentId))
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/product-information/{id}", clientId, nonexistentId))
                 .andDo(print()).andExpect(status().isNotFound());
     }
 

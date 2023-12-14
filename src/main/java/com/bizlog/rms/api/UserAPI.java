@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/v1/{clientId}")
+@RequestMapping("/api/v1/cos/{clientId}")
 public interface UserAPI {
 
     @GetMapping("/{id}")

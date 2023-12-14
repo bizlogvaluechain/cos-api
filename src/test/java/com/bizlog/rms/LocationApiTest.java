@@ -49,7 +49,7 @@ public class LocationApiTest extends BaseApiTest {
     void should_retrieve_with_valid_user_id() throws Exception {
         Long clientId = locationRepository.findAll().get(0).getclientId();
         Long id = locationRepository.findAll().get(0).getId();
-        this.mockMvc.perform(get("/api/v1/{clientId}/location/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/location/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -57,7 +57,7 @@ public class LocationApiTest extends BaseApiTest {
     void should_not_retrieve_with_invalid_user_id() throws Exception {
         int clientId = 11;
         int id = 11;
-        this.mockMvc.perform(get("/api/v1/{clientId}/location/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/location/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -85,7 +85,7 @@ public class LocationApiTest extends BaseApiTest {
         location.setSelectStates("AP");
         location.setSelectCities("viz");
         this.mockMvc
-                .perform(post("/api/v1/{clientId}/location", client.getId()).contentType(MediaType.APPLICATION_JSON)
+                .perform(post("/api/v1/cos/{clientId}/location", client.getId()).contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(location)))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
@@ -114,7 +114,7 @@ public class LocationApiTest extends BaseApiTest {
         location.setSelectStates("AP");
         location.setSelectCities("viz");
         this.mockMvc
-                .perform(post("/api/v1/{clientId}/notification", clientId).contentType(MediaType.APPLICATION_JSON)
+                .perform(post("/api/v1/cos/{clientId}/notification", clientId).contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(location)))
                 .andDo(print()).andExpect(status().isNotFound());
     }
@@ -151,7 +151,7 @@ public class LocationApiTest extends BaseApiTest {
         updatedLocation.setSelectCities("patna");
 
         this.mockMvc
-                .perform(put("/api/v1/{clientId}/location/{id}", client.getId(), initialLocation.getId())
+                .perform(put("/api/v1/cos/{clientId}/location/{id}", client.getId(), initialLocation.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedLocation).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updatedLocation).orElse("")));
@@ -167,7 +167,7 @@ public class LocationApiTest extends BaseApiTest {
         updatedLocation.setSelectStates("bihar");
         updatedLocation.setSelectCities("patna");
 
-        this.mockMvc.perform(put("/api/v1/{clientId}/location/{id}", clientId, id)
+        this.mockMvc.perform(put("/api/v1/cos/{clientId}/location/{id}", clientId, id)
                 .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedLocation).orElse(""))).andDo(print())
                 .andExpect(status().isNotFound());
     }
@@ -197,7 +197,7 @@ public class LocationApiTest extends BaseApiTest {
         location.setClient(client);
         location.setSelectCities("viz");
         location = locationRepository.save(location);
-        this.mockMvc.perform(delete("/api/v1/{clientId}/location/{id}", client.getId(), location.getId()))
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/location/{id}", client.getId(), location.getId()))
                 .andDo(print()).andExpect(status().isNoContent());
     }
 
@@ -205,7 +205,7 @@ public class LocationApiTest extends BaseApiTest {
     void should_not_delete_nonexistent_location() throws Exception {
         int clientId = 11;
         int nonexistentId = 999;
-        this.mockMvc.perform(delete("/api/v1/{clientId}/location/{id}", clientId, nonexistentId)).andDo(print())
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/location/{id}", clientId, nonexistentId)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(value = "/api/v1/{clientId}/notification")
+@RequestMapping(value = "/api/v1/cos/{clientId}/notification")
 public interface NotificationAPI extends BaseAPI<NotificationDTO, NotificationDTO> {
     @PostMapping
     ResponseEntity<NotificationDTO> create(Long clientId, NotificationDTO notificationDTO);
