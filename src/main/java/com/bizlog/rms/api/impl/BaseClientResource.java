@@ -9,8 +9,16 @@ import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.BaseClientRepository;
 import com.bizlog.rms.repository.ClientRepository;
+import com.bizlog.rms.rsql.CustomRsqlVisitor;
 import com.bizlog.rms.utils.OperationType;
 
+import com.bizlog.rms.utils.ProjectionRow;
+import com.bizlog.rms.utils.ProjectionsUtil;
+import cz.jirutka.rsql.parser.RSQLParser;
+import cz.jirutka.rsql.parser.ast.Node;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Tuple;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +48,9 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     @Autowired
     private ClientRepository clientRepository;
 
+    @Autowired
+    private EntityManager entityManager;
+
     public BaseClientResource(BaseClientRepository<V, Long> baseClientRepository) {
         this.baseClientRepository = baseClientRepository;
     }
@@ -61,6 +72,14 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     }
 
     protected O toDTO(V entity) {
+        return null;
+    }
+
+    public Class<V> getEntityClass() {
+        return null;
+    }
+
+    public O toDTO(Map<String, String> row) {
         return null;
     }
 
@@ -190,6 +209,47 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         List<O> outPutDTO = pageData.getContent().stream().map(this::toDTO).collect(Collectors.toList());
         Map<String, Object> meta = getMetaData(pageData);
         return new PageResponse<>(meta, outPutDTO);
+    }
+
+    // @GetMapping("/search")
+    // List<User> search(@RequestParam(value = "search") String search) {
+    // Node rootNode = new RSQLParser().parse(search);
+    // Specification<User> spec = rootNode.accept(new CustomRsqlVisitor<>());
+    // return repository.findAll(spec);
+    // }
+
+    public ResponseEntity<PageResponse<O>> advanceSearch(String search, Optional<Set<String>> attributesOpt,
+            Pageable pageable) {
+        Node rootNode = new RSQLParser().parse(search);
+        Specification<V> dynamicQuerySpec = rootNode.accept(new CustomRsqlVisitor<>());
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createTupleQuery();
+        Root<V> root = criteriaQuery.from(getEntityClass());
+
+        attributesOpt.ifPresent(attributes -> {
+            // Create an array of Path objects representing selected attributes
+            List<Selection<?>> selectionList = ProjectionsUtil.getSelectionList(root, attributes);
+
+            // Apply projections directly on the criteria query
+            criteriaQuery.multiselect(selectionList);
+        });
+
+        criteriaQuery.where(dynamicQuerySpec.toPredicate(root, criteriaQuery, criteriaBuilder));
+
+        TypedQuery<Tuple> typedQuery = entityManager.createQuery(criteriaQuery);
+        typedQuery.setFirstResult((int) pageable.getOffset());
+        typedQuery.setMaxResults(pageable.getPageSize());
+
+        List<ProjectionRow> projectionRowList = ProjectionsUtil.convert(typedQuery.getResultList());
+        List<O> outPutDTO = projectionRowList.stream().map(x -> x.getContents()).map(this::toDTO)
+                .collect(Collectors.toList());
+
+        // Page<V> pageData = baseClientRepository.findAll(dynamicQuerySpec, pageable);
+        // List<O> outPutDTO = pageData.getContent().stream().map(this::toDTO).collect(Collectors.toList());
+        Map<String, Object> meta = new HashMap<>();// getMetaData(pageData);
+        PageResponse<O> pageResponse = new PageResponse<>(meta, outPutDTO);
+        return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
 
 }

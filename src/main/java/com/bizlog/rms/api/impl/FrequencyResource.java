@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -65,6 +66,12 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
     }
 
     @Override
+    public ResponseEntity<PageResponse<FrequencyDTO>> advanceSearch(@RequestParam("search") String search,
+            @RequestParam("requiredAttributes") Optional<Set<String>> attributesOpt, Pageable pageable) {
+        return super.advanceSearch(search, attributesOpt, pageable);
+    }
+
+    @Override
     protected FrequencyDTO toDTO(Frequency entity) {
         return getMapper().toDTO(entity);
     }
@@ -72,5 +79,16 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
     @Override
     protected Frequency toEntity(FrequencyDTO dto) {
         return getMapper().toEntity(dto);
+    }
+
+    public Class<Frequency> getEntityClass() {
+        return Frequency.class;
+    }
+
+    public FrequencyDTO toDTO(Map<String, String> row) {
+        // FrequencyDTO dto = new FrequencyDTO();
+        // dto.setTicketsVolume(row.get("ticketsVolume"));
+        // return dto;
+        return getMapper().toDTO(row);
     }
 }
