@@ -21,4 +21,9 @@ public class TicketCreationConfigDTO extends BaseDTO {
     @ElementCollection
     @NotEmpty(message = "ticketCreationBasedOn should not be empty")
     private List<TicketCreationBasedOn> ticketCreationBasedOn;
+    private String city;
+    private String clientName;
+    private String phoneNumber;
+    private String pincode;
+    private String address;
 }
