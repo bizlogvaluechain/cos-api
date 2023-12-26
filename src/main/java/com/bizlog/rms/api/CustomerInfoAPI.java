@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface CustomerInfoAPI extends BaseAPI<CustomerInfoDTO, CustomerInfoDTO> {
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
     ResponseEntity<CustomerInfoDTO> create(Long clientId, CustomerInfoDTO customerInfoDTO, MultipartFile gstFile,
-            MultipartFile panFile, MultipartFile msmeFile);
+            MultipartFile panOrAadharFile);
 
     @GetMapping("/{id}")
     ResponseEntity<CustomerInfoDTO> getById(Long clientId, Long id);
