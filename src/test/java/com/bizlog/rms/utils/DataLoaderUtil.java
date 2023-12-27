@@ -44,7 +44,7 @@ public class DataLoaderUtil {
         client.setDomainName("abcdefghi");
         client.setActive(true);
         client.setType("abcde");
-        client.setDateOfOnboarding(LocalDateTime.of(2023, 10, 12, 0, 0));
+        client.setDateOfOnboarding(23122023L);
         return client;
     }
 
@@ -82,9 +82,9 @@ public class DataLoaderUtil {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setDayEndTime(LocalDateTime.of(2023, 10, 12, 0, 0));
-        frequency.setDayStartTime(LocalDateTime.of(2023, 10, 12, 0, 0));
-        frequency.setOnboardingDate(LocalDateTime.of(2023, 10, 12, 0, 0));
+        frequency.setDayEndTime(23122023L);
+        frequency.setDayStartTime(23122023L);
+        frequency.setOnboardingDate(23122023L);
         List<HolidayApplicable> holidayApplicables = new ArrayList<>();
         holidayApplicables.add(holidayApplicable);
         frequency.setHolidayApplicable(holidayApplicables);
