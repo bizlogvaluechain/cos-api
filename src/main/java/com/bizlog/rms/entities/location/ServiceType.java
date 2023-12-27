@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Embeddable
 public class ServiceType {
-    private String deliverableArea;
-    private String nonDeliverableArea;
-    private String outDeliverableArea;
+    private Boolean deliverableArea;
+    private Boolean nonDeliverableArea;
+    private Boolean outDeliverableArea;
 }

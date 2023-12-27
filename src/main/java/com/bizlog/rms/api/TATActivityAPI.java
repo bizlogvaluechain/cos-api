@@ -25,4 +25,6 @@ public interface TATActivityAPI extends BaseAPI<TATActivityDTO, TATActivityDTO> 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id);
 
+    @GetMapping("/getByClientId")
+    ResponseEntity<TATActivityDTO> getByClientId(Long clientId);
 }

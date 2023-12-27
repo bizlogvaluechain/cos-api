@@ -75,4 +75,8 @@ public class TATActivityResource extends BaseClientResource<TATActivity, TATActi
         return getMapper().toDTO(entity);
     }
 
+    @Override
+    public ResponseEntity<TATActivityDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
+    }
 }

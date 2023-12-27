@@ -35,4 +35,6 @@ public interface FrequencyAPI extends BaseAPI<FrequencyDTO, FrequencyDTO> {
     ResponseEntity<PageResponse<FrequencyDTO>> advanceSearch(@RequestParam("search") String search,
             @RequestParam("requiredAttributes") Optional<Set<String>> attributesOpt, Pageable pageable);
 
+    @GetMapping("/getByClientId")
+    ResponseEntity<FrequencyDTO> getByClientId(Long clientId);
 }

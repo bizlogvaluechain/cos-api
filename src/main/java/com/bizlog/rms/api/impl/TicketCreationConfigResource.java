@@ -57,7 +57,7 @@ public class TicketCreationConfigResource
 
     @Override
     public ResponseEntity<TicketCreationConfigDTO> update(@PathVariable("clientId") Long clientId,
-            @PathVariable("id") Long id, @RequestBody @Valid TicketCreationConfigDTO ticketCreationConfigDTO) {
+            @PathVariable("id") Long id, @RequestBody TicketCreationConfigDTO ticketCreationConfigDTO) {
         return super.update(clientId, id, ticketCreationConfigDTO);
     }
 
@@ -75,5 +75,10 @@ public class TicketCreationConfigResource
     @Override
     protected TicketCreationConfig toEntity(TicketCreationConfigDTO dto) {
         return getMapper().toEntity(dto);
+    }
+
+    @Override
+    public ResponseEntity<TicketCreationConfigDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
     }
 }

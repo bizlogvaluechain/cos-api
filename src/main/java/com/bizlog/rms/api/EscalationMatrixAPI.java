@@ -31,4 +31,7 @@ public interface EscalationMatrixAPI extends BaseAPI<EscalationMatrixDTO, Escala
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    @GetMapping("/getByClientId")
+    ResponseEntity<EscalationMatrixDTO> getByClientId(Long clientId);
 }

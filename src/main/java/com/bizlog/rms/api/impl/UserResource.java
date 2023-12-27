@@ -46,7 +46,7 @@ public class UserResource extends BaseClientResource<User, UserDTO, UserDTO> imp
     }
 
     @Override
-    public ResponseEntity<UserDTO> getById(Long clientId, Long id) {
+    public ResponseEntity<UserDTO> getById(@PathVariable("clientId") Long clientId,@PathVariable("id") Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found", "id", id));
         UserDTO userDTO = getMapper().toDTO(user);

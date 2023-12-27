@@ -22,4 +22,7 @@ public interface TicketCreationConfigAPI extends BaseAPI<TicketCreationConfigDTO
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    @GetMapping("/getByClientId")
+    ResponseEntity<TicketCreationConfigDTO> getByClientId(Long clientId);
 }

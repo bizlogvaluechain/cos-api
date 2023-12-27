@@ -14,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class LocationDTO extends BaseDTO {
     private String bizlogLocationMaster;
-    private List<ServiceType> serviceType;
-    private List<Charge> charge;
+    private ServiceType serviceType;
+    private Charge charge;
     private String selectStates;
     private String selectCities;
 }

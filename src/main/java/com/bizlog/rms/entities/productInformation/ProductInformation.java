@@ -16,9 +16,8 @@ public class ProductInformation extends BaseClientEntity {
     private String productCategory;
     @Column(name = "productSubCategory", nullable = false)
     private String productSubCategory;
-    @Column(name = "productSize", nullable = false)
-    @ElementCollection(targetClass = ProductSize.class, fetch = FetchType.EAGER)
-    private List<ProductSize> productSize;
+    @Embedded
+    private ProductSize productSize;
     @Column(name = "isInventoryNeeded", nullable = false)
     private Boolean isInventoryNeeded;
     @Column(name = "isWareHousingNeeded", nullable = false)

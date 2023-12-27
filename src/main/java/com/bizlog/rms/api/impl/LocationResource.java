@@ -71,4 +71,9 @@ public class LocationResource extends BaseClientResource<Location, LocationDTO, 
     protected LocationDTO toDTO(Location entity) {
         return getMapper().toDTO(entity);
     }
+
+    @Override
+    public ResponseEntity<LocationDTO> getByClientId(@PathVariable("clientId")  Long clientId) {
+        return super.getByClientId(clientId);
+    }
 }

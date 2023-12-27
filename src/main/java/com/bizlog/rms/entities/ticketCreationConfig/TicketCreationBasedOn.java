@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 @Embeddable
 public class TicketCreationBasedOn {
-    private String AwbNumber;
-    private String OrderNumber;
-    private String InvoiceNumber;
-    private String ComplaintNumber;
+    private Boolean AwbNumber;
+    private Boolean OrderNumber;
+    private Boolean InvoiceNumber;
+    private Boolean ComplaintNumber;
 }

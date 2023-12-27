@@ -77,4 +77,9 @@ public class EscalationMatrixResource extends
     protected EscalationMatrixDTO toDTO(EscalationMatrix entity) {
         return getMapper().toDTO(entity);
     }
+
+    @Override
+    public ResponseEntity<EscalationMatrixDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
+    }
 }

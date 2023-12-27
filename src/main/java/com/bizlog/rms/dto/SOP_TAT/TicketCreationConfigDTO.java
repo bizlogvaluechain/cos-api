@@ -15,12 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TicketCreationConfigDTO extends BaseDTO {
-    @ElementCollection
-    @NotEmpty(message = "ticketCreationThrough should not be empty")
-    private List<TicketCreationThrough> ticketCreationThrough;
-    @ElementCollection
-    @NotEmpty(message = "ticketCreationBasedOn should not be empty")
-    private List<TicketCreationBasedOn> ticketCreationBasedOn;
+
+    private TicketCreationThrough ticketCreationThrough;
+    private TicketCreationBasedOn ticketCreationBasedOn;
     private String city;
     private String clientName;
     private String phoneNumber;

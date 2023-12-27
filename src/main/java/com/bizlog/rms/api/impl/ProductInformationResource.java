@@ -74,4 +74,9 @@ public class ProductInformationResource
     protected ProductInformationDTO toDTO(ProductInformation entity) {
         return getMapper().toDTO(entity);
     }
+
+    @Override
+    public ResponseEntity<ProductInformationDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
+    }
 }

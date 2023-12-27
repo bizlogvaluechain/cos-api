@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Embeddable
 public class TicketCreationThrough {
-    private String Excel;
-    private String Api;
-    private String Form;
+    private Boolean Excel;
+    private Boolean Api;
+    private Boolean Form;
 }

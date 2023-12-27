@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Embeddable
 public class Charge {
-    private Long deliverableArea;
-    private Long nonDeliverableArea;
-    private Long outDeliverableArea;
+    private Long deliverableAreaCharge;
+    private Long nonDeliverableAreaCharge;
+    private Long outDeliverableAreaCharge;
 }

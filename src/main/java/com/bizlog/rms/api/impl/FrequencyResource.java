@@ -4,7 +4,10 @@ import com.bizlog.rms.api.FrequencyAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.frequency.FrequencyDTO;
 import com.bizlog.rms.entities.frequency.Frequency;
+import com.bizlog.rms.exception.AlreadyExistException;
+import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
+import com.bizlog.rms.utils.OperationType;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -91,4 +94,23 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
         // return dto;
         return getMapper().toDTO(row);
     }
+
+    @Override
+    public ResponseEntity<FrequencyDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
+    }
+
+//    @Override
+//    protected void preValidate (Long clientId, FrequencyDTO payloadDTO, OperationType operationType) {
+//        super.preValidate(clientId, payloadDTO, operationType);
+//        if (operationType==OperationType.CREATE){
+//            Optional<Frequency> entity=getBaseClientRepository().findByClient(
+//                    getClientRepository().findById(clientId)
+//                            .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)));
+//            entity.ifPresent(X->{
+//                throw new AlreadyExistException(clientId);
+//            }
+//            );
+//        }
+//    }
 }

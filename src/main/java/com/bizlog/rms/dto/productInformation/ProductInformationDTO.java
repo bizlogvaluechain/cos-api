@@ -15,7 +15,7 @@ public class ProductInformationDTO extends BaseDTO {
     private Boolean isProductInformationRequiredForTicketCreation;
     private String productCategory;
     private String productSubCategory;
-    private List<ProductSize> productSize;
+    private ProductSize productSize;
     private Boolean isInventoryNeeded;
     private Boolean isWareHousingNeeded;
     private Boolean isPackingNeeded;

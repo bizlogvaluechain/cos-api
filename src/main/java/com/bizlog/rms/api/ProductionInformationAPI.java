@@ -22,4 +22,7 @@ public interface ProductionInformationAPI extends BaseAPI<ProductInformationDTO,
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    @GetMapping("/getByClientId")
+    ResponseEntity<ProductInformationDTO> getByClientId(Long clientId);
 }

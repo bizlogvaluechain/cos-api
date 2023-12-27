@@ -5,6 +5,8 @@ import com.bizlog.rms.dto.PageResponse;
 
 import com.bizlog.rms.entities.BaseClientEntity;
 import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.frequency.Frequency;
+import com.bizlog.rms.exception.AlreadyExistException;
 import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.BaseClientRepository;
@@ -56,6 +58,15 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     }
 
     protected void preValidate(Long clientId, I payloadDTO, OperationType operationType) {
+        if (operationType==OperationType.CREATE){
+            Optional<V> entity=baseClientRepository.findByClient(
+                    clientRepository.findById(clientId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)));
+            entity.ifPresent(X->{
+                        throw new AlreadyExistException(clientId);
+                    }
+            );
+        }
     }
 
     protected void validate(Long clientId, I payloadDTO, V entity, OperationType operationType) {
@@ -250,6 +261,17 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         Map<String, Object> meta = new HashMap<>();// getMetaData(pageData);
         PageResponse<O> pageResponse = new PageResponse<>(meta, outPutDTO);
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
+    }
+    public ResponseEntity<O> getByClientId(Long clientId){
+        V entity=baseClientRepository.findByClient(
+                clientRepository.findById(clientId).orElseThrow(
+                        ()->new ResourceNotFoundException("client","clientId",clientId)
+                )
+        ).orElseThrow(
+                ()->new ResourceNotFoundException("entity","clientId",clientId)
+        );
+        O response=toDTO(entity);
+        return ResponseEntity.ok(response);
     }
 
 }
