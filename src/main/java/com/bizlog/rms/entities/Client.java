@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 @Entity
 @Table(name = "client")
@@ -37,6 +38,16 @@ public class Client {
     private String type;
 
     @Column(name = "dateOfOnboarding")
-    private LocalDateTime dateOfOnboarding;
+    private Long dateOfOnboarding;
+
+    @PrePersist
+    @PreUpdate
+    private void updateEpochTimes() {
+        dateOfOnboarding = convertToEpochSeconds(LocalDateTime.ofEpochSecond(dateOfOnboarding, 0, ZoneOffset.UTC));
+    }
+
+    private long convertToEpochSeconds(LocalDateTime localDateTime) {
+        return localDateTime.toEpochSecond(ZoneOffset.UTC);;
+    }
 
 }

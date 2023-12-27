@@ -9,7 +9,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ClientDTO {
+public class  ClientDTO {
 
     private Long id;
 
@@ -35,5 +35,5 @@ public class ClientDTO {
 
     private String type;
 
-    private LocalDateTime dateOfOnboarding;
+    private Long dateOfOnboarding;
 }
