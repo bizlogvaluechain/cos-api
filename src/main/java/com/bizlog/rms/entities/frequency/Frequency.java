@@ -31,9 +31,9 @@ public class Frequency extends BaseClientEntity {
     @Column(name = "onlyWorkdays", nullable = false)
     private Boolean onlyWorkdays;
 
-
     @PrePersist
     @PreUpdate
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void updateEpochTimes() {
         onboardingDate = convertToEpochSeconds(LocalDateTime.ofEpochSecond(onboardingDate, 0, ZoneOffset.UTC));
         dayStartTime = convertToEpochSeconds(LocalDateTime.ofEpochSecond(dayStartTime, 0, ZoneOffset.UTC));

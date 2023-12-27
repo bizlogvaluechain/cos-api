@@ -15,7 +15,6 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -42,6 +41,7 @@ public class Client {
 
     @PrePersist
     @PreUpdate
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void updateEpochTimes() {
         dateOfOnboarding = convertToEpochSeconds(LocalDateTime.ofEpochSecond(dateOfOnboarding, 0, ZoneOffset.UTC));
     }
