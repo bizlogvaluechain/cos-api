@@ -47,7 +47,7 @@ public class Client {
     }
 
     private long convertToEpochSeconds(LocalDateTime localDateTime) {
-        return localDateTime.toEpochSecond(ZoneOffset.UTC);;
+        return localDateTime.toEpochSecond(ZoneOffset.UTC);
     }
 
 }
