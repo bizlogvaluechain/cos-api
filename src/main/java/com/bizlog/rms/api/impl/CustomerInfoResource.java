@@ -40,7 +40,8 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
         return super.create(clientId, customerInfoDTO);
     }
 
-    private void createResourceInS3(CustomerInfoDTO customerInfoDTO, MultipartFile gstFile, MultipartFile panOrAadharFile) {
+    private void createResourceInS3(CustomerInfoDTO customerInfoDTO, MultipartFile gstFile,
+            MultipartFile panOrAadharFile) {
         String gstS3Key = s3Service.uploadFileToS3(gstFile);
         String panOrAadharS3Key = s3Service.uploadFileToS3(panOrAadharFile);
         customerInfoDTO.setGstS3Key(gstS3Key);

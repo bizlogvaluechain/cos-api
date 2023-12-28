@@ -79,9 +79,10 @@ public class EscalationMatrixApiTest extends BaseApiTest {
         escalationMatrix.setBusinessContactInfo("IDP");
         escalationMatrix.setOpsContactInfo("IDP");
         escalationMatrix.setEmergencyContactInfo("IDP");
-        this.mockMvc.perform(post("/api/v1/cos/{clientId}/escalation-matrix", clientId)
-                .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrix).orElse(""))).andDo(print())
-                .andExpect(status().isNotFound());
+        this.mockMvc
+                .perform(post("/api/v1/cos/{clientId}/escalation-matrix", clientId)
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrix).orElse("")))
+                .andDo(print()).andExpect(status().isNotFound());
     }
 
     @Test
@@ -142,8 +143,8 @@ public class EscalationMatrixApiTest extends BaseApiTest {
         escalationMatrix.setClient(client);
         escalationMatrix = escalationMatrixRepository.save(escalationMatrix);
 
-        this.mockMvc
-                .perform(delete("/api/v1/cos/{clientId}/escalation-matrix/{id}", client.getId(), escalationMatrix.getId()))
+        this.mockMvc.perform(
+                delete("/api/v1/cos/{clientId}/escalation-matrix/{id}", client.getId(), escalationMatrix.getId()))
                 .andDo(print()).andExpect(status().isNoContent());
 
     }

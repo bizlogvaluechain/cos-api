@@ -154,9 +154,10 @@ public class ProductionInformationApiTest extends BaseApiTest {
         updateProductInformation.setIsPackingNeeded(false);
         updateProductInformation.setIsVehicleNeeded(true);
 
-        this.mockMvc.perform(
-                put("/api/v1/cos/{clientId}/product-information/{id}", client.getId(), initialProductInformation.getId())
-                        .contentType(MediaType.APPLICATION_JSON).content(toJson(updateProductInformation).orElse("")))
+        this.mockMvc
+                .perform(put("/api/v1/cos/{clientId}/product-information/{id}", client.getId(),
+                        initialProductInformation.getId()).contentType(MediaType.APPLICATION_JSON)
+                                .content(toJson(updateProductInformation).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updateProductInformation).orElse("")));
     }
