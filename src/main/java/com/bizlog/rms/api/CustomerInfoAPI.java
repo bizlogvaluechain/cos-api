@@ -1,6 +1,6 @@
 package com.bizlog.rms.api;
 
-import com.bizlog.rms.dto.CustomerInfoDTO;
+import com.bizlog.rms.dto.clientinfo.CustomerInfoDTO;
 import com.bizlog.rms.dto.PageResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
