@@ -4,8 +4,6 @@ import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 @Entity
@@ -31,16 +29,4 @@ public class Frequency extends BaseClientEntity {
     @Column(name = "onlyWorkdays", nullable = false)
     private Boolean onlyWorkdays;
 
-    @PrePersist
-    @PreUpdate
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
-    private void updateEpochTimes() {
-        onboardingDate = convertToEpochSeconds(LocalDateTime.ofEpochSecond(onboardingDate, 0, ZoneOffset.UTC));
-        dayStartTime = convertToEpochSeconds(LocalDateTime.ofEpochSecond(dayStartTime, 0, ZoneOffset.UTC));
-        dayEndTime = convertToEpochSeconds(LocalDateTime.ofEpochSecond(dayEndTime, 0, ZoneOffset.UTC));
-    }
-
-    private long convertToEpochSeconds(LocalDateTime localDateTime) {
-        return localDateTime.toEpochSecond(ZoneOffset.UTC);
-    }
 }

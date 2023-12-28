@@ -3,9 +3,6 @@ package com.bizlog.rms.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-
 @Entity
 @Table(name = "client")
 @Data
@@ -39,15 +36,5 @@ public class Client {
     @Column(name = "dateOfOnboarding")
     private Long dateOfOnboarding;
 
-    @PrePersist
-    @PreUpdate
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
-    private void updateEpochTimes() {
-        dateOfOnboarding = convertToEpochSeconds(LocalDateTime.ofEpochSecond(dateOfOnboarding, 0, ZoneOffset.UTC));
-    }
-
-    private long convertToEpochSeconds(LocalDateTime localDateTime) {
-        return localDateTime.toEpochSecond(ZoneOffset.UTC);
-    }
 
 }
