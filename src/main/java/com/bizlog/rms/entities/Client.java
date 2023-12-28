@@ -36,5 +36,4 @@ public class Client {
     @Column(name = "dateOfOnboarding")
     private Long dateOfOnboarding;
 
-
 }
