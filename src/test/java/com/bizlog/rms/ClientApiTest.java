@@ -56,26 +56,11 @@ class ClientApiTest extends BaseApiTest {
         client.setDomainName("abcdefghi");
         client.setActive(true);
         client.setType("abcde");
+        client.setDateOfOnboarding(27122023L);
         this.mockMvc
                 .perform(post(CLIENT_URL).contentType(MediaType.APPLICATION_JSON).content(toJson(client).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
-
-    // @Test
-    // void should_not_create_new_client() throws Exception{
-    // Client client = new Client();
-    // client.setName("JOHN");
-    // client.setDescription("DEVELOPEMENT");
-    // client.setEmail("abc@gmail.com");
-    // client.setPhoneNumber("7698524598");
-    // client.setDomainName("abcdefghi");
-    // client.setActive(true);
-    // client.setType("abcde");
-    // this.mockMvc
-    // .perform(post(CLIENT_URL).contentType(MediaType.APPLICATION_JSON)
-    // .content(toJson(client).orElse("")))
-    // .andDo(print()).andExpect(status().isNotFound());
-    // }
 
     /*
      * @Test void should_update_existing_client() throws Exception {

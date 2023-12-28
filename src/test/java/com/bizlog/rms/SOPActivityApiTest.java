@@ -231,8 +231,8 @@ public class SOPActivityApiTest extends BaseApiTest {
         Client client = getClient();
         sopActivity.setClient(client);
         sopActivity = sopActivityRepository.save(sopActivity);
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/sop/{id}", client.getId(), sopActivity.getId())).andDo(print())
-                .andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/sop/{id}", client.getId(), sopActivity.getId()))
+                .andDo(print()).andExpect(status().isNoContent());
 
     }
 

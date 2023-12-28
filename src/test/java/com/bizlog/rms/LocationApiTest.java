@@ -167,9 +167,10 @@ public class LocationApiTest extends BaseApiTest {
         updatedLocation.setSelectStates("bihar");
         updatedLocation.setSelectCities("patna");
 
-        this.mockMvc.perform(put("/api/v1/cos/{clientId}/location/{id}", clientId, id)
-                .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedLocation).orElse(""))).andDo(print())
-                .andExpect(status().isNotFound());
+        this.mockMvc
+                .perform(put("/api/v1/cos/{clientId}/location/{id}", clientId, id)
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedLocation).orElse("")))
+                .andDo(print()).andExpect(status().isNotFound());
     }
 
     @Test

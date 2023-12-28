@@ -3,8 +3,6 @@ package com.bizlog.rms.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "client")
 @Data
@@ -14,7 +12,6 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -37,6 +34,6 @@ public class Client {
     private String type;
 
     @Column(name = "dateOfOnboarding")
-    private LocalDateTime dateOfOnboarding;
+    private Long dateOfOnboarding;
 
 }

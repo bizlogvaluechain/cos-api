@@ -66,9 +66,10 @@ public class NotificationApiTest extends BaseApiTest {
         notification.setIsTicketScansRequired(false);
         notification.setIsReportAlertsRequired(true);
         notification.setIsAlertNeededForNegativeCases(false);
-        this.mockMvc.perform(post("/api/v1/cos/{clientId}/notification", client.getId())
-                .contentType(MediaType.APPLICATION_JSON).content(toJson(notification).orElse(""))).andDo(print())
-                .andExpect(status().is2xxSuccessful());
+        this.mockMvc
+                .perform(post("/api/v1/cos/{clientId}/notification", client.getId())
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(notification).orElse("")))
+                .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 
     @Test
