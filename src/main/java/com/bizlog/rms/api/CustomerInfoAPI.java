@@ -8,11 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@RequestMapping(value = "/api/v1/client/{clientId}/customer-info")
+@RequestMapping(value = "/api/v1/cos/client/{clientId}/customer-info")
 public interface CustomerInfoAPI extends BaseAPI<CustomerInfoDTO, CustomerInfoDTO> {
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
     ResponseEntity<CustomerInfoDTO> create(Long clientId, CustomerInfoDTO customerInfoDTO, MultipartFile gstFile,
-            MultipartFile panFile, MultipartFile msmeFile);
+            MultipartFile panOrAadharFile);
 
     @GetMapping("/{id}")
     ResponseEntity<CustomerInfoDTO> getById(Long clientId, Long id);

@@ -47,7 +47,7 @@ public class TATActivityApiTest extends BaseApiTest {
     void should_retrieve_with_valid_user_id() throws Exception {
         Long clientId = tatActivityRepository.findAll().get(0).getclientId();
         Long id = tatActivityRepository.findAll().get(0).getId();
-        this.mockMvc.perform(get("/api/v1/{clientId}/tatActivities/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/tatActivities/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -55,7 +55,7 @@ public class TATActivityApiTest extends BaseApiTest {
     void should_not_retrieve_with_invalid_user_id() throws Exception {
         int clientId = 11;
         int id = 11;
-        this.mockMvc.perform(get("/api/v1/{clientId}/tatActivities/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/tatActivities/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -79,7 +79,7 @@ public class TATActivityApiTest extends BaseApiTest {
         tatActivity.setTatBreachDueTo(tatBreachDueToList);
 
         this.mockMvc
-                .perform(post("/api/v1/{clientId}/tatActivities", client.getId())
+                .perform(post("/api/v1/cos/{clientId}/tatActivities", client.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(tatActivity).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
@@ -112,7 +112,7 @@ public class TATActivityApiTest extends BaseApiTest {
         updatedTatActivity.setTatForLinehaul("xyz");
         updatedTatActivity.setNumberOfReshedules("3");
         this.mockMvc
-                .perform(put("/api/v1/{clientId}/tatActivities/{id}", client.getId(), initialTatActivity.getId())
+                .perform(put("/api/v1/cos/{clientId}/tatActivities/{id}", client.getId(), initialTatActivity.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updatedTatActivity).orElse("")));
@@ -128,7 +128,7 @@ public class TATActivityApiTest extends BaseApiTest {
         updatedTatActivity.setTatForLinehaul("xyz");
         updatedTatActivity.setNumberOfReshedules("3");
         this.mockMvc
-                .perform(put("/api/v1/{clientId}/tatActivities/{id}", clientId, id)
+                .perform(put("/api/v1/cos/{clientId}/tatActivities/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
     }
@@ -155,7 +155,7 @@ public class TATActivityApiTest extends BaseApiTest {
         tatActivity.setClient(client);
         tatActivity = tatActivityRepository.save(tatActivity);
 
-        this.mockMvc.perform(delete("/api/v1/{clientId}/tatActivities/{id}", client.getId(), tatActivity.getId()))
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/tatActivities/{id}", client.getId(), tatActivity.getId()))
                 .andDo(print()).andExpect(status().isNoContent());
     }
 
@@ -163,7 +163,7 @@ public class TATActivityApiTest extends BaseApiTest {
     void should_not_delete_nonexistent_tatActivity() throws Exception {
         int clientId = 11;
         int nonexistentId = 999;
-        this.mockMvc.perform(delete("/api/v1/{clientId}/tatActivities/{id}", clientId, nonexistentId)).andDo(print())
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/tatActivities/{id}", clientId, nonexistentId)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 }

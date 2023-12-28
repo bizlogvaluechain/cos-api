@@ -16,5 +16,9 @@ public class TicketCreationConfig extends BaseClientEntity {
     @Column(name = "ticketCreationBasedOn", nullable = false)
     @ElementCollection(targetClass = TicketCreationBasedOn.class, fetch = FetchType.EAGER)
     private List<TicketCreationBasedOn> ticketCreationBasedOn;
-
+    private String city;
+    private String clientName;
+    private String phoneNumber;
+    private String pincode;
+    private String address;
 }

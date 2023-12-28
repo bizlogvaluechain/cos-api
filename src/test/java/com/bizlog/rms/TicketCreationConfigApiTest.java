@@ -47,7 +47,7 @@ public class TicketCreationConfigApiTest extends BaseApiTest {
     void should_retrieve_with_valid_user_id() throws Exception {
         Long clientId = ticketCreationConfigRepository.findAll().get(0).getclientId();
         Long id = ticketCreationConfigRepository.findAll().get(0).getId();
-        this.mockMvc.perform(get("/api/v1/{clientId}/ticket-creation-config/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/ticket-creation-config/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -55,7 +55,7 @@ public class TicketCreationConfigApiTest extends BaseApiTest {
     void should_not_retrieve_with_invalid_user_id() throws Exception {
         int clientId = 11;
         int id = 11;
-        this.mockMvc.perform(get("/api/v1/{clientId}/ticket-creation-config/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/ticket-creation-config/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
     // @Test
@@ -82,7 +82,7 @@ public class TicketCreationConfigApiTest extends BaseApiTest {
     // ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
     //
     // this.mockMvc
-    // .perform(post("/api/v1/{clientId}/ticket-creation-config", clientId).contentType(MediaType.APPLICATION_JSON)
+    // .perform(post("/api/v1/cos/{clientId}/ticket-creation-config", clientId).contentType(MediaType.APPLICATION_JSON)
     // .content(toJson(ticketCreationThrough).orElse("")))
     // .andDo(print()).andExpect(status().is2xxSuccessful());
     // }
@@ -111,7 +111,7 @@ public class TicketCreationConfigApiTest extends BaseApiTest {
         ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
 
         this.mockMvc
-                .perform(post("/api/v1/{clientId}/ticket-creation-config", clientId)
+                .perform(post("/api/v1/cos/{clientId}/ticket-creation-config", clientId)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(ticketCreationThrough).orElse("")))
                 .andDo(print()).andExpect(status().isBadRequest());
     }

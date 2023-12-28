@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(value = "/api/v1/{clientId}/location")
+@RequestMapping(value = "/api/v1/cos/{clientId}/location")
 public interface LocationAPI extends BaseAPI<LocationDTO, LocationDTO> {
     @PostMapping
     ResponseEntity<LocationDTO> create(Long clientId, LocationDTO locationDTO);
