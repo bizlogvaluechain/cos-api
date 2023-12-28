@@ -24,7 +24,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -164,7 +163,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  DATE_FORMAT(time, '%Y-%m-%d') AS day,\r\n  COUNT(id) AS count_per_day\r\nFROM\r\n  cos_db.client\r\nWHERE\r\n  DATE(time) = CURDATE() -- Include records only for the current date\r\nGROUP BY\r\n  day\r\nLIMIT\r\n  50;",
+          "rawSql": "SELECT\r\n  DATE_FORMAT(date_of_onboarding, '%Y-%m-%d') AS day,\r\n  COUNT(id) AS count_per_day\r\nFROM\r\n  cos_db.client\r\nWHERE\r\n  DATE(date_of_onboarding) = CURDATE() -- Include records only for the current date\r\nGROUP BY\r\n  day\r\nLIMIT\r\n  50;",
           "refId": "A",
           "sql": {
             "columns": [
@@ -249,7 +248,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  DATE_FORMAT(time, '%Y-%m-%d') AS day,\r\n  COUNT(id) AS count_per_day\r\nFROM\r\n  cos_db.client\r\nWHERE\r\n  YEAR(time) = YEAR(CURDATE()) AND MONTH(time) = MONTH(CURDATE()) -- Include records only for the current month\r\nGROUP BY\r\n  day\r\nLIMIT\r\n  50;",
+          "rawSql": "SELECT\r\n  DATE_FORMAT(date_of_onboarding, '%Y-%m-%d') AS day,\r\n  COUNT(id) AS count_per_day\r\nFROM\r\n  cos_db.client\r\nWHERE\r\n  YEAR(date_of_onboarding) = YEAR(CURDATE()) AND MONTH(date_of_onboarding) = MONTH(CURDATE()) -- Include records only for the current month\r\nGROUP BY\r\n  day\r\nLIMIT\r\n  50;",
           "refId": "A",
           "sql": {
             "columns": [
@@ -358,7 +357,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  DATE_FORMAT(time, '%Y-%m') AS month,\r\n  COUNT(id) AS count_per_month\r\nFROM\r\n  cos_db.client\r\nGROUP BY\r\n  month\r\nLIMIT\r\n  50;\r\n",
+          "rawSql": "SELECT\r\n  DATE_FORMAT(date_of_onboarding, '%Y-%m') AS month,\r\n  COUNT(id) AS count_per_month\r\nFROM\r\n  cos_db.client\r\nGROUP BY\r\n  month\r\nLIMIT\r\n  50;\r\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -397,6 +396,6 @@
   "timezone": "",
   "title": "Cos-Api",
   "uid": "gE3U_rHSk",
-  "version": 9,
+  "version": 1,
   "weekStart": ""
 }
