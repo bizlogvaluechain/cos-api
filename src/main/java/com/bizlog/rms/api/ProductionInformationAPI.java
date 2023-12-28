@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(value = "/api/v1/{clientId}/product-information")
+@RequestMapping(value = "/api/v1/cos/{clientId}/product-information")
 public interface ProductionInformationAPI extends BaseAPI<ProductInformationDTO, ProductInformationDTO> {
     @PostMapping
     ResponseEntity<ProductInformationDTO> create(Long clientId, ProductInformationDTO productInformationDTO);

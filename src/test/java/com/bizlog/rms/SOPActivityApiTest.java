@@ -50,7 +50,7 @@ public class SOPActivityApiTest extends BaseApiTest {
     void should_retrieve_with_valid_user_id() throws Exception {
         Long clientId = sopActivityRepository.findAll().get(0).getclientId();
         Long id = sopActivityRepository.findAll().get(0).getId();
-        this.mockMvc.perform(get("/api/v1/{clientId}/sop/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/sop/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -58,7 +58,7 @@ public class SOPActivityApiTest extends BaseApiTest {
     void should_not_retrieve_with_invalid_user_id() throws Exception {
         int clientId = 11;
         int id = 11;
-        this.mockMvc.perform(get("/api/v1/{clientId}/sop/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/sop/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -93,7 +93,7 @@ public class SOPActivityApiTest extends BaseApiTest {
 
         sopActivity.setMajorActivites(majorActivitesList);
         sopActivity.setMinorActivites(minorActivitesList);
-        this.mockMvc.perform(post("/api/v1/{clientId}/sop", client.getId()).contentType(MediaType.APPLICATION_JSON)
+        this.mockMvc.perform(post("/api/v1/cos/{clientId}/sop", client.getId()).contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(sopActivity).orElse(""))).andDo(print()).andExpect(status().is2xxSuccessful());
 
     }
@@ -150,7 +150,7 @@ public class SOPActivityApiTest extends BaseApiTest {
         updatedSopActivity.setMinorActivites(minorActivitesList);
 
         this.mockMvc
-                .perform(put("/api/v1/{clientId}/sop/{id}", client.getId(), initialSopActivity.getId())
+                .perform(put("/api/v1/cos/{clientId}/sop/{id}", client.getId(), initialSopActivity.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedSopActivity).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updatedSopActivity).orElse("")));
@@ -191,7 +191,7 @@ public class SOPActivityApiTest extends BaseApiTest {
         updatedSopActivity.setMinorActivites(minorActivitesList);
 
         this.mockMvc
-                .perform(put("/api/v1/{clientId}/sop/{id}", clientId, id).contentType(MediaType.APPLICATION_JSON)
+                .perform(put("/api/v1/cos/{clientId}/sop/{id}", clientId, id).contentType(MediaType.APPLICATION_JSON)
                         .content(toJson(updatedSopActivity).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
 
@@ -231,7 +231,7 @@ public class SOPActivityApiTest extends BaseApiTest {
         Client client = getClient();
         sopActivity.setClient(client);
         sopActivity = sopActivityRepository.save(sopActivity);
-        this.mockMvc.perform(delete("/api/v1/{clientId}/sop/{id}", client.getId(), sopActivity.getId())).andDo(print())
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/sop/{id}", client.getId(), sopActivity.getId())).andDo(print())
                 .andExpect(status().isNoContent());
 
     }
@@ -240,7 +240,7 @@ public class SOPActivityApiTest extends BaseApiTest {
     void should_not_delete_nonexistent_sopActivity() throws Exception {
         int clientId = 11;
         int nonexistentId = 999;
-        this.mockMvc.perform(delete("/api/v1/{clientId}/sop/{id}", clientId, nonexistentId)).andDo(print())
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/sop/{id}", clientId, nonexistentId)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 

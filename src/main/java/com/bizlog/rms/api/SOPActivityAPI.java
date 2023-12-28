@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(value = "/api/v1/{clientId}/sop")
+@RequestMapping(value = "/api/v1/cos/{clientId}/sop")
 public interface SOPActivityAPI extends BaseAPI<SOPActivityDTO, SOPActivityDTO> {
     @PostMapping
     ResponseEntity<SOPActivityDTO> create(Long clientId, SOPActivityDTO sopActivityDTO);

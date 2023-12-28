@@ -52,7 +52,7 @@ public class FrequencyApiTest extends BaseApiTest {
     void should_retrieve_with_valid_user_id() throws Exception {
         Long clientId = frequencyRepository.findAll().get(0).getclientId();
         Long id = frequencyRepository.findAll().get(0).getId();
-        this.mockMvc.perform(get("/api/v1/{clientId}/frequency/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/frequency/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -60,7 +60,7 @@ public class FrequencyApiTest extends BaseApiTest {
     void should_not_retrieve_with_invalid_user_id() throws Exception {
         int clientId = 11;
         int id = 11;
-        this.mockMvc.perform(get("/api/v1/{clientId}/frequency/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/frequency/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -362,7 +362,7 @@ public class FrequencyApiTest extends BaseApiTest {
     // frequency.setOnlyWorkdays(true);
     // frequency.setTicketsVolume("100");
     // this.mockMvc
-    // .perform(post("/api/v1/{clientId}/frequency", clientId).contentType(MediaType.APPLICATION_JSON)
+    // .perform(post("/api/v1/cos/{clientId}/frequency", clientId).contentType(MediaType.APPLICATION_JSON)
     // .content(new ObjectMapper().writeValueAsString(frequency)))
     // .andDo(print()).andExpect(status().is2xxSuccessful());
     // }
@@ -385,7 +385,7 @@ public class FrequencyApiTest extends BaseApiTest {
     // frequency.setOnlyWorkdays(true);
     // frequency.setTicketsVolume("100");
     // this.mockMvc
-    // .perform(post("/api/v1/{clientId}/frequency", clientId).contentType(MediaType.APPLICATION_JSON)
+    // .perform(post("/api/v1/cos/{clientId}/frequency", clientId).contentType(MediaType.APPLICATION_JSON)
     // .content(new ObjectMapper().writeValueAsString(frequency)))
     // .andDo(print()).andExpect(status().isNotFound());
     // }

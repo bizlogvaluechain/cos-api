@@ -35,19 +35,16 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
     @Override
     public ResponseEntity<CustomerInfoDTO> create(@PathVariable Long clientId,
             @RequestBody @Valid CustomerInfoDTO customerInfoDTO, @RequestParam("gstFile") MultipartFile gstFile,
-            @RequestParam("panFile") MultipartFile panFile, @RequestParam("msmeFile") MultipartFile msmeFile) {
-        createResourceInS3(customerInfoDTO, gstFile, panFile, msmeFile);
+            @RequestParam("panOrAadharFile") MultipartFile panOrAadharFile) {
+        createResourceInS3(customerInfoDTO, gstFile, panOrAadharFile);
         return super.create(clientId, customerInfoDTO);
     }
 
-    private void createResourceInS3(CustomerInfoDTO customerInfoDTO, MultipartFile gstFile, MultipartFile panFile,
-            MultipartFile msmeFile) {
-        String gsts3Key = s3Service.uploadFileToS3(gstFile);
-        String pans3Key = s3Service.uploadFileToS3(panFile);
-        String msmes3Key = s3Service.uploadFileToS3(msmeFile);
-        customerInfoDTO.setGst(gsts3Key);
-        customerInfoDTO.setGst(pans3Key);
-        customerInfoDTO.setGst(msmes3Key);
+    private void createResourceInS3(CustomerInfoDTO customerInfoDTO, MultipartFile gstFile, MultipartFile panOrAadharFile) {
+        String gstS3Key = s3Service.uploadFileToS3(gstFile);
+        String panOrAadharS3Key = s3Service.uploadFileToS3(panOrAadharFile);
+        customerInfoDTO.setGstS3Key(gstS3Key);
+        customerInfoDTO.setPanOrAadharS3Key(panOrAadharS3Key);
     }
 
     @Override

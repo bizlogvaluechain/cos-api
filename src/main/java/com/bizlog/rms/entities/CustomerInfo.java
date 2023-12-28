@@ -8,22 +8,30 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "customer_info", uniqueConstraints = @UniqueConstraint(columnNames = { "id", "client_id" }))
+@Table(name = "client_info", uniqueConstraints = @UniqueConstraint(columnNames = { "id", "client_id" }))
 public class CustomerInfo extends BaseClientEntity {
-    @Column(name = "registeredEntity", nullable = false)
-    private String registeredEntity;
-    @Column(name = "entityType", nullable = false)
-    private String entityType;
-    @Column(name = "brandName", nullable = false)
-    private String brandName;
-    @Column(name = "industryVertical", nullable = false)
-    private String industryVertical;
-    @Column(name = "sector", nullable = false)
-    private String sector;
+    @Column(name = "clientName", nullable = false)
+    private String clientName;
+    @Column(name = "legalEntityType", nullable = false)
+    private String legalEntityType;
+    @Column(name = "clientBrandName", nullable = false)
+    private String clientBrandName;
+    @Column(name = "clientSector", nullable = false)
+    private String clientSector;
+    @Column(name = "companySize", nullable = false)
+    private Integer companySize;
+    @Column(name = "registeredYear", nullable = false)
+    private String registeredYear;
+    @Column(name = "companyRevenue", nullable = false)
+    private Long companyRevenue;
+    @Column(name = "clientRevenueFY", nullable = false)
+    private Long clientRevenueFY;
     @Column(name = "gst", nullable = false)
     private String gst;
-    @Column(name = "pan", nullable = false)
-    private String pan;
-    @Column(name = "msme", nullable = false)
-    private String msme;
+    @Column(name = "panOrAadhar", nullable = false)
+    private String panOrAadhar;
+    @Column(name = "gstS3Key", nullable = false)
+    private String gstS3Key;
+    @Column(name = "panOrAadharS3Key", nullable = false)
+    private String panOrAadharS3Key;
 }

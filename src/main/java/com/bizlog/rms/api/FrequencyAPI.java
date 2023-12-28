@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-@RequestMapping(value = "/api/v1/{clientId}/frequency")
+@RequestMapping(value = "/api/v1/cos/{clientId}/frequency")
 public interface FrequencyAPI extends BaseAPI<FrequencyDTO, FrequencyDTO> {
     @PostMapping
     ResponseEntity<FrequencyDTO> create(Long clientId, FrequencyDTO frequencyDTO);
