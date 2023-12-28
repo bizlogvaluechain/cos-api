@@ -1,5 +1,6 @@
-package com.bizlog.rms.dto;
+package com.bizlog.rms.dto.clientinfo;
 
+import com.bizlog.rms.dto.BaseDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,9 +17,10 @@ public class CustomerInfoDTO extends BaseDTO {
     private Integer companySize;
     private String registeredYear;
     private Long companyRevenue;
-    private Long clientRevenueFY;
+    private String clientRevenueFY;
     private String gst;
     private String panOrAadhar;
+    private String clientCode;
     @JsonIgnore
     private String gstS3Key;
     @JsonIgnore

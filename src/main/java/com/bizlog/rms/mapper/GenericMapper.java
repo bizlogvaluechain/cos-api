@@ -2,7 +2,10 @@ package com.bizlog.rms.mapper;
 
 import com.bizlog.rms.dto.ClientDTO;
 import com.bizlog.rms.dto.ClientSettingDTO;
-import com.bizlog.rms.dto.CustomerInfoDTO;
+import com.bizlog.rms.dto.clientinfo.BillingInfoDTO;
+import com.bizlog.rms.dto.clientinfo.ClientStagingDTO;
+import com.bizlog.rms.dto.clientinfo.CompanyContactDetailsDTO;
+import com.bizlog.rms.dto.clientinfo.CustomerInfoDTO;
 import com.bizlog.rms.dto.SOP_TAT.SOPActivityDTO;
 import com.bizlog.rms.dto.SOP_TAT.TATActivityDTO;
 import com.bizlog.rms.dto.SOP_TAT.TicketCreationConfigDTO;
@@ -14,7 +17,10 @@ import com.bizlog.rms.dto.productInformation.ProductInformationDTO;
 import com.bizlog.rms.dto.users.UserDTO;
 import com.bizlog.rms.entities.ClientSetting;
 import com.bizlog.rms.entities.Client;
-import com.bizlog.rms.entities.CustomerInfo;
+import com.bizlog.rms.entities.clientinfo.BillingInfo;
+import com.bizlog.rms.entities.clientinfo.ClientStaging;
+import com.bizlog.rms.entities.clientinfo.CompanyContactDetails;
+import com.bizlog.rms.entities.clientinfo.CustomerInfo;
 import com.bizlog.rms.entities.Specifications.SOPActivity;
 import com.bizlog.rms.entities.Specifications.TATActivity;
 import com.bizlog.rms.entities.escalationMatrix.EscalationMatrix;
@@ -83,4 +89,16 @@ public interface GenericMapper {
     // @Mapping(target = "ticketsVolume", source = "ticketsVolume")
     @Mapping(expression = "java(row.get(\"ticketsVolume\"))", target = "ticketsVolume")
     FrequencyDTO toDTO(Map<String, String> row);
+
+    BillingInfo toEntity(BillingInfoDTO dto);
+
+    BillingInfoDTO toDTO(BillingInfo entity);
+
+    CompanyContactDetails toEntity(CompanyContactDetailsDTO dto);
+
+    CompanyContactDetailsDTO toDTO(CompanyContactDetails entity);
+
+    ClientStaging toEntity(ClientStagingDTO dto);
+
+    ClientStagingDTO toDTO(ClientStaging entity);
 }

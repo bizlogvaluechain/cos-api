@@ -1,9 +1,9 @@
 package com.bizlog.rms.api.impl;
 
 import com.bizlog.rms.api.CustomerInfoAPI;
-import com.bizlog.rms.dto.CustomerInfoDTO;
+import com.bizlog.rms.dto.clientinfo.CustomerInfoDTO;
 import com.bizlog.rms.dto.PageResponse;
-import com.bizlog.rms.entities.CustomerInfo;
+import com.bizlog.rms.entities.clientinfo.CustomerInfo;
 import com.bizlog.rms.repository.BaseClientRepository;
 import com.bizlog.rms.service.S3Service;
 import jakarta.validation.Valid;
@@ -40,7 +40,8 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
         return super.create(clientId, customerInfoDTO);
     }
 
-    private void createResourceInS3(CustomerInfoDTO customerInfoDTO, MultipartFile gstFile, MultipartFile panOrAadharFile) {
+    private void createResourceInS3(CustomerInfoDTO customerInfoDTO, MultipartFile gstFile,
+            MultipartFile panOrAadharFile) {
         String gstS3Key = s3Service.uploadFileToS3(gstFile);
         String panOrAadharS3Key = s3Service.uploadFileToS3(panOrAadharFile);
         customerInfoDTO.setGstS3Key(gstS3Key);

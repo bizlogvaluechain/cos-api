@@ -1,5 +1,6 @@
-package com.bizlog.rms.entities;
+package com.bizlog.rms.entities.clientinfo;
 
+import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -25,7 +26,7 @@ public class CustomerInfo extends BaseClientEntity {
     @Column(name = "companyRevenue", nullable = false)
     private Long companyRevenue;
     @Column(name = "clientRevenueFY", nullable = false)
-    private Long clientRevenueFY;
+    private String clientRevenueFY;
     @Column(name = "gst", nullable = false)
     private String gst;
     @Column(name = "panOrAadhar", nullable = false)
@@ -34,4 +35,6 @@ public class CustomerInfo extends BaseClientEntity {
     private String gstS3Key;
     @Column(name = "panOrAadharS3Key", nullable = false)
     private String panOrAadharS3Key;
+    @Column(name = "clientCode", nullable = false)
+    private String clientCode;
 }
