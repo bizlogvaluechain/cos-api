@@ -19,7 +19,6 @@ import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationBasedOn;
 import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationConfig;
 import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationThrough;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +29,7 @@ public class DataLoaderUtil {
         Client client = new Client();
         client.setId(1L);
         client.setName("IDP");
+        client.setDateOfOnboarding(27122023L);
         return List.of(client);
     }
 
