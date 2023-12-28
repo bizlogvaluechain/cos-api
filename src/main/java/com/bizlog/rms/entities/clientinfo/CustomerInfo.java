@@ -35,4 +35,6 @@ public class CustomerInfo extends BaseClientEntity {
     private String gstS3Key;
     @Column(name = "panOrAadharS3Key", nullable = false)
     private String panOrAadharS3Key;
+    @Column(name = "clientCode", nullable = false)
+    private String clientCode;
 }

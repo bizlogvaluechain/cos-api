@@ -20,6 +20,7 @@ public class CustomerInfoDTO extends BaseDTO {
     private String clientRevenueFY;
     private String gst;
     private String panOrAadhar;
+    private String clientCode;
     @JsonIgnore
     private String gstS3Key;
     @JsonIgnore
