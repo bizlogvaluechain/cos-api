@@ -1,5 +1,6 @@
 package com.bizlog.rms.dto;
 
+import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -35,4 +36,6 @@ public class  ClientDTO {
     private String type;
 
     private Long dateOfOnboarding;
+
+   
 }

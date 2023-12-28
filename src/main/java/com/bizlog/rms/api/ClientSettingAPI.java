@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(value = "/api/v1/client/{clientId}/client-setting")
+@RequestMapping(value = "/api/v1/cos/client/{clientId}/client-setting")
 public interface ClientSettingAPI extends BaseAPI<ClientSettingDTO, ClientSettingDTO> {
 
     @PostMapping

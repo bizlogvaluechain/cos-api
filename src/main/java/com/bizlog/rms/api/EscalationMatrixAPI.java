@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-@RequestMapping(value = "/api/v1/{clientId}/escalation-matrix")
+@RequestMapping(value = "/api/v1/cos/{clientId}/escalation-matrix")
 public interface EscalationMatrixAPI extends BaseAPI<EscalationMatrixDTO, EscalationMatrixDTO> {
     @PostMapping
     ResponseEntity<EscalationMatrixDTO> create(Long clientId, EscalationMatrixDTO escalationMatrixDTO);

@@ -45,7 +45,7 @@ public class NotificationApiTest extends BaseApiTest {
     void should_retrieve_with_valid_user_id() throws Exception {
         Long clientId = notificationRepository.findAll().get(0).getclientId();
         Long id = notificationRepository.findAll().get(0).getId();
-        this.mockMvc.perform(get("/api/v1/{clientId}/notification/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/notification/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -53,7 +53,7 @@ public class NotificationApiTest extends BaseApiTest {
     void should_not_retrieve_with_invalid_user_id() throws Exception {
         int clientId = 11;
         int id = 11;
-        this.mockMvc.perform(get("/api/v1/{clientId}/notification/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/notification/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -66,7 +66,7 @@ public class NotificationApiTest extends BaseApiTest {
         notification.setIsTicketScansRequired(false);
         notification.setIsReportAlertsRequired(true);
         notification.setIsAlertNeededForNegativeCases(false);
-        this.mockMvc.perform(post("/api/v1/{clientId}/notification", client.getId())
+        this.mockMvc.perform(post("/api/v1/cos/{clientId}/notification", client.getId())
                 .contentType(MediaType.APPLICATION_JSON).content(toJson(notification).orElse(""))).andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
@@ -81,7 +81,7 @@ public class NotificationApiTest extends BaseApiTest {
         notification.setIsReportAlertsRequired(true);
         notification.setIsAlertNeededForNegativeCases(false);
         this.mockMvc
-                .perform(post("/api/v1/{clientId}/notification", clientId).contentType(MediaType.APPLICATION_JSON)
+                .perform(post("/api/v1/cos/{clientId}/notification", clientId).contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(notification)))
                 .andDo(print()).andExpect(status().isNotFound());
     }
@@ -106,7 +106,7 @@ public class NotificationApiTest extends BaseApiTest {
         updateNotification.setIsReportAlertsRequired(false);
         updateNotification.setIsAlertNeededForNegativeCases(true);
         this.mockMvc
-                .perform(put("/api/v1/{clientId}/notification/{id}", client.getId(), initialNotification.getId())
+                .perform(put("/api/v1/cos/{clientId}/notification/{id}", client.getId(), initialNotification.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateNotification).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updateNotification).orElse("")));
@@ -124,7 +124,7 @@ public class NotificationApiTest extends BaseApiTest {
         updateNotification.setIsReportAlertsRequired(false);
         updateNotification.setIsAlertNeededForNegativeCases(true);
         this.mockMvc
-                .perform(put("/api/v1/{clientId}/notification/{id}", clientId, id)
+                .perform(put("/api/v1/cos/{clientId}/notification/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateNotification).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
     }
@@ -140,7 +140,7 @@ public class NotificationApiTest extends BaseApiTest {
         Client client = getClient();
         notification.setClient(client);
         notification = notificationRepository.save(notification);
-        this.mockMvc.perform(delete("/api/v1/{clientId}/notification/{id}", client.getId(), notification.getId()))
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/notification/{id}", client.getId(), notification.getId()))
                 .andDo(print()).andExpect(status().isNoContent());
     }
 
@@ -148,7 +148,7 @@ public class NotificationApiTest extends BaseApiTest {
     void should_not_delete_nonexistent_notification() throws Exception {
         int clientId = 11;
         int nonexistentId = 999;
-        this.mockMvc.perform(delete("/api/v1/{clientId}/notification/{id}", clientId, nonexistentId)).andDo(print())
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/notification/{id}", clientId, nonexistentId)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 }

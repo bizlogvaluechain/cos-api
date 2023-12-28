@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/{clientId}")
+@RequestMapping("/api/v1/cos/{clientId}")
 public class S3Resource {
     @Autowired
     private S3Service s3Service;
