@@ -21,8 +21,5 @@ public class CompanyContactDetails {
     @Column(name = "socialMediaLink", nullable = false)
     private String socialMediaLink;
 
-    // @OneToOne(fetch = FetchType.EAGER)
-    // @JoinColumn(name = "BILLING_INFO_ID", referencedColumnName = "id",nullable = false, updatable = false)
-    // @JsonIgnore
-    // public CustomerInfo customerInfo;
+
 }

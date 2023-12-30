@@ -33,9 +33,6 @@ public class CustomerInfo extends BaseClientEntity {
     @Column(name = "panOrAadharS3Key", nullable = false)
     private String panOrAadharS3Key;
 
-    // @OneToOne(fetch = FetchType.EAGER)
-    // @JoinColumn(name = "BILLING_INFO_ID", referencedColumnName = "id")
-    // private BillingInfo billingInfo;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "BILLING_INFO_ID", referencedColumnName = "id")
     private BillingInfo billingInfo;
@@ -48,13 +45,4 @@ public class CustomerInfo extends BaseClientEntity {
     @JoinColumn(name = "CONTACT_DETAILS_ID", referencedColumnName = "id")
     private CompanyContactDetails companyContactDetails;
 
-    // @OneToOne(fetch = FetchType.EAGER)
-    // @JoinColumn(name = BILLING_INFO_ID, nullable = false, updatable = false)
-    // public BillingInfo billingInfo;
-    // @OneToOne(fetch = FetchType.EAGER)
-    // @JoinColumn(name = SHIPMENT_INFO_ID, nullable = false, updatable = false)
-    // public ShipmentInfo shipmentInfo;
-    // @OneToOne(fetch = FetchType.EAGER)
-    // @JoinColumn(name = COMPANY_CONTACT_DETAILS_ID, nullable = false, updatable = false)
-    // public CompanyContactDetails companyContactDetails;
 }
