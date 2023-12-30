@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClientCodeDTO extends BaseDTO {
-    private String clientCode;
+    private String clientCodeNo;
 }
