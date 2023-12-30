@@ -1,15 +1,17 @@
 package com.bizlog.rms.entities.clientinfo;
 
-import com.bizlog.rms.entities.BaseClientEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "company_contact_details")
-public class CompanyContactDetails extends BaseClientEntity {
+public class CompanyContactDetails {
+
+    @Column(name = "id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
     @Column(name = "phoneNumber", nullable = false)
     private String phoneNumber;
     @Column(name = "EmailId", nullable = false)
@@ -18,4 +20,9 @@ public class CompanyContactDetails extends BaseClientEntity {
     private String website;
     @Column(name = "socialMediaLink", nullable = false)
     private String socialMediaLink;
+
+    // @OneToOne(fetch = FetchType.EAGER)
+    // @JoinColumn(name = "BILLING_INFO_ID", referencedColumnName = "id",nullable = false, updatable = false)
+    // @JsonIgnore
+    // public CustomerInfo customerInfo;
 }

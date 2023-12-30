@@ -10,14 +10,20 @@ import lombok.Data;
 @Data
 @Table(name = "escalation_matrix_tbl")
 public class EscalationMatrix extends BaseClientEntity {
-    @Column(name = "opsContactInfo", nullable = false)
-    private String opsContactInfo;
-    @Column(name = "itContactInfo", nullable = false)
-    private String itContactInfo;
-    @Column(name = "businessContactInfo", nullable = false)
-    private String businessContactInfo;
-    @Column(name = "accountContactInfo", nullable = false)
-    private String accountContactInfo;
-    @Column(name = "emergencyContactInfo", nullable = false)
-    private String emergencyContactInfo;
+    @Column(name = "firstName", nullable = false)
+    private String firstName;
+    @Column(name = "lastName", nullable = false)
+    private String lastName;
+    @Column(name = "emailAddress", nullable = false)
+    private String emailAddress;
+    @Column(name = "mobile", nullable = false)
+    private String mobile;
+    @Column(name = "designation", nullable = false)
+    private String designation;
+
+    @Column(name = "escalationMatrixType", nullable = false)
+    private String escalationMatrixType;
+    @Column(name = "escalationType", nullable = false)
+    private String escalationType;
+
 }

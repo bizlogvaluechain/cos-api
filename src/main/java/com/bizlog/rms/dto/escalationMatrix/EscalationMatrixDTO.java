@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EscalationMatrixDTO extends BaseDTO {
-    private String opsContactInfo;
-    private String itContactInfo;
-    private String businessContactInfo;
-    private String accountContactInfo;
-    private String emergencyContactInfo;
+    private String firstName;
+    private String lastName;
+    private String emailAddress;
+    private String mobile;
+    private String designation;
+    private String escalationMatrixType;
+    private String escalationType;
 }

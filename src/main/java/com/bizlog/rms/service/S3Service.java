@@ -17,7 +17,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class S3Service {
-    public static final String BUCKET_NAME = "gatnix";
+    public static final String BUCKET_NAME = "";
     @Autowired
     private AmazonS3 amazonS3Client;
 

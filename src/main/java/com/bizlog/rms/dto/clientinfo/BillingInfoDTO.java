@@ -1,6 +1,5 @@
 package com.bizlog.rms.dto.clientinfo;
 
-import com.bizlog.rms.dto.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BillingInfoDTO extends BaseDTO {
+public class BillingInfoDTO {
+    private Long id;
     private String country;
     private String state;
     private String city;

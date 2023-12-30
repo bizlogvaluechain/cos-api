@@ -1,10 +1,7 @@
 package com.bizlog.rms.entities.clientinfo;
 
 import com.bizlog.rms.entities.BaseClientEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -35,6 +32,29 @@ public class CustomerInfo extends BaseClientEntity {
     private String gstS3Key;
     @Column(name = "panOrAadharS3Key", nullable = false)
     private String panOrAadharS3Key;
-    @Column(name = "clientCode", nullable = false)
-    private String clientCode;
+
+    // @OneToOne(fetch = FetchType.EAGER)
+    // @JoinColumn(name = "BILLING_INFO_ID", referencedColumnName = "id")
+    // private BillingInfo billingInfo;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "BILLING_INFO_ID", referencedColumnName = "id")
+    private BillingInfo billingInfo;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "SHIPMENT_INFO_ID", referencedColumnName = "id")
+    private ShipmentInfo shipmentInfo;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "CONTACT_DETAILS_ID", referencedColumnName = "id")
+    private CompanyContactDetails companyContactDetails;
+
+    // @OneToOne(fetch = FetchType.EAGER)
+    // @JoinColumn(name = BILLING_INFO_ID, nullable = false, updatable = false)
+    // public BillingInfo billingInfo;
+    // @OneToOne(fetch = FetchType.EAGER)
+    // @JoinColumn(name = SHIPMENT_INFO_ID, nullable = false, updatable = false)
+    // public ShipmentInfo shipmentInfo;
+    // @OneToOne(fetch = FetchType.EAGER)
+    // @JoinColumn(name = COMPANY_CONTACT_DETAILS_ID, nullable = false, updatable = false)
+    // public CompanyContactDetails companyContactDetails;
 }
