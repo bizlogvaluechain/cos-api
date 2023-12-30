@@ -1,9 +1,7 @@
 package com.bizlog.rms.entities.clientinfo;
 
 import com.bizlog.rms.entities.BaseClientEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
