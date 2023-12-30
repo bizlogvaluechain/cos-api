@@ -17,10 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 public class CompanyContactDetailsResource {
+    private final CompanyContactDetailsRepository companyContactDetailsRepository;
+    private final GenericMapper genericMapper;
+
     @Autowired
-    private CompanyContactDetailsRepository companyContactDetailsRepository;
-    @Autowired
-    private GenericMapper genericMapper;
+    public CompanyContactDetailsResource(
+            CompanyContactDetailsRepository companyContactDetailsRepository,
+            GenericMapper genericMapper) {
+        this.companyContactDetailsRepository = companyContactDetailsRepository;
+        this.genericMapper = genericMapper;
+    }
 
     public ResponseEntity<CompanyContactDetailsDTO> create(CompanyContactDetailsDTO payloadDTO) {
         CompanyContactDetails entityToSave = genericMapper.toEntity(payloadDTO);

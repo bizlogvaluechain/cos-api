@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 public class BillingInfoResource {
+    private final BillingInfoRepository billingInfoRepository;
+    private final GenericMapper genericMapper;
+
     @Autowired
-    private BillingInfoRepository billingInfoRepository;
-    @Autowired
-    private GenericMapper genericMapper;
+    public BillingInfoResource(BillingInfoRepository billingInfoRepository, GenericMapper genericMapper) {
+        this.billingInfoRepository = billingInfoRepository;
+        this.genericMapper = genericMapper;
+    }
 
     public ResponseEntity<BillingInfoDTO> create(BillingInfoDTO payloadDTO) {
         BillingInfo entityToSave = genericMapper.toEntity(payloadDTO);
