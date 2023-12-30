@@ -18,37 +18,37 @@ public class ClientCodeResource extends BaseClientResource<ClientCode, ClientCod
         super(baseClientRepository);
     }
 
-    @Override
+
     protected ClientCode toEntity(ClientCodeDTO dto) {
         return getMapper().toEntity(dto);
     }
 
-    @Override
+
     protected ClientCodeDTO toDTO(ClientCode entity) {
         return getMapper().toDTO(entity);
     }
 
-    @Override
+
     public ResponseEntity<ClientCodeDTO> create(Long clientId, ClientCodeDTO payloadDTO) {
         return super.create(clientId, payloadDTO);
     }
 
-    @Override
+
     public ResponseEntity<ClientCodeDTO> update(Long clientId, Long id, ClientCodeDTO payloadDTO) {
         return super.update(clientId, id, payloadDTO);
     }
 
-    @Override
+
     public ResponseEntity<Void> delete(Long clientId, Long id) {
         return super.delete(clientId, id);
     }
 
-    @Override
+
     public ResponseEntity<ClientCodeDTO> getById(Long clientId, Long id) {
         return super.get(clientId, id);
     }
 
-    @Override
+    
     public ResponseEntity<PageResponse<ClientCodeDTO>> getAll(Long clientId, Pageable pageable) {
         return super.getAllConfig(clientId, pageable);
     }
