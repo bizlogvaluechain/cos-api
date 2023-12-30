@@ -21,8 +21,7 @@ public class CompanyContactDetailsResource {
     private final GenericMapper genericMapper;
 
     @Autowired
-    public CompanyContactDetailsResource(
-            CompanyContactDetailsRepository companyContactDetailsRepository,
+    public CompanyContactDetailsResource(CompanyContactDetailsRepository companyContactDetailsRepository,
             GenericMapper genericMapper) {
         this.companyContactDetailsRepository = companyContactDetailsRepository;
         this.genericMapper = genericMapper;

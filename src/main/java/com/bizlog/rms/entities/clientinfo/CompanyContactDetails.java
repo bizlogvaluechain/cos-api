@@ -21,5 +21,4 @@ public class CompanyContactDetails {
     @Column(name = "socialMediaLink", nullable = false)
     private String socialMediaLink;
 
-
 }

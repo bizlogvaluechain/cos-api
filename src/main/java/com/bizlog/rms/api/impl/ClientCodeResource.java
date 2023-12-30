@@ -34,11 +34,13 @@ public class ClientCodeResource extends BaseClientResource<ClientCode, ClientCod
     public ResponseEntity<ClientCodeDTO> create(Long clientId, ClientCodeDTO payloadDTO) {
         return super.create(clientId, payloadDTO);
     }
+
     @Transactional
     @Override
     public ResponseEntity<ClientCodeDTO> update(Long clientId, Long id, ClientCodeDTO payloadDTO) {
         return super.update(clientId, id, payloadDTO);
     }
+
     @Transactional
     @Override
     public ResponseEntity<Void> delete(Long clientId, Long id) {
