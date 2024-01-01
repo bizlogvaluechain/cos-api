@@ -7,6 +7,8 @@ import com.bizlog.rms.entities.clientinfo.ClientStaging;
 import com.bizlog.rms.repository.BaseClientRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,12 +19,12 @@ public class ClientStagingResource extends BaseClientResource<ClientStaging, Cli
     }
 
     @Override
-    public ResponseEntity<ClientStagingDTO> getById(Long clientId, Long id) {
+    public ResponseEntity<ClientStagingDTO> getById(@PathVariable("clientId") Long clientId,@PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<ClientStagingDTO>> getAll(Long clientId, Pageable pageable) {
+    public ResponseEntity<PageResponse<ClientStagingDTO>> getAll(@PathVariable("clientId") Long clientId, Pageable pageable) {
         return super.getAllConfig(clientId, pageable);
     }
 
@@ -37,17 +39,17 @@ public class ClientStagingResource extends BaseClientResource<ClientStaging, Cli
     }
 
     @Override
-    public ResponseEntity<ClientStagingDTO> create(Long clientId, ClientStagingDTO payloadDTO) {
+    public ResponseEntity<ClientStagingDTO> create(@PathVariable("clientId") Long clientId,@RequestBody ClientStagingDTO payloadDTO) {
         return super.create(clientId, payloadDTO);
     }
 
     @Override
-    public ResponseEntity<ClientStagingDTO> update(Long clientId, Long id, ClientStagingDTO payloadDTO) {
+    public ResponseEntity<ClientStagingDTO> update(@PathVariable("clientId") Long clientId,@PathVariable("id") Long id,@RequestBody ClientStagingDTO payloadDTO) {
         return super.update(clientId, id, payloadDTO);
     }
 
     @Override
-    public ResponseEntity<Void> delete(Long clientId, Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId,@PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
 }

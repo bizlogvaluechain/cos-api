@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(value = "/api/v1/cos/client-staging")
+@RequestMapping(value = "/api/v1/cos/{clientId}/client-staging")
 public interface ClientStagingAPI extends BaseAPI<ClientStagingDTO, ClientStagingDTO> {
     @PostMapping
     ResponseEntity<ClientStagingDTO> create(Long clientId, ClientStagingDTO inputDTO);

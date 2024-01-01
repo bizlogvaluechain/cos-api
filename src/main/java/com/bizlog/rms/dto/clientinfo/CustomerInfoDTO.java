@@ -18,7 +18,7 @@ public class CustomerInfoDTO extends BaseDTO {
     private String clientBrandName;
     private String clientSector;
     private Integer companySize;
-    private String registeredYear;
+    private Long registeredYear;
     private Long companyRevenue;
     private String clientRevenueFY;
     private String gst;

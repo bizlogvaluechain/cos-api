@@ -10,5 +10,5 @@ import lombok.Data;
 public class ClientCode extends BaseClientEntity {
 
     @Column(name = "clientCode", nullable = false)
-    private String clientCodeNo;
+    private String clientCode;
 }

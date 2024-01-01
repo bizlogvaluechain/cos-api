@@ -34,9 +34,7 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
     @Transactional
     @Override
     public ResponseEntity<CustomerInfoDTO> create(@PathVariable Long clientId,
-            @RequestBody @Valid CustomerInfoDTO customerInfoDTO, @RequestParam("gstFile") MultipartFile gstFile,
-            @RequestParam("panOrAadharFile") MultipartFile panOrAadharFile) {
-        createResourceInS3(customerInfoDTO, gstFile, panOrAadharFile);
+            @RequestBody @Valid CustomerInfoDTO customerInfoDTO) {
         return super.create(clientId, customerInfoDTO);
     }
 

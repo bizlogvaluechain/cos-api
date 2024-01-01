@@ -19,7 +19,7 @@ public class CustomerInfo extends BaseClientEntity {
     @Column(name = "companySize", nullable = false)
     private Integer companySize;
     @Column(name = "registeredYear", nullable = false)
-    private String registeredYear;
+    private Long registeredYear;
     @Column(name = "companyRevenue", nullable = false)
     private Long companyRevenue;
     @Column(name = "clientRevenueFY", nullable = false)
