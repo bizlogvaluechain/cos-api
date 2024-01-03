@@ -1,5 +1,6 @@
 package com.bizlog.rms;
 
+import com.bizlog.rms.dto.escalationMatrix.EscalationMatrixDTO;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.escalationMatrix.EscalationMatrix;
 import com.bizlog.rms.repository.EscalationMatrixRepository;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -95,27 +97,34 @@ public class EscalationMatrixApiTest extends BaseApiTest {
                 .andDo(print()).andExpect(status().isNotFound());
     }
 
-    // @Test
-    // void should_update_existing_escalationMatrix() throws Exception {
-    // EscalationMatrix initialEscalationMatrix = new EscalationMatrix();
-    // initialEscalationMatrix.setEscalationMatrixType("InitialAccountInfo");
-    // initialEscalationMatrix.setLastName("InitialItInfo");
-    // initialEscalationMatrix.setMobile("InitialBusinessInfo");
-    // initialEscalationMatrix.setDesignation("InitialOpsInfo");
-    // initialEscalationMatrix.setEscalationType("InitialEmergencyInfo");
-    // initialEscalationMatrix.setEscalationType("InitialEmergencyInfo");
-    // initialEscalationMatrix.setEscalationType("InitialEmergencyInfo");
-    // Client client = getClient();
-    // initialEscalationMatrix.setClient(client);
-    // initialEscalationMatrix = escalationMatrixRepository.save(initialEscalationMatrix);
-    //
-    // EscalationMatrixDTO updatedEscalationMatrix = getMapper().toDTO(initialEscalationMatrix);
-    // updatedEscalationMatrix.setEscalationMatrixType("UpdatedAccountInfo");
-    // updatedEscalationMatrix.setLastName("UpdatedItInfo");
-    // updatedEscalationMatrix.setMobile("UpdatedBusinessInfo");
-    // updatedEscalationMatrix.setDesignation("UpdatedOpsInfo");
-    // updatedEscalationMatrix.setEscalationType("UpdatedEmergencyInfo");
-    // }
+    @Test
+    void should_update_existing_escalationMatrix() throws Exception {
+        EscalationMatrix initialEscalationMatrix = new EscalationMatrix();
+        initialEscalationMatrix.setEscalationMatrixType("InitialAccountInfo");
+        initialEscalationMatrix.setLastName("InitialItInfo");
+        initialEscalationMatrix.setMobile("InitialBusinessInfo");
+        initialEscalationMatrix.setDesignation("InitialOpsInfo");
+        initialEscalationMatrix.setEscalationType("InitialEmergencyInfo");
+        initialEscalationMatrix.setFirstName("InitialEmergencyInfo");
+        initialEscalationMatrix.setEmailAddress("akash@gmail.com");
+        Client client = getClient();
+        initialEscalationMatrix.setClient(client);
+        initialEscalationMatrix = escalationMatrixRepository.save(initialEscalationMatrix);
+
+        EscalationMatrixDTO updatedEscalationMatrix = getMapper().toDTO(initialEscalationMatrix);
+        updatedEscalationMatrix.setEscalationMatrixType("UpdatedAccountInfo");
+        updatedEscalationMatrix.setLastName("UpdatedItInfo");
+        updatedEscalationMatrix.setMobile("UpdatedBusinessInfo");
+        updatedEscalationMatrix.setDesignation("UpdatedOpsInfo");
+        updatedEscalationMatrix.setEscalationType("UpdatedEmergencyInfo");
+
+        this.mockMvc.perform(put("/api/v1/cos/{clientId}/escalation-matrix/{id}", client.getId(), initialEscalationMatrix.getId())
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedEscalationMatrix).orElse("")))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(toJson(updatedEscalationMatrix).orElse("")));
+    }
+
 
     @Test
     void should_not_update_existent_escalationMatrix() throws Exception {
