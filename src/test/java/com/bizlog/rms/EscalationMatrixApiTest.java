@@ -1,6 +1,5 @@
 package com.bizlog.rms;
 
-import com.bizlog.rms.dto.escalationMatrix.EscalationMatrixDTO;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.escalationMatrix.EscalationMatrix;
 import com.bizlog.rms.repository.EscalationMatrixRepository;
@@ -14,9 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -58,6 +59,7 @@ public class EscalationMatrixApiTest extends BaseApiTest {
     @Test
     void should_create_new_escalationMatrix() throws Exception {
         Client client = getClient();
+        List<EscalationMatrix> escalationMatrixList = new ArrayList<>();
         EscalationMatrix escalationMatrix = new EscalationMatrix();
         escalationMatrix.setEscalationMatrixType("IDP");
         escalationMatrix.setEscalationType("IDP");
@@ -66,15 +68,17 @@ public class EscalationMatrixApiTest extends BaseApiTest {
         escalationMatrix.setLastName("IDP");
         escalationMatrix.setEmailAddress("IDP");
         escalationMatrix.setMobile("IDP");
+        escalationMatrixList.add(escalationMatrix);
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/escalation-matrix", client.getId())
-                        .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrix).orElse("")))
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrixList).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 
     @Test
     void should_not_create_new_escalationMatrix() throws Exception {
         int clientId = 11;
+        List<EscalationMatrix> escalationMatrixList = new ArrayList<>();
         EscalationMatrix escalationMatrix = new EscalationMatrix();
         escalationMatrix.setEscalationMatrixType("IDP");
         escalationMatrix.setEscalationType("IDP");
@@ -83,9 +87,11 @@ public class EscalationMatrixApiTest extends BaseApiTest {
         escalationMatrix.setLastName("IDP");
         escalationMatrix.setEmailAddress("IDP");
         escalationMatrix.setMobile("IDP");
+        escalationMatrixList.add(escalationMatrix);
+
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/escalation-matrix", clientId)
-                        .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrix).orElse("")))
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrixList).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
     }
 
