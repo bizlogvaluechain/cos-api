@@ -10,6 +10,7 @@ import com.bizlog.rms.repository.BaseClientRepository;
 import com.bizlog.rms.utils.OperationType;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -76,6 +77,7 @@ public class ClientStagingResource extends BaseClientResource<ClientStaging, Cli
     }
 
     @Override
+    @Transactional
     public ResponseEntity<ClientStagingDTO> getByClientId(@PathVariable("clientId") Long clientId) {
         return super.getByClientId(clientId);
     }

@@ -79,6 +79,7 @@ public class ClientCodeResource extends BaseClientResource<ClientCode, ClientCod
     }
 
     @Override
+    @Transactional
     public ResponseEntity<ClientCodeDTO> getByClientId(@PathVariable("clientId") Long clientId) {
         return super.getByClientId(clientId);
     }

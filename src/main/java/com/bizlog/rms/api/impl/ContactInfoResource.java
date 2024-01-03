@@ -29,7 +29,7 @@ public class ContactInfoResource
     @Override
     public ResponseEntity<List<ContactInformationDTO>> create(@PathVariable("clientId") Long clientId,
             @RequestBody List<ContactInformationDTO> inputDTOs) {
-        List<ContactInformationDTO> outputDTOs = (inputDTOs.stream().map(inputDTO -> {
+        List<ContactInformationDTO> outputDTOs = inputDTOs.stream().map(inputDTO -> {
             Client client = getClientRepository().findById(clientId)
                     .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
             ContactInformation entity = toEntity(inputDTO);
@@ -37,7 +37,7 @@ public class ContactInfoResource
             ContactInformation createdEntity = getBaseClientRepository().save(entity);
             ContactInformationDTO outPutDTO = toDTO(createdEntity);
             return outPutDTO;
-        }).toList());
+        }).toList();
         return ResponseEntity.ok().body(outputDTOs);
     }
 

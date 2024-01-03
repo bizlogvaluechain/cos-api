@@ -11,6 +11,7 @@ import com.bizlog.rms.utils.OperationType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,7 @@ public class ClientHierarchyResource extends BaseClientResource<ClientHierarchy,
     }
 
     @Override
+    @Transactional
     public ResponseEntity<ClientHierarchyDTO> create(@PathVariable("clientId") Long clientId,
             @RequestBody ClientHierarchyDTO payloadDTO) {
         return super.create(clientId, payloadDTO);
@@ -64,6 +66,7 @@ public class ClientHierarchyResource extends BaseClientResource<ClientHierarchy,
     }
 
     @Override
+    @Transactional
     public ResponseEntity<ClientHierarchyDTO> getByClientId(@PathVariable("clientId") Long clientId) {
         return super.getByClientId(clientId);
     }

@@ -27,11 +27,11 @@ import java.util.Optional;
 public class CustomerInfoResource extends BaseClientResource<CustomerInfo, CustomerInfoDTO, CustomerInfoDTO>
         implements CustomerInfoAPI {
 
-    private final S3Service s3Service;
+//    private final S3Service s3Service;
 
-    public CustomerInfoResource(BaseClientRepository<CustomerInfo, Long> clientSettingRepository, S3Service s3Service) {
+    public CustomerInfoResource(BaseClientRepository<CustomerInfo, Long> clientSettingRepository) {
         super(clientSettingRepository);
-        this.s3Service = s3Service;
+//        this.s3Service = s3Service;
     }
 
     @Override
@@ -55,13 +55,13 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
         return super.create(clientId, customerInfoDTO);
     }
 
-    private void createResourceInS3(CustomerInfoDTO customerInfoDTO, MultipartFile gstFile,
-            MultipartFile panOrAadharFile) {
-        String gstS3Key = s3Service.uploadFileToS3(gstFile);
-        String panOrAadharS3Key = s3Service.uploadFileToS3(panOrAadharFile);
-        customerInfoDTO.setGstS3Key(gstS3Key);
-        customerInfoDTO.setPanOrAadharS3Key(panOrAadharS3Key);
-    }
+//    private void createResourceInS3(CustomerInfoDTO customerInfoDTO, MultipartFile gstFile,
+//            MultipartFile panOrAadharFile) {
+//        String gstS3Key = s3Service.uploadFileToS3(gstFile);
+//        String panOrAadharS3Key = s3Service.uploadFileToS3(panOrAadharFile);
+//        customerInfoDTO.setGstS3Key(gstS3Key);
+//        customerInfoDTO.setPanOrAadharS3Key(panOrAadharS3Key);
+//    }
 
     @Override
     public ResponseEntity<PageResponse<CustomerInfoDTO>> getAll(@PathVariable Long clientId, Pageable pageable) {
@@ -95,6 +95,7 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
     }
 
     @Override
+    @Transactional
     public ResponseEntity<CustomerInfoDTO> getByClientId(@PathVariable("clientId") Long clientId) {
         return super.getByClientId(clientId);
     }
