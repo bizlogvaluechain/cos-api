@@ -7,7 +7,6 @@ import com.bizlog.rms.entities.clientinfo.CustomerInfo;
 import com.bizlog.rms.exception.AlreadyExistException;
 import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
-import com.bizlog.rms.service.S3Service;
 import com.bizlog.rms.utils.OperationType;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 import java.util.Optional;
