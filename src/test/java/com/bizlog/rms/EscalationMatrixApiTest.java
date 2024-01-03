@@ -63,8 +63,6 @@ public class EscalationMatrixApiTest extends BaseApiTest {
         Client client = getClient();
         List<EscalationMatrix> escalationMatrixList = new ArrayList<>();
         EscalationMatrix escalationMatrix = new EscalationMatrix();
-        escalationMatrix.setEscalationMatrixType("IDP");
-        escalationMatrix.setEscalationType("IDP");
         escalationMatrix.setDesignation("IDP");
         escalationMatrix.setFirstName("IDP");
         escalationMatrix.setLastName("IDP");
@@ -82,8 +80,6 @@ public class EscalationMatrixApiTest extends BaseApiTest {
         int clientId = 11;
         List<EscalationMatrix> escalationMatrixList = new ArrayList<>();
         EscalationMatrix escalationMatrix = new EscalationMatrix();
-        escalationMatrix.setEscalationMatrixType("IDP");
-        escalationMatrix.setEscalationType("IDP");
         escalationMatrix.setDesignation("IDP");
         escalationMatrix.setFirstName("IDP");
         escalationMatrix.setLastName("IDP");
@@ -100,31 +96,26 @@ public class EscalationMatrixApiTest extends BaseApiTest {
     @Test
     void should_update_existing_escalationMatrix() throws Exception {
         EscalationMatrix initialEscalationMatrix = new EscalationMatrix();
-        initialEscalationMatrix.setEscalationMatrixType("InitialAccountInfo");
         initialEscalationMatrix.setLastName("InitialItInfo");
         initialEscalationMatrix.setMobile("InitialBusinessInfo");
         initialEscalationMatrix.setDesignation("InitialOpsInfo");
-        initialEscalationMatrix.setEscalationType("InitialEmergencyInfo");
         initialEscalationMatrix.setFirstName("InitialEmergencyInfo");
-        initialEscalationMatrix.setEmailAddress("akash@gmail.com");
+        initialEscalationMatrix.setEmailAddress("initial@gmail.com");
         Client client = getClient();
         initialEscalationMatrix.setClient(client);
         initialEscalationMatrix = escalationMatrixRepository.save(initialEscalationMatrix);
 
         EscalationMatrixDTO updatedEscalationMatrix = getMapper().toDTO(initialEscalationMatrix);
-        updatedEscalationMatrix.setEscalationMatrixType("UpdatedAccountInfo");
         updatedEscalationMatrix.setLastName("UpdatedItInfo");
         updatedEscalationMatrix.setMobile("UpdatedBusinessInfo");
         updatedEscalationMatrix.setDesignation("UpdatedOpsInfo");
-        updatedEscalationMatrix.setEscalationType("UpdatedEmergencyInfo");
 
-        this.mockMvc.perform(put("/api/v1/cos/{clientId}/escalation-matrix/{id}", client.getId(), initialEscalationMatrix.getId())
+        this.mockMvc.perform(
+                put("/api/v1/cos/{clientId}/escalation-matrix/{id}", client.getId(), initialEscalationMatrix.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedEscalationMatrix).orElse("")))
-                .andDo(print())
-                .andExpect(status().isOk())
+                .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updatedEscalationMatrix).orElse("")));
     }
-
 
     @Test
     void should_not_update_existent_escalationMatrix() throws Exception {
@@ -133,7 +124,6 @@ public class EscalationMatrixApiTest extends BaseApiTest {
         int nonexistentEscalationMatrixId = 999;
 
         EscalationMatrix updatedEscalationMatrix = new EscalationMatrix();
-        updatedEscalationMatrix.setEscalationMatrixType("UpdatedAccountInfo");
         updatedEscalationMatrix.setLastName("UpdatedItInfo");
         updatedEscalationMatrix.setMobile("UpdatedBusinessInfo");
         updatedEscalationMatrix.setDesignation("UpdatedOpsInfo");
@@ -148,8 +138,6 @@ public class EscalationMatrixApiTest extends BaseApiTest {
     @Test
     void should_delete_existing_escalationMatrix() throws Exception {
         EscalationMatrix escalationMatrix = new EscalationMatrix();
-        escalationMatrix.setEscalationMatrixType("IDP");
-        escalationMatrix.setEscalationType("IDP");
         escalationMatrix.setDesignation("IDP");
         escalationMatrix.setFirstName("IDP");
         escalationMatrix.setLastName("IDP");

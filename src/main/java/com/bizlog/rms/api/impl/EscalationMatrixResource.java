@@ -34,17 +34,15 @@ public class EscalationMatrixResource extends
 
     @Override
     public ResponseEntity<List<EscalationMatrixDTO>> create(@PathVariable("clientId") Long clientId,
-                                                            @RequestBody @Valid List<EscalationMatrixDTO> escalationMatrixDTO) {
-        List<EscalationMatrixDTO> outputDTOs = escalationMatrixDTO.stream()
-                .map(inputDTO -> {
-                    Client client = getClientRepository().findById(clientId)
-                            .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
-                    EscalationMatrix entity = toEntity(inputDTO);
-                    entity.setClient(client);
-                    EscalationMatrix createdEntity = getBaseClientRepository().save(entity);
-                    return toDTO(createdEntity);
-                })
-                .toList();
+            @RequestBody @Valid List<EscalationMatrixDTO> escalationMatrixDTO) {
+        List<EscalationMatrixDTO> outputDTOs = escalationMatrixDTO.stream().map(inputDTO -> {
+            Client client = getClientRepository().findById(clientId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
+            EscalationMatrix entity = toEntity(inputDTO);
+            entity.setClient(client);
+            EscalationMatrix createdEntity = getBaseClientRepository().save(entity);
+            return toDTO(createdEntity);
+        }).toList();
         return ResponseEntity.ok().body(outputDTOs);
     }
 

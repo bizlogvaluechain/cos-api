@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EscalationMatrixDTO extends BaseDTO {
+public class ClientTechEscalationDTO extends BaseDTO {
     private String firstName;
     private String lastName;
     private String emailAddress;

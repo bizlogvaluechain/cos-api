@@ -98,8 +98,6 @@ public class DataLoaderUtil {
         EscalationMatrix escalationMatrix = new EscalationMatrix();
         escalationMatrix.setId(1L);
         escalationMatrix.setClient(client);
-        escalationMatrix.setEscalationMatrixType("IDP");
-        escalationMatrix.setEscalationType("IDP");
         escalationMatrix.setDesignation("IDP");
         escalationMatrix.setFirstName("IDP");
         escalationMatrix.setLastName("IDP");

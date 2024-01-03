@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "escalation_matrix_tbl")
-public class EscalationMatrix extends BaseClientEntity {
+@Table(name = "client_Ops_escalation_tbl")
+public class ClientOpsEscalation extends BaseClientEntity {
     @Column(name = "firstName", nullable = false)
     private String firstName;
     @Column(name = "lastName", nullable = false)
@@ -20,5 +20,4 @@ public class EscalationMatrix extends BaseClientEntity {
     private String mobile;
     @Column(name = "designation", nullable = false)
     private String designation;
-
 }
