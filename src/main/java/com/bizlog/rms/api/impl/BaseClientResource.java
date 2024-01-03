@@ -28,6 +28,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -83,6 +84,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         return null;
     }
 
+    @Transactional
     public ResponseEntity<O> create(Long clientId, I payloadDTO) {
         Client client = clientRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("  Client not found", "id", clientId));
@@ -92,6 +94,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         validate(clientId, payloadDTO, entity, OperationType.CREATE);
         // other logic if any
         prePersist(clientId, payloadDTO, OperationType.CREATE);
+        log.info("entity--------->" + entity.toString());
         V createdEntity = getBaseClientRepository().save(entity);
         postPersist(clientId, payloadDTO, OperationType.CREATE);
         O outPutDTO = toDTO(createdEntity);
@@ -162,6 +165,15 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         getBaseClientRepository().deleteById(id);
         postPersist(clientId, null, OperationType.DELETE);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    public ResponseEntity<O> getByClientId(Long clientId) {
+        V entity = baseClientRepository
+                .findByClient(clientRepository.findById(clientId)
+                        .orElseThrow(() -> new ResourceNotFoundException("client", "clientId", clientId)))
+                .orElseThrow(() -> new ResourceNotFoundException("entity", "clientId", clientId));
+        O response = toDTO(entity);
+        return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<PageResponse<O>> search(Long clientId, Map<String, String> searchCriteria,

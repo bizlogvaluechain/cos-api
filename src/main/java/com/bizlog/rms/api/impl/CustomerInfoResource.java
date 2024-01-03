@@ -4,8 +4,11 @@ import com.bizlog.rms.api.CustomerInfoAPI;
 import com.bizlog.rms.dto.clientinfo.CustomerInfoDTO;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.entities.clientinfo.CustomerInfo;
+import com.bizlog.rms.exception.AlreadyExistException;
+import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
 import com.bizlog.rms.service.S3Service;
+import com.bizlog.rms.utils.OperationType;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -13,11 +16,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -31,10 +34,24 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
         this.s3Service = s3Service;
     }
 
+    @Override
+    protected void preValidate(Long clientId, CustomerInfoDTO payloadDTO, OperationType operationType) {
+        super.preValidate(clientId, payloadDTO, operationType);
+        if (operationType == OperationType.CREATE) {
+            Optional<CustomerInfo> entity = getBaseClientRepository()
+                    .findByClient(getClientRepository().findById(clientId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)));
+            entity.ifPresent(X -> {
+                throw new AlreadyExistException(clientId);
+            });
+        }
+    }
+
     @Transactional
     @Override
     public ResponseEntity<CustomerInfoDTO> create(@PathVariable Long clientId,
             @RequestBody @Valid CustomerInfoDTO customerInfoDTO) {
+        log.info("billing Info------->" + customerInfoDTO.getBillingInfo().toString());
         return super.create(clientId, customerInfoDTO);
     }
 
@@ -75,6 +92,11 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
     @Override
     public ResponseEntity<Void> delete(@PathVariable Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
+    }
+
+    @Override
+    public ResponseEntity<CustomerInfoDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
     }
 
     @Override

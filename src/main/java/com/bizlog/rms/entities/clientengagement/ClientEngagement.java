@@ -11,10 +11,9 @@ import lombok.Data;
 @Table(name = "client_engagement_table")
 public class ClientEngagement extends BaseClientEntity {
     @Column(name = "areaOfOperationLocation", nullable = false)
-    private String areaOfOperationLocation;
+    private String areaOfOperations;
     @Column(name = "onBoardingService", nullable = false)
     private String onBoardingService;
     @Column(name = "noOfOperationLocation", nullable = false)
-    private String noOfOperationLocation;
-
+    private String operationLocationNumber;
 }

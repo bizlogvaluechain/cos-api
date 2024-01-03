@@ -28,21 +28,21 @@ public class CustomerInfo extends BaseClientEntity {
     private String gst;
     @Column(name = "panOrAadhar", nullable = false)
     private String panOrAadhar;
-    @Column(name = "gstS3Key", nullable = false)
+    @Column(name = "gstS3Key")
     private String gstS3Key;
-    @Column(name = "panOrAadharS3Key", nullable = false)
+    @Column(name = "panOrAadharS3Key")
     private String panOrAadharS3Key;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "BILLING_INFO_ID", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "billingInfoId", referencedColumnName = "id")
     private BillingInfo billingInfo;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "SHIPMENT_INFO_ID", referencedColumnName = "id")
-    private ShipmentInfo shipmentInfo;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "shipmentInfoId", referencedColumnName = "id")
+    private ShipmentInfo shippingAddress;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "CONTACT_DETAILS_ID", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "companyContactDetailsId", referencedColumnName = "id")
     private CompanyContactDetails companyContactDetails;
 
 }

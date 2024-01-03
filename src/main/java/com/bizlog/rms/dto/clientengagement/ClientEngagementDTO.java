@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ClientEngagementDTO extends BaseDTO {
 
-    private String areaOfOperationLocation;
+    private String areaOfOperations;
     private String onBoardingService;
-    private String noOfOperationLocation;
+    private String operationLocationNumber;
 }

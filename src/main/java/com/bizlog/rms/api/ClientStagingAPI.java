@@ -22,4 +22,7 @@ public interface ClientStagingAPI extends BaseAPI<ClientStagingDTO, ClientStagin
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    @GetMapping("/getByClientId")
+    ResponseEntity<ClientStagingDTO> getByClientId(Long clientId);
 }

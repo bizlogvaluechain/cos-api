@@ -22,4 +22,7 @@ public interface ClientCodeAPI extends BaseAPI<ClientCodeDTO, ClientCodeDTO> {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    @GetMapping("/getByClientId")
+    ResponseEntity<ClientCodeDTO> getByClientId(Long clientId);
 }

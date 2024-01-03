@@ -17,5 +17,5 @@ public class ClientHierarchy extends BaseClientEntity {
     @Column(name = "emailId", nullable = false)
     private String emailId;
     @Column(name = "phoneNumber", nullable = false)
-    private String phoneNumber;
+    private String phoneNum;
 }

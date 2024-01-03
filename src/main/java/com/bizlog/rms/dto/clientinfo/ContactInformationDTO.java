@@ -12,6 +12,6 @@ public class ContactInformationDTO extends BaseDTO {
 
     private String contactPersonName;
     private String contactPersonTitle;
-    private String contactPersonEmailID;
-    private String contactPersonPhoneNO;
+    private String contactPersonsEmailId;
+    private String contactPersonsPhoneNumber;
 }

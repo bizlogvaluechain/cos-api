@@ -1,9 +1,9 @@
 package com.bizlog.rms.api.impl;
 
-import com.bizlog.rms.api.ClientCodeAPI;
+import com.bizlog.rms.api.ClientHierarchyAPI;
 import com.bizlog.rms.dto.PageResponse;
-import com.bizlog.rms.dto.clientinfo.ClientCodeDTO;
-import com.bizlog.rms.entities.clientinfo.ClientCode;
+import com.bizlog.rms.dto.clientinfo.ClientHierarchyDTO;
+import com.bizlog.rms.entities.clientinfo.ClientHierarchy;
 import com.bizlog.rms.exception.AlreadyExistException;
 import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
@@ -11,21 +11,20 @@ import com.bizlog.rms.utils.OperationType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
-public class ClientCodeResource extends BaseClientResource<ClientCode, ClientCodeDTO, ClientCodeDTO>
-        implements ClientCodeAPI {
-    public ClientCodeResource(BaseClientRepository<ClientCode, Long> baseClientRepository) {
+@Slf4j
+public class ClientHierarchyResource extends BaseClientResource<ClientHierarchy, ClientHierarchyDTO, ClientHierarchyDTO>
+        implements ClientHierarchyAPI {
+    public ClientHierarchyResource(BaseClientRepository<ClientHierarchy, Long> baseClientRepository) {
         super(baseClientRepository);
     }
 
     @Override
-    protected void preValidate(Long clientId, ClientCodeDTO payloadDTO, OperationType operationType) {
+    protected void preValidate(Long clientId, ClientHierarchyDTO payloadDTO, OperationType operationType) {
         super.preValidate(clientId, payloadDTO, operationType);
         if (operationType == OperationType.CREATE) {
             getBaseClientRepository()
@@ -38,48 +37,46 @@ public class ClientCodeResource extends BaseClientResource<ClientCode, ClientCod
     }
 
     @Override
-    protected ClientCode toEntity(ClientCodeDTO dto) {
+    protected ClientHierarchy toEntity(ClientHierarchyDTO dto) {
         return getMapper().toEntity(dto);
     }
 
     @Override
-    protected ClientCodeDTO toDTO(ClientCode entity) {
+    protected ClientHierarchyDTO toDTO(ClientHierarchy entity) {
         return getMapper().toDTO(entity);
     }
 
-    @Transactional
     @Override
-    public ResponseEntity<ClientCodeDTO> create(@PathVariable("clientId") Long clientId,
-            @RequestBody ClientCodeDTO payloadDTO) {
+    public ResponseEntity<ClientHierarchyDTO> create(@PathVariable("clientId") Long clientId,
+            @RequestBody ClientHierarchyDTO payloadDTO) {
         return super.create(clientId, payloadDTO);
     }
 
-    @Transactional
     @Override
-    public ResponseEntity<ClientCodeDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
-            @RequestBody ClientCodeDTO payloadDTO) {
+    public ResponseEntity<ClientHierarchyDTO> update(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id, @RequestBody ClientHierarchyDTO payloadDTO) {
         return super.update(clientId, id, payloadDTO);
     }
 
-    @Transactional
     @Override
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
 
     @Override
-    public ResponseEntity<ClientCodeDTO> getById(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
+    public ResponseEntity<ClientHierarchyDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
+    }
+
+    @Override
+    public ResponseEntity<ClientHierarchyDTO> getById(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<ClientCodeDTO>> getAll(@PathVariable("clientId") Long clientId,
+    public ResponseEntity<PageResponse<ClientHierarchyDTO>> getAll(@PathVariable("clientId") Long clientId,
             Pageable pageable) {
         return super.getAllConfig(clientId, pageable);
-    }
-
-    @Override
-    public ResponseEntity<ClientCodeDTO> getByClientId(@PathVariable("clientId") Long clientId) {
-        return super.getByClientId(clientId);
     }
 }

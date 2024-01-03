@@ -3,10 +3,8 @@ package com.bizlog.rms.api;
 import com.bizlog.rms.dto.clientinfo.CustomerInfoDTO;
 import com.bizlog.rms.dto.PageResponse;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping(value = "/api/v1/cos/client/{clientId}/customer-info")
 public interface CustomerInfoAPI extends BaseAPI<CustomerInfoDTO, CustomerInfoDTO> {
@@ -24,4 +22,7 @@ public interface CustomerInfoAPI extends BaseAPI<CustomerInfoDTO, CustomerInfoDT
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    @GetMapping("/getByClientId")
+    ResponseEntity<CustomerInfoDTO> getByClientId(Long clientId);
 }

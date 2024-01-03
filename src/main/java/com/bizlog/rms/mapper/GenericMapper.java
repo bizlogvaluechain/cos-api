@@ -2,6 +2,7 @@ package com.bizlog.rms.mapper;
 
 import com.bizlog.rms.dto.ClientDTO;
 import com.bizlog.rms.dto.ClientSettingDTO;
+import com.bizlog.rms.dto.clientengagement.ClientEngagementDTO;
 import com.bizlog.rms.dto.clientinfo.*;
 import com.bizlog.rms.dto.SOP_TAT.SOPActivityDTO;
 import com.bizlog.rms.dto.SOP_TAT.TATActivityDTO;
@@ -14,6 +15,7 @@ import com.bizlog.rms.dto.productInformation.ProductInformationDTO;
 import com.bizlog.rms.dto.users.UserDTO;
 import com.bizlog.rms.entities.ClientSetting;
 import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.clientengagement.ClientEngagement;
 import com.bizlog.rms.entities.clientinfo.*;
 import com.bizlog.rms.entities.Specifications.SOPActivity;
 import com.bizlog.rms.entities.Specifications.TATActivity;
@@ -104,4 +106,15 @@ public interface GenericMapper {
 
     ShipmentInfoDTO toDTO(ShipmentInfo entity);
 
+    ClientEngagement toEntity(ClientEngagementDTO dto);
+
+    ClientEngagementDTO toDTO(ClientEngagement entity);
+
+    ClientHierarchy toEntity(ClientHierarchyDTO dto);
+
+    ClientHierarchyDTO toDTO(ClientHierarchy entity);
+
+    ContactInformation toEntity(ContactInformationDTO dto);
+
+    ContactInformationDTO toDTO(ContactInformation entity);
 }
