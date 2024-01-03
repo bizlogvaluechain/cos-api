@@ -7,6 +7,7 @@ import com.bizlog.rms.entities.clientinfo.CustomerInfo;
 import com.bizlog.rms.exception.AlreadyExistException;
 import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
+import com.bizlog.rms.service.S3Service;
 import com.bizlog.rms.utils.OperationType;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 import java.util.Optional;
@@ -25,11 +28,10 @@ import java.util.Optional;
 public class CustomerInfoResource extends BaseClientResource<CustomerInfo, CustomerInfoDTO, CustomerInfoDTO>
         implements CustomerInfoAPI {
 
-//    private final S3Service s3Service;
-
-    public CustomerInfoResource(BaseClientRepository<CustomerInfo, Long> clientSettingRepository) {
+    private final S3Service s3Service;
+    public CustomerInfoResource(BaseClientRepository<CustomerInfo, Long> clientSettingRepository, S3Service s3Service) {
         super(clientSettingRepository);
-//        this.s3Service = s3Service;
+        this.s3Service = s3Service;
     }
 
     @Override
@@ -45,6 +47,8 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
         }
     }
 
+
+
     @Transactional
     @Override
     public ResponseEntity<CustomerInfoDTO> create(@PathVariable Long clientId,
@@ -53,13 +57,30 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
         return super.create(clientId, customerInfoDTO);
     }
 
-//    private void createResourceInS3(CustomerInfoDTO customerInfoDTO, MultipartFile gstFile,
-//            MultipartFile panOrAadharFile) {
-//        String gstS3Key = s3Service.uploadFileToS3(gstFile);
-//        String panOrAadharS3Key = s3Service.uploadFileToS3(panOrAadharFile);
-//        customerInfoDTO.setGstS3Key(gstS3Key);
-//        customerInfoDTO.setPanOrAadharS3Key(panOrAadharS3Key);
-//    }
+    @Override
+    public ResponseEntity<String> uploadFile(
+            @PathVariable Long clientId,
+            @RequestParam(value = "file") MultipartFile file,@RequestParam String fileName) {
+        CustomerInfo customerInfo = getBaseClientRepository().findByClient(
+                getClientRepository().findById(clientId).
+                        orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
+                .orElseThrow(() -> new ResourceNotFoundException("entity not found", "id", clientId));
+        String s3Key = createResourceInS3(file);
+        if(fileName.equals("gst"))
+        {
+           customerInfo.setGstS3Key(s3Key);
+        }
+        else if(fileName.equals("aadhar")|| fileName.equals("pan")){
+            customerInfo.setPanOrAadharS3Key(s3Key);
+        }
+        getBaseClientRepository().save(customerInfo);
+        return ResponseEntity.ok().body(s3Key);
+    }
+
+
+    private String createResourceInS3( MultipartFile file) {
+        return s3Service.uploadFileToS3(file);
+    }
 
     @Override
     public ResponseEntity<PageResponse<CustomerInfoDTO>> getAll(@PathVariable Long clientId, Pageable pageable) {

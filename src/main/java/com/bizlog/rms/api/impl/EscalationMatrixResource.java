@@ -3,7 +3,9 @@ package com.bizlog.rms.api.impl;
 import com.bizlog.rms.api.EscalationMatrixAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.escalationMatrix.EscalationMatrixDTO;
+import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.escalationMatrix.EscalationMatrix;
+import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
 
 import jakarta.validation.Valid;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -29,12 +32,20 @@ public class EscalationMatrixResource extends
         super(escalationMatrixRepository);
     }
 
-    @Transactional
     @Override
-    public ResponseEntity<EscalationMatrixDTO> create(@PathVariable("clientId") Long clientId,
-            @RequestBody @Valid EscalationMatrixDTO escalationMatrixDTO) {
-        escalationMatrixDTO.setClientId(clientId);
-        return super.create(clientId, escalationMatrixDTO);
+    public ResponseEntity<List<EscalationMatrixDTO>> create(@PathVariable("clientId") Long clientId,
+                                                            @RequestBody @Valid List<EscalationMatrixDTO> escalationMatrixDTO) {
+        List<EscalationMatrixDTO> outputDTOs = escalationMatrixDTO.stream()
+                .map(inputDTO -> {
+                    Client client = getClientRepository().findById(clientId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
+                    EscalationMatrix entity = toEntity(inputDTO);
+                    entity.setClient(client);
+                    EscalationMatrix createdEntity = getBaseClientRepository().save(entity);
+                    return toDTO(createdEntity);
+                })
+                .toList();
+        return ResponseEntity.ok().body(outputDTOs);
     }
 
     @Override

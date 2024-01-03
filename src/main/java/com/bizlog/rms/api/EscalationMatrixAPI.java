@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -14,7 +15,7 @@ import java.util.Set;
 @RequestMapping(value = "/api/v1/cos/{clientId}/escalation-matrix")
 public interface EscalationMatrixAPI extends BaseAPI<EscalationMatrixDTO, EscalationMatrixDTO> {
     @PostMapping
-    ResponseEntity<EscalationMatrixDTO> create(Long clientId, EscalationMatrixDTO escalationMatrixDTO);
+    ResponseEntity<List<EscalationMatrixDTO>> create(Long clientId, List<EscalationMatrixDTO> escalationMatrixDTO);
 
     @GetMapping("/{id}")
     ResponseEntity<EscalationMatrixDTO> getById(Long clientId, Long id);
