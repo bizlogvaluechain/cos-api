@@ -1,57 +1,50 @@
 package com.bizlog.rms.api.impl;
 
-import com.bizlog.rms.api.CompanyContactDetailsAPI;
-import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.clientinfo.CompanyContactDetailsDTO;
+
 import com.bizlog.rms.entities.clientinfo.CompanyContactDetails;
-import com.bizlog.rms.repository.BaseClientRepository;
+import com.bizlog.rms.exception.ResourceNotFoundException;
+import com.bizlog.rms.mapper.GenericMapper;
+
+import com.bizlog.rms.repository.CompanyContactDetailsRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-public class CompanyContactDetailsResource
-        extends BaseClientResource<CompanyContactDetails, CompanyContactDetailsDTO, CompanyContactDetailsDTO>
-        implements CompanyContactDetailsAPI {
-    public CompanyContactDetailsResource(BaseClientRepository<CompanyContactDetails, Long> baseClientRepository) {
-        super(baseClientRepository);
+public class CompanyContactDetailsResource {
+    private final CompanyContactDetailsRepository companyContactDetailsRepository;
+    private final GenericMapper genericMapper;
+
+    @Autowired
+    public CompanyContactDetailsResource(CompanyContactDetailsRepository companyContactDetailsRepository,
+            GenericMapper genericMapper) {
+        this.companyContactDetailsRepository = companyContactDetailsRepository;
+        this.genericMapper = genericMapper;
     }
 
-    @Override
-    public ResponseEntity<CompanyContactDetailsDTO> getById(Long clientId, Long id) {
-        return super.get(clientId, id);
+    public ResponseEntity<CompanyContactDetailsDTO> create(CompanyContactDetailsDTO payloadDTO) {
+        CompanyContactDetails entityToSave = genericMapper.toEntity(payloadDTO);
+        CompanyContactDetails savedEntity = companyContactDetailsRepository.save(entityToSave);
+        CompanyContactDetailsDTO savedDTO = genericMapper.toDTO(savedEntity);
+
+        return new ResponseEntity<>(savedDTO, HttpStatus.CREATED);
     }
 
-    @Override
-    public ResponseEntity<PageResponse<CompanyContactDetailsDTO>> getAll(Long clientId, Pageable pageable) {
-        return super.getAllConfig(clientId, pageable);
+    public ResponseEntity<Void> delete(Long id) {
+        companyContactDetailsRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @Override
-    protected CompanyContactDetails toEntity(CompanyContactDetailsDTO dto) {
-        return getMapper().toEntity(dto);
-    }
+    public ResponseEntity<CompanyContactDetailsDTO> getById(Long id) {
+        CompanyContactDetails existingEntity = companyContactDetailsRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("BillingInfo not found with  ", "id", id));
+        CompanyContactDetailsDTO dto = genericMapper.toDTO(existingEntity);
 
-    @Override
-    protected CompanyContactDetailsDTO toDTO(CompanyContactDetails entity) {
-        return getMapper().toDTO(entity);
-    }
-
-    @Override
-    public ResponseEntity<CompanyContactDetailsDTO> create(Long clientId, CompanyContactDetailsDTO payloadDTO) {
-        return super.create(clientId, payloadDTO);
-    }
-
-    @Override
-    public ResponseEntity<CompanyContactDetailsDTO> update(Long clientId, Long id,
-            CompanyContactDetailsDTO payloadDTO) {
-        return super.update(clientId, id, payloadDTO);
-    }
-
-    @Override
-    public ResponseEntity<Void> delete(Long clientId, Long id) {
-        return super.delete(clientId, id);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

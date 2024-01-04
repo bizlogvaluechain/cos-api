@@ -98,11 +98,11 @@ public class DataLoaderUtil {
         EscalationMatrix escalationMatrix = new EscalationMatrix();
         escalationMatrix.setId(1L);
         escalationMatrix.setClient(client);
-        escalationMatrix.setAccountContactInfo("IDP");
-        escalationMatrix.setItContactInfo("IDP");
-        escalationMatrix.setBusinessContactInfo("IDP");
-        escalationMatrix.setOpsContactInfo("IDP");
-        escalationMatrix.setEmergencyContactInfo("IDP");
+        escalationMatrix.setDesignation("IDP");
+        escalationMatrix.setFirstName("IDP");
+        escalationMatrix.setLastName("IDP");
+        escalationMatrix.setEmailAddress("IDP");
+        escalationMatrix.setMobile("IDP");
         return List.of(escalationMatrix);
     }
 

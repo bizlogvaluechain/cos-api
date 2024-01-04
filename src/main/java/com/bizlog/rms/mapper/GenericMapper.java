@@ -2,14 +2,12 @@ package com.bizlog.rms.mapper;
 
 import com.bizlog.rms.dto.ClientDTO;
 import com.bizlog.rms.dto.ClientSettingDTO;
-import com.bizlog.rms.dto.clientinfo.BillingInfoDTO;
-import com.bizlog.rms.dto.clientinfo.ClientStagingDTO;
-import com.bizlog.rms.dto.clientinfo.CompanyContactDetailsDTO;
-import com.bizlog.rms.dto.clientinfo.CustomerInfoDTO;
+import com.bizlog.rms.dto.clientengagement.ClientEngagementDTO;
+import com.bizlog.rms.dto.clientinfo.*;
 import com.bizlog.rms.dto.SOP_TAT.SOPActivityDTO;
 import com.bizlog.rms.dto.SOP_TAT.TATActivityDTO;
 import com.bizlog.rms.dto.SOP_TAT.TicketCreationConfigDTO;
-import com.bizlog.rms.dto.escalationMatrix.EscalationMatrixDTO;
+import com.bizlog.rms.dto.escalationMatrix.*;
 import com.bizlog.rms.dto.frequency.FrequencyDTO;
 import com.bizlog.rms.dto.locationService.LocationDTO;
 import com.bizlog.rms.dto.notification.NotificationDTO;
@@ -17,13 +15,11 @@ import com.bizlog.rms.dto.productInformation.ProductInformationDTO;
 import com.bizlog.rms.dto.users.UserDTO;
 import com.bizlog.rms.entities.ClientSetting;
 import com.bizlog.rms.entities.Client;
-import com.bizlog.rms.entities.clientinfo.BillingInfo;
-import com.bizlog.rms.entities.clientinfo.ClientStaging;
-import com.bizlog.rms.entities.clientinfo.CompanyContactDetails;
-import com.bizlog.rms.entities.clientinfo.CustomerInfo;
+import com.bizlog.rms.entities.clientengagement.ClientEngagement;
+import com.bizlog.rms.entities.clientinfo.*;
 import com.bizlog.rms.entities.Specifications.SOPActivity;
 import com.bizlog.rms.entities.Specifications.TATActivity;
-import com.bizlog.rms.entities.escalationMatrix.EscalationMatrix;
+import com.bizlog.rms.entities.escalationMatrix.*;
 import com.bizlog.rms.entities.frequency.Frequency;
 import com.bizlog.rms.entities.location.Location;
 import com.bizlog.rms.entities.notification.Notification;
@@ -101,4 +97,48 @@ public interface GenericMapper {
     ClientStaging toEntity(ClientStagingDTO dto);
 
     ClientStagingDTO toDTO(ClientStaging entity);
+
+    ClientCode toEntity(ClientCodeDTO dto);
+
+    ClientCodeDTO toDTO(ClientCode entity);
+
+    ShipmentInfo toEntity(ShipmentInfoDTO dto);
+
+    ShipmentInfoDTO toDTO(ShipmentInfo entity);
+
+    ClientEngagement toEntity(ClientEngagementDTO dto);
+
+    ClientEngagementDTO toDTO(ClientEngagement entity);
+
+    ClientHierarchy toEntity(ClientHierarchyDTO dto);
+
+    ClientHierarchyDTO toDTO(ClientHierarchy entity);
+
+    ContactInformation toEntity(ContactInformationDTO dto);
+
+    ContactInformationDTO toDTO(ContactInformation entity);
+
+    BizlogFinanceEscalation toEntity(BizlogFinanceEscalationDTO dto);
+
+    BizlogFinanceEscalationDTO toDTO(BizlogFinanceEscalation entity);
+
+    BizlogOpsEscalation toEntity(BizlogOpsEscalationDTO dto);
+
+    BizlogOpsEscalationDTO toDTO(BizlogOpsEscalation entity);
+
+    BizlogTechEscalation toEntity(BizlogTechEscalationDTO dto);
+
+    BizlogTechEscalationDTO toDTO(BizlogTechEscalation entity);
+
+    ClientFinanceEscalation toEntity(ClientFinanceEscalationDTO dto);
+
+    ClientFinanceEscalationDTO toDTO(ClientFinanceEscalation entity);
+
+    ClientOpsEscalation toEntity(ClientOpsEscalationDTO dto);
+
+    ClientOpsEscalationDTO toDTO(ClientOpsEscalation entity);
+
+    ClientTechEscalation toEntity(ClientTechEscalationDTO dto);
+
+    ClientTechEscalationDTO toDTO(ClientTechEscalation entity);
 }

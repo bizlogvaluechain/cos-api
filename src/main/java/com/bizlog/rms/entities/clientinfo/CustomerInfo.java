@@ -1,10 +1,7 @@
 package com.bizlog.rms.entities.clientinfo;
 
 import com.bizlog.rms.entities.BaseClientEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -22,7 +19,7 @@ public class CustomerInfo extends BaseClientEntity {
     @Column(name = "companySize", nullable = false)
     private Integer companySize;
     @Column(name = "registeredYear", nullable = false)
-    private String registeredYear;
+    private Long registeredYear;
     @Column(name = "companyRevenue", nullable = false)
     private Long companyRevenue;
     @Column(name = "clientRevenueFY", nullable = false)
@@ -31,10 +28,21 @@ public class CustomerInfo extends BaseClientEntity {
     private String gst;
     @Column(name = "panOrAadhar", nullable = false)
     private String panOrAadhar;
-    @Column(name = "gstS3Key", nullable = false)
+    @Column(name = "gstS3Key")
     private String gstS3Key;
-    @Column(name = "panOrAadharS3Key", nullable = false)
+    @Column(name = "panOrAadharS3Key")
     private String panOrAadharS3Key;
-    @Column(name = "clientCode", nullable = false)
-    private String clientCode;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "billingInfoId", referencedColumnName = "id")
+    private BillingInfo billingInfo;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "shipmentInfoId", referencedColumnName = "id")
+    private ShipmentInfo shippingAddress;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "companyContactDetailsId", referencedColumnName = "id")
+    private CompanyContactDetails companyContactDetails;
+
 }

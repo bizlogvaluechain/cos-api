@@ -32,7 +32,6 @@ public class ClientDTO {
     private Boolean active;
 
     private String type;
-
     private Long dateOfOnboarding;
 
 }

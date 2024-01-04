@@ -25,4 +25,6 @@ public interface BaseAPI<I extends BaseDTO, O extends BaseDTO> {
     ResponseEntity<O> update(Long clientId, Long id, I inputDTO);
 
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    ResponseEntity<O> getByClientId(Long clientId);
 }

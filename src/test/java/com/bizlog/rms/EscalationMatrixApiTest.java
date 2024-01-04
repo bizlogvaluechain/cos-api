@@ -14,6 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -58,57 +61,60 @@ public class EscalationMatrixApiTest extends BaseApiTest {
     @Test
     void should_create_new_escalationMatrix() throws Exception {
         Client client = getClient();
+        List<EscalationMatrix> escalationMatrixList = new ArrayList<>();
         EscalationMatrix escalationMatrix = new EscalationMatrix();
-        escalationMatrix.setAccountContactInfo("IDP");
-        escalationMatrix.setItContactInfo("IDP");
-        escalationMatrix.setBusinessContactInfo("IDP");
-        escalationMatrix.setOpsContactInfo("IDP");
-        escalationMatrix.setEmergencyContactInfo("IDP");
+        escalationMatrix.setDesignation("IDP");
+        escalationMatrix.setFirstName("IDP");
+        escalationMatrix.setLastName("IDP");
+        escalationMatrix.setEmailAddress("IDP");
+        escalationMatrix.setMobile("IDP");
+        escalationMatrixList.add(escalationMatrix);
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/escalation-matrix", client.getId())
-                        .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrix).orElse("")))
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrixList).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 
     @Test
     void should_not_create_new_escalationMatrix() throws Exception {
         int clientId = 11;
+        List<EscalationMatrix> escalationMatrixList = new ArrayList<>();
         EscalationMatrix escalationMatrix = new EscalationMatrix();
-        escalationMatrix.setAccountContactInfo("IDP");
-        escalationMatrix.setItContactInfo("IDP");
-        escalationMatrix.setBusinessContactInfo("IDP");
-        escalationMatrix.setOpsContactInfo("IDP");
-        escalationMatrix.setEmergencyContactInfo("IDP");
+        escalationMatrix.setDesignation("IDP");
+        escalationMatrix.setFirstName("IDP");
+        escalationMatrix.setLastName("IDP");
+        escalationMatrix.setEmailAddress("IDP");
+        escalationMatrix.setMobile("IDP");
+        escalationMatrixList.add(escalationMatrix);
+
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/escalation-matrix", clientId)
-                        .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrix).orElse("")))
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrixList).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
     }
 
     @Test
     void should_update_existing_escalationMatrix() throws Exception {
         EscalationMatrix initialEscalationMatrix = new EscalationMatrix();
-        initialEscalationMatrix.setAccountContactInfo("InitialAccountInfo");
-        initialEscalationMatrix.setItContactInfo("InitialItInfo");
-        initialEscalationMatrix.setBusinessContactInfo("InitialBusinessInfo");
-        initialEscalationMatrix.setOpsContactInfo("InitialOpsInfo");
-        initialEscalationMatrix.setEmergencyContactInfo("InitialEmergencyInfo");
+        initialEscalationMatrix.setLastName("InitialItInfo");
+        initialEscalationMatrix.setMobile("InitialBusinessInfo");
+        initialEscalationMatrix.setDesignation("InitialOpsInfo");
+        initialEscalationMatrix.setFirstName("InitialEmergencyInfo");
+        initialEscalationMatrix.setEmailAddress("initial@gmail.com");
         Client client = getClient();
         initialEscalationMatrix.setClient(client);
         initialEscalationMatrix = escalationMatrixRepository.save(initialEscalationMatrix);
 
         EscalationMatrixDTO updatedEscalationMatrix = getMapper().toDTO(initialEscalationMatrix);
-        updatedEscalationMatrix.setAccountContactInfo("UpdatedAccountInfo");
-        updatedEscalationMatrix.setItContactInfo("UpdatedItInfo");
-        updatedEscalationMatrix.setBusinessContactInfo("UpdatedBusinessInfo");
-        updatedEscalationMatrix.setOpsContactInfo("UpdatedOpsInfo");
-        updatedEscalationMatrix.setEmergencyContactInfo("UpdatedEmergencyInfo");
+        updatedEscalationMatrix.setLastName("UpdatedItInfo");
+        updatedEscalationMatrix.setMobile("UpdatedBusinessInfo");
+        updatedEscalationMatrix.setDesignation("UpdatedOpsInfo");
+
         this.mockMvc.perform(
                 put("/api/v1/cos/{clientId}/escalation-matrix/{id}", client.getId(), initialEscalationMatrix.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedEscalationMatrix).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updatedEscalationMatrix).orElse("")));
-
     }
 
     @Test
@@ -118,11 +124,9 @@ public class EscalationMatrixApiTest extends BaseApiTest {
         int nonexistentEscalationMatrixId = 999;
 
         EscalationMatrix updatedEscalationMatrix = new EscalationMatrix();
-        updatedEscalationMatrix.setAccountContactInfo("UpdatedAccountInfo");
-        updatedEscalationMatrix.setItContactInfo("UpdatedItInfo");
-        updatedEscalationMatrix.setBusinessContactInfo("UpdatedBusinessInfo");
-        updatedEscalationMatrix.setOpsContactInfo("UpdatedOpsInfo");
-        updatedEscalationMatrix.setEmergencyContactInfo("UpdatedEmergencyInfo");
+        updatedEscalationMatrix.setLastName("UpdatedItInfo");
+        updatedEscalationMatrix.setMobile("UpdatedBusinessInfo");
+        updatedEscalationMatrix.setDesignation("UpdatedOpsInfo");
 
         // Perform the PUT request to update the EscalationMatrix
         this.mockMvc
@@ -134,11 +138,11 @@ public class EscalationMatrixApiTest extends BaseApiTest {
     @Test
     void should_delete_existing_escalationMatrix() throws Exception {
         EscalationMatrix escalationMatrix = new EscalationMatrix();
-        escalationMatrix.setAccountContactInfo("ToDeleteAccountInfo");
-        escalationMatrix.setItContactInfo("ToDeleteItInfo");
-        escalationMatrix.setBusinessContactInfo("ToDeleteBusinessInfo");
-        escalationMatrix.setOpsContactInfo("ToDeleteOpsInfo");
-        escalationMatrix.setEmergencyContactInfo("ToDeleteEmergencyInfo");
+        escalationMatrix.setDesignation("IDP");
+        escalationMatrix.setFirstName("IDP");
+        escalationMatrix.setLastName("IDP");
+        escalationMatrix.setEmailAddress("IDP");
+        escalationMatrix.setMobile("IDP");
         Client client = getClient();
         escalationMatrix.setClient(client);
         escalationMatrix = escalationMatrixRepository.save(escalationMatrix);

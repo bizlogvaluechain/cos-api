@@ -10,9 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping(value = "/api/v1/cos/client/{clientId}/customer-info")
 public interface CustomerInfoAPI extends BaseAPI<CustomerInfoDTO, CustomerInfoDTO> {
-    @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-    ResponseEntity<CustomerInfoDTO> create(Long clientId, CustomerInfoDTO customerInfoDTO, MultipartFile gstFile,
-            MultipartFile panOrAadharFile);
+    @PostMapping
+    ResponseEntity<CustomerInfoDTO> create(Long clientId, CustomerInfoDTO customerInfoDTO);
+
+    @PostMapping(value = "/upload",consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+    ResponseEntity<String> uploadFile(Long clientId, MultipartFile file,String fileName);
 
     @GetMapping("/{id}")
     ResponseEntity<CustomerInfoDTO> getById(Long clientId, Long id);
@@ -25,4 +27,7 @@ public interface CustomerInfoAPI extends BaseAPI<CustomerInfoDTO, CustomerInfoDT
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    @GetMapping("/getByClientId")
+    ResponseEntity<CustomerInfoDTO> getByClientId(Long clientId);
 }

@@ -1,55 +1,48 @@
 package com.bizlog.rms.api.impl;
 
-import com.bizlog.rms.api.BillingInfoAPI;
-import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.clientinfo.BillingInfoDTO;
 import com.bizlog.rms.entities.clientinfo.BillingInfo;
-import com.bizlog.rms.repository.BaseClientRepository;
+import com.bizlog.rms.exception.ResourceNotFoundException;
+import com.bizlog.rms.mapper.GenericMapper;
+
+import com.bizlog.rms.repository.BillingInfoRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-public class BillingInfoResource extends BaseClientResource<BillingInfo, BillingInfoDTO, BillingInfoDTO>
-        implements BillingInfoAPI {
-    public BillingInfoResource(BaseClientRepository<BillingInfo, Long> baseClientRepository) {
-        super(baseClientRepository);
+public class BillingInfoResource {
+    private final BillingInfoRepository billingInfoRepository;
+    private final GenericMapper genericMapper;
+
+    @Autowired
+    public BillingInfoResource(BillingInfoRepository billingInfoRepository, GenericMapper genericMapper) {
+        this.billingInfoRepository = billingInfoRepository;
+        this.genericMapper = genericMapper;
     }
 
-    @Override
-    protected BillingInfo toEntity(BillingInfoDTO dto) {
-        return getMapper().toEntity(dto);
+    public ResponseEntity<BillingInfoDTO> create(BillingInfoDTO payloadDTO) {
+        BillingInfo entityToSave = genericMapper.toEntity(payloadDTO);
+        BillingInfo savedEntity = billingInfoRepository.save(entityToSave);
+        BillingInfoDTO savedDTO = genericMapper.toDTO(savedEntity);
+
+        return new ResponseEntity<>(savedDTO, HttpStatus.CREATED);
     }
 
-    @Override
-    protected BillingInfoDTO toDTO(BillingInfo entity) {
-        return getMapper().toDTO(entity);
+    public ResponseEntity<Void> delete(Long id) {
+        billingInfoRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @Override
-    public ResponseEntity<BillingInfoDTO> create(Long clientId, BillingInfoDTO payloadDTO) {
-        return super.create(clientId, payloadDTO);
+    public ResponseEntity<BillingInfoDTO> getById(Long id) {
+        BillingInfo existingEntity = billingInfoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("BillingInfo not found with  ", "id", id));
+        BillingInfoDTO dto = genericMapper.toDTO(existingEntity);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<BillingInfoDTO> update(Long clientId, Long id, BillingInfoDTO payloadDTO) {
-        return super.update(clientId, id, payloadDTO);
-    }
-
-    @Override
-    public ResponseEntity<Void> delete(Long clientId, Long id) {
-        return super.delete(clientId, id);
-    }
-
-    @Override
-    public ResponseEntity<BillingInfoDTO> getById(Long clientId, Long id) {
-        return super.get(clientId, id);
-    }
-
-    @Override
-    public ResponseEntity<PageResponse<BillingInfoDTO>> getAll(Long clientId, Pageable pageable) {
-        return super.getAllConfig(clientId, pageable);
-    }
 }
