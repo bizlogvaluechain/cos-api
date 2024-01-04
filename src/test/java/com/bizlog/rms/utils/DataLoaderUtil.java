@@ -4,9 +4,9 @@ import com.bizlog.rms.dto.SOP_TAT.subLists.MajorActivites;
 import com.bizlog.rms.dto.SOP_TAT.subLists.MinorActivites;
 import com.bizlog.rms.dto.SOP_TAT.subLists.TATBreachDueTo;
 import com.bizlog.rms.entities.Client;
-import com.bizlog.rms.entities.Specifications.SOPActivity;
-import com.bizlog.rms.entities.Specifications.TATActivity;
-import com.bizlog.rms.entities.escalationMatrix.EscalationMatrix;
+import com.bizlog.rms.entities.escalationMatrix.BizlogFinanceEscalation;
+import com.bizlog.rms.entities.sop.SOPActivity;
+import com.bizlog.rms.entities.sop.TATActivity;
 import com.bizlog.rms.entities.frequency.Frequency;
 import com.bizlog.rms.entities.frequency.HolidayApplicable;
 import com.bizlog.rms.entities.location.Charge;
@@ -94,8 +94,8 @@ public class DataLoaderUtil {
         return List.of(frequency);
     }
 
-    public static List<EscalationMatrix> getEscalationMatrix(Client client) {
-        EscalationMatrix escalationMatrix = new EscalationMatrix();
+    public static List<BizlogFinanceEscalation> getEscalationMatrix(Client client) {
+        BizlogFinanceEscalation escalationMatrix = new BizlogFinanceEscalation();
         escalationMatrix.setId(1L);
         escalationMatrix.setClient(client);
         escalationMatrix.setDesignation("IDP");
