@@ -45,6 +45,7 @@ public class ClientTechEscalationResource
 
     @Override
     public ResponseEntity<ClientTechEscalationDTO> getById(@PathVariable("clientId")Long clientId,@PathVariable("id") Long id) {
+
         return super.get(clientId, id);
     }
 

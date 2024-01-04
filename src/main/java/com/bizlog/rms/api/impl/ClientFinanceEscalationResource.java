@@ -44,7 +44,9 @@ public class ClientFinanceEscalationResource
     }
 
     @Override
+
     public ResponseEntity<ClientFinanceEscalationDTO> getById(@PathVariable("clientId")Long clientId,@PathVariable("id") Long id) {
+  
         return super.get(clientId, id);
     }
 
