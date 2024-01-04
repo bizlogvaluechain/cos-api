@@ -1,4 +1,4 @@
-package com.bizlog.rms.entities.Specifications;
+package com.bizlog.rms.entities.sop;
 
 import com.bizlog.rms.dto.SOP_TAT.subLists.TATBreachDueTo;
 import com.bizlog.rms.entities.BaseClientEntity;

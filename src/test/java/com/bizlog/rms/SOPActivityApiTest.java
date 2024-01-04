@@ -5,7 +5,7 @@ import com.bizlog.rms.dto.SOP_TAT.subLists.MajorActivites;
 import com.bizlog.rms.dto.SOP_TAT.subLists.MinorActivites;
 import com.bizlog.rms.entities.Client;
 
-import com.bizlog.rms.entities.Specifications.SOPActivity;
+import com.bizlog.rms.entities.sop.SOPActivity;
 import com.bizlog.rms.repository.SOPActivityRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
 import org.junit.jupiter.api.AfterEach;

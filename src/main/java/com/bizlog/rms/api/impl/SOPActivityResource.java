@@ -3,7 +3,7 @@ package com.bizlog.rms.api.impl;
 import com.bizlog.rms.api.SOPActivityAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.SOP_TAT.SOPActivityDTO;
-import com.bizlog.rms.entities.Specifications.SOPActivity;
+import com.bizlog.rms.entities.sop.SOPActivity;
 import com.bizlog.rms.repository.BaseClientRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

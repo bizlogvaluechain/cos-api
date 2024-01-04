@@ -3,7 +3,7 @@ package com.bizlog.rms;
 import com.bizlog.rms.dto.SOP_TAT.TATActivityDTO;
 import com.bizlog.rms.dto.SOP_TAT.subLists.TATBreachDueTo;
 import com.bizlog.rms.entities.Client;
-import com.bizlog.rms.entities.Specifications.TATActivity;
+import com.bizlog.rms.entities.sop.TATActivity;
 import com.bizlog.rms.repository.TATActivityRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
 import org.junit.jupiter.api.AfterEach;

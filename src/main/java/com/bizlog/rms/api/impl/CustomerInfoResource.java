@@ -29,6 +29,7 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
         implements CustomerInfoAPI {
 
     private final S3Service s3Service;
+
     public CustomerInfoResource(BaseClientRepository<CustomerInfo, Long> clientSettingRepository, S3Service s3Service) {
         super(clientSettingRepository);
         this.s3Service = s3Service;
@@ -47,8 +48,6 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
         }
     }
 
-
-
     @Transactional
     @Override
     public ResponseEntity<CustomerInfoDTO> create(@PathVariable Long clientId,
@@ -58,27 +57,23 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
     }
 
     @Override
-    public ResponseEntity<String> uploadFile(
-            @PathVariable Long clientId,
-            @RequestParam(value = "file") MultipartFile file,@RequestParam String fileName) {
-        CustomerInfo customerInfo = getBaseClientRepository().findByClient(
-                getClientRepository().findById(clientId).
-                        orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
+    public ResponseEntity<String> uploadFile(@PathVariable Long clientId,
+            @RequestParam(value = "file") MultipartFile file, @RequestParam String fileName) {
+        CustomerInfo customerInfo = getBaseClientRepository()
+                .findByClient(getClientRepository().findById(clientId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
                 .orElseThrow(() -> new ResourceNotFoundException("entity not found", "id", clientId));
         String s3Key = createResourceInS3(file);
-        if(fileName.equals("gst"))
-        {
-           customerInfo.setGstS3Key(s3Key);
-        }
-        else if(fileName.equals("aadhar")|| fileName.equals("pan")){
+        if (fileName.equals("gst")) {
+            customerInfo.setGstS3Key(s3Key);
+        } else if (fileName.equals("aadhar") || fileName.equals("pan")) {
             customerInfo.setPanOrAadharS3Key(s3Key);
         }
         getBaseClientRepository().save(customerInfo);
         return ResponseEntity.ok().body(s3Key);
     }
 
-
-    private String createResourceInS3( MultipartFile file) {
+    private String createResourceInS3(MultipartFile file) {
         return s3Service.uploadFileToS3(file);
     }
 

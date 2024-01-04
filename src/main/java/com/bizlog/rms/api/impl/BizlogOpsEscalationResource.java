@@ -44,17 +44,19 @@ public class BizlogOpsEscalationResource
     }
 
     @Override
-    public ResponseEntity<BizlogOpsEscalationDTO> getById(@PathVariable("clientId")Long clientId,@PathVariable("id") Long id) {
+    public ResponseEntity<BizlogOpsEscalationDTO> getById(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<BizlogOpsEscalationDTO>> getAll(@PathVariable("clientId")Long clientId, Pageable pageable) {
+    public ResponseEntity<PageResponse<BizlogOpsEscalationDTO>> getAll(@PathVariable("clientId") Long clientId,
+            Pageable pageable) {
         return super.getAllConfig(clientId, pageable);
     }
 
     @Override
-    public ResponseEntity<PageResponse<BizlogOpsEscalationDTO>> search(@PathVariable("clientId")Long clientId,
+    public ResponseEntity<PageResponse<BizlogOpsEscalationDTO>> search(@PathVariable("clientId") Long clientId,
             Map<String, String> searchCriteria, Optional<Set<String>> attributesOpt, Pageable pageable) {
         return null;
     }
