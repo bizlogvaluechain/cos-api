@@ -1,4 +1,4 @@
-package com.bizlog.rms.entities.frequency;
+package com.bizlog.rms.entities.sop.frequency;
 
 import jakarta.persistence.Embeddable;
 import lombok.Data;

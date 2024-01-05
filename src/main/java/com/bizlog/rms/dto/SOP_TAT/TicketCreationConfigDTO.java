@@ -1,8 +1,8 @@
 package com.bizlog.rms.dto.SOP_TAT;
 
 import com.bizlog.rms.dto.BaseDTO;
-import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationBasedOn;
-import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationThrough;
+import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationBasedOn;
+import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationThrough;
 import jakarta.persistence.ElementCollection;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -21,9 +21,4 @@ public class TicketCreationConfigDTO extends BaseDTO {
     @ElementCollection
     @NotEmpty(message = "ticketCreationBasedOn should not be empty")
     private List<TicketCreationBasedOn> ticketCreationBasedOn;
-    private String city;
-    private String clientName;
-    private String phoneNumber;
-    private String pincode;
-    private String address;
 }

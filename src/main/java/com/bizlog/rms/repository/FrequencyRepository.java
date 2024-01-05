@@ -1,6 +1,6 @@
 package com.bizlog.rms.repository;
 
-import com.bizlog.rms.entities.frequency.Frequency;
+import com.bizlog.rms.entities.sop.frequency.Frequency;
 import org.springframework.stereotype.Repository;
 
 @Repository

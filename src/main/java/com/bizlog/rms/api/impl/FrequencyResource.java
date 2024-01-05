@@ -3,7 +3,7 @@ package com.bizlog.rms.api.impl;
 import com.bizlog.rms.api.FrequencyAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.frequency.FrequencyDTO;
-import com.bizlog.rms.entities.frequency.Frequency;
+import com.bizlog.rms.entities.sop.frequency.Frequency;
 import com.bizlog.rms.repository.BaseClientRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

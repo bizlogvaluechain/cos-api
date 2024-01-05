@@ -7,17 +7,17 @@ import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.escalationMatrix.BizlogFinanceEscalation;
 import com.bizlog.rms.entities.sop.SOPActivity;
 import com.bizlog.rms.entities.sop.TATActivity;
-import com.bizlog.rms.entities.frequency.Frequency;
-import com.bizlog.rms.entities.frequency.HolidayApplicable;
+import com.bizlog.rms.entities.sop.frequency.Frequency;
+import com.bizlog.rms.entities.sop.frequency.HolidayApplicable;
 import com.bizlog.rms.entities.location.Charge;
 import com.bizlog.rms.entities.location.Location;
 import com.bizlog.rms.entities.location.ServiceType;
-import com.bizlog.rms.entities.notification.Notification;
+import com.bizlog.rms.entities.sop.notification.Notification;
 import com.bizlog.rms.entities.productInformation.ProductInformation;
 import com.bizlog.rms.entities.productInformation.ProductSize;
-import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationBasedOn;
-import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationConfig;
-import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationThrough;
+import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationBasedOn;
+import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationConfig;
+import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationThrough;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -110,11 +110,10 @@ public class DataLoaderUtil {
         Notification notification = new Notification();
         notification.setId(1L);
         notification.setClient(client);
-        notification.setIsSmsRequired(false);
-        notification.setIsReportAlertsRequired(true);
-        notification.setIsEmailRequired(true);
-        notification.setIsAlertNeededForNegativeCases(false);
-        notification.setIsTicketScansRequired(true);
+        notification.setIsSmsClient(false);
+        notification.setIsEmailClient(true);
+        notification.setIsSmsCustomer(false);
+        notification.setIsEmailCustomer(true);
         return List.of(notification);
     }
 
@@ -198,7 +197,7 @@ public class DataLoaderUtil {
         ticketCreationThrough.setForm("form");
 
         TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
-        ticketCreationBasedOn.setAwbNumber("AWB");
+        ticketCreationBasedOn.setLRNumber("AWB");
         ticketCreationBasedOn.setInvoiceNumber("invoice");
         ticketCreationBasedOn.setComplaintNumber("complaint");
         ticketCreationBasedOn.setOrderNumber("order");

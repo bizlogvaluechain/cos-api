@@ -1,7 +1,7 @@
 package com.bizlog.rms.dto.frequency;
 
 import com.bizlog.rms.dto.BaseDTO;
-import com.bizlog.rms.entities.frequency.HolidayApplicable;
+import com.bizlog.rms.entities.sop.frequency.HolidayApplicable;
 import lombok.Data;
 
 import java.util.List;

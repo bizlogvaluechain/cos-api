@@ -2,11 +2,9 @@ package com.bizlog.rms.mapper;
 
 import com.bizlog.rms.dto.ClientDTO;
 import com.bizlog.rms.dto.ClientSettingDTO;
+import com.bizlog.rms.dto.SOP_TAT.*;
 import com.bizlog.rms.dto.clientengagement.ClientEngagementDTO;
 import com.bizlog.rms.dto.clientinfo.*;
-import com.bizlog.rms.dto.SOP_TAT.SOPActivityDTO;
-import com.bizlog.rms.dto.SOP_TAT.TATActivityDTO;
-import com.bizlog.rms.dto.SOP_TAT.TicketCreationConfigDTO;
 import com.bizlog.rms.dto.escalationMatrix.*;
 import com.bizlog.rms.dto.frequency.FrequencyDTO;
 import com.bizlog.rms.dto.locationService.LocationDTO;
@@ -20,11 +18,15 @@ import com.bizlog.rms.entities.clientinfo.*;
 import com.bizlog.rms.entities.sop.SOPActivity;
 import com.bizlog.rms.entities.sop.TATActivity;
 import com.bizlog.rms.entities.escalationMatrix.*;
-import com.bizlog.rms.entities.frequency.Frequency;
+import com.bizlog.rms.entities.sop.frequency.Frequency;
 import com.bizlog.rms.entities.location.Location;
-import com.bizlog.rms.entities.notification.Notification;
+import com.bizlog.rms.entities.sop.labourtoolvechile.Labour;
+import com.bizlog.rms.entities.sop.labourtoolvechile.Vehicle;
+import com.bizlog.rms.entities.sop.linehaul.Linehaul;
+import com.bizlog.rms.entities.sop.notification.Notification;
 import com.bizlog.rms.entities.productInformation.ProductInformation;
-import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationConfig;
+import com.bizlog.rms.entities.sop.packing.Packing;
+import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationConfig;
 import com.bizlog.rms.entities.users.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -141,4 +143,20 @@ public interface GenericMapper {
     ClientTechEscalation toEntity(ClientTechEscalationDTO dto);
 
     ClientTechEscalationDTO toDTO(ClientTechEscalation entity);
+
+    Packing toEntity(PackingDTO dto);
+
+    PackingDTO toDTO(Packing entity);
+
+    Linehaul toEntity(LinehaulDTO dto);
+
+    LinehaulDTO toDTO(Linehaul entity);
+
+    Vehicle toEntity(VehicleDTO dto);
+
+    VehicleDTO toDTO(Vehicle entity);
+
+    Labour toEntity(LabourDTO dto);
+
+    LabourDTO toDTO(Labour entity);
 }
