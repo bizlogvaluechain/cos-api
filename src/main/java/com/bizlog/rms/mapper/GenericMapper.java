@@ -15,8 +15,7 @@ import com.bizlog.rms.entities.ClientSetting;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.clientengagement.ClientEngagement;
 import com.bizlog.rms.entities.clientinfo.*;
-import com.bizlog.rms.entities.sop.SOPActivity;
-import com.bizlog.rms.entities.sop.TATActivity;
+import com.bizlog.rms.entities.sop.*;
 import com.bizlog.rms.entities.escalationMatrix.*;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
 import com.bizlog.rms.entities.location.Location;
@@ -159,4 +158,16 @@ public interface GenericMapper {
     Labour toEntity(LabourDTO dto);
 
     LabourDTO toDTO(Labour entity);
+
+    Product toEntity(ProductDTO dto);
+
+    ProductDTO toDTO(Product entity);
+
+    TicketsFollow toEntity(TicketFollowDTO dto);
+
+    TicketFollowDTO toDTO(TicketsFollow entity);
+
+    Payment toEntity(PaymentDTO dto);
+
+    PaymentDTO toDTO(Payment entity);
 }
