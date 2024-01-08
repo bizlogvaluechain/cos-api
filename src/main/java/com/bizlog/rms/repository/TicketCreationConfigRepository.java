@@ -1,6 +1,6 @@
 package com.bizlog.rms.repository;
 
-import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationConfig;
+import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationConfig;
 import org.springframework.stereotype.Repository;
 
 @Repository

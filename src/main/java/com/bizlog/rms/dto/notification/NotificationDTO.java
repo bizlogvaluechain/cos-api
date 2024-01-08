@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NotificationDTO extends BaseDTO {
-    private Boolean isSmsRequired;
-    private Boolean isEmailRequired;
-    private Boolean isTicketScansRequired;
-    private Boolean isReportAlertsRequired;
-    private Boolean isAlertNeededForNegativeCases;
+    private Boolean isSmsClient;
+    private Boolean isEmailClient;
+    private Boolean isSmsCustomer;
+    private Boolean isEmailCustomer;
 }

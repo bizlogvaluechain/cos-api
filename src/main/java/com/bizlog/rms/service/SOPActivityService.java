@@ -1,7 +1,7 @@
 package com.bizlog.rms.service;
 
 import com.bizlog.rms.dto.SOP_TAT.SOPActivityDTO;
-import com.bizlog.rms.entities.Specifications.SOPActivity;
+import com.bizlog.rms.entities.sop.SOPActivity;
 import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.SOPActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;

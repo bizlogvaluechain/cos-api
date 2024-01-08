@@ -1,8 +1,8 @@
 package com.bizlog.rms;
 
-import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationBasedOn;
-import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationConfig;
-import com.bizlog.rms.entities.ticketCreationConfig.TicketCreationThrough;
+import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationBasedOn;
+import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationConfig;
+import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationThrough;
 import com.bizlog.rms.repository.TicketCreationConfigRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -96,7 +96,7 @@ public class TicketCreationConfigApiTest extends BaseApiTest {
         ticketCreationThrough.setForm("form");
 
         TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
-        ticketCreationBasedOn.setAwbNumber("AWB");
+        ticketCreationBasedOn.setLRNumber("AWB");
         ticketCreationBasedOn.setInvoiceNumber("invoice");
         ticketCreationBasedOn.setComplaintNumber("complaint");
         ticketCreationBasedOn.setOrderNumber("order");

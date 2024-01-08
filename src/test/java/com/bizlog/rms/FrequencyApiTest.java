@@ -1,8 +1,8 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.entities.Client;
-import com.bizlog.rms.entities.frequency.Frequency;
-import com.bizlog.rms.entities.frequency.HolidayApplicable;
+import com.bizlog.rms.entities.sop.frequency.Frequency;
+import com.bizlog.rms.entities.sop.frequency.HolidayApplicable;
 import com.bizlog.rms.repository.FrequencyRepository;
 import com.bizlog.rms.rsql.CustomRsqlVisitor;
 import com.bizlog.rms.utils.DataLoaderUtil;

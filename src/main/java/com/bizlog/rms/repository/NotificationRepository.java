@@ -1,6 +1,6 @@
 package com.bizlog.rms.repository;
 
-import com.bizlog.rms.entities.notification.Notification;
+import com.bizlog.rms.entities.sop.notification.Notification;
 import org.springframework.stereotype.Repository;
 
 @Repository

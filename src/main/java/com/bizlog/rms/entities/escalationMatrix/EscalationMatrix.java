@@ -2,13 +2,15 @@ package com.bizlog.rms.entities.escalationMatrix;
 
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.MappedSuperclass;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
+@MappedSuperclass
 @Data
-@Table(name = "escalation_matrix_tbl")
+@NoArgsConstructor
+@AllArgsConstructor
 public class EscalationMatrix extends BaseClientEntity {
     @Column(name = "firstName", nullable = false)
     private String firstName;

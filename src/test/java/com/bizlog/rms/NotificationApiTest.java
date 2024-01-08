@@ -3,7 +3,7 @@ package com.bizlog.rms;
 import com.bizlog.rms.dto.notification.NotificationDTO;
 import com.bizlog.rms.entities.Client;
 
-import com.bizlog.rms.entities.notification.Notification;
+import com.bizlog.rms.entities.sop.notification.Notification;
 import com.bizlog.rms.repository.NotificationRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,11 +61,10 @@ public class NotificationApiTest extends BaseApiTest {
     void should_create_new_notification() throws Exception {
         Client client = getClient();
         Notification notification = new Notification();
-        notification.setIsEmailRequired(true);
-        notification.setIsSmsRequired(false);
-        notification.setIsTicketScansRequired(false);
-        notification.setIsReportAlertsRequired(true);
-        notification.setIsAlertNeededForNegativeCases(false);
+        notification.setIsSmsClient(false);
+        notification.setIsEmailClient(true);
+        notification.setIsSmsCustomer(false);
+        notification.setIsEmailCustomer(true);
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/notification", client.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(notification).orElse("")))
@@ -76,11 +75,10 @@ public class NotificationApiTest extends BaseApiTest {
     void should_not_create_new_notification() throws Exception {
         int clientId = 11;
         Notification notification = new Notification();
-        notification.setIsEmailRequired(true);
-        notification.setIsSmsRequired(false);
-        notification.setIsTicketScansRequired(false);
-        notification.setIsReportAlertsRequired(true);
-        notification.setIsAlertNeededForNegativeCases(false);
+        notification.setIsSmsClient(false);
+        notification.setIsEmailClient(true);
+        notification.setIsSmsCustomer(false);
+        notification.setIsEmailCustomer(true);
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/notification", clientId).contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(notification)))
@@ -91,21 +89,19 @@ public class NotificationApiTest extends BaseApiTest {
     void should_update_existing_notification() throws Exception {
 
         Notification initialNotification = new Notification();
-        initialNotification.setIsEmailRequired(true);
-        initialNotification.setIsSmsRequired(false);
-        initialNotification.setIsTicketScansRequired(false);
-        initialNotification.setIsReportAlertsRequired(true);
-        initialNotification.setIsAlertNeededForNegativeCases(false);
+        initialNotification.setIsSmsClient(false);
+        initialNotification.setIsEmailClient(true);
+        initialNotification.setIsSmsCustomer(false);
+        initialNotification.setIsEmailCustomer(true);
         Client client = getClient();
         initialNotification.setClient(client);
         initialNotification = notificationRepository.save(initialNotification);
 
         NotificationDTO updateNotification = getMapper().toDTO(initialNotification);
-        updateNotification.setIsEmailRequired(false);
-        updateNotification.setIsSmsRequired(true);
-        updateNotification.setIsTicketScansRequired(true);
-        updateNotification.setIsReportAlertsRequired(false);
-        updateNotification.setIsAlertNeededForNegativeCases(true);
+        updateNotification.setIsSmsClient(false);
+        updateNotification.setIsEmailClient(true);
+        updateNotification.setIsSmsCustomer(false);
+        updateNotification.setIsEmailCustomer(true);
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/notification/{id}", client.getId(), initialNotification.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateNotification).orElse("")))
@@ -119,11 +115,10 @@ public class NotificationApiTest extends BaseApiTest {
         long id = 991;
 
         Notification updateNotification = new Notification();
-        updateNotification.setIsEmailRequired(false);
-        updateNotification.setIsSmsRequired(true);
-        updateNotification.setIsTicketScansRequired(true);
-        updateNotification.setIsReportAlertsRequired(false);
-        updateNotification.setIsAlertNeededForNegativeCases(true);
+        updateNotification.setIsSmsClient(false);
+        updateNotification.setIsEmailClient(true);
+        updateNotification.setIsSmsCustomer(false);
+        updateNotification.setIsEmailCustomer(true);
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/notification/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateNotification).orElse("")))
@@ -133,11 +128,10 @@ public class NotificationApiTest extends BaseApiTest {
     @Test
     void should_delete_existing_notification() throws Exception {
         Notification notification = new Notification();
-        notification.setIsEmailRequired(true);
-        notification.setIsSmsRequired(false);
-        notification.setIsTicketScansRequired(false);
-        notification.setIsReportAlertsRequired(true);
-        notification.setIsAlertNeededForNegativeCases(false);
+        notification.setIsSmsClient(false);
+        notification.setIsEmailClient(true);
+        notification.setIsSmsCustomer(false);
+        notification.setIsEmailCustomer(true);
         Client client = getClient();
         notification.setClient(client);
         notification = notificationRepository.save(notification);

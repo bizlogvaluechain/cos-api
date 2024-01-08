@@ -13,9 +13,9 @@ import java.util.Set;
 
 @RequestMapping(value = "/api/v1/cos/{clientId}/bizlog-finance-escalation")
 public interface BizlogFinanceEscalationAPI extends BaseAPI<BizlogFinanceEscalationDTO, BizlogFinanceEscalationDTO> {
+
     @PostMapping
-    ResponseEntity<List<BizlogFinanceEscalationDTO>> create(Long clientId,
-            List<BizlogFinanceEscalationDTO> bizlogFinanceEscalationDTOS);
+    ResponseEntity<List<BizlogFinanceEscalationDTO>> create(Long clientId, List<BizlogFinanceEscalationDTO> inputDTOS);
 
     @GetMapping("/{id}")
     ResponseEntity<BizlogFinanceEscalationDTO> getById(Long clientId, Long id);
@@ -24,8 +24,7 @@ public interface BizlogFinanceEscalationAPI extends BaseAPI<BizlogFinanceEscalat
     ResponseEntity<PageResponse<BizlogFinanceEscalationDTO>> getAll(Long clientId, Pageable pageable);
 
     @PutMapping("/{id}")
-    ResponseEntity<BizlogFinanceEscalationDTO> update(Long Id, Long id,
-            BizlogFinanceEscalationDTO bizlogFinanceEscalationDTO);
+    ResponseEntity<BizlogFinanceEscalationDTO> update(Long Id, Long id, BizlogFinanceEscalationDTO inputDTOs);
 
     @GetMapping("/search")
     ResponseEntity<PageResponse<BizlogFinanceEscalationDTO>> search(Long clientId, Map<String, String> searchCriteria,

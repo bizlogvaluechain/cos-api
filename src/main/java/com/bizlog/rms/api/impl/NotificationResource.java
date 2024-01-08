@@ -3,7 +3,7 @@ package com.bizlog.rms.api.impl;
 import com.bizlog.rms.api.NotificationAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.notification.NotificationDTO;
-import com.bizlog.rms.entities.notification.Notification;
+import com.bizlog.rms.entities.sop.notification.Notification;
 import com.bizlog.rms.repository.BaseClientRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

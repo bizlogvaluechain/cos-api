@@ -9,4 +9,5 @@ public class TATBreachDueTo {
     private String bizlog;
     private String customer;
     private String thirdPartyLogistics;
+    private String naturalCalamities;
 }

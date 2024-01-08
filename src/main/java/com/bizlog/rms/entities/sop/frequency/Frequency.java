@@ -1,4 +1,4 @@
-package com.bizlog.rms.entities.frequency;
+package com.bizlog.rms.entities.sop.frequency;
 
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
