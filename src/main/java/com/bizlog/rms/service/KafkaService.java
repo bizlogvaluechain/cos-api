@@ -2,11 +2,13 @@ package com.bizlog.rms.service;
 
 import com.bizlog.rms.dto.ClientDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class  KafkaService {
 
     private static final String TOPIC = "bizlog_cos_data";
@@ -22,19 +24,9 @@ public class  KafkaService {
             String jsonMessage = objectMapper.writeValueAsString(clientDTO);
             kafkaTemplate.send(TOPIC, jsonMessage);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error occurred while sending message to Kafka", e);
         }
     }
 
-//    public void sendMessage(String message){
-//
-//        this.kafkaTemplate.send(TOPIC,message);
-//    }
-
-//    @Bean
-//    public NewTopic createTopic(){
-//
-//        return new NewTopic(TOPIC,3,(short) 1);
-//    }
 
 }
