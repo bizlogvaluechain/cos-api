@@ -19,14 +19,13 @@ public class  KafkaService {
 
     public void sendMessage(ClientDTO clientDTO) {
         try {
-
             String jsonMessage = objectMapper.writeValueAsString(clientDTO);
             kafkaTemplate.send(TOPIC, jsonMessage);
         } catch (Exception e) {
-
             e.printStackTrace();
         }
     }
+
 //    public void sendMessage(String message){
 //
 //        this.kafkaTemplate.send(TOPIC,message);
