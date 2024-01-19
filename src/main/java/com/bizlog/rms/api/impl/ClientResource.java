@@ -7,6 +7,7 @@ import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.ClientRepository;
 import com.bizlog.rms.service.ClientService;
+import com.bizlog.rms.service.KafkaService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +26,13 @@ public class ClientResource implements ClientAPI {
     private final GenericMapper mapper;
     private final ClientService clientService;
     private final ClientRepository clientRepository;
+    private final KafkaService kafkaProducerService;
 
     @Transactional
     @Override
     public ResponseEntity<ClientDTO> create(@RequestBody ClientDTO clientDTO) {
         Client client = mapper.toEntity(clientDTO);
+        kafkaProducerService.sendMessage(clientDTO);
         client = clientRepository.save(client);
         ClientDTO clientDTO1 = mapper.toDTO(client);
         return ResponseEntity.ok().body(clientDTO1);
