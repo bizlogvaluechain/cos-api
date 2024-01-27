@@ -10,23 +10,23 @@ import java.util.List;
 @Data
 @Table(name = "frequency")
 public class Frequency extends BaseClientEntity {
+    @Column(name = "unit", nullable = false)
+    private FrequencyUnit unit;
     @Column(name = "ticketsVolume", nullable = false)
-    private String ticketsVolume;
+    private String  ticketsVolume;
+    @Column(name = "FrequencyStartDate", nullable = false)
+    private long startDate;
+    @Column(name = "FrequencyEndDate", nullable = false)
+    private Long endDate;
+    @Column(name = "operationStartTime", nullable = false)
+    private Long operationStartTime;
 
-    @Column(name = "onboardingDate", nullable = false)
-    private long onboardingDate;
-
-    @Column(name = "dayStartTime", nullable = false)
-    private long dayStartTime;
-
-    @Column(name = "dayEndTime", nullable = false)
-    private long dayEndTime;
-
+    @Column(name = "operationEndTime", nullable = false)
+    private long operationEndTime;
+    @Column(name = "operationDay", nullable = false)
+    private Long operationDay;
     @Column(name = "holidayApplicable", nullable = false)
     @ElementCollection(targetClass = HolidayApplicable.class, fetch = FetchType.EAGER)
     private List<HolidayApplicable> holidayApplicable;
-
-    @Column(name = "onlyWorkdays", nullable = false)
-    private Boolean onlyWorkdays;
 
 }

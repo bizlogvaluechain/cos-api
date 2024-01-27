@@ -1,6 +1,7 @@
 package com.bizlog.rms.dto.frequency;
 
 import com.bizlog.rms.dto.BaseDTO;
+import com.bizlog.rms.entities.sop.frequency.FrequencyUnit;
 import com.bizlog.rms.entities.sop.frequency.HolidayApplicable;
 import lombok.Data;
 
@@ -8,10 +9,12 @@ import java.util.List;
 
 @Data
 public class FrequencyDTO extends BaseDTO {
+    private FrequencyUnit unit;
     private String ticketsVolume;
-    private Long onboardingDate;
-    private Long dayStartTime;
-    private Long dayEndTime;
+    private long startDate;
+    private Long endDate;
+    private Long operationStartTime;
+    private long operationEndTime;
+    private Long operationDay;
     private List<HolidayApplicable> holidayApplicable;
-    private Boolean onlyWorkdays;
 }
