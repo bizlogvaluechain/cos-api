@@ -24,17 +24,17 @@ public class FinanceContactInformationResource extends BaseClientResource<Financ
 
     @Override
     public ResponseEntity<List<FinanceContactInformationDTO>> create(@PathVariable("clientId") Long clientId,
-                                                              @RequestBody List<FinanceContactInformationDTO> inputDTOs) {
-        List<FinanceContactInformationDTO> outputDTOs = inputDTOs.stream().map(inputDTO -> {
+                                                              @RequestBody List<FinanceContactInformationDTO> financeContactInformationDTOS) {
+        List<FinanceContactInformationDTO> financeContactInformationDTOS1 = financeContactInformationDTOS.stream().map(financeContactInformationDTO -> {
             Client client = getClientRepository().findById(clientId)
                     .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
-            FinanceContactInformation entity = toEntity(inputDTO);
-            entity.setClient(client);
-            FinanceContactInformation createdEntity = getBaseClientRepository().save(entity);
-            FinanceContactInformationDTO outPutDTO = toDTO(createdEntity);
-            return outPutDTO;
+            FinanceContactInformation financeContactInformation = toEntity(financeContactInformationDTO);
+            financeContactInformation.setClient(client);
+            FinanceContactInformation financeContactInformation1 = getBaseClientRepository().save(financeContactInformation);
+            FinanceContactInformationDTO financeContactInformationDTO1 = toDTO(financeContactInformation1);
+            return financeContactInformationDTO1;
         }).toList();
-        return ResponseEntity.ok().body(outputDTOs);
+        return ResponseEntity.ok().body(financeContactInformationDTOS1);
     }
 
     @Override
@@ -63,8 +63,8 @@ public class FinanceContactInformationResource extends BaseClientResource<Financ
 
     @Override
     public ResponseEntity<FinanceContactInformationDTO> update(@PathVariable("clientId") Long clientId,
-                                                        @PathVariable("id") Long id, @RequestBody FinanceContactInformationDTO payloadDTO) {
-        return super.update(clientId, id, payloadDTO);
+                                                        @PathVariable("id") Long id, @RequestBody FinanceContactInformationDTO financeContactInformationDTOS) {
+        return super.update(clientId, id, financeContactInformationDTOS);
     }
 
     @Override

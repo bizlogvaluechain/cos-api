@@ -24,17 +24,17 @@ public class OperationContactResource extends BaseClientResource<OperationContac
 
     @Override
     public ResponseEntity<List<OperationContactInformationDTO>> create(@PathVariable("clientId") Long clientId,
-                                                              @RequestBody List<OperationContactInformationDTO> inputDTOs) {
-        List<OperationContactInformationDTO> outputDTOs = inputDTOs.stream().map(inputDTO -> {
+                                                              @RequestBody List<OperationContactInformationDTO> operationContactInformationDTOS) {
+        List<OperationContactInformationDTO> operationContactInformationDTOList = operationContactInformationDTOS.stream().map(operationContactInformationDTO -> {
             Client client = getClientRepository().findById(clientId)
                     .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
-            OperationContactInformation entity = toEntity(inputDTO);
-            entity.setClient(client);
-            OperationContactInformation createdEntity = getBaseClientRepository().save(entity);
-            OperationContactInformationDTO outPutDTO = toDTO(createdEntity);
-            return outPutDTO;
+            OperationContactInformation operationContactInformation = toEntity(operationContactInformationDTO);
+            operationContactInformation.setClient(client);
+            OperationContactInformation operationContactInformation1 = getBaseClientRepository().save(operationContactInformation);
+            OperationContactInformationDTO operationContactInformationDTO1 = toDTO(operationContactInformation1);
+            return operationContactInformationDTO1;
         }).toList();
-        return ResponseEntity.ok().body(outputDTOs);
+        return ResponseEntity.ok().body(operationContactInformationDTOList);
     }
 
     @Override
@@ -63,8 +63,8 @@ public class OperationContactResource extends BaseClientResource<OperationContac
 
     @Override
     public ResponseEntity<OperationContactInformationDTO> update(@PathVariable("clientId") Long clientId,
-                                                        @PathVariable("id") Long id, @RequestBody OperationContactInformationDTO payloadDTO) {
-        return super.update(clientId, id, payloadDTO);
+                                                        @PathVariable("id") Long id, @RequestBody OperationContactInformationDTO operationContactInformationDTO) {
+        return super.update(clientId, id, operationContactInformationDTO);
     }
 
     @Override
