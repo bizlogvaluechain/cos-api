@@ -118,10 +118,6 @@ public interface GenericMapper {
 
     ClientHierarchyDTO toDTO(ClientHierarchy entity);
 
-//    ContactInformation toEntity(ContactInformationDTO dto);
-//
-//    ContactInformationDTO toDTO(ContactInformation entity);
-
     OperationContactInformation toEntity(OperationContactInformationDTO dto);
 
     OperationContactInformationDTO toDTO(OperationContactInformation entity);
