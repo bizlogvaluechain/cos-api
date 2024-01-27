@@ -15,6 +15,8 @@ import com.bizlog.rms.entities.ClientSetting;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.clientengagement.ClientEngagement;
 import com.bizlog.rms.entities.clientinfo.*;
+import com.bizlog.rms.entities.clientinfo.contactinformation.FinanceContactInformation;
+import com.bizlog.rms.entities.clientinfo.contactinformation.OperationContactInformation;
 import com.bizlog.rms.entities.sop.*;
 import com.bizlog.rms.entities.escalationMatrix.*;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
@@ -30,6 +32,7 @@ import com.bizlog.rms.entities.users.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
 import java.util.Map;
 
 @Mapper(componentModel = "spring")
@@ -87,10 +90,10 @@ public interface GenericMapper {
     @Mapping(expression = "java(row.get(\"ticketsVolume\"))", target = "ticketsVolume")
     FrequencyDTO toDTO(Map<String, String> row);
 
+    List<BillingInfo> toEntity(List<BillingInfoDTO> dto);
     BillingInfo toEntity(BillingInfoDTO dto);
-
+    List<BillingInfoDTO> toDTO(List<BillingInfo> entity);
     BillingInfoDTO toDTO(BillingInfo entity);
-
     CompanyContactDetails toEntity(CompanyContactDetailsDTO dto);
 
     CompanyContactDetailsDTO toDTO(CompanyContactDetails entity);
@@ -115,9 +118,16 @@ public interface GenericMapper {
 
     ClientHierarchyDTO toDTO(ClientHierarchy entity);
 
-    ContactInformation toEntity(ContactInformationDTO dto);
+//    ContactInformation toEntity(ContactInformationDTO dto);
+//
+//    ContactInformationDTO toDTO(ContactInformation entity);
 
-    ContactInformationDTO toDTO(ContactInformation entity);
+    OperationContactInformation toEntity(OperationContactInformationDTO dto);
+
+    OperationContactInformationDTO toDTO(OperationContactInformation entity);
+    FinanceContactInformation toEntity(FinanceContactInformationDTO dto);
+
+    FinanceContactInformationDTO toDTO(FinanceContactInformation entity);
 
     BizlogFinanceEscalation toEntity(BizlogFinanceEscalationDTO dto);
 

@@ -4,6 +4,8 @@ import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "client_info", uniqueConstraints = @UniqueConstraint(columnNames = { "id", "client_id" }))
@@ -33,13 +35,13 @@ public class CustomerInfo extends BaseClientEntity {
     @Column(name = "panOrAadharS3Key")
     private String panOrAadharS3Key;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "billingInfoId", referencedColumnName = "id")
-    private BillingInfo billingInfo;
+    private List<BillingInfo> billingInfo;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "shipmentInfoId", referencedColumnName = "id")
-    private ShipmentInfo shippingAddress;
+    private List<ShipmentInfo> shippingAddress;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "companyContactDetailsId", referencedColumnName = "id")

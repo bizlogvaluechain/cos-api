@@ -1,4 +1,4 @@
-package com.bizlog.rms.entities.clientinfo;
+package com.bizlog.rms.entities.clientinfo.contactinformation;
 
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.Column;
@@ -8,9 +8,8 @@ import lombok.Data;
 
 @Data
 @Entity
-
-@Table(name = "client_Contact_info_table")
-public class ContactInformation extends BaseClientEntity {
+@Table(name = "client_Operation_Contact_info_table")
+public class OperationContactInformation  extends BaseClientEntity {
     @Column(name = "contactPersonName", nullable = false)
     private String contactPersonName;
     @Column(name = "contactPersonTitle", nullable = false)
