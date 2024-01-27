@@ -170,4 +170,7 @@ public interface GenericMapper {
     Payment toEntity(PaymentDTO dto);
 
     PaymentDTO toDTO(Payment entity);
+
+    ActivitySOP toEntity(ActivitySOPDTO dto);
+    ActivitySOPDTO toDTO(ActivitySOP entity);
 }
