@@ -30,11 +30,11 @@ public class BillingInfoResource implements BillingInfoAPI {
     }
     @Override
     public ResponseEntity<List<BillingInfoDTO>> create(@RequestBody List<BillingInfoDTO> payloadDTO) {
-        List<BillingInfo> entityToSave = genericMapper.toEntity(payloadDTO);
-        List<BillingInfo> savedEntities = billingInfoRepository.saveAll(entityToSave);
-        List<BillingInfoDTO> savedDTO = genericMapper.toDTO(savedEntities);
+        List<BillingInfo> billingInfos = genericMapper.toEntity(payloadDTO);
+        List<BillingInfo> billingInfos1 = billingInfoRepository.saveAll(billingInfos);
+        List<BillingInfoDTO> billingInfoDTOS = genericMapper.toDTO(billingInfos1);
 
-        return new ResponseEntity<>(savedDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(billingInfoDTOS, HttpStatus.CREATED);
     }
     @Override
     public ResponseEntity<Void> delete(Long id) {
@@ -43,25 +43,25 @@ public class BillingInfoResource implements BillingInfoAPI {
     }
     @Override
     public ResponseEntity<BillingInfoDTO> getById(Long id) {
-        BillingInfo existingEntity = billingInfoRepository.findById(id)
+        BillingInfo existingBillingInfo = billingInfoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("BillingInfo not found with  ", "id", id));
-        BillingInfoDTO dto = genericMapper.toDTO(existingEntity);
+        BillingInfoDTO dto = genericMapper.toDTO(existingBillingInfo);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<BillingInfoDTO> update(@PathVariable Long id, @RequestBody BillingInfoDTO updatedDTO) {
+    public ResponseEntity<BillingInfoDTO> update(@PathVariable Long id, @RequestBody BillingInfoDTO updatedBillingInfoDTO) {
 
-        BillingInfo existingEntity = billingInfoRepository.findById(id)
+        BillingInfo existingBillingInfo = billingInfoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("BillingInfo not found with id", "id", id));
-        existingEntity.setCity(updatedDTO.getCity());
-        existingEntity.setCountry(updatedDTO.getCountry());
-        existingEntity.setState(updatedDTO.getState());
-        existingEntity.setPincode(updatedDTO.getPincode());
-        BillingInfo updatedEntity = billingInfoRepository.save(existingEntity);
-        BillingInfoDTO updatedDTOResponse = genericMapper.toDTO(updatedEntity);
-        return new ResponseEntity<>(updatedDTOResponse, HttpStatus.OK);
+        existingBillingInfo.setCity(updatedBillingInfoDTO.getCity());
+        existingBillingInfo.setCountry(updatedBillingInfoDTO.getCountry());
+        existingBillingInfo.setState(updatedBillingInfoDTO.getState());
+        existingBillingInfo.setPincode(updatedBillingInfoDTO.getPincode());
+        BillingInfo updatedBillingInfoEntity = billingInfoRepository.save(existingBillingInfo);
+        BillingInfoDTO updatedBillingInfoDTOs = genericMapper.toDTO(updatedBillingInfoEntity);
+        return new ResponseEntity<>(updatedBillingInfoDTOs, HttpStatus.OK);
     }
 
 

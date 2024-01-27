@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class FinanceContactInformationDTO extends BaseDTO {
-    private String contactPersonName;
-    private String contactPersonTitle;
-    private String contactPersonsEmailId;
-    private String contactPersonsPhoneNumber;
+    private String name;
+    private String title;
+    private String emailId;
+    private String phoneNumber;
 }

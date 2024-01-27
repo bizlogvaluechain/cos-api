@@ -10,12 +10,12 @@ import lombok.Data;
 @Entity
 @Table(name = "client_Operation_Contact_info_table")
 public class OperationContactInformation  extends BaseClientEntity {
-    @Column(name = "contactPersonName", nullable = false)
-    private String contactPersonName;
-    @Column(name = "contactPersonTitle", nullable = false)
-    private String contactPersonTitle;
-    @Column(name = "contactPersonsEmailId", nullable = false)
-    private String contactPersonsEmailId;
-    @Column(name = "contactPersonsPhoneNumber", nullable = false)
-    private String contactPersonsPhoneNumber;
+    @Column(name = "name", nullable = false)
+    private String name;
+    @Column(name = "title", nullable = false)
+    private String title;
+    @Column(name = "emailId", nullable = false)
+    private String emailId;
+    @Column(name = "phoneNumber", nullable = false)
+    private String phoneNumber;
 }
