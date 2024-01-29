@@ -92,7 +92,8 @@ public class TicketCreationConfigApiTest extends BaseApiTest {
         int clientId = 11;
         TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
         ticketCreationThrough.setApi("API");
-        ticketCreationThrough.setExcel("Excel");
+        ticketCreationThrough.setExcelByBizlog("Excel");
+        ticketCreationThrough.setExcelByClient("Excel");
         ticketCreationThrough.setForm("form");
 
         TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();

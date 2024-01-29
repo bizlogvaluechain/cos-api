@@ -12,14 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TATActivityDTO extends BaseDTO {
-
-    private String tatForFirstMile;
-
-    private String tatForLastMile;
-
+    private Boolean IsTatRequired;
     private List<TATBreachDueTo> tatBreachDueTo;
-
-    private String tatForLinehaul;
-    private String numberOfReshedules;
-
 }

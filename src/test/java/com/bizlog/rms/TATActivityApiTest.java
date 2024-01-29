@@ -68,11 +68,7 @@ public class TATActivityApiTest extends BaseApiTest {
         tatBreachDueTo.setThirdPartyLogistics("abcdef");
 
         TATActivity tatActivity = new TATActivity();
-        tatActivity.setTatForFirstMile("abcdef");
-        tatActivity.setTatForLastMile("abcdef");
-        tatActivity.setTatForLinehaul("abcdef");
-        tatActivity.setNumberOfReshedules("5");
-
+        tatActivity.setIsTatRequired(true);
         List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
         tatBreachDueToList.add(tatBreachDueTo);
 
@@ -93,12 +89,10 @@ public class TATActivityApiTest extends BaseApiTest {
         tatBreachDueTo.setThirdPartyLogistics("abcdef");
 
         TATActivity initialTatActivity = new TATActivity();
-        initialTatActivity.setTatForFirstMile("abcdef");
-        initialTatActivity.setTatForLastMile("abcdef");
-        initialTatActivity.setTatForLinehaul("abcdef");
+        initialTatActivity.setIsTatRequired(true);
+
         Client client = getClient();
         initialTatActivity.setClient(client);
-        initialTatActivity.setNumberOfReshedules("5");
 
         List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
         tatBreachDueToList.add(tatBreachDueTo);
@@ -107,10 +101,7 @@ public class TATActivityApiTest extends BaseApiTest {
         initialTatActivity = tatActivityRepository.save(initialTatActivity);
 
         TATActivityDTO updatedTatActivity = getMapper().toDTO(initialTatActivity);
-        updatedTatActivity.setTatForFirstMile("pqrst");
-        updatedTatActivity.setTatForLastMile("pqrst");
-        updatedTatActivity.setTatForLinehaul("xyz");
-        updatedTatActivity.setNumberOfReshedules("3");
+        updatedTatActivity.setIsTatRequired(false);
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/tatActivities/{id}", client.getId(), initialTatActivity.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
@@ -123,10 +114,7 @@ public class TATActivityApiTest extends BaseApiTest {
         int clientId = 12;
         int id = 21;
         TATActivity updatedTatActivity = new TATActivity();
-        updatedTatActivity.setTatForFirstMile("pqrst");
-        updatedTatActivity.setTatForLastMile("pqrst");
-        updatedTatActivity.setTatForLinehaul("xyz");
-        updatedTatActivity.setNumberOfReshedules("3");
+        updatedTatActivity.setIsTatRequired(false);
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/tatActivities/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
@@ -142,10 +130,7 @@ public class TATActivityApiTest extends BaseApiTest {
         tatBreachDueTo.setThirdPartyLogistics("abcdef");
 
         TATActivity tatActivity = new TATActivity();
-        tatActivity.setTatForFirstMile("abcdef");
-        tatActivity.setTatForLastMile("abcdef");
-        tatActivity.setTatForLinehaul("abcdef");
-        tatActivity.setNumberOfReshedules("5");
+        tatActivity.setIsTatRequired(false);
 
         List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
         tatBreachDueToList.add(tatBreachDueTo);

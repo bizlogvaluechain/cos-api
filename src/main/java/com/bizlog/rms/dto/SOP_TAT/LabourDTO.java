@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LabourDTO extends BaseDTO {
     private Boolean isLabourRequired;
+    private Long noOfLabour;
     private Boolean isLabourRequiredParticularProducts;
-    private String durationForActivity;
+    private Long durationForActivity;
 }

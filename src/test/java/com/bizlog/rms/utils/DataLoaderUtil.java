@@ -182,12 +182,10 @@ public class DataLoaderUtil {
         TATActivity tatActivity = new TATActivity();
         tatActivity.setId(1L);
         tatActivity.setClient(client);
-        tatActivity.setTatForFirstMile("55");
-        tatActivity.setTatForLastMile("165");
+
         List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
         tatActivity.setTatBreachDueTo(tatBreachDueToList);
-        tatActivity.setTatForLinehaul("abc");
-        tatActivity.setNumberOfReshedules("5");
+        tatActivity.setIsTatRequired(true);
 
         return List.of(tatActivity);
     }
@@ -195,7 +193,8 @@ public class DataLoaderUtil {
     public static List<TicketCreationConfig> getTicketCreationConfig(Client client) {
         TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
         ticketCreationThrough.setApi("API");
-        ticketCreationThrough.setExcel("Excel");
+        ticketCreationThrough.setExcelByBizlog("Excel");
+        ticketCreationThrough.setExcelByClient("Excel");
         ticketCreationThrough.setForm("form");
 
         TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();

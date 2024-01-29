@@ -10,20 +10,14 @@ import java.util.List;
 @Table(name = "TAT")
 @Data
 public class TATActivity extends BaseClientEntity {
-    @Column(name = "tatForFirstMile")
-    private String tatForFirstMile;
 
-    @Column(name = "tatForLastMile")
-    private String tatForLastMile;
+
+    @Column(name = "IsTatRequired")
+    private Boolean IsTatRequired;
 
     @Column(name = "tatBreachDueTo")
     @ElementCollection(targetClass = TATBreachDueTo.class, fetch = FetchType.EAGER)
     private List<TATBreachDueTo> tatBreachDueTo;
 
-    @Column(name = "tatForLinehaul")
-    private String tatForLinehaul;
-
-    @Column(name = "numberOfReshedules")
-    private String numberOfReshedules;
 
 }

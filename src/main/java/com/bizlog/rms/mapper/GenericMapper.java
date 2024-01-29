@@ -20,6 +20,7 @@ import com.bizlog.rms.entities.escalationMatrix.*;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
 import com.bizlog.rms.entities.location.Location;
 import com.bizlog.rms.entities.sop.labourtoolvechile.Labour;
+import com.bizlog.rms.entities.sop.labourtoolvechile.Tools;
 import com.bizlog.rms.entities.sop.labourtoolvechile.Vehicle;
 import com.bizlog.rms.entities.sop.linehaul.Linehaul;
 import com.bizlog.rms.entities.sop.notification.Notification;
@@ -159,6 +160,8 @@ public interface GenericMapper {
 
     LabourDTO toDTO(Labour entity);
 
+    Tools toEntity(ToolsDTO dto);
+    ToolsDTO toDTO(Tools entity);
     Product toEntity(ProductDTO dto);
 
     ProductDTO toDTO(Product entity);
@@ -173,4 +176,7 @@ public interface GenericMapper {
 
     ActivitySOP toEntity(ActivitySOPDTO dto);
     ActivitySOPDTO toDTO(ActivitySOP entity);
+
+    LocationSop toEntity(LocationSopDTO dto);
+    LocationSopDTO toDTO(LocationSop entity);
 }
