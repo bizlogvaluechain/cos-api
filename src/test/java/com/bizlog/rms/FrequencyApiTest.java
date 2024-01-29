@@ -437,26 +437,50 @@ public class FrequencyApiTest extends BaseApiTest {
 
     @Test
     void should_not_update_existing_frequency() throws Exception {
-        int clientId = 11;
+        int clientId = 111;
         Long id = 999L;
-        HolidayApplicable holidayApplicable = new HolidayApplicable();
-        holidayApplicable.setBizlogHolidays(true);
-        holidayApplicable.setPublicHolidays(true);
-        holidayApplicable.setClientHolidaays(false);
         Frequency frequency = new Frequency();
         frequency.setUnit(FrequencyUnit.PER_DAY);
         frequency.setEndDate(23122023L);
-        frequency.setStartDate(23122023L);
-        frequency.setOperationStartTime(23122023L);
-        frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
+
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/frequency/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(frequency).orElse("")))
+                .andDo(print()).andExpect(status().isNotFound());
+    }
+
+    @Test
+    void should_delete_existing_ticket_creation_config() throws Exception {
+        HolidayApplicable holidayApplicable = new HolidayApplicable();
+        holidayApplicable.setBizlogHolidays(true);
+        holidayApplicable.setPublicHolidays(true);
+        holidayApplicable.setClientHolidaays(false);
+        Frequency intialFrequency = new Frequency();
+        intialFrequency.setUnit(FrequencyUnit.PER_DAY);
+        intialFrequency.setEndDate(23122023L);
+        intialFrequency.setStartDate(23122023L);
+        intialFrequency.setOperationStartTime(23122023L);
+        intialFrequency.setOperationEndTime(23122023L);
+        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
+        holidayApplicables.add(holidayApplicable);
+        intialFrequency.setHolidayApplicable(holidayApplicables);
+        intialFrequency.setOperationDay(5L);
+        intialFrequency.setTicketsVolume("100");
+        Client client = getClient();
+        intialFrequency.setClient(client);
+        intialFrequency = frequencyRepository.save(intialFrequency);
+
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/frequency/{id}", client.getId(), intialFrequency.getId()))
+                .andDo(print()).andExpect(status().isNoContent());
+    }
+
+    @Test
+    void should_not_delete_non_existent_ticket_creation_config() throws Exception {
+        int clientId = 11;
+        int nonexistentId = 999;
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/frequency/{id}", clientId, nonexistentId))
                 .andDo(print()).andExpect(status().isNotFound());
     }
 
