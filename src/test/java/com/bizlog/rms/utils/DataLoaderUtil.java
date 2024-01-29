@@ -8,6 +8,7 @@ import com.bizlog.rms.entities.escalationMatrix.BizlogFinanceEscalation;
 import com.bizlog.rms.entities.sop.SOPActivity;
 import com.bizlog.rms.entities.sop.TATActivity;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
+import com.bizlog.rms.entities.sop.frequency.FrequencyUnit;
 import com.bizlog.rms.entities.sop.frequency.HolidayApplicable;
 import com.bizlog.rms.entities.location.Charge;
 import com.bizlog.rms.entities.location.Location;
@@ -82,14 +83,15 @@ public class DataLoaderUtil {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setDayEndTime(23122023L);
-        frequency.setDayStartTime(23122023L);
-        frequency.setOnboardingDate(23122023L);
+        frequency.setUnit(FrequencyUnit.PER_DAY);
+        frequency.setEndDate(23122023L);
+        frequency.setStartDate(23122023L);
+        frequency.setOperationStartTime(23122023L);
+        frequency.setOperationEndTime(23122023L);
         List<HolidayApplicable> holidayApplicables = new ArrayList<>();
         holidayApplicables.add(holidayApplicable);
         frequency.setHolidayApplicable(holidayApplicables);
-        frequency.setOnlyWorkdays(true);
-        frequency.setOnlyWorkdays(true);
+        frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         return List.of(frequency);
     }
