@@ -1,14 +1,12 @@
 package com.bizlog.rms.rsql;
 
-import cz.jirutka.rsql.parser.ast.ComparisonNode;
-import cz.jirutka.rsql.parser.ast.LogicalNode;
-import cz.jirutka.rsql.parser.ast.LogicalOperator;
-import cz.jirutka.rsql.parser.ast.Node;
+import cz.jirutka.rsql.parser.ast.*;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
 
 public class GenericRsqlSpecBuilder<T> {
 
@@ -45,4 +43,5 @@ public class GenericRsqlSpecBuilder<T> {
                 comparisonNode.getOperator(), comparisonNode.getArguments()));
         return result;
     }
+
 }

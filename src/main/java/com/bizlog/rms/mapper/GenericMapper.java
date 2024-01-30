@@ -85,9 +85,16 @@ public interface GenericMapper {
     LocationDTO toDTO(Location location);
 
     // @Mapping(target = "ticketsVolume", source = "ticketsVolume")
-    @Mapping(expression = "java(row.get(\"ticketsVolume\"))", target = "ticketsVolume")
+    @Mapping(target = "id", expression = "java(toLong(row.get(\"id\")))")
+    @Mapping(target = "startDate", expression = "java(toLong(row.get(\"startDate\")))")
+    @Mapping(target = "ticketsVolume", expression = "java(toLong(row.get(\"ticketsVolume\")))")
+    @Mapping(target = "endDate", expression = "java(toLong(row.get(\"id\")))")
+    @Mapping(target = "operationStartTime", expression = "java(toLong(row.get(\"startDate\")))")
+    @Mapping(target = "operationEndTime", expression = "java(toLong(row.get(\"ticketsVolume\")))")
     FrequencyDTO toDTO(Map<String, String> row);
-
+    default Long toLong(String value) {
+        return value != null ? Long.parseLong(value) : null;
+    }
     BillingInfo toEntity(BillingInfoDTO dto);
 
     BillingInfoDTO toDTO(BillingInfo entity);

@@ -90,7 +90,7 @@ public class DataLoaderUtil {
         frequency.setOperationEndTime(23122023L);
         frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         return List.of(frequency);
     }
 

@@ -82,7 +82,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         frequencyRepository.save(frequency);
         Node rootNode = new RSQLParser().parse("ticketsVolume==100");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
@@ -108,7 +108,7 @@ public class FrequencyApiTest extends BaseApiTest {
 
         frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         frequencyRepository.save(frequency);
         Node rootNode = new RSQLParser().parse("ticketsVolume==100");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
@@ -134,7 +134,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperationEndTime(23122023L);
 
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         frequencyRepository.save(frequency);
         Node rootNode = new RSQLParser().parse("ticketsVolume!=500");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
@@ -162,7 +162,7 @@ public class FrequencyApiTest extends BaseApiTest {
 
         frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         frequencyRepository.save(frequency);
         Node rootNode = new RSQLParser().parse("ticketsVolume!=500");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
@@ -190,7 +190,7 @@ public class FrequencyApiTest extends BaseApiTest {
 
         frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         frequencyRepository.save(frequency);
         Node rootNode = new RSQLParser().parse("ticketsVolume>80");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
@@ -218,7 +218,7 @@ public class FrequencyApiTest extends BaseApiTest {
 
         frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         frequencyRepository.save(frequency);
         Node rootNode = new RSQLParser().parse("ticketsVolume<80");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
@@ -244,9 +244,9 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         frequencyRepository.save(frequency);
-        Node rootNode = new RSQLParser().parse("ticketsVolume==10*");
+        Node rootNode = new RSQLParser().parse("ticketsVolume==100");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
         List<Frequency> results = frequencyRepository.findAll(spec);
 
@@ -271,9 +271,9 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperationEndTime(23122023L);
         frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         frequencyRepository.save(frequency);
-        Node rootNode = new RSQLParser().parse("ticketsVolume==50*");
+        Node rootNode = new RSQLParser().parse("ticketsVolume==500");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
         List<Frequency> results = frequencyRepository.findAll(spec);
 
@@ -293,7 +293,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         frequencyRepository.save(frequency);
         Node rootNode = new RSQLParser().parse("ticketsVolume=in=(100,150)");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
@@ -320,7 +320,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperationEndTime(23122023L);
         frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         frequencyRepository.save(frequency);
         Node rootNode = new RSQLParser().parse("ticketsVolume=in=(100,120)");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
@@ -344,7 +344,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperationEndTime(23122023L);
         frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
 
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/frequency", client.getId())
@@ -367,7 +367,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperationEndTime(23122023L);
         frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         this.mockMvc.perform(post("/api/v1/cos/{clientId}/frequency", clientId).contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(frequency).orElse(""))).andDo(print()).andExpect(status().isNotFound());
     }
@@ -386,7 +386,7 @@ public class FrequencyApiTest extends BaseApiTest {
         intialFrequency.setOperationEndTime(23122023L);
         intialFrequency.setHolidayApplicable(holidayApplicable);
         intialFrequency.setOperationDay(5L);
-        intialFrequency.setTicketsVolume("100");
+        intialFrequency.setTicketsVolume(100L);
         Client client = getClient();
         intialFrequency.setClient(client);
         intialFrequency = frequencyRepository.save(intialFrequency);
@@ -414,7 +414,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setEndDate(23122023L);
 
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume("100");
+        frequency.setTicketsVolume(100L);
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/frequency/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(frequency).orElse("")))
@@ -435,7 +435,7 @@ public class FrequencyApiTest extends BaseApiTest {
         intialFrequency.setOperationEndTime(23122023L);
         intialFrequency.setHolidayApplicable(holidayApplicable);
         intialFrequency.setOperationDay(5L);
-        intialFrequency.setTicketsVolume("100");
+        intialFrequency.setTicketsVolume(100L);
         Client client = getClient();
         intialFrequency.setClient(client);
         intialFrequency = frequencyRepository.save(intialFrequency);

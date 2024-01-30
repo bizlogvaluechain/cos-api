@@ -9,11 +9,11 @@ import lombok.Data;
 @Data
 public class FrequencyDTO extends BaseDTO {
     private FrequencyUnit unit;
-    private String ticketsVolume;
-    private long startDate;
+    private Long ticketsVolume;
+    private Long startDate;
     private Long endDate;
     private Long operationStartTime;
-    private long operationEndTime;
+    private Long operationEndTime;
     private Long operationDay;
     private HolidayApplicable holidayApplicable;
 }
