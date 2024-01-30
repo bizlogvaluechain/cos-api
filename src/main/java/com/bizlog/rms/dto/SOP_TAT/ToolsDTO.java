@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class ToolsDTO extends BaseDTO {
+    private Boolean isToolsRequired;
     private String equipmentDetail;
     private String equipmentProvideBy;
     private Boolean isTrainingProvide;

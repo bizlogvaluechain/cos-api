@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class LabourDTO extends BaseDTO {
     private Boolean isLabourRequired;
     private Long noOfLabour;
+    private Boolean isApprovalNeeded;
     private Boolean isLabourRequiredParticularProducts;
     private Long durationForActivity;
 }

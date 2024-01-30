@@ -11,8 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VehicleDTO extends BaseDTO {
+    private Boolean isVehicleRequired;
     private List<String> typeOfVehicle;
-    private Long noOfVehicle;
+    private Long volumeOfVehicle;
     private Boolean isVehicleRequiredAllProduct;
     private Boolean isVehicleRequiredAllPincodes;
     private Boolean isPriorApprovalNeededBeforeUsingVehicle;
