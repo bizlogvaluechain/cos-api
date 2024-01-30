@@ -88,9 +88,7 @@ public class DataLoaderUtil {
         frequency.setStartDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
+        frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         return List.of(frequency);

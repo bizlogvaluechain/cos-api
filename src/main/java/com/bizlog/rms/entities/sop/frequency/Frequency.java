@@ -4,7 +4,6 @@ import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
 
 @Entity
 @Data
@@ -25,8 +24,7 @@ public class Frequency extends BaseClientEntity {
     private long operationEndTime;
     @Column(name = "operationDay", nullable = false)
     private Long operationDay;
-    @Column(name = "holidayApplicable", nullable = false)
-    @ElementCollection(targetClass = HolidayApplicable.class, fetch = FetchType.EAGER)
-    private List<HolidayApplicable> holidayApplicable;
-
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "holidayApplicableId", referencedColumnName = "id")
+    private HolidayApplicable holidayApplicable;
 }

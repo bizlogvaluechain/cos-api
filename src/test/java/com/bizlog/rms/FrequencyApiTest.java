@@ -20,7 +20,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.Matchers.isIn;
 import static org.hamcrest.Matchers.not;
@@ -82,9 +81,6 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setStartDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         frequencyRepository.save(frequency);
@@ -109,9 +105,8 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setUnit(FrequencyUnit.PER_DAY);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
+
+        frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         frequencyRepository.save(frequency);
@@ -137,9 +132,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setStartDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
+
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         frequencyRepository.save(frequency);
@@ -166,9 +159,8 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setStartDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
+
+        frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         frequencyRepository.save(frequency);
@@ -195,9 +187,8 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setStartDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
+
+        frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         frequencyRepository.save(frequency);
@@ -224,9 +215,8 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setStartDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
+
+        frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         frequencyRepository.save(frequency);
@@ -253,9 +243,6 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setStartDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         frequencyRepository.save(frequency);
@@ -282,9 +269,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setStartDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
+        frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         frequencyRepository.save(frequency);
@@ -299,10 +284,6 @@ public class FrequencyApiTest extends BaseApiTest {
     public void ListOfTicketsVolume_whenGettingListOfUsers_thenCorrect() {
 
         Client client = getClient();
-        HolidayApplicable holidayApplicable = new HolidayApplicable();
-        holidayApplicable.setBizlogHolidays(true);
-        holidayApplicable.setPublicHolidays(true);
-        holidayApplicable.setClientHolidaays(false);
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
@@ -311,13 +292,10 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setStartDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         frequencyRepository.save(frequency);
-        Node rootNode = new RSQLParser().parse("ticketsVolume=in=(100,120)");
+        Node rootNode = new RSQLParser().parse("ticketsVolume=in=(100,150)");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
         List<Frequency> results = frequencyRepository.findAll(spec);
 
@@ -340,9 +318,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setStartDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
+        frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         frequencyRepository.save(frequency);
@@ -366,9 +342,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setStartDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
+        frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
 
@@ -391,9 +365,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setStartDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        frequency.setHolidayApplicable(holidayApplicables);
+        frequency.setHolidayApplicable(holidayApplicable);
         frequency.setOperationDay(5L);
         frequency.setTicketsVolume("100");
         this.mockMvc.perform(post("/api/v1/cos/{clientId}/frequency", clientId).contentType(MediaType.APPLICATION_JSON)
@@ -412,9 +384,7 @@ public class FrequencyApiTest extends BaseApiTest {
         intialFrequency.setStartDate(23122023L);
         intialFrequency.setOperationStartTime(23122023L);
         intialFrequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        intialFrequency.setHolidayApplicable(holidayApplicables);
+        intialFrequency.setHolidayApplicable(holidayApplicable);
         intialFrequency.setOperationDay(5L);
         intialFrequency.setTicketsVolume("100");
         Client client = getClient();
@@ -463,9 +433,7 @@ public class FrequencyApiTest extends BaseApiTest {
         intialFrequency.setStartDate(23122023L);
         intialFrequency.setOperationStartTime(23122023L);
         intialFrequency.setOperationEndTime(23122023L);
-        List<HolidayApplicable> holidayApplicables = new ArrayList<>();
-        holidayApplicables.add(holidayApplicable);
-        intialFrequency.setHolidayApplicable(holidayApplicables);
+        intialFrequency.setHolidayApplicable(holidayApplicable);
         intialFrequency.setOperationDay(5L);
         intialFrequency.setTicketsVolume("100");
         Client client = getClient();

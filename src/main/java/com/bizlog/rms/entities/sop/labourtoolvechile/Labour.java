@@ -13,11 +13,11 @@ public class Labour extends BaseClientEntity {
 
     @Column(name = "isLabourRequired", nullable = false)
     private Boolean isLabourRequired;
-    @Column(name = "noOfLabour", nullable = false)
+    @Column(name = "noOfLabour")
     private Long noOfLabour;
-    @Column(name = "isLabourRequiredParticularProducts", nullable = false)
+    @Column(name = "isLabourRequiredParticularProducts")
     private Boolean isLabourRequiredParticularProducts;
 
-    @Column(name = "durationForActivity", nullable = false)
+    @Column(name = "durationForActivity")
     private Long durationForActivity;
 }
