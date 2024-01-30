@@ -9,11 +9,9 @@ import java.util.List;
 @Table(name = "ticket_creation_config")
 @Data
 public class TicketCreationConfig extends BaseClientEntity {
-    @Column(name = "ticketCreationThrough", nullable = false)
-    @ElementCollection(targetClass = TicketCreationThrough.class, fetch = FetchType.EAGER)
-    private List<TicketCreationThrough> ticketCreationThrough;
-    @Column(name = "ticketCreationBasedOn", nullable = false)
-    @ElementCollection(targetClass = TicketCreationBasedOn.class, fetch = FetchType.EAGER)
-    private List<TicketCreationBasedOn> ticketCreationBasedOn;
+
+    private List<String> ticketCreationThrough;
+
+    private List<String>  ticketCreationBasedOn;
 
 }

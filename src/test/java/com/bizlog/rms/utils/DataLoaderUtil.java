@@ -2,7 +2,6 @@ package com.bizlog.rms.utils;
 
 import com.bizlog.rms.dto.SOP_TAT.subLists.MajorActivites;
 import com.bizlog.rms.dto.SOP_TAT.subLists.MinorActivites;
-import com.bizlog.rms.dto.SOP_TAT.subLists.TATBreachDueTo;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.escalationMatrix.BizlogFinanceEscalation;
 import com.bizlog.rms.entities.sop.SOPActivity;
@@ -16,11 +15,10 @@ import com.bizlog.rms.entities.location.ServiceType;
 import com.bizlog.rms.entities.sop.notification.Notification;
 import com.bizlog.rms.entities.productInformation.ProductInformation;
 import com.bizlog.rms.entities.productInformation.ProductSize;
-import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationBasedOn;
 import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationConfig;
-import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationThrough;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -170,47 +168,67 @@ public class DataLoaderUtil {
         return List.of(sopActivity);
     }
 
-    public static List<TATActivity> getTATActivity(Client client) {
-
-        TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
-        tatBreachDueTo.setCustomer("yes");
-        tatBreachDueTo.setBizlog("no");
-        tatBreachDueTo.setThirdPartyLogistics("yes");
-
+//    public static List<TATActivity> getTATActivity(Client client) {
+//
+//        TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
+//        tatBreachDueTo.setCustomer("yes");
+//        tatBreachDueTo.setBizlog("no");
+//        tatBreachDueTo.setThirdPartyLogistics("yes");
+//
+//        TATActivity tatActivity = new TATActivity();
+//        tatActivity.setId(1L);
+//        tatActivity.setClient(client);
+//
+//        List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
+//        tatActivity.setTatBreachDueTo(tatBreachDueToList);
+//        tatActivity.setIsTatRequired(true);
+//
+//        return List.of(tatActivity);
+//    }
+    public static List<TATActivity> getTATActivity(Client client)
+    {
         TATActivity tatActivity = new TATActivity();
         tatActivity.setId(1L);
         tatActivity.setClient(client);
-
-        List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
-        tatActivity.setTatBreachDueTo(tatBreachDueToList);
         tatActivity.setIsTatRequired(true);
-
+        tatActivity.setBizlog("yes");
+        tatActivity.setCustomer("yes");
         return List.of(tatActivity);
     }
+//    public static List<TicketCreationConfig> getTicketCreationConfig(Client client) {
+//        TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
+//        ticketCreationThrough.setApi("API");
+//        ticketCreationThrough.setExcelByBizlog("Excel");
+//        ticketCreationThrough.setExcelByClient("Excel");
+//        ticketCreationThrough.setForm("form");
+//
+//        TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
+//        ticketCreationBasedOn.setLRNumber("AWB");
+//        ticketCreationBasedOn.setInvoiceNumber("invoice");
+//        ticketCreationBasedOn.setComplaintNumber("complaint");
+//        ticketCreationBasedOn.setOrderNumber("order");
+//
+//        TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
+//        ticketCreationConfig.setId(1L);
+//        ticketCreationConfig.setClient(client);
+//        List<TicketCreationThrough> ticketCreationThroughs = new ArrayList<>();
+//        // ticketCreationThroughs.add(ticketCreationThrough);
+//        ticketCreationConfig.setTicketCreationThrough(ticketCreationThroughs);
+//        List<TicketCreationBasedOn> ticketCreationBasedOns = new ArrayList<>();
+//        // ticketCreationBasedOns.add(ticketCreationBasedOn);
+//        ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
+//
+//        return List.of(ticketCreationConfig);
+//    }
 
-    public static List<TicketCreationConfig> getTicketCreationConfig(Client client) {
-        TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
-        ticketCreationThrough.setApi("API");
-        ticketCreationThrough.setExcelByBizlog("Excel");
-        ticketCreationThrough.setExcelByClient("Excel");
-        ticketCreationThrough.setForm("form");
-
-        TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
-        ticketCreationBasedOn.setLRNumber("AWB");
-        ticketCreationBasedOn.setInvoiceNumber("invoice");
-        ticketCreationBasedOn.setComplaintNumber("complaint");
-        ticketCreationBasedOn.setOrderNumber("order");
+    public static List<TicketCreationConfig> getTicketCreationConfig(Client client){
+        List<String> creationThroughList = Arrays.asList("Api", "Lr", "excel");
 
         TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
         ticketCreationConfig.setId(1L);
         ticketCreationConfig.setClient(client);
-        List<TicketCreationThrough> ticketCreationThroughs = new ArrayList<>();
-        // ticketCreationThroughs.add(ticketCreationThrough);
-        ticketCreationConfig.setTicketCreationThrough(ticketCreationThroughs);
-        List<TicketCreationBasedOn> ticketCreationBasedOns = new ArrayList<>();
-        // ticketCreationBasedOns.add(ticketCreationBasedOn);
-        ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
-
+        ticketCreationConfig.setTicketCreationThrough(creationThroughList);
+        ticketCreationConfig.setTicketCreationBasedOn(Arrays.asList("Api", "Lr", "excel"));
         return List.of(ticketCreationConfig);
     }
 

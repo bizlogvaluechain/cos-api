@@ -2,9 +2,7 @@ package com.bizlog.rms;
 
 import com.bizlog.rms.dto.SOP_TAT.TicketCreationConfigDTO;
 import com.bizlog.rms.entities.Client;
-import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationBasedOn;
 import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationConfig;
-import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationThrough;
 import com.bizlog.rms.repository.TicketCreationConfigRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -16,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -62,92 +60,45 @@ public class TicketCreationConfigApiTest extends BaseApiTest {
     }
      @Test
      void should_create_new_ticket_creation_config() throws Exception {
-     TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
-     ticketCreationThrough.setApi("API");
-     ticketCreationThrough.setExcelByClient("Excel");
-     ticketCreationThrough.setExcelByBizlog("Excel");
-     ticketCreationThrough.setForm("form");
-
-     TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
-     ticketCreationBasedOn.setLRNumber("lr");
-     ticketCreationBasedOn.setInvoiceNumber("invoice");
-     ticketCreationBasedOn.setComplaintNumber("complaint");
-     ticketCreationBasedOn.setOrderNumber("order");
-
-     TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
-
-     List<TicketCreationThrough> ticketCreationThroughList = new ArrayList<>();
-     ticketCreationThroughList.add(ticketCreationThrough);
-     ticketCreationConfig.setTicketCreationThrough(ticketCreationThroughList);
-     List<TicketCreationBasedOn> ticketCreationBasedOnList = new ArrayList<>();
-     ticketCreationBasedOnList.add(ticketCreationBasedOn);
-     ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOnList);
-     Client client = getClient();
-
-
-     this.mockMvc
-     .perform(post("/api/v1/cos/{clientId}/ticket-creation-config", client.getId()).contentType(MediaType.APPLICATION_JSON)
-     .content(toJson(ticketCreationConfig).orElse("")))
-     .andDo(print()).andExpect(status().is2xxSuccessful());
+         Client client = getClient();
+         List<String> creationThroughList = Arrays.asList("Api", "Lr", "excel");
+         TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
+         ticketCreationConfig.setId(1L);
+         ticketCreationConfig.setClient(client);
+         ticketCreationConfig.setTicketCreationThrough(creationThroughList);
+         ticketCreationConfig.setTicketCreationBasedOn(Arrays.asList("Api", "Lr", "excel"));
+         this.mockMvc
+                .perform(post("/api/v1/cos/{clientId}/ticket-creation-config", client.getId()).contentType(MediaType.APPLICATION_JSON)
+                    .content(toJson(ticketCreationConfig).orElse("")))
+                .andDo(print()).andExpect(status().is2xxSuccessful());
      }
 
     @Test
     void should_not_create_new_ticket_creation_config() throws Exception {
-        int clientId = 11;
-        TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
-        ticketCreationThrough.setApi("API");
-        ticketCreationThrough.setExcelByBizlog("Excel");
-        ticketCreationThrough.setExcelByClient("Excel");
-        ticketCreationThrough.setForm("form");
-
-        TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
-        ticketCreationBasedOn.setLRNumber("AWB");
-        ticketCreationBasedOn.setInvoiceNumber("invoice");
-        ticketCreationBasedOn.setComplaintNumber("complaint");
-        ticketCreationBasedOn.setOrderNumber("order");
-
+        int clientId = 111;
+        List<String> creationThroughList = Arrays.asList("Api", "Lr", "excel");
         TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
-
-        List<TicketCreationThrough> ticketCreationThroughs = new ArrayList<>();
-        ticketCreationThroughs.add(ticketCreationThrough);
-        ticketCreationConfig.setTicketCreationThrough(ticketCreationThroughs);
-        List<TicketCreationBasedOn> ticketCreationBasedOns = new ArrayList<>();
-        ticketCreationBasedOns.add(ticketCreationBasedOn);
-        ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
+        ticketCreationConfig.setTicketCreationThrough(creationThroughList);
 
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/ticket-creation-config", clientId)
-                        .contentType(MediaType.APPLICATION_JSON).content(toJson(ticketCreationThrough).orElse("")))
-                .andDo(print()).andExpect(status().isBadRequest());
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(ticketCreationConfig).orElse("")))
+                .andDo(print()).andExpect(status().is4xxClientError());
     }
     @Test
     void should_update_existing_ticket_creation_config() throws Exception {
-        TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
-        ticketCreationThrough.setApi("API");
-        ticketCreationThrough.setExcelByClient("Excel");
-        ticketCreationThrough.setExcelByBizlog("Excel");
-        ticketCreationThrough.setForm("form");
-
-        TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
-        ticketCreationBasedOn.setLRNumber("lr");
-        ticketCreationBasedOn.setInvoiceNumber("invoice");
-        ticketCreationBasedOn.setComplaintNumber("complaint");
-        ticketCreationBasedOn.setOrderNumber("order");
 
         TicketCreationConfig existingTicketCreationConfig = new TicketCreationConfig();
 
-        List<TicketCreationThrough> ticketCreationThroughList = new ArrayList<>();
-        ticketCreationThroughList.add(ticketCreationThrough);
-        existingTicketCreationConfig.setTicketCreationThrough(ticketCreationThroughList);
-        List<TicketCreationBasedOn> ticketCreationBasedOnList = new ArrayList<>();
-        ticketCreationBasedOnList.add(ticketCreationBasedOn);
-        existingTicketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOnList);
+
+        existingTicketCreationConfig.setTicketCreationBasedOn(Arrays.asList("Api", "Lr", "excel"));
+        existingTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "Lr", "excel"));
         Client client = getClient();
         existingTicketCreationConfig.setClient(client);
         existingTicketCreationConfig = ticketCreationConfigRepository.save(existingTicketCreationConfig);
 
         TicketCreationConfigDTO updatedTicketCreationConfig = getMapper().toDTO(existingTicketCreationConfig);
-        updatedTicketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOnList);
+        updatedTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "pr", "excelBizlog"));
 
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/ticket-creation-config/{id}", client.getId(),existingTicketCreationConfig.getId()).
@@ -159,18 +110,9 @@ public class TicketCreationConfigApiTest extends BaseApiTest {
     void should_not_update_existing_ticket_creation_config() throws Exception {
         Long clientId = 99L;
         Long id = 999L;
-        TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
-        ticketCreationBasedOn.setLRNumber("lr");
-        ticketCreationBasedOn.setInvoiceNumber("invoice");
-        ticketCreationBasedOn.setComplaintNumber("complaint");
-        ticketCreationBasedOn.setOrderNumber("order");
 
         TicketCreationConfig updatedTicketCreationConfig = new TicketCreationConfig();
-
-        List<TicketCreationBasedOn> ticketCreationBasedOnList = new ArrayList<>();
-        ticketCreationBasedOnList.add(ticketCreationBasedOn);
-
-        updatedTicketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOnList);
+        updatedTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "Lr", "excel"));
         this.mockMvc
                     .perform(put("/api/v1/cos/{clientId}/ticket-creation-config/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTicketCreationConfig).orElse("")))
@@ -178,26 +120,11 @@ public class TicketCreationConfigApiTest extends BaseApiTest {
     }
     @Test
     void should_delete_existing_ticket_creation_config() throws Exception {
-        TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
-        ticketCreationThrough.setApi("API");
-        ticketCreationThrough.setExcelByClient("Excel");
-        ticketCreationThrough.setExcelByBizlog("Excel");
-        ticketCreationThrough.setForm("form");
 
-        TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
-        ticketCreationBasedOn.setLRNumber("lr");
-        ticketCreationBasedOn.setInvoiceNumber("invoice");
-        ticketCreationBasedOn.setComplaintNumber("complaint");
-        ticketCreationBasedOn.setOrderNumber("order");
 
         TicketCreationConfig existingTicketCreationConfig = new TicketCreationConfig();
-
-        List<TicketCreationThrough> ticketCreationThroughList = new ArrayList<>();
-        ticketCreationThroughList.add(ticketCreationThrough);
-        existingTicketCreationConfig.setTicketCreationThrough(ticketCreationThroughList);
-        List<TicketCreationBasedOn> ticketCreationBasedOnList = new ArrayList<>();
-        ticketCreationBasedOnList.add(ticketCreationBasedOn);
-        existingTicketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOnList);
+        existingTicketCreationConfig.setTicketCreationBasedOn(Arrays.asList("Api", "Lr", "excel"));
+        existingTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "Lr", "excel"));
         Client client = getClient();
         existingTicketCreationConfig.setClient(client);
         existingTicketCreationConfig = ticketCreationConfigRepository.save(existingTicketCreationConfig);

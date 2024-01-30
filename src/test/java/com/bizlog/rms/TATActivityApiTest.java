@@ -1,7 +1,6 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.dto.SOP_TAT.TATActivityDTO;
-import com.bizlog.rms.dto.SOP_TAT.subLists.TATBreachDueTo;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.sop.TATActivity;
 import com.bizlog.rms.repository.TATActivityRepository;
@@ -14,9 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -62,17 +58,12 @@ public class TATActivityApiTest extends BaseApiTest {
     @Test
     void should_create_new_tatActivity() throws Exception {
         Client client = getClient();
-        TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
-        tatBreachDueTo.setBizlog("abcdef");
-        tatBreachDueTo.setCustomer("abcdef");
-        tatBreachDueTo.setThirdPartyLogistics("abcdef");
 
         TATActivity tatActivity = new TATActivity();
         tatActivity.setIsTatRequired(true);
-        List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
-        tatBreachDueToList.add(tatBreachDueTo);
+        tatActivity.setBizlog("yes");
+        tatActivity.setCustomer("yes");
 
-        tatActivity.setTatBreachDueTo(tatBreachDueToList);
 
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/tatActivities", client.getId())
@@ -83,21 +74,15 @@ public class TATActivityApiTest extends BaseApiTest {
     @Test
     void should_update_existing_tatActivity() throws Exception {
 
-        TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
-        tatBreachDueTo.setBizlog("abcdef");
-        tatBreachDueTo.setCustomer("abcdef");
-        tatBreachDueTo.setThirdPartyLogistics("abcdef");
+
 
         TATActivity initialTatActivity = new TATActivity();
         initialTatActivity.setIsTatRequired(true);
 
         Client client = getClient();
         initialTatActivity.setClient(client);
-
-        List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
-        tatBreachDueToList.add(tatBreachDueTo);
-
-        initialTatActivity.setTatBreachDueTo(tatBreachDueToList);
+        initialTatActivity.setIsTatRequired(true);
+        initialTatActivity.setCustomer("yes");
         initialTatActivity = tatActivityRepository.save(initialTatActivity);
 
         TATActivityDTO updatedTatActivity = getMapper().toDTO(initialTatActivity);
@@ -124,18 +109,11 @@ public class TATActivityApiTest extends BaseApiTest {
     @Test
     void should_delete_existing_tatActivity() throws Exception {
 
-        TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
-        tatBreachDueTo.setBizlog("abcdef");
-        tatBreachDueTo.setCustomer("abcdef");
-        tatBreachDueTo.setThirdPartyLogistics("abcdef");
+
 
         TATActivity tatActivity = new TATActivity();
         tatActivity.setIsTatRequired(false);
-
-        List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
-        tatBreachDueToList.add(tatBreachDueTo);
-
-        tatActivity.setTatBreachDueTo(tatBreachDueToList);
+        tatActivity.setCustomer("yes");
         Client client = getClient();
         tatActivity.setClient(client);
         tatActivity = tatActivityRepository.save(tatActivity);
