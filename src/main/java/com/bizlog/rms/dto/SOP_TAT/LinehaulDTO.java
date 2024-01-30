@@ -15,4 +15,7 @@ import java.util.List;
 public class LinehaulDTO extends BaseDTO {
     private List<LinehaulByBizlog> linehaulByBizlogs;
     private List<LinehaulByClient> linehaulByClients;
+    private Boolean isConsolodationRequired;
+    private String duration;
+    private String size;
 }

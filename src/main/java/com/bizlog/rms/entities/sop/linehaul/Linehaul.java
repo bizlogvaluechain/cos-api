@@ -17,4 +17,11 @@ public class Linehaul extends BaseClientEntity {
     @Column(name = "linehaulByClients", nullable = false)
     @ElementCollection(targetClass = LinehaulByClient.class, fetch = FetchType.EAGER)
     private List<LinehaulByClient> linehaulByClients;
+    @Column(name = "isConsolodationRequired", nullable = false)
+    private Boolean isConsolodationRequired;
+    @Column(name = "Duration")
+    private String duration;
+    @Column(name = "size")
+    private String size;
+
 }
