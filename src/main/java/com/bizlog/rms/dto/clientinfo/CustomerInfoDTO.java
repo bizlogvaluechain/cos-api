@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,7 +26,7 @@ public class CustomerInfoDTO extends BaseDTO {
     private String panOrAadhar;
     private String gstS3Key;
     private String panOrAadharS3Key;
-    private BillingInfo billingInfo;
-    private ShipmentInfo shippingAddress;
+    private List<BillingInfo> billingInfo;
+    private List<ShipmentInfo> shippingAddress;
     private CompanyContactDetails companyContactDetails;
 }
