@@ -15,6 +15,8 @@ import com.bizlog.rms.entities.ClientSetting;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.clientengagement.ClientEngagement;
 import com.bizlog.rms.entities.clientinfo.*;
+import com.bizlog.rms.entities.clientinfo.contactinformation.FinanceContactInformation;
+import com.bizlog.rms.entities.clientinfo.contactinformation.OperationContactInformation;
 import com.bizlog.rms.entities.sop.*;
 import com.bizlog.rms.entities.escalationMatrix.*;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
@@ -31,6 +33,7 @@ import com.bizlog.rms.entities.users.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
 import java.util.Map;
 
 @Mapper(componentModel = "spring")
@@ -92,13 +95,17 @@ public interface GenericMapper {
     @Mapping(target = "operationStartTime", expression = "java(toLong(row.get(\"startDate\")))")
     @Mapping(target = "operationEndTime", expression = "java(toLong(row.get(\"ticketsVolume\")))")
     FrequencyDTO toDTO(Map<String, String> row);
+
     default Long toLong(String value) {
         return value != null ? Long.parseLong(value) : null;
     }
+
+
+    List<BillingInfo> toEntity(List<BillingInfoDTO> dto);
+
     BillingInfo toEntity(BillingInfoDTO dto);
-
+    List<BillingInfoDTO> toDTO(List<BillingInfo> entity);
     BillingInfoDTO toDTO(BillingInfo entity);
-
     CompanyContactDetails toEntity(CompanyContactDetailsDTO dto);
 
     CompanyContactDetailsDTO toDTO(CompanyContactDetails entity);
@@ -123,9 +130,12 @@ public interface GenericMapper {
 
     ClientHierarchyDTO toDTO(ClientHierarchy entity);
 
-    ContactInformation toEntity(ContactInformationDTO dto);
+    OperationContactInformation toEntity(OperationContactInformationDTO dto);
 
-    ContactInformationDTO toDTO(ContactInformation entity);
+    OperationContactInformationDTO toDTO(OperationContactInformation entity);
+    FinanceContactInformation toEntity(FinanceContactInformationDTO dto);
+
+    FinanceContactInformationDTO toDTO(FinanceContactInformation entity);
 
     BizlogFinanceEscalation toEntity(BizlogFinanceEscalationDTO dto);
 
