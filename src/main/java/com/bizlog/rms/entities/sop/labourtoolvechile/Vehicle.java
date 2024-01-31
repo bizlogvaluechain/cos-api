@@ -6,19 +6,24 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name = "vehicle_tbl")
 @Data
 public class Vehicle extends BaseClientEntity {
-    @Column(name = "typeOfVehicle", nullable = false)
-    private String typeOfVehicle;
-    @Column(name = "noOfVehicle", nullable = false)
-    private String noOfVehicle;
-    @Column(name = "isVehicleRequiredAllProduct", nullable = false)
+    @Column(name = "isVehicleRequired", nullable = false)
+    private Boolean isVehicleRequired;
+    @Column(name = "typeOfVehicle")
+    private List<String> typeOfVehicle;
+    @Column(name = "volumeOfVehicle")
+    private Long volumeOfVehicle;
+    @Column(name = "isVehicleRequiredAllProduct")
     private Boolean isVehicleRequiredAllProduct;
-    @Column(name = "isVehicleRequiredAllPincodes", nullable = false)
+    @Column(name = "isVehicleRequiredAllPincodes")
     private Boolean isVehicleRequiredAllPincodes;
-    @Column(name = "isPriorApprovalNeededBeforeUsingVehicle", nullable = false)
+    @Column(name = "isPriorApprovalNeededBeforeUsingVehicle")
     private Boolean isPriorApprovalNeededBeforeUsingVehicle;
-
+    @Column(name = "durationForActivity")
+    private Long durationForActivity;
 }

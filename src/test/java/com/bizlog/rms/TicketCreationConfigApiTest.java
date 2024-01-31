@@ -1,8 +1,8 @@
 package com.bizlog.rms;
 
-import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationBasedOn;
+import com.bizlog.rms.dto.SOP_TAT.TicketCreationConfigDTO;
+import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationConfig;
-import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationThrough;
 import com.bizlog.rms.repository.TicketCreationConfigRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -14,12 +14,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -58,61 +58,86 @@ public class TicketCreationConfigApiTest extends BaseApiTest {
         this.mockMvc.perform(get("/api/v1/cos/{clientId}/ticket-creation-config/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
-    // @Test
-    // void should_create_new_ticket_creation_config() throws Exception {
-    // int clientId = 1;
-    // TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
-    // ticketCreationThrough.setApi("API");
-    // ticketCreationThrough.setExcel("Excel");
-    // ticketCreationThrough.setForm("form");
-    //
-    // TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
-    // ticketCreationBasedOn.setAwbNumber("AWB");
-    // ticketCreationBasedOn.setInvoiceNumber("invoice");
-    // ticketCreationBasedOn.setComplaintNumber("complaint");
-    // ticketCreationBasedOn.setOrderNumber("order");
-    //
-    // TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
-    //
-    // List<TicketCreationThrough> ticketCreationThroughList = new ArrayList<>();
-    // ticketCreationThroughList.add(ticketCreationThrough);
-    // ticketCreationConfig.setTicketCreationThrough(ticketCreationThroughs);
-    // List<TicketCreationBasedOn> ticketCreationBasedOnList = new ArrayList<>();
-    // ticketCreationBasedOnList.add(ticketCreationBasedOn);
-    // ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
-    //
-    // this.mockMvc
-    // .perform(post("/api/v1/cos/{clientId}/ticket-creation-config", clientId).contentType(MediaType.APPLICATION_JSON)
-    // .content(toJson(ticketCreationThrough).orElse("")))
-    // .andDo(print()).andExpect(status().is2xxSuccessful());
-    // }
+     @Test
+     void should_create_new_ticket_creation_config() throws Exception {
+         Client client = getClient();
+         List<String> creationThroughList = Arrays.asList("Api", "Lr", "excel");
+         TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
+         ticketCreationConfig.setId(1L);
+         ticketCreationConfig.setClient(client);
+         ticketCreationConfig.setTicketCreationThrough(creationThroughList);
+         ticketCreationConfig.setTicketCreationBasedOn(Arrays.asList("Api", "Lr", "excel"));
+         this.mockMvc
+                .perform(post("/api/v1/cos/{clientId}/ticket-creation-config", client.getId()).contentType(MediaType.APPLICATION_JSON)
+                    .content(toJson(ticketCreationConfig).orElse("")))
+                .andDo(print()).andExpect(status().is2xxSuccessful());
+     }
 
     @Test
     void should_not_create_new_ticket_creation_config() throws Exception {
-        int clientId = 11;
-        TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
-        ticketCreationThrough.setApi("API");
-        ticketCreationThrough.setExcel("Excel");
-        ticketCreationThrough.setForm("form");
-
-        TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
-        ticketCreationBasedOn.setLRNumber("AWB");
-        ticketCreationBasedOn.setInvoiceNumber("invoice");
-        ticketCreationBasedOn.setComplaintNumber("complaint");
-        ticketCreationBasedOn.setOrderNumber("order");
-
+        int clientId = 111;
+        List<String> creationThroughList = Arrays.asList("Api", "Lr", "excel");
         TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
-
-        List<TicketCreationThrough> ticketCreationThroughs = new ArrayList<>();
-        ticketCreationThroughs.add(ticketCreationThrough);
-        ticketCreationConfig.setTicketCreationThrough(ticketCreationThroughs);
-        List<TicketCreationBasedOn> ticketCreationBasedOns = new ArrayList<>();
-        ticketCreationBasedOns.add(ticketCreationBasedOn);
-        ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
+        ticketCreationConfig.setTicketCreationThrough(creationThroughList);
 
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/ticket-creation-config", clientId)
-                        .contentType(MediaType.APPLICATION_JSON).content(toJson(ticketCreationThrough).orElse("")))
-                .andDo(print()).andExpect(status().isBadRequest());
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(ticketCreationConfig).orElse("")))
+                .andDo(print()).andExpect(status().is4xxClientError());
+    }
+    @Test
+    void should_update_existing_ticket_creation_config() throws Exception {
+
+        TicketCreationConfig existingTicketCreationConfig = new TicketCreationConfig();
+
+
+        existingTicketCreationConfig.setTicketCreationBasedOn(Arrays.asList("Api", "Lr", "excel"));
+        existingTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "Lr", "excel"));
+        Client client = getClient();
+        existingTicketCreationConfig.setClient(client);
+        existingTicketCreationConfig = ticketCreationConfigRepository.save(existingTicketCreationConfig);
+
+        TicketCreationConfigDTO updatedTicketCreationConfig = getMapper().toDTO(existingTicketCreationConfig);
+        updatedTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "pr", "excelBizlog"));
+
+        this.mockMvc
+                .perform(put("/api/v1/cos/{clientId}/ticket-creation-config/{id}", client.getId(),existingTicketCreationConfig.getId()).
+                        contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTicketCreationConfig).orElse("")))
+                        .andDo(print()).andExpect(status().is2xxSuccessful())
+                        .andExpect(content().json(toJson(updatedTicketCreationConfig).orElse("")));
+    }
+    @Test
+    void should_not_update_existing_ticket_creation_config() throws Exception {
+        Long clientId = 99L;
+        Long id = 999L;
+
+        TicketCreationConfig updatedTicketCreationConfig = new TicketCreationConfig();
+        updatedTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "Lr", "excel"));
+        this.mockMvc
+                    .perform(put("/api/v1/cos/{clientId}/ticket-creation-config/{id}", clientId, id)
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTicketCreationConfig).orElse("")))
+                        .andDo(print()).andExpect(status().is4xxClientError());
+    }
+    @Test
+    void should_delete_existing_ticket_creation_config() throws Exception {
+
+
+        TicketCreationConfig existingTicketCreationConfig = new TicketCreationConfig();
+        existingTicketCreationConfig.setTicketCreationBasedOn(Arrays.asList("Api", "Lr", "excel"));
+        existingTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "Lr", "excel"));
+        Client client = getClient();
+        existingTicketCreationConfig.setClient(client);
+        existingTicketCreationConfig = ticketCreationConfigRepository.save(existingTicketCreationConfig);
+
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/ticket-creation-config/{id}", client.getId(), existingTicketCreationConfig.getId()))
+                .andDo(print()).andExpect(status().isNoContent());
+    }
+
+    @Test
+    void should_not_delete_nonexistent_ticket_creation_config() throws Exception {
+        int clientId = 11;
+        int nonexistentId = 999;
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/ticket-creation-config/{id}", clientId, nonexistentId))
+                .andDo(print()).andExpect(status().isNotFound());
     }
 }

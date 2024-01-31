@@ -4,29 +4,26 @@ import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Entity
 @Data
 @Table(name = "frequency")
 public class Frequency extends BaseClientEntity {
+    @Column(name = "unit", nullable = false)
+    private FrequencyUnit unit;
     @Column(name = "ticketsVolume", nullable = false)
-    private String ticketsVolume;
+    private Long  ticketsVolume;
+    @Column(name = "FrequencyStartDate", nullable = false)
+    private Long startDate;
+    @Column(name = "FrequencyEndDate", nullable = false)
+    private Long endDate;
+    @Column(name = "operationStartTime", nullable = false)
+    private Long operationStartTime;
 
-    @Column(name = "onboardingDate", nullable = false)
-    private long onboardingDate;
-
-    @Column(name = "dayStartTime", nullable = false)
-    private long dayStartTime;
-
-    @Column(name = "dayEndTime", nullable = false)
-    private long dayEndTime;
-
-    @Column(name = "holidayApplicable", nullable = false)
-    @ElementCollection(targetClass = HolidayApplicable.class, fetch = FetchType.EAGER)
-    private List<HolidayApplicable> holidayApplicable;
-
-    @Column(name = "onlyWorkdays", nullable = false)
-    private Boolean onlyWorkdays;
-
+    @Column(name = "operationEndTime", nullable = false)
+    private Long operationEndTime;
+    @Column(name = "operationDay", nullable = false)
+    private Long operationDay;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "holidayApplicableId", referencedColumnName = "id")
+    private HolidayApplicable holidayApplicable;
 }

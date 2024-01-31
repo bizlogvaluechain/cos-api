@@ -6,7 +6,8 @@ import lombok.Data;
 @Data
 @Embeddable
 public class TicketCreationThrough {
-    private String excel;
+    private String excelByClient;
+    private String excelByBizlog;
     private String api;
     private String form;
 }

@@ -240,13 +240,9 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         Root<V> root = criteriaQuery.from(getEntityClass());
 
         attributesOpt.ifPresent(attributes -> {
-            // Create an array of Path objects representing selected attributes
             List<Selection<?>> selectionList = ProjectionsUtil.getSelectionList(root, attributes);
-
-            // Apply projections directly on the criteria query
             criteriaQuery.multiselect(selectionList);
         });
-
         criteriaQuery.where(dynamicQuerySpec.toPredicate(root, criteriaQuery, criteriaBuilder));
 
         TypedQuery<Tuple> typedQuery = entityManager.createQuery(criteriaQuery);
@@ -256,10 +252,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         List<ProjectionRow> projectionRowList = ProjectionsUtil.convert(typedQuery.getResultList());
         List<O> outPutDTO = projectionRowList.stream().map(x -> x.getContents()).map(this::toDTO)
                 .collect(Collectors.toList());
-
-        // Page<V> pageData = baseClientRepository.findAll(dynamicQuerySpec, pageable);
-        // List<O> outPutDTO = pageData.getContent().stream().map(this::toDTO).collect(Collectors.toList());
-        Map<String, Object> meta = new HashMap<>();// getMetaData(pageData);
+        Map<String, Object> meta = new HashMap<>();
         PageResponse<O> pageResponse = new PageResponse<>(meta, outPutDTO);
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }

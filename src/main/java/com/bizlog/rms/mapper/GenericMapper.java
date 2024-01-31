@@ -22,6 +22,7 @@ import com.bizlog.rms.entities.escalationMatrix.*;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
 import com.bizlog.rms.entities.location.Location;
 import com.bizlog.rms.entities.sop.labourtoolvechile.Labour;
+import com.bizlog.rms.entities.sop.labourtoolvechile.Tools;
 import com.bizlog.rms.entities.sop.labourtoolvechile.Vehicle;
 import com.bizlog.rms.entities.sop.linehaul.Linehaul;
 import com.bizlog.rms.entities.sop.notification.Notification;
@@ -87,10 +88,21 @@ public interface GenericMapper {
     LocationDTO toDTO(Location location);
 
     // @Mapping(target = "ticketsVolume", source = "ticketsVolume")
-    @Mapping(expression = "java(row.get(\"ticketsVolume\"))", target = "ticketsVolume")
+    @Mapping(target = "id", expression = "java(toLong(row.get(\"id\")))")
+    @Mapping(target = "startDate", expression = "java(toLong(row.get(\"startDate\")))")
+    @Mapping(target = "ticketsVolume", expression = "java(toLong(row.get(\"ticketsVolume\")))")
+    @Mapping(target = "endDate", expression = "java(toLong(row.get(\"id\")))")
+    @Mapping(target = "operationStartTime", expression = "java(toLong(row.get(\"startDate\")))")
+    @Mapping(target = "operationEndTime", expression = "java(toLong(row.get(\"ticketsVolume\")))")
     FrequencyDTO toDTO(Map<String, String> row);
 
+    default Long toLong(String value) {
+        return value != null ? Long.parseLong(value) : null;
+    }
+
+
     List<BillingInfo> toEntity(List<BillingInfoDTO> dto);
+
     BillingInfo toEntity(BillingInfoDTO dto);
     List<BillingInfoDTO> toDTO(List<BillingInfo> entity);
     BillingInfoDTO toDTO(BillingInfo entity);
@@ -165,6 +177,8 @@ public interface GenericMapper {
 
     LabourDTO toDTO(Labour entity);
 
+    Tools toEntity(ToolsDTO dto);
+    ToolsDTO toDTO(Tools entity);
     Product toEntity(ProductDTO dto);
 
     ProductDTO toDTO(Product entity);
@@ -176,4 +190,10 @@ public interface GenericMapper {
     Payment toEntity(PaymentDTO dto);
 
     PaymentDTO toDTO(Payment entity);
+
+    ActivitySOP toEntity(ActivitySOPDTO dto);
+    ActivitySOPDTO toDTO(ActivitySOP entity);
+
+    LocationSop toEntity(LocationSopDTO dto);
+    LocationSopDTO toDTO(LocationSop entity);
 }

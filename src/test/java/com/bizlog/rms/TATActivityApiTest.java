@@ -1,7 +1,6 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.dto.SOP_TAT.TATActivityDTO;
-import com.bizlog.rms.dto.SOP_TAT.subLists.TATBreachDueTo;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.sop.TATActivity;
 import com.bizlog.rms.repository.TATActivityRepository;
@@ -14,9 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -62,21 +58,12 @@ public class TATActivityApiTest extends BaseApiTest {
     @Test
     void should_create_new_tatActivity() throws Exception {
         Client client = getClient();
-        TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
-        tatBreachDueTo.setBizlog("abcdef");
-        tatBreachDueTo.setCustomer("abcdef");
-        tatBreachDueTo.setThirdPartyLogistics("abcdef");
 
         TATActivity tatActivity = new TATActivity();
-        tatActivity.setTatForFirstMile("abcdef");
-        tatActivity.setTatForLastMile("abcdef");
-        tatActivity.setTatForLinehaul("abcdef");
-        tatActivity.setNumberOfReshedules("5");
+        tatActivity.setIsTatRequired(true);
+        tatActivity.setBizlog("yes");
+        tatActivity.setCustomer("yes");
 
-        List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
-        tatBreachDueToList.add(tatBreachDueTo);
-
-        tatActivity.setTatBreachDueTo(tatBreachDueToList);
 
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/tatActivities", client.getId())
@@ -87,30 +74,19 @@ public class TATActivityApiTest extends BaseApiTest {
     @Test
     void should_update_existing_tatActivity() throws Exception {
 
-        TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
-        tatBreachDueTo.setBizlog("abcdef");
-        tatBreachDueTo.setCustomer("abcdef");
-        tatBreachDueTo.setThirdPartyLogistics("abcdef");
+
 
         TATActivity initialTatActivity = new TATActivity();
-        initialTatActivity.setTatForFirstMile("abcdef");
-        initialTatActivity.setTatForLastMile("abcdef");
-        initialTatActivity.setTatForLinehaul("abcdef");
+        initialTatActivity.setIsTatRequired(true);
+
         Client client = getClient();
         initialTatActivity.setClient(client);
-        initialTatActivity.setNumberOfReshedules("5");
-
-        List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
-        tatBreachDueToList.add(tatBreachDueTo);
-
-        initialTatActivity.setTatBreachDueTo(tatBreachDueToList);
+        initialTatActivity.setIsTatRequired(true);
+        initialTatActivity.setCustomer("yes");
         initialTatActivity = tatActivityRepository.save(initialTatActivity);
 
         TATActivityDTO updatedTatActivity = getMapper().toDTO(initialTatActivity);
-        updatedTatActivity.setTatForFirstMile("pqrst");
-        updatedTatActivity.setTatForLastMile("pqrst");
-        updatedTatActivity.setTatForLinehaul("xyz");
-        updatedTatActivity.setNumberOfReshedules("3");
+        updatedTatActivity.setIsTatRequired(false);
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/tatActivities/{id}", client.getId(), initialTatActivity.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
@@ -123,10 +99,7 @@ public class TATActivityApiTest extends BaseApiTest {
         int clientId = 12;
         int id = 21;
         TATActivity updatedTatActivity = new TATActivity();
-        updatedTatActivity.setTatForFirstMile("pqrst");
-        updatedTatActivity.setTatForLastMile("pqrst");
-        updatedTatActivity.setTatForLinehaul("xyz");
-        updatedTatActivity.setNumberOfReshedules("3");
+        updatedTatActivity.setIsTatRequired(false);
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/tatActivities/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
@@ -136,21 +109,11 @@ public class TATActivityApiTest extends BaseApiTest {
     @Test
     void should_delete_existing_tatActivity() throws Exception {
 
-        TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
-        tatBreachDueTo.setBizlog("abcdef");
-        tatBreachDueTo.setCustomer("abcdef");
-        tatBreachDueTo.setThirdPartyLogistics("abcdef");
+
 
         TATActivity tatActivity = new TATActivity();
-        tatActivity.setTatForFirstMile("abcdef");
-        tatActivity.setTatForLastMile("abcdef");
-        tatActivity.setTatForLinehaul("abcdef");
-        tatActivity.setNumberOfReshedules("5");
-
-        List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
-        tatBreachDueToList.add(tatBreachDueTo);
-
-        tatActivity.setTatBreachDueTo(tatBreachDueToList);
+        tatActivity.setIsTatRequired(false);
+        tatActivity.setCustomer("yes");
         Client client = getClient();
         tatActivity.setClient(client);
         tatActivity = tatActivityRepository.save(tatActivity);

@@ -5,11 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentDTO extends BaseDTO {
-    private Boolean isCollectionRequired;
-    private String paymentMethod;
+    private List<String> paymentMethod;
+    private String reconciliationFrequency ;
     private Boolean IsPaymentRequired;
 }

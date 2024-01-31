@@ -9,7 +9,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "notification_tbl")
-public class Notification extends BaseClientEntity {
+public class  Notification extends BaseClientEntity {
     @Column(name = "isSmsClient", nullable = false)
     private Boolean isSmsClient;
     @Column(name = "isEmailClient", nullable = false)

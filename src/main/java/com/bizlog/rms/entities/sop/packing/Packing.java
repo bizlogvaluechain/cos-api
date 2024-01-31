@@ -11,11 +11,9 @@ import java.util.List;
 @Data
 public class Packing extends BaseClientEntity {
 
-    @Column(name = "packingRequired")
-    @ElementCollection(targetClass = PackingRequired.class, fetch = FetchType.EAGER)
-    private List<PackingRequired> packingRequired;
+    @Column(name = "packingRequired",nullable = false)
+    private List<String> packingRequired;
 
-    @Column(name = "packingType")
-    @ElementCollection(targetClass = PackingType.class, fetch = FetchType.EAGER)
-    private List<PackingType> packingTypes;
+    @Column(name = "packingType",nullable = false)
+    private List<String> packingTypes;
 }

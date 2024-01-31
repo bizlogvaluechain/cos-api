@@ -7,19 +7,17 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "product_tbl")
+@Table(name = "sop_product_tbl")
 @Data
 public class Product extends BaseClientEntity {
     @Column(name = "noOfProduct", nullable = false)
     private Long noOfProduct;
-    @Column(name = "isContainSKUBarCode", nullable = false)
-    private Boolean isContainSKUBarCode;
-    @Column(name = "isContainUniqueIdentifier", nullable = false)
-    private Boolean isContainUniqueIdentifier;
-    @Column(name = "isContainUniqueBarcodes", nullable = false)
-    private Boolean isContainUniqueBarcodes;
-    @Column(name = "isLBH", nullable = false)
-    private Boolean isLBH;
-    @Column(name = "IsInventoryManagementRequired", nullable = false)
-    private Boolean IsInventoryManagementRequired;
+    @Column(name = "UniqueIdentifier")
+    private String uniqueIdentifier;
+    @Column(name = "isContainUniqueBarcodes")
+    private String isContainUniqueBarcodes;
+    @Column(name = "isLBH")
+    private String isLBH;
+    @Column(name = "IsInventoryManagementRequired")
+    private String IsInventoryManagementRequired;
 }
