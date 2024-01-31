@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "product_tbl")
+@Table(name = "sop_product_tbl")
 @Data
 public class Product extends BaseClientEntity {
     @Column(name = "noOfProduct", nullable = false)
