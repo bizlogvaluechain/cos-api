@@ -45,5 +45,10 @@ public class ProductEvalutions extends BaseClientEntity {
     private Boolean isAdditionalEquipmentRequired;
     @Column(name = "noOfEquipment")
     private Long noOfEquipment;
-
+    @Column(name = "isInstallationRequired", nullable = false)
+    private Boolean isInstallationRequired;
+    @Column(name = "isInventoryManagementRequired", nullable = false)
+    private Boolean isInventoryManagementRequired;
+    @Column(name = "isAdditionalInventoryNeeded", nullable = false)
+    private Boolean isAdditionalInventoryNeeded;
 }
