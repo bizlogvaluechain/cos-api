@@ -1,9 +1,9 @@
 package com.bizlog.rms.entities.product;
 
 import com.bizlog.rms.entities.BaseClientEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
@@ -51,4 +51,14 @@ public class ProductEvalutions extends BaseClientEntity {
     private Boolean isInventoryManagementRequired;
     @Column(name = "isAdditionalInventoryNeeded", nullable = false)
     private Boolean isAdditionalInventoryNeeded;
+
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "Product_Info_Id", nullable = false, updatable = false)
+    private ProductInfo productInfo;
+
+    @JsonProperty("Product_Info_Id")
+    public Long getProductInfoId() {
+        return (productInfo != null) ? productInfo.getId() : null;
+    }
 }
