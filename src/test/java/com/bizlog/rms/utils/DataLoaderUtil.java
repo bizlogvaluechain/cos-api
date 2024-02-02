@@ -9,9 +9,7 @@ import com.bizlog.rms.entities.sop.TATActivity;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
 import com.bizlog.rms.entities.sop.frequency.FrequencyUnit;
 import com.bizlog.rms.entities.sop.frequency.HolidayApplicable;
-import com.bizlog.rms.entities.location.Charge;
 import com.bizlog.rms.entities.location.Location;
-import com.bizlog.rms.entities.location.ServiceType;
 import com.bizlog.rms.entities.sop.notification.Notification;
 import com.bizlog.rms.entities.productInformation.ProductInformation;
 import com.bizlog.rms.entities.productInformation.ProductSize;
@@ -47,29 +45,43 @@ public class DataLoaderUtil {
         return client;
     }
 
+//    public static List<Location> getLocations(Client client) {
+//        Charge charge = new Charge();
+//        charge.setDeliverableArea(10L);
+//        charge.setNonDeliverableArea(10L);
+//        charge.setOutDeliverableArea(10L);
+//
+//        ServiceType serviceType = new ServiceType();
+//        serviceType.setDeliverableArea("yes");
+//        serviceType.setOutDeliverableArea("yes");
+//        serviceType.setNonDeliverableArea("yes");
+//
+//        Location location = new Location();
+//        location.setId(1L);
+//        location.setClient(client);
+//        List<Charge> charges = new ArrayList<>();
+//        charges.add(charge);
+//        location.setCharge(charges);
+//        location.setBizlogLocationMaster("IDP");
+//        List<ServiceType> serviceTypes = new ArrayList<>();
+//        serviceTypes.add(serviceType);
+//        location.setServiceType(serviceTypes);
+//        location.setSelectStates("AP");
+//        location.setSelectCities("viz");
+//        return List.of(location);
+//    }
+
     public static List<Location> getLocations(Client client) {
-        Charge charge = new Charge();
-        charge.setDeliverableArea(10L);
-        charge.setNonDeliverableArea(10L);
-        charge.setOutDeliverableArea(10L);
-
-        ServiceType serviceType = new ServiceType();
-        serviceType.setDeliverableArea("yes");
-        serviceType.setOutDeliverableArea("yes");
-        serviceType.setNonDeliverableArea("yes");
-
         Location location = new Location();
         location.setId(1L);
         location.setClient(client);
-        List<Charge> charges = new ArrayList<>();
-        charges.add(charge);
-        location.setCharge(charges);
-        location.setBizlogLocationMaster("IDP");
-        List<ServiceType> serviceTypes = new ArrayList<>();
-        serviceTypes.add(serviceType);
-        location.setServiceType(serviceTypes);
-        location.setSelectStates("AP");
-        location.setSelectCities("viz");
+        location.setCountries(Arrays.asList("India", "Usa"));
+        location.setStates(Arrays.asList("Karnataka ", "up", "bihar"));
+        location.setAreas(Arrays.asList("Urban", "costalarea"));
+        location.setCities(Arrays.asList("Bangalore", "Delhi", "Goa"));
+        location.setVehicle(Arrays.asList("threeVelor", "fourVelor", "bike"));
+        location.setPinCodes(Arrays.asList("560001", "560028", "560029"));
+        location.setTransportLinehaul("bizlog");
         return List.of(location);
     }
 
