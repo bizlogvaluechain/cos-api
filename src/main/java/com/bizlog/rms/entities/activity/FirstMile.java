@@ -13,8 +13,8 @@ import java.util.List;
 @Table(name = "activity_first_Mile_tbl")
 public class FirstMile extends BaseClientEntity {
 
-    @Column(name = "ActivityType")
-    private String activityType;
+    @Column(name = "FirstMileActivityType")
+    private String firstMileActivityType;
     @Column(name = "isImageRequired")
     private Boolean isImageRequired;
     @Column(name = "isBizlogQuestion")

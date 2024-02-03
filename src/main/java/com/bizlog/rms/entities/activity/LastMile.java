@@ -11,8 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "activity_last_Mile_tbl")
 public class LastMile extends BaseClientEntity {
-    @Column(name = "ActivityType")
-    private String activityType;
+    @Column(name = "lastMileActivityType")
+    private String lastMileActivityType;
     @Column(name = "isImageRequired")
     private Boolean isImageRequired;
     @Column(name = "isBizlogQuestion")

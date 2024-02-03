@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class FirstMileDTO extends BaseDTO {
-    private String activityType;
+    private String firstMileActivityType;
     private Boolean isImageRequired;
     private Boolean isBizlogQuestion;
     private List<String> bizlogQuestion;

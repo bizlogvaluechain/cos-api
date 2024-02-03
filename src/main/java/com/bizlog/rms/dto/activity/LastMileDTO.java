@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 @Data
 public class LastMileDTO extends BaseDTO {
-    private String activityType;
+    private String lastMileActivityType;
     private Boolean isImageRequired;
     private Boolean isBizlogQuestion;
     private List<String> bizlogQuestion;
