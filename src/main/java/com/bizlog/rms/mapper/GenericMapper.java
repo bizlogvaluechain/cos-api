@@ -16,6 +16,7 @@ import com.bizlog.rms.dto.frequency.FrequencyDTO;
 import com.bizlog.rms.dto.locationService.LocationDTO;
 import com.bizlog.rms.dto.locationService.RegionSpecificLocationDTO;
 import com.bizlog.rms.dto.notification.NotificationDTO;
+import com.bizlog.rms.dto.product.*;
 import com.bizlog.rms.dto.productInformation.ProductInformationDTO;
 import com.bizlog.rms.dto.users.UserDTO;
 import com.bizlog.rms.entities.ClientSetting;
@@ -30,7 +31,10 @@ import com.bizlog.rms.entities.clientengagement.ClientEngagement;
 import com.bizlog.rms.entities.clientinfo.*;
 import com.bizlog.rms.entities.clientinfo.contactinformation.FinanceContactInformation;
 import com.bizlog.rms.entities.clientinfo.contactinformation.OperationContactInformation;
+
+import com.bizlog.rms.entities.product.*;
 import com.bizlog.rms.entities.location.RegionSpecificLocation;
+
 import com.bizlog.rms.entities.sop.*;
 import com.bizlog.rms.entities.escalationMatrix.*;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
@@ -213,22 +217,32 @@ public interface GenericMapper {
     LocationSop toEntity(LocationSopDTO dto);
 
     LocationSopDTO toDTO(LocationSop entity);
+
+    ProductVehicle toEntity(ProductVehicleDTO dto);
+    ProductVehicleDTO toDTO(ProductVehicle entity);
+    ProductInfo toEntity(ProductInfoDTO dto);
+    ProductInfoDTO toDTO(ProductInfo entity);
+    ProductEvalutions toEntity(ProductEvalutionsDTO dto);
+    ProductEvalutionsDTO toDTO(ProductEvalutions entity);
+    ProductDetails toEntity(ProductDetailsDTO dto);
+    ProductDetailsDTO toDTO(ProductDetails entity);
+    PackingMaterial toEntity(PackingMaterialDTO dto);
+    PackingMaterialDTO toDTO(PackingMaterial entity);
+    LocationCenter toEntity(LocationCenterDTO dto);
+    LocationCenterDTO toDTO(LocationCenter entity);
     RegionSpecificLocation toEntity(RegionSpecificLocationDTO dto);
     RegionSpecificLocationDTO toDTO(RegionSpecificLocation entity);
     TAT toEntity(TATDTO dto);
-
     TATDTO toDTO(TAT entity);
-
     FirstMile toEntity(FirstMileDTO dto);
-
     FirstMileDTO toDTO(FirstMile entity);
-
     LastMile toEntity(LastMileDTO dto);
-
     LastMileDTO toDTO(LastMile entity);
-
     MiddleMile toEntity(MiddleMileDTO dto);
-
     MiddleMileDTO toDTO(MiddleMile entity);
+
+   
+
+   
 
 }
