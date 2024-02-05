@@ -26,7 +26,7 @@ public class TAT extends BaseClientEntity {
     private String intraCityPickup;
     @Column(name = "intraCityDaysPickup")
     private Long intraCityDaysPickup;
-    @Column(name = "interCityDrop")
+    @Column(name = "intraCityDrop")
     private String intraCityDrop;
     @Column(name = "intraCityDaysDrop")
     private Long intraCityDaysDrop;
