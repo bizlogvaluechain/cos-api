@@ -14,6 +14,7 @@ import com.bizlog.rms.dto.clientinfo.*;
 import com.bizlog.rms.dto.escalationMatrix.*;
 import com.bizlog.rms.dto.frequency.FrequencyDTO;
 import com.bizlog.rms.dto.locationService.LocationDTO;
+import com.bizlog.rms.dto.locationService.RegionSpecificLocationDTO;
 import com.bizlog.rms.dto.notification.NotificationDTO;
 import com.bizlog.rms.dto.productInformation.ProductInformationDTO;
 import com.bizlog.rms.dto.users.UserDTO;
@@ -29,6 +30,7 @@ import com.bizlog.rms.entities.clientengagement.ClientEngagement;
 import com.bizlog.rms.entities.clientinfo.*;
 import com.bizlog.rms.entities.clientinfo.contactinformation.FinanceContactInformation;
 import com.bizlog.rms.entities.clientinfo.contactinformation.OperationContactInformation;
+import com.bizlog.rms.entities.location.RegionSpecificLocation;
 import com.bizlog.rms.entities.sop.*;
 import com.bizlog.rms.entities.escalationMatrix.*;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
@@ -203,19 +205,16 @@ public interface GenericMapper {
     TicketsFollow toEntity(TicketFollowDTO dto);
 
     TicketFollowDTO toDTO(TicketsFollow entity);
-
     Payment toEntity(PaymentDTO dto);
-
     PaymentDTO toDTO(Payment entity);
-
     ActivitySOP toEntity(ActivitySOPDTO dto);
 
     ActivitySOPDTO toDTO(ActivitySOP entity);
-
     LocationSop toEntity(LocationSopDTO dto);
 
     LocationSopDTO toDTO(LocationSop entity);
-
+    RegionSpecificLocation toEntity(RegionSpecificLocationDTO dto);
+    RegionSpecificLocationDTO toDTO(RegionSpecificLocation entity);
     TAT toEntity(TATDTO dto);
 
     TATDTO toDTO(TAT entity);
@@ -231,4 +230,5 @@ public interface GenericMapper {
     MiddleMile toEntity(MiddleMileDTO dto);
 
     MiddleMileDTO toDTO(MiddleMile entity);
+
 }
