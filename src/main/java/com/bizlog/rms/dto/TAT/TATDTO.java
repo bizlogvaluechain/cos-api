@@ -5,14 +5,16 @@ import lombok.Data;
 
 @Data
 public class TATDTO extends BaseDTO {
-
     private Boolean isInterCityTAT;
     private Boolean isIntraCityTAT;
-    private String sameDayPickup;
-    private  String nextDayPickup;
-    private Long dateForPickup;
-    private String sameDayDrop;
-    private  String nextDayDrop;
-    private Long dateForDrop;
-    private String ticketInLineHaul;
+    private String interCityPickup;
+    private Long interCityDaysPickup;
+    private String interCityDrop;
+    private Long interCityDaysDrop;
+    private String intraCityPickup;
+    private Long intraCityDaysPickup;
+    private String intraCityDrop;
+    private Long intraCityDaysDrop;
+    private Boolean ticketInLineHaul;
+    private Long lineHaulDays;
 }

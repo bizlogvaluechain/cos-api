@@ -14,18 +14,24 @@ public class TAT extends BaseClientEntity {
     private Boolean isInterCityTAT;
     @Column(name = "isIntraCityTAT")
     private Boolean isIntraCityTAT;
-    @Column(name = "sameDayPickup")
-    private String sameDayPickup;
-    @Column(name = "nextDayPickup")
-    private  String nextDayPickup;
-    @Column(name = "dateForPickup")
-    private Long dateForPickup;
-    @Column(name = "sameDayDrop")
-    private String sameDayDrop;
-    @Column(name = "nextDayDrop")
-    private  String nextDayDrop;
-    @Column(name = "dateForDrop")
-    private Long dateForDrop;
+    @Column(name = "interCityPickup")
+    private String interCityPickup;
+    @Column(name = "interCityDaysPickup")
+    private Long interCityDaysPickup;
+    @Column(name = "interCityDrop")
+    private String interCityDrop;
+    @Column(name = "interCityDaysDrop")
+    private Long interCityDaysDrop;
+    @Column(name = "intraCityPickup")
+    private String intraCityPickup;
+    @Column(name = "intraCityDaysPickup")
+    private Long intraCityDaysPickup;
+    @Column(name = "interCityDrop")
+    private String intraCityDrop;
+    @Column(name = "intraCityDaysDrop")
+    private Long intraCityDaysDrop;
     @Column(name = "ticketInLineHaul")
-    private String ticketInLineHaul;
+    private Boolean ticketInLineHaul;
+    @Column(name = "lineHaulDays")
+    private Long lineHaulDays;
 }
