@@ -1,8 +1,6 @@
 package com.bizlog.rms.dto.locationService;
 
 import com.bizlog.rms.dto.BaseDTO;
-import com.bizlog.rms.entities.location.Charge;
-import com.bizlog.rms.entities.location.ServiceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,9 +11,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocationDTO extends BaseDTO {
-    private String bizlogLocationMaster;
-    private List<ServiceType> serviceType;
-    private List<Charge> charge;
-    private String selectStates;
-    private String selectCities;
+    private List<String> countries;
+    private List<String> states;
+    private List<String> cities;
+    private List<String> areas;
+    private List<String> pinCodes;
+    private  String transportLinehaul;
+    private  List<String> vehicle;
 }
