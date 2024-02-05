@@ -22,7 +22,9 @@ import com.bizlog.rms.entities.Client;
 
 import com.bizlog.rms.entities.TAT.TAT;
 
-
+import com.bizlog.rms.entities.activity.FirstMile;
+import com.bizlog.rms.entities.activity.LastMile;
+import com.bizlog.rms.entities.activity.MiddleMile;
 import com.bizlog.rms.entities.clientengagement.ClientEngagement;
 import com.bizlog.rms.entities.clientinfo.*;
 import com.bizlog.rms.entities.clientinfo.contactinformation.FinanceContactInformation;
@@ -110,12 +112,14 @@ public interface GenericMapper {
         return value != null ? Long.parseLong(value) : null;
     }
 
-
     List<BillingInfo> toEntity(List<BillingInfoDTO> dto);
 
     BillingInfo toEntity(BillingInfoDTO dto);
+
     List<BillingInfoDTO> toDTO(List<BillingInfo> entity);
+
     BillingInfoDTO toDTO(BillingInfo entity);
+
     CompanyContactDetails toEntity(CompanyContactDetailsDTO dto);
 
     CompanyContactDetailsDTO toDTO(CompanyContactDetails entity);
@@ -143,6 +147,7 @@ public interface GenericMapper {
     OperationContactInformation toEntity(OperationContactInformationDTO dto);
 
     OperationContactInformationDTO toDTO(OperationContactInformation entity);
+
     FinanceContactInformation toEntity(FinanceContactInformationDTO dto);
 
     FinanceContactInformationDTO toDTO(FinanceContactInformation entity);
@@ -188,7 +193,9 @@ public interface GenericMapper {
     LabourDTO toDTO(Labour entity);
 
     Tools toEntity(ToolsDTO dto);
+
     ToolsDTO toDTO(Tools entity);
+
     Product toEntity(ProductDTO dto);
 
     ProductDTO toDTO(Product entity);
@@ -202,12 +209,26 @@ public interface GenericMapper {
     PaymentDTO toDTO(Payment entity);
 
     ActivitySOP toEntity(ActivitySOPDTO dto);
+
     ActivitySOPDTO toDTO(ActivitySOP entity);
 
     LocationSop toEntity(LocationSopDTO dto);
+
     LocationSopDTO toDTO(LocationSop entity);
+
     TAT toEntity(TATDTO dto);
+
     TATDTO toDTO(TAT entity);
 
+    FirstMile toEntity(FirstMileDTO dto);
 
+    FirstMileDTO toDTO(FirstMile entity);
+
+    LastMile toEntity(LastMileDTO dto);
+
+    LastMileDTO toDTO(LastMile entity);
+
+    MiddleMile toEntity(MiddleMileDTO dto);
+
+    MiddleMileDTO toDTO(MiddleMile entity);
 }
