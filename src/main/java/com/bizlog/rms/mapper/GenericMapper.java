@@ -207,6 +207,7 @@ public interface GenericMapper {
     LocationSop toEntity(LocationSopDTO dto);
     LocationSopDTO toDTO(LocationSop entity);
     TAT toEntity(TATDTO dto);
+    TATDTO toDTO(TAT entity);
 
 
 }
