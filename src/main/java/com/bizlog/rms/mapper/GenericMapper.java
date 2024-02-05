@@ -3,6 +3,9 @@ package com.bizlog.rms.mapper;
 import com.bizlog.rms.dto.ClientDTO;
 import com.bizlog.rms.dto.ClientSettingDTO;
 import com.bizlog.rms.dto.SOP_TAT.*;
+import com.bizlog.rms.dto.activity.FirstMileDTO;
+import com.bizlog.rms.dto.activity.LastMileDTO;
+import com.bizlog.rms.dto.activity.MiddleMileDTO;
 import com.bizlog.rms.dto.clientengagement.ClientEngagementDTO;
 import com.bizlog.rms.dto.clientinfo.*;
 import com.bizlog.rms.dto.escalationMatrix.*;
@@ -14,6 +17,9 @@ import com.bizlog.rms.dto.productInformation.ProductInformationDTO;
 import com.bizlog.rms.dto.users.UserDTO;
 import com.bizlog.rms.entities.ClientSetting;
 import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.activity.FirstMile;
+import com.bizlog.rms.entities.activity.LastMile;
+import com.bizlog.rms.entities.activity.MiddleMile;
 import com.bizlog.rms.entities.clientengagement.ClientEngagement;
 import com.bizlog.rms.entities.clientinfo.*;
 import com.bizlog.rms.entities.clientinfo.contactinformation.FinanceContactInformation;
@@ -199,7 +205,6 @@ public interface GenericMapper {
     LocationSop toEntity(LocationSopDTO dto);
     LocationSopDTO toDTO(LocationSop entity);
 
-
     ProductVehicle toEntity(ProductVehicleDTO dto);
     ProductVehicleDTO toDTO(ProductVehicle entity);
 
@@ -213,4 +218,11 @@ public interface GenericMapper {
     PackingMaterialDTO toDTO(PackingMaterial entity);
     LocationCenter toEntity(LocationCenterDTO dto);
     LocationCenterDTO toDTO(LocationCenter entity);
+    FirstMile toEntity(FirstMileDTO dto);
+    FirstMileDTO toDTO(FirstMile entity);
+    LastMile toEntity(LastMileDTO dto);
+    LastMileDTO toDTO(LastMile entity);
+    MiddleMile toEntity(MiddleMileDTO dto);
+    MiddleMileDTO toDTO(MiddleMile entity);
+
 }
