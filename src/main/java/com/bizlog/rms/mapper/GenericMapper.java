@@ -17,9 +17,6 @@ import com.bizlog.rms.dto.productInformation.ProductInformationDTO;
 import com.bizlog.rms.dto.users.UserDTO;
 import com.bizlog.rms.entities.ClientSetting;
 import com.bizlog.rms.entities.Client;
-import com.bizlog.rms.entities.activity.FirstMile;
-import com.bizlog.rms.entities.activity.LastMile;
-import com.bizlog.rms.entities.activity.MiddleMile;
 import com.bizlog.rms.entities.clientengagement.ClientEngagement;
 import com.bizlog.rms.entities.clientinfo.*;
 import com.bizlog.rms.entities.clientinfo.contactinformation.FinanceContactInformation;
@@ -224,5 +221,6 @@ public interface GenericMapper {
     LastMileDTO toDTO(LastMile entity);
     MiddleMile toEntity(MiddleMileDTO dto);
     MiddleMileDTO toDTO(MiddleMile entity);
+
 
 }
