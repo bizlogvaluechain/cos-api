@@ -3,6 +3,9 @@ package com.bizlog.rms.mapper;
 import com.bizlog.rms.dto.ClientDTO;
 import com.bizlog.rms.dto.ClientSettingDTO;
 import com.bizlog.rms.dto.SOP_TAT.*;
+import com.bizlog.rms.dto.activity.FirstMileDTO;
+import com.bizlog.rms.dto.activity.LastMileDTO;
+import com.bizlog.rms.dto.activity.MiddleMileDTO;
 import com.bizlog.rms.dto.clientengagement.ClientEngagementDTO;
 import com.bizlog.rms.dto.clientinfo.*;
 import com.bizlog.rms.dto.escalationMatrix.*;
@@ -194,6 +197,10 @@ public interface GenericMapper {
     ActivitySOPDTO toDTO(ActivitySOP entity);
     LocationSop toEntity(LocationSopDTO dto);
     LocationSopDTO toDTO(LocationSop entity);
+
     RegionSpecificLocation toEntity(RegionSpecificLocationDTO dto);
     RegionSpecificLocationDTO toDTO(RegionSpecificLocation entity);
+
+
+
 }
