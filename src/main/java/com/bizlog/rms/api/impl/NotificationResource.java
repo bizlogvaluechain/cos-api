@@ -4,10 +4,7 @@ import com.bizlog.rms.api.NotificationAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.notification.NotificationDTO;
 import com.bizlog.rms.entities.sop.notification.Notification;
-import com.bizlog.rms.exception.AlreadyExistException;
-import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
-import com.bizlog.rms.utils.OperationType;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -25,18 +22,6 @@ public class NotificationResource extends BaseClientResource<Notification, Notif
         implements NotificationAPI {
     public NotificationResource(BaseClientRepository<Notification, Long> NotificationRepository) {
         super(NotificationRepository);
-    }
-    @Override
-    protected void preValidate(Long clientId, NotificationDTO payloadDTO, OperationType operationType) {
-        super.preValidate(clientId, payloadDTO, operationType);
-        if (operationType == OperationType.CREATE) {
-            getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
-                            .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
-                    .ifPresent(X -> {
-                        throw new AlreadyExistException(clientId);
-                    });
-        }
     }
 
     @Transactional
