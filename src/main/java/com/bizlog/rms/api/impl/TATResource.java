@@ -4,7 +4,10 @@ import com.bizlog.rms.api.TATAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.TAT.TATDTO;
 import com.bizlog.rms.entities.TAT.TAT;
+import com.bizlog.rms.exception.AlreadyExistException;
+import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
+import com.bizlog.rms.utils.OperationType;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +24,19 @@ import java.util.Map;
 public class TATResource extends BaseClientResource<TAT, TATDTO,TATDTO> implements TATAPI {
     public TATResource(BaseClientRepository<TAT, Long> baseClientRepository) {
         super(baseClientRepository);
+    }
+
+    @Override
+    protected void preValidate(Long clientId, TATDTO payloadDTO, OperationType operationType) {
+        super.preValidate(clientId, payloadDTO, operationType);
+        if (operationType == OperationType.CREATE) {
+            getBaseClientRepository()
+                    .findByClient(getClientRepository().findById(clientId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
+                    .ifPresent(X -> {
+                        throw new AlreadyExistException(clientId);
+                    });
+        }
     }
 
     @Transactional
