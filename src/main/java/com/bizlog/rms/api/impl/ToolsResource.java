@@ -5,8 +5,10 @@ import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.SOP_TAT.ToolsDTO;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.sop.labourtoolvechile.Tools;
+import com.bizlog.rms.exception.AlreadyExistException;
 import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
+import com.bizlog.rms.utils.OperationType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,19 @@ import java.util.List;
 public class ToolsResource extends BaseClientResource<Tools, ToolsDTO,ToolsDTO> implements ToolsAPI {
     public ToolsResource(BaseClientRepository<Tools, Long> baseClientRepository) {
         super(baseClientRepository);
+    }
+
+    @Override
+    protected void preValidate(Long clientId, ToolsDTO payloadDTO, OperationType operationType) {
+        super.preValidate(clientId, payloadDTO, operationType);
+        if (operationType == OperationType.CREATE) {
+            getBaseClientRepository()
+                    .findByClient(getClientRepository().findById(clientId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
+                    .ifPresent(X -> {
+                        throw new AlreadyExistException(clientId);
+                    });
+        }
     }
 
     @Override

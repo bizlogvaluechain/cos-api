@@ -4,7 +4,10 @@ import com.bizlog.rms.api.LinehaulAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.SOP_TAT.LinehaulDTO;
 import com.bizlog.rms.entities.sop.linehaul.Linehaul;
+import com.bizlog.rms.exception.AlreadyExistException;
+import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
+import com.bizlog.rms.utils.OperationType;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +21,18 @@ public class LinehaulResource extends BaseClientResource<Linehaul, LinehaulDTO, 
         super(baseClientRepository);
     }
 
+    @Override
+    protected void preValidate(Long clientId, LinehaulDTO payloadDTO, OperationType operationType) {
+        super.preValidate(clientId, payloadDTO, operationType);
+        if (operationType == OperationType.CREATE) {
+            getBaseClientRepository()
+                    .findByClient(getClientRepository().findById(clientId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
+                    .ifPresent(X -> {
+                        throw new AlreadyExistException(clientId);
+                    });
+        }
+    }
     @Override
     public ResponseEntity<LinehaulDTO> create(@PathVariable("clientId") Long clientId,
             @RequestBody LinehaulDTO payloadDTO) {
