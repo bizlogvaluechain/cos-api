@@ -1,9 +1,8 @@
 package com.bizlog.rms.api.impl;
 
-import com.bizlog.rms.api.TicketCreationConfigAPI;
+import com.bizlog.rms.api.TicketInflowAPI;
 import com.bizlog.rms.dto.PageResponse;
-import com.bizlog.rms.dto.SOP_TAT.TicketCreationConfigDTO;
-import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationConfig;
+import com.bizlog.rms.dto.SOP_TAT.TicketInflowDTO;
 import com.bizlog.rms.repository.BaseClientRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -20,44 +19,44 @@ import java.util.*;
 
 @Slf4j
 @RestController
-public class TicketCreationConfigResource
-        extends BaseClientResource<TicketCreationConfig, TicketCreationConfigDTO, TicketCreationConfigDTO>
-        implements TicketCreationConfigAPI {
+public class TicketInflowResource extends
+        BaseClientResource<com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow, TicketInflowDTO, TicketInflowDTO>
+        implements TicketInflowAPI {
 
-    public TicketCreationConfigResource(
-            BaseClientRepository<TicketCreationConfig, Long> ticketCreationConfigRepository) {
+    public TicketInflowResource(
+            BaseClientRepository<com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow, Long> ticketCreationConfigRepository) {
         super(ticketCreationConfigRepository);
     }
 
     @Override
-    public ResponseEntity<TicketCreationConfigDTO> getById(@PathVariable("clientId") Long clientId,
+    public ResponseEntity<TicketInflowDTO> getById(@PathVariable("clientId") Long clientId,
             @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<TicketCreationConfigDTO>> getAll(@PathVariable("clientId") Long clientId,
+    public ResponseEntity<PageResponse<TicketInflowDTO>> getAll(@PathVariable("clientId") Long clientId,
             Pageable pageable) {
         return super.getAllConfig(clientId, pageable);
     }
 
     @Override
-    public ResponseEntity<PageResponse<TicketCreationConfigDTO>> search(@PathVariable Long clientId,
+    public ResponseEntity<PageResponse<TicketInflowDTO>> search(@PathVariable Long clientId,
             @RequestParam Map<String, String> searchCriteria, Pageable pageable) {
         return super.search(clientId, searchCriteria, pageable);
     }
 
     @Transactional
     @Override
-    public ResponseEntity<TicketCreationConfigDTO> create(@PathVariable("clientId") Long clientId,
-            @RequestBody @Valid TicketCreationConfigDTO ticketCreationConfigDTO) {
+    public ResponseEntity<TicketInflowDTO> create(@PathVariable("clientId") Long clientId,
+            @RequestBody @Valid TicketInflowDTO ticketCreationConfigDTO) {
         ticketCreationConfigDTO.setClientId(clientId);
         return super.create(clientId, ticketCreationConfigDTO);
     }
 
     @Override
-    public ResponseEntity<TicketCreationConfigDTO> update(@PathVariable("clientId") Long clientId,
-            @PathVariable("id") Long id, @RequestBody @Valid TicketCreationConfigDTO ticketCreationConfigDTO) {
+    public ResponseEntity<TicketInflowDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
+            @RequestBody @Valid TicketInflowDTO ticketCreationConfigDTO) {
         return super.update(clientId, id, ticketCreationConfigDTO);
     }
 
@@ -68,12 +67,12 @@ public class TicketCreationConfigResource
     }
 
     @Override
-    protected TicketCreationConfigDTO toDTO(TicketCreationConfig entity) {
+    protected TicketInflowDTO toDTO(com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow entity) {
         return getMapper().toDTO(entity);
     }
 
     @Override
-    protected TicketCreationConfig toEntity(TicketCreationConfigDTO dto) {
+    protected com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow toEntity(TicketInflowDTO dto) {
         return getMapper().toEntity(dto);
     }
 }

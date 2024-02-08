@@ -8,10 +8,10 @@ import java.util.List;
 @Entity
 @Table(name = "ticket_creation_config")
 @Data
-public class TicketCreationConfig extends BaseClientEntity {
+public class TicketInflow extends BaseClientEntity {
 
     private List<String> ticketCreationThrough;
 
-    private List<String>  ticketCreationBasedOn;
+    private List<String> ticketType;
 
 }

@@ -1,9 +1,9 @@
 package com.bizlog.rms.api.impl;
 
-import com.bizlog.rms.api.TATActivityAPI;
+import com.bizlog.rms.api.TATAdherenceAPI;
 import com.bizlog.rms.dto.PageResponse;
-import com.bizlog.rms.dto.SOP_TAT.TATActivityDTO;
-import com.bizlog.rms.entities.sop.TATActivity;
+import com.bizlog.rms.dto.SOP_TAT.TATAdherenceDTO;
+import com.bizlog.rms.entities.sop.TATAdherence;
 import com.bizlog.rms.repository.BaseClientRepository;
 import jakarta.validation.Valid;
 
@@ -20,42 +20,42 @@ import java.util.Map;
 @Slf4j
 @RestController
 
-public class TATActivityResource extends BaseClientResource<TATActivity, TATActivityDTO, TATActivityDTO>
-        implements TATActivityAPI {
+public class TATAdherenceResource extends BaseClientResource<TATAdherence, TATAdherenceDTO, TATAdherenceDTO>
+        implements TATAdherenceAPI {
 
-    public TATActivityResource(BaseClientRepository<TATActivity, Long> tatActivityRepository) {
-        super(tatActivityRepository);
+    public TATAdherenceResource(BaseClientRepository<TATAdherence, Long> baseClientRepository) {
+        super(baseClientRepository);
     }
 
     @Transactional
     @Override
-    public ResponseEntity<TATActivityDTO> create(@PathVariable("clientId") Long clientId,
-            @Valid TATActivityDTO tatActivityDTO) {
+    public ResponseEntity<TATAdherenceDTO> create(@PathVariable("clientId") Long clientId,
+            @Valid TATAdherenceDTO tatActivityDTO) {
         return super.create(clientId, tatActivityDTO);
     }
 
     @Override
-    public ResponseEntity<TATActivityDTO> getById(@PathVariable("clientId") Long clientId,
+    public ResponseEntity<TATAdherenceDTO> getById(@PathVariable("clientId") Long clientId,
             @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<TATActivityDTO>> getAll(@PathVariable("clientId") Long clientId,
+    public ResponseEntity<PageResponse<TATAdherenceDTO>> getAll(@PathVariable("clientId") Long clientId,
             Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
     }
 
     @Override
-    public ResponseEntity<PageResponse<TATActivityDTO>> search(Long clientId, Map<String, String> searchCriteria,
+    public ResponseEntity<PageResponse<TATAdherenceDTO>> search(Long clientId, Map<String, String> searchCriteria,
             Pageable pageable) {
         return super.search(clientId, searchCriteria, pageable);
     }
 
     @Override
-    public ResponseEntity<TATActivityDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
-            @RequestBody @Valid TATActivityDTO tatActivityDTO) {
+    public ResponseEntity<TATAdherenceDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
+            @RequestBody @Valid TATAdherenceDTO tatActivityDTO) {
         return super.update(clientId, id, tatActivityDTO);
     }
 
@@ -66,12 +66,12 @@ public class TATActivityResource extends BaseClientResource<TATActivity, TATActi
     }
 
     @Override
-    protected TATActivity toEntity(TATActivityDTO dto) {
+    protected TATAdherence toEntity(TATAdherenceDTO dto) {
         return getMapper().toEntity(dto);
     }
 
     @Override
-    protected TATActivityDTO toDTO(TATActivity entity) {
+    protected TATAdherenceDTO toDTO(TATAdherence entity) {
         return getMapper().toDTO(entity);
     }
 

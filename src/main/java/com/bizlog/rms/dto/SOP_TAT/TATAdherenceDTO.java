@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TATActivityDTO extends BaseDTO {
-    private Boolean IsTatRequired;
+public class TATAdherenceDTO extends BaseDTO {
+    private Boolean tatAdherenceRequired;
 
     private String bizlog;
     private String customer;
     private String thirdPartyLogistics;
-    private String unavoidableCircumtances;
+    private String unavoidableCircumstances;
 }

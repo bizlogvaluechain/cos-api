@@ -1,14 +1,12 @@
 package com.bizlog.rms.dto.product;
 
-import com.bizlog.rms.dto.BaseDTO;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
+
 @Data
-public class ProductEvalutionsDTO extends BaseDTO {
-    @JsonProperty("Product_Info_Id")
-    private Long productInfoId;
+public class ProductEvalutionsDTO {
+    public Long id;
     private List<String> question;
     private Boolean isFragile;
     private Boolean isCompressed;
@@ -26,7 +24,5 @@ public class ProductEvalutionsDTO extends BaseDTO {
     private Long noOfLabour;
     private Boolean isAdditionalEquipmentRequired;
     private Long noOfEquipment;
-    private Boolean isInstallationRequired;
-    private Boolean isInventoryManagementRequired;
-    private Boolean isAdditionalInventoryNeeded;
+
 }
