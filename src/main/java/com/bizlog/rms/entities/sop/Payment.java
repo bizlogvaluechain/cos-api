@@ -12,11 +12,11 @@ import java.util.List;
 @Table(name = "payment_tbl")
 @Data
 public class Payment extends BaseClientEntity {
-    @Column(name = "IsPaymentRequired", nullable = false)
-    private Boolean IsPaymentRequired;
-    @Column(name = "paymentMethod")
-    private List<String> paymentMethod;
+    @Column(name = "collectRequired", nullable = false)
+    private Boolean collectRequired;
+    @Column(name = "paymentMethods")
+    private List<String> paymentMethods;
     @Column(name = "reconciliationFrequency")
-    private String reconciliationFrequency ;
+    private Long reconciliationFrequency;
 
 }

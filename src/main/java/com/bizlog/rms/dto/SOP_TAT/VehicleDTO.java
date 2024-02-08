@@ -11,11 +11,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VehicleDTO extends BaseDTO {
-    private Boolean isVehicleRequired;
-    private List<String> typeOfVehicle;
-    private Long volumeOfVehicle;
-    private Boolean isVehicleRequiredAllProduct;
-    private Boolean isVehicleRequiredAllPincodes;
-    private Boolean isPriorApprovalNeededBeforeUsingVehicle;
-    private Long durationForActivity;
+    private Boolean vehicleRequired;
+    private List<String> typeOfVehicles;
+    private Long vehicleVolume;
+    private Boolean vehicleForAllProducts;
+    private Boolean vehicleForAllPinncodes;
+    private Boolean priorApprovalForVehicle;
+    private Long durationOfActivity;
 }
