@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LinehaulResource extends BaseClientResource<Linehaul, LinehaulDTO, LinehaulDTO> implements LinehaulAPI {
-    public LinehaulResource(BaseClientRepository baseClientRepository) {
+
+    public LinehaulResource(BaseClientRepository<Linehaul, Long> baseClientRepository) {
         super(baseClientRepository);
     }
 
