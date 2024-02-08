@@ -86,10 +86,8 @@ public class DataLoaderUtil {
         Notification notification = new Notification();
         notification.setId(1L);
         notification.setClient(client);
-        notification.setIsSmsClient(false);
-        notification.setIsEmailClient(true);
-        notification.setIsSmsCustomer(false);
-        notification.setIsEmailCustomer(true);
+        notification.setSms(Arrays.asList("client", "customer"));
+        notification.setEmail(Arrays.asList("client", "customer"));
         return List.of(notification);
     }
 
