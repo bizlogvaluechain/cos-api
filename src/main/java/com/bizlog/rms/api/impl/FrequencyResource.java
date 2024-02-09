@@ -27,6 +27,7 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
         super(baseClientRepository);
     }
 
+
     @Transactional
     @Override
     public ResponseEntity<FrequencyDTO> create(@PathVariable("clientId") Long clientId,

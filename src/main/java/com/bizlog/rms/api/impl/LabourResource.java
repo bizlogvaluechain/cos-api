@@ -4,7 +4,10 @@ import com.bizlog.rms.api.LabourAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.SOP_TAT.LabourDTO;
 import com.bizlog.rms.entities.sop.labourtoolvechile.Labour;
+import com.bizlog.rms.exception.AlreadyExistException;
+import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
+import com.bizlog.rms.utils.OperationType;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class LabourResource extends BaseClientResource<Labour, LabourDTO, LabourDTO> implements LabourAPI {
     public LabourResource(BaseClientRepository<Labour, Long> baseClientRepository) {
         super(baseClientRepository);
+    }
+
+    @Override
+    protected void preValidate(Long clientId, LabourDTO payloadDTO, OperationType operationType) {
+        super.preValidate(clientId, payloadDTO, operationType);
+        if (operationType == OperationType.CREATE) {
+            getBaseClientRepository()
+                    .findByClient(getClientRepository().findById(clientId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
+                    .ifPresent(X -> {
+                        throw new AlreadyExistException(clientId);
+                    });
+        }
     }
 
     @Override
