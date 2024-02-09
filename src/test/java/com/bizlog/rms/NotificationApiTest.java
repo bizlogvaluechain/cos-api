@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Arrays;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -61,10 +63,9 @@ public class NotificationApiTest extends BaseApiTest {
     void should_create_new_notification() throws Exception {
         Client client = getClient();
         Notification notification = new Notification();
-        notification.setIsSmsClient(false);
-        notification.setIsEmailClient(true);
-        notification.setIsSmsCustomer(false);
-        notification.setIsEmailCustomer(true);
+        notification.setSms(Arrays.asList("client", "customer"));
+        notification.setEmail(Arrays.asList("client", "customer"));
+
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/notification", client.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(notification).orElse("")))
@@ -75,10 +76,9 @@ public class NotificationApiTest extends BaseApiTest {
     void should_not_create_new_notification() throws Exception {
         int clientId = 11;
         Notification notification = new Notification();
-        notification.setIsSmsClient(false);
-        notification.setIsEmailClient(true);
-        notification.setIsSmsCustomer(false);
-        notification.setIsEmailCustomer(true);
+        notification.setSms(Arrays.asList("client", "customer"));
+        notification.setEmail(Arrays.asList("client", "customer"));
+
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/notification", clientId).contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(notification)))
@@ -89,19 +89,14 @@ public class NotificationApiTest extends BaseApiTest {
     void should_update_existing_notification() throws Exception {
 
         Notification initialNotification = new Notification();
-        initialNotification.setIsSmsClient(false);
-        initialNotification.setIsEmailClient(true);
-        initialNotification.setIsSmsCustomer(false);
-        initialNotification.setIsEmailCustomer(true);
+        initialNotification.setSms(Arrays.asList("client", "customer"));
+        initialNotification.setEmail(Arrays.asList("client", "customer"));
         Client client = getClient();
         initialNotification.setClient(client);
         initialNotification = notificationRepository.save(initialNotification);
 
         NotificationDTO updateNotification = getMapper().toDTO(initialNotification);
-        updateNotification.setIsSmsClient(false);
-        updateNotification.setIsEmailClient(true);
-        updateNotification.setIsSmsCustomer(false);
-        updateNotification.setIsEmailCustomer(true);
+        updateNotification.setSms(Arrays.asList("client"));
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/notification/{id}", client.getId(), initialNotification.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateNotification).orElse("")))
@@ -115,10 +110,8 @@ public class NotificationApiTest extends BaseApiTest {
         long id = 991;
 
         Notification updateNotification = new Notification();
-        updateNotification.setIsSmsClient(false);
-        updateNotification.setIsEmailClient(true);
-        updateNotification.setIsSmsCustomer(false);
-        updateNotification.setIsEmailCustomer(true);
+        updateNotification.setSms(Arrays.asList("client"));
+        updateNotification.setEmail(Arrays.asList("customer"));
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/notification/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateNotification).orElse("")))
@@ -128,10 +121,8 @@ public class NotificationApiTest extends BaseApiTest {
     @Test
     void should_delete_existing_notification() throws Exception {
         Notification notification = new Notification();
-        notification.setIsSmsClient(false);
-        notification.setIsEmailClient(true);
-        notification.setIsSmsCustomer(false);
-        notification.setIsEmailCustomer(true);
+        notification.setSms(Arrays.asList("client"));
+        notification.setEmail(Arrays.asList("customer"));
         Client client = getClient();
         notification.setClient(client);
         notification = notificationRepository.save(notification);

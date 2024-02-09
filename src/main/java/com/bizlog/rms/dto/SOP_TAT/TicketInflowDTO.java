@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TicketCreationConfigDTO extends BaseDTO {
+public class TicketInflowDTO extends BaseDTO {
 
     private List<String> ticketCreationThrough;
     private List<String> ticketCreationBasedOn;

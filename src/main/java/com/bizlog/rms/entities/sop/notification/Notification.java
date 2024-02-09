@@ -6,17 +6,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "notification_tbl")
 public class  Notification extends BaseClientEntity {
-    @Column(name = "isSmsClient", nullable = false)
-    private Boolean isSmsClient;
-    @Column(name = "isEmailClient", nullable = false)
-    private Boolean isEmailClient;
-    @Column(name = "isSmsCustomer", nullable = false)
-    private Boolean isSmsCustomer;
-    @Column(name = "isEmailCustomer", nullable = false)
-    private Boolean isEmailCustomer;
+    @Column(name = "sms", nullable = false)
+    private List<String> sms;
+
+    @Column(name = "email", nullable = false)
+    private List<String> email;
+
 
 }

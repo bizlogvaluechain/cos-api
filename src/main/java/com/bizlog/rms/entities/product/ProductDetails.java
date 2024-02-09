@@ -1,16 +1,16 @@
 package com.bizlog.rms.entities.product;
 
-import com.bizlog.rms.entities.BaseClientEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "product_detail_table")
-public class ProductDetails extends BaseClientEntity {
-
+public class ProductDetails {
+    @Column(name = "id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
     @Column(name = "skuName", nullable = false)
     private String skuName;
     @Column(name = "skuBarcode", nullable = false)
@@ -24,14 +24,14 @@ public class ProductDetails extends BaseClientEntity {
     @Column(name = "actualWeight", nullable = false)
     private String actualWeight;
 
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "Product_Info_Id", nullable = false, updatable = false)
-    private ProductInfo productInfo;
-
-    @JsonProperty("Product_Info_Id")
-    public Long getProductInfoId() {
-        return (productInfo != null) ? productInfo.getId() : null;
-    }
+    // @JsonIgnore
+    // @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    // @JoinColumn(name = "Product_Info_Id", nullable = false, updatable = false)
+    // private ProductInfo productInfo;
+    //
+    // @JsonProperty("Product_Info_Id")
+    // public Long getProductInfoId() {
+    // return (productInfo != null) ? productInfo.getId() : null;
+    // }
 
 }

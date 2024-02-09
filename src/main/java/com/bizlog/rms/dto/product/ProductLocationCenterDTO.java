@@ -1,13 +1,10 @@
 package com.bizlog.rms.dto.product;
 
-import com.bizlog.rms.dto.BaseDTO;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class LocationCenterDTO extends BaseDTO {
-    @JsonProperty("Product_Info_Id")
-    private Long productInfoId;
+public class ProductLocationCenterDTO {
+    public Long id;
     private String country;
     private String state;
     private String city;

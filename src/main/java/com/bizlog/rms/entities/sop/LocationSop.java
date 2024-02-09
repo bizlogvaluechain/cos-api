@@ -10,10 +10,10 @@ import lombok.Data;
 @Table(name = "sop_location_tbl")
 @Data
 public class LocationSop extends BaseClientEntity {
-    @Column(name = "locationServed", nullable = false)
-    private String locationServed;
-    @Column(name = "nonServiceableArea")
-    private Boolean nonServiceableArea;
-    @Column(name = "IsPincodeServedBasedOnProduct")
-    private Boolean IsPincodeServedBasedOnProduct;
+    @Column(name = "locationsServed", nullable = false)
+    private String locationsServed;
+    @Column(name = "isNSARequired")
+    private Boolean isNSARequired;
+    @Column(name = "productBasedpincodeService")
+    private Boolean productBasedpincodeService;
 }

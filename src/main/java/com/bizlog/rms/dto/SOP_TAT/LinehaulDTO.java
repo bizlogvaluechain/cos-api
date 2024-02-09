@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LinehaulDTO extends BaseDTO {
-    private String linehaulPreference;
-    private String LogisticMode;
-    private String LogisticProvider;
+    private String linehaulBy;
+    private String LogisticsMode;
+    private String LogisticsProvider;
     private String vehicleType;
-    private Boolean isConsolodationRequired;
-    private String duration;
+    private Boolean consolidationRequired;
+    private Long duration;
     private String size;
 }

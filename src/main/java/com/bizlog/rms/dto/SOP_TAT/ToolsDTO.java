@@ -5,10 +5,10 @@ import lombok.Data;
 
 @Data
 public class ToolsDTO extends BaseDTO {
-    private Boolean isToolsRequired;
-    private String equipmentDetail;
-    private String equipmentProvideBy;
-    private Boolean isTrainingProvide;
+    private Boolean toolsRequired;
+    private String equipmentName;
+    private String equipmentProvidedBy;
+    private Boolean trainingProvided;
     private Boolean toolProductSpecific;
-    private String toolName;
+
 }

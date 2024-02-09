@@ -1,23 +1,17 @@
 package com.bizlog.rms.utils;
 
-import com.bizlog.rms.dto.SOP_TAT.subLists.MajorActivites;
-import com.bizlog.rms.dto.SOP_TAT.subLists.MinorActivites;
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.escalationMatrix.BizlogFinanceEscalation;
-import com.bizlog.rms.entities.sop.SOPActivity;
-import com.bizlog.rms.entities.sop.TATActivity;
+import com.bizlog.rms.entities.sop.TATAdherence;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
-import com.bizlog.rms.entities.sop.frequency.FrequencyUnit;
-import com.bizlog.rms.entities.sop.frequency.HolidayApplicable;
 import com.bizlog.rms.entities.location.Location;
 import com.bizlog.rms.entities.sop.notification.Notification;
 import com.bizlog.rms.entities.productInformation.ProductInformation;
 import com.bizlog.rms.entities.productInformation.ProductSize;
-import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationConfig;
+import com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class DataLoaderUtil {
@@ -45,32 +39,6 @@ public class DataLoaderUtil {
         return client;
     }
 
-//    public static List<Location> getLocations(Client client) {
-//        Charge charge = new Charge();
-//        charge.setDeliverableArea(10L);
-//        charge.setNonDeliverableArea(10L);
-//        charge.setOutDeliverableArea(10L);
-//
-//        ServiceType serviceType = new ServiceType();
-//        serviceType.setDeliverableArea("yes");
-//        serviceType.setOutDeliverableArea("yes");
-//        serviceType.setNonDeliverableArea("yes");
-//
-//        Location location = new Location();
-//        location.setId(1L);
-//        location.setClient(client);
-//        List<Charge> charges = new ArrayList<>();
-//        charges.add(charge);
-//        location.setCharge(charges);
-//        location.setBizlogLocationMaster("IDP");
-//        List<ServiceType> serviceTypes = new ArrayList<>();
-//        serviceTypes.add(serviceType);
-//        location.setServiceType(serviceTypes);
-//        location.setSelectStates("AP");
-//        location.setSelectCities("viz");
-//        return List.of(location);
-//    }
-
     public static List<Location> getLocations(Client client) {
         Location location = new Location();
         location.setId(1L);
@@ -86,21 +54,19 @@ public class DataLoaderUtil {
     }
 
     public static List<Frequency> getFrequency(Client client) {
-        HolidayApplicable holidayApplicable = new HolidayApplicable();
-        holidayApplicable.setBizlogHolidays(true);
-        holidayApplicable.setPublicHolidays(true);
-        holidayApplicable.setClientHolidaays(false);
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setUnit(FrequencyUnit.PER_DAY);
-        frequency.setEndDate(23122023L);
-        frequency.setStartDate(23122023L);
+        frequency.setFrequency("abc");
+        frequency.setFrequencyUnit(100L);
+        frequency.setActivityStartDate(23122023L);
+        frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        frequency.setHolidayApplicable(holidayApplicable);
+        frequency.setOperationsOnBizlogHolidays(true);
+        frequency.setOperationsOnPublicHolidays(false);
+        frequency.setOperationsOnClientHolidays(true);
         frequency.setOperationDay(5L);
-        frequency.setTicketsVolume(100L);
         return List.of(frequency);
     }
 
@@ -120,10 +86,8 @@ public class DataLoaderUtil {
         Notification notification = new Notification();
         notification.setId(1L);
         notification.setClient(client);
-        notification.setIsSmsClient(false);
-        notification.setIsEmailClient(true);
-        notification.setIsSmsCustomer(false);
-        notification.setIsEmailCustomer(true);
+        notification.setSms(Arrays.asList("client", "customer"));
+        notification.setEmail(Arrays.asList("client", "customer"));
         return List.of(notification);
     }
 
@@ -153,94 +117,24 @@ public class DataLoaderUtil {
         return List.of(productInformation);
     }
 
-    public static List<SOPActivity> getSOPActivity(Client client) {
-        MajorActivites majorActivites = new MajorActivites();
-        majorActivites.setSPS(Collections.singletonList("IDP"));
-        majorActivites.setMultiProductShipment(Collections.singletonList("IDP"));
-        majorActivites.setLessThanTruckLoad(Collections.singletonList("IDP"));
-        majorActivites.setLinehaul(Collections.singletonList("IDP"));
-        majorActivites.setFullTruckLoad(Collections.singletonList("IDP"));
-
-        MinorActivites minorActivites = new MinorActivites();
-        minorActivites.setOTPValidation(Collections.singletonList("Yes"));
-        minorActivites.setQC(Collections.singletonList("Yes"));
-        minorActivites.setGrading(Collections.singletonList("yes"));
-        minorActivites.setSegregation(Collections.singletonList("Yes"));
-        minorActivites.setEvaluation(Collections.singletonList("yes"));
-        minorActivites.setSignatureCapture(Collections.singletonList("yes"));
-        minorActivites.setImageCapture(Collections.singletonList("yes"));
-
-        SOPActivity sopActivity = new SOPActivity();
-        sopActivity.setId(1L);
-        sopActivity.setClient(client);
-        List<MajorActivites> majorActivitesList = new ArrayList<>();
-        sopActivity.setMajorActivites(majorActivitesList);
-        List<MinorActivites> minorActivitesList = new ArrayList<>();
-        sopActivity.setMinorActivites(minorActivitesList);
-        return List.of(sopActivity);
-    }
-
-//    public static List<TATActivity> getTATActivity(Client client) {
-//
-//        TATBreachDueTo tatBreachDueTo = new TATBreachDueTo();
-//        tatBreachDueTo.setCustomer("yes");
-//        tatBreachDueTo.setBizlog("no");
-//        tatBreachDueTo.setThirdPartyLogistics("yes");
-//
-//        TATActivity tatActivity = new TATActivity();
-//        tatActivity.setId(1L);
-//        tatActivity.setClient(client);
-//
-//        List<TATBreachDueTo> tatBreachDueToList = new ArrayList<>();
-//        tatActivity.setTatBreachDueTo(tatBreachDueToList);
-//        tatActivity.setIsTatRequired(true);
-//
-//        return List.of(tatActivity);
-//    }
-    public static List<TATActivity> getTATActivity(Client client)
-    {
-        TATActivity tatActivity = new TATActivity();
+    public static List<TATAdherence> getTATActivity(Client client) {
+        TATAdherence tatActivity = new TATAdherence();
         tatActivity.setId(1L);
         tatActivity.setClient(client);
-        tatActivity.setIsTatRequired(true);
+        tatActivity.setTatAdherenceRequired(true);
         tatActivity.setBizlog("yes");
         tatActivity.setCustomer("yes");
         return List.of(tatActivity);
     }
-//    public static List<TicketCreationConfig> getTicketCreationConfig(Client client) {
-//        TicketCreationThrough ticketCreationThrough = new TicketCreationThrough();
-//        ticketCreationThrough.setApi("API");
-//        ticketCreationThrough.setExcelByBizlog("Excel");
-//        ticketCreationThrough.setExcelByClient("Excel");
-//        ticketCreationThrough.setForm("form");
-//
-//        TicketCreationBasedOn ticketCreationBasedOn = new TicketCreationBasedOn();
-//        ticketCreationBasedOn.setLRNumber("AWB");
-//        ticketCreationBasedOn.setInvoiceNumber("invoice");
-//        ticketCreationBasedOn.setComplaintNumber("complaint");
-//        ticketCreationBasedOn.setOrderNumber("order");
-//
-//        TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
-//        ticketCreationConfig.setId(1L);
-//        ticketCreationConfig.setClient(client);
-//        List<TicketCreationThrough> ticketCreationThroughs = new ArrayList<>();
-//        // ticketCreationThroughs.add(ticketCreationThrough);
-//        ticketCreationConfig.setTicketCreationThrough(ticketCreationThroughs);
-//        List<TicketCreationBasedOn> ticketCreationBasedOns = new ArrayList<>();
-//        // ticketCreationBasedOns.add(ticketCreationBasedOn);
-//        ticketCreationConfig.setTicketCreationBasedOn(ticketCreationBasedOns);
-//
-//        return List.of(ticketCreationConfig);
-//    }
 
-    public static List<TicketCreationConfig> getTicketCreationConfig(Client client){
+    public static List<TicketInflow> getTicketCreationConfig(Client client) {
         List<String> creationThroughList = Arrays.asList("Api", "Lr", "excel");
 
-        TicketCreationConfig ticketCreationConfig = new TicketCreationConfig();
+        TicketInflow ticketCreationConfig = new TicketInflow();
         ticketCreationConfig.setId(1L);
         ticketCreationConfig.setClient(client);
         ticketCreationConfig.setTicketCreationThrough(creationThroughList);
-        ticketCreationConfig.setTicketCreationBasedOn(Arrays.asList("Api", "Lr", "excel"));
+        ticketCreationConfig.setTicketType(Arrays.asList("Api", "Lr", "excel"));
         return List.of(ticketCreationConfig);
     }
 

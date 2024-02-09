@@ -12,18 +12,18 @@ import java.util.List;
 @Table(name = "vehicle_tbl")
 @Data
 public class Vehicle extends BaseClientEntity {
-    @Column(name = "isVehicleRequired", nullable = false)
-    private Boolean isVehicleRequired;
-    @Column(name = "typeOfVehicle")
-    private List<String> typeOfVehicle;
-    @Column(name = "volumeOfVehicle")
-    private Long volumeOfVehicle;
-    @Column(name = "isVehicleRequiredAllProduct")
-    private Boolean isVehicleRequiredAllProduct;
-    @Column(name = "isVehicleRequiredAllPincodes")
-    private Boolean isVehicleRequiredAllPincodes;
-    @Column(name = "isPriorApprovalNeededBeforeUsingVehicle")
-    private Boolean isPriorApprovalNeededBeforeUsingVehicle;
-    @Column(name = "durationForActivity")
-    private Long durationForActivity;
+    @Column(name = "vehicleRequired", nullable = false)
+    private Boolean vehicleRequired;
+    @Column(name = "typeOfVehicles")
+    private List<String> typeOfVehicles;
+    @Column(name = "vehicleVolume")
+    private Long vehicleVolume;
+    @Column(name = "vehicleForAllProducts")
+    private Boolean vehicleForAllProducts;
+    @Column(name = "vehicleForAllPincodes")
+    private Boolean vehicleForAllPincodes;
+    @Column(name = "priorApprovalForVehicle")
+    private Boolean priorApprovalForVehicle;
+    @Column(name = "durationOfActivity")
+    private Long durationOfActivity;
 }

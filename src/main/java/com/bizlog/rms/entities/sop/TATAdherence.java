@@ -7,10 +7,10 @@ import lombok.Data;
 @Entity
 @Table(name = "TAT")
 @Data
-public class TATActivity extends BaseClientEntity {
+public class TATAdherence extends BaseClientEntity {
 
-    @Column(name = "IsTatRequired", nullable = false)
-    private Boolean IsTatRequired;
+    @Column(name = "tatAdherenceRequired", nullable = false)
+    private Boolean tatAdherenceRequired;
 
     @Column(name = "tatBreachDueToBizlog")
     private String bizlog;
@@ -18,9 +18,7 @@ public class TATActivity extends BaseClientEntity {
     private String customer;
     @Column(name = "tatBreachDueToThirdPartyLogistics")
     private String thirdPartyLogistics;
-    @Column(name = "tatBreachDueToUnavoidableCircumtances")
-    private String unavoidableCircumtances;
-
-
+    @Column(name = "tatBreachDueToUnavoidableCircumstances")
+    private String unavoidableCircumstances;
 
 }

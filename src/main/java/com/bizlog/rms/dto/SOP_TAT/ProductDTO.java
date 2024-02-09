@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDTO extends BaseDTO {
-    private Long noOfProduct;
+    private Long numberOfProducts;
+    private Boolean SKUBarcodePresent;
+    private Boolean uniqueIdentifierPresent;
     private String uniqueIdentifier;
-    private String isContainUniqueBarcodes;
-    private String isLBH;
-    private String IsInventoryManagementRequired;
+    private String uniqueIdBarcodePresent;
+    private Boolean productMetricsProvided;
+    private Boolean inventoryManagementRequired;
 }

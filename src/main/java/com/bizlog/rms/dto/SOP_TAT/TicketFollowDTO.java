@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TicketFollowDTO extends BaseDTO {
-    private String searchTrack;
-    private String clientReport;
-    private String LiveTicketScan;
+    private String searchAndTrack;
+    private Boolean clientReports;
+    private Boolean liveTicketScan;
 }

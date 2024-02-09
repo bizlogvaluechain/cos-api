@@ -1,9 +1,9 @@
 package com.bizlog.rms;
 
-import com.bizlog.rms.dto.SOP_TAT.TATActivityDTO;
+import com.bizlog.rms.dto.SOP_TAT.TATAdherenceDTO;
 import com.bizlog.rms.entities.Client;
-import com.bizlog.rms.entities.sop.TATActivity;
-import com.bizlog.rms.repository.TATActivityRepository;
+import com.bizlog.rms.entities.sop.TATAdherence;
+import com.bizlog.rms.repository.TATAdherenceRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,27 +22,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-public class TATActivityApiTest extends BaseApiTest {
+public class TATAdherenceApiTest extends BaseApiTest {
     @Autowired
-    private TATActivityRepository tatActivityRepository;
+    private TATAdherenceRepository tatAdherenceRepository;
 
     @BeforeEach
     void beforeEach() {
         super.beforeEach();
-        DataLoaderUtil.getTATActivity(getClient()).forEach(tatActivityRepository::save);
+        DataLoaderUtil.getTATActivity(getClient()).forEach(tatAdherenceRepository::save);
     }
 
     @AfterEach
     void afterEach() {
-        tatActivityRepository.deleteAll();
+        tatAdherenceRepository.deleteAll();
         clientRepository.deleteAll();
 
     }
 
     @Test
     void should_retrieve_with_valid_user_id() throws Exception {
-        Long clientId = tatActivityRepository.findAll().get(0).getclientId();
-        Long id = tatActivityRepository.findAll().get(0).getId();
+        Long clientId = tatAdherenceRepository.findAll().get(0).getclientId();
+        Long id = tatAdherenceRepository.findAll().get(0).getId();
         this.mockMvc.perform(get("/api/v1/cos/{clientId}/tatActivities/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
@@ -56,14 +56,13 @@ public class TATActivityApiTest extends BaseApiTest {
     }
 
     @Test
-    void should_create_new_tatActivity() throws Exception {
+    void should_create_new_tatAdherence() throws Exception {
         Client client = getClient();
 
-        TATActivity tatActivity = new TATActivity();
-        tatActivity.setIsTatRequired(true);
+        TATAdherence tatActivity = new TATAdherence();
+        tatActivity.setTatAdherenceRequired(true);
         tatActivity.setBizlog("yes");
         tatActivity.setCustomer("yes");
-
 
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/tatActivities", client.getId())
@@ -72,21 +71,19 @@ public class TATActivityApiTest extends BaseApiTest {
     }
 
     @Test
-    void should_update_existing_tatActivity() throws Exception {
+    void should_update_existing_tatAdherence() throws Exception {
 
-
-
-        TATActivity initialTatActivity = new TATActivity();
-        initialTatActivity.setIsTatRequired(true);
+        TATAdherence initialTatActivity = new TATAdherence();
+        initialTatActivity.setTatAdherenceRequired(true);
 
         Client client = getClient();
         initialTatActivity.setClient(client);
-        initialTatActivity.setIsTatRequired(true);
+        initialTatActivity.setTatAdherenceRequired(true);
         initialTatActivity.setCustomer("yes");
-        initialTatActivity = tatActivityRepository.save(initialTatActivity);
+        initialTatActivity = tatAdherenceRepository.save(initialTatActivity);
 
-        TATActivityDTO updatedTatActivity = getMapper().toDTO(initialTatActivity);
-        updatedTatActivity.setIsTatRequired(false);
+        TATAdherenceDTO updatedTatActivity = getMapper().toDTO(initialTatActivity);
+        updatedTatActivity.setTatAdherenceRequired(false);
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/tatActivities/{id}", client.getId(), initialTatActivity.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
@@ -95,11 +92,11 @@ public class TATActivityApiTest extends BaseApiTest {
     }
 
     @Test
-    void should_not_update_existing_tatActivity() throws Exception {
+    void should_not_update_existing_tatAdherence() throws Exception {
         int clientId = 12;
         int id = 21;
-        TATActivity updatedTatActivity = new TATActivity();
-        updatedTatActivity.setIsTatRequired(false);
+        TATAdherence updatedTatActivity = new TATAdherence();
+        updatedTatActivity.setTatAdherenceRequired(false);
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/tatActivities/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
@@ -109,14 +106,12 @@ public class TATActivityApiTest extends BaseApiTest {
     @Test
     void should_delete_existing_tatActivity() throws Exception {
 
-
-
-        TATActivity tatActivity = new TATActivity();
-        tatActivity.setIsTatRequired(false);
+        TATAdherence tatActivity = new TATAdherence();
+        tatActivity.setTatAdherenceRequired(false);
         tatActivity.setCustomer("yes");
         Client client = getClient();
         tatActivity.setClient(client);
-        tatActivity = tatActivityRepository.save(tatActivity);
+        tatActivity = tatAdherenceRepository.save(tatActivity);
 
         this.mockMvc.perform(delete("/api/v1/cos/{clientId}/tatActivities/{id}", client.getId(), tatActivity.getId()))
                 .andDo(print()).andExpect(status().isNoContent());

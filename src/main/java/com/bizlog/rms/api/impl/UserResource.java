@@ -13,7 +13,6 @@ import com.bizlog.rms.repository.UserRepository;
 import com.bizlog.rms.service.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -35,14 +34,14 @@ public class UserResource extends BaseClientResource<User, UserDTO, UserDTO> imp
 
     private final UserService userService;
     private final UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    public UserResource(BaseClientRepository baseClientRepository, UserService userService,
-            UserRepository userRepository) {
+    public UserResource(BaseClientRepository<User, Long> baseClientRepository, UserService userService,
+            UserRepository userRepository, RoleRepository roleRepository) {
         super(baseClientRepository);
-        this.userRepository = userRepository;
         this.userService = userService;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override

@@ -11,16 +11,16 @@ import lombok.Data;
 @Data
 public class Labour extends BaseClientEntity {
 
-    @Column(name = "isLabourRequired", nullable = false)
-    private Boolean isLabourRequired;
-    @Column(name = "noOfLabour")
-    private Long noOfLabour;
+    @Column(name = "manualLabourRequired", nullable = false)
+    private Boolean manualLabourRequired;
+    @Column(name = "labourSize")
+    private Long labourSize;
 
-    @Column(name = "isApprovalNeeded")
-    private Boolean isApprovalNeeded;
-    @Column(name = "isLabourRequiredParticularProducts")
-    private Boolean isLabourRequiredParticularProducts;
+    @Column(name = "priorApprovalNeedForLabour")
+    private Boolean priorApprovalNeedForLabour;
+    @Column(name = "labourForParticularProduct")
+    private Boolean labourForParticularProduct;
 
-    @Column(name = "durationForActivity")
-    private Long durationForActivity;
+    @Column(name = "durationOfActivity")
+    private Long durationOfActivity;
 }

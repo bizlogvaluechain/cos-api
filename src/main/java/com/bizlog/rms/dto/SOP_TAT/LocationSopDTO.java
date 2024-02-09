@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class LocationSopDTO extends BaseDTO {
 
-    private String locationServed;
-    private Boolean nonServiceableArea;
-    private Boolean IsPincodeServedBasedOnProduct;
+    private String locationsServed;
+    private Boolean isNSARequired;
+    private Boolean productBasedpincodeService;
 }

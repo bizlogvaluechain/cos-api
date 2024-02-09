@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class NotificationDTO extends BaseDTO {
-    private Boolean isSmsClient;
-    private Boolean isEmailClient;
-    private Boolean isSmsCustomer;
-    private Boolean isEmailCustomer;
+    private List<String> sms;
+    private List<String> email;
 }

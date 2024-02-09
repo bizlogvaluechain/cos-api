@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentDTO extends BaseDTO {
-    private List<String> paymentMethod;
-    private String reconciliationFrequency ;
-    private Boolean IsPaymentRequired;
+    private List<String> paymentMethods;
+    private Long reconciliationFrequency;
+    private Boolean collectRequired;
 }

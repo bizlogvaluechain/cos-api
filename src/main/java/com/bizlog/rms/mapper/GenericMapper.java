@@ -46,7 +46,6 @@ import com.bizlog.rms.entities.sop.linehaul.Linehaul;
 import com.bizlog.rms.entities.sop.notification.Notification;
 import com.bizlog.rms.entities.productInformation.ProductInformation;
 import com.bizlog.rms.entities.sop.packing.Packing;
-import com.bizlog.rms.entities.sop.ticketInFlow.TicketCreationConfig;
 import com.bizlog.rms.entities.users.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -73,17 +72,17 @@ public interface GenericMapper {
 
     UserDTO toDTO(User user);
 
-    SOPActivityDTO toDTO(SOPActivity entity);
+    // SOPActivityDTO toDTO(SOPActivity entity);
+    //
+    // SOPActivity toEntity(SOPActivityDTO dto);
 
-    SOPActivity toEntity(SOPActivityDTO dto);
+    TATAdherenceDTO toDTO(TATAdherence entity);
 
-    TATActivityDTO toDTO(TATActivity entity);
+    TATAdherence toEntity(TATAdherenceDTO dto);
 
-    TATActivity toEntity(TATActivityDTO dto);
+    TicketInflowDTO toDTO(com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow ticketCreationConfig);
 
-    TicketCreationConfigDTO toDTO(TicketCreationConfig ticketCreationConfig);
-
-    TicketCreationConfig toEntity(TicketCreationConfigDTO ticketCreationConfigDTO);
+    com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow toEntity(TicketInflowDTO ticketCreationConfigDTO);
 
     Frequency toEntity(FrequencyDTO frequencyDTO);
 
@@ -107,11 +106,12 @@ public interface GenericMapper {
 
     // @Mapping(target = "ticketsVolume", source = "ticketsVolume")
     @Mapping(target = "id", expression = "java(toLong(row.get(\"id\")))")
-    @Mapping(target = "startDate", expression = "java(toLong(row.get(\"startDate\")))")
-    @Mapping(target = "ticketsVolume", expression = "java(toLong(row.get(\"ticketsVolume\")))")
-    @Mapping(target = "endDate", expression = "java(toLong(row.get(\"id\")))")
-    @Mapping(target = "operationStartTime", expression = "java(toLong(row.get(\"startDate\")))")
-    @Mapping(target = "operationEndTime", expression = "java(toLong(row.get(\"ticketsVolume\")))")
+    @Mapping(target = "activityStartDate", expression = "java(toLong(row.get(\"activityStartDate\")))")
+    @Mapping(target = "frequencyUnit", expression = "java(toLong(row.get(\"frequencyUnit\")))")
+    @Mapping(target = "frequency", expression = "java(row.get(\"frequency\"))")
+    @Mapping(target = "activityEndDate", expression = "java(toLong(row.get(\"activityEndDate\")))")
+    @Mapping(target = "operationStartTime", expression = "java(toLong(row.get(\"operationStartTime\")))")
+    @Mapping(target = "operationEndTime", expression = "java(toLong(row.get(\"operationEndTime\")))")
     FrequencyDTO toDTO(Map<String, String> row);
 
     default Long toLong(String value) {
@@ -209,40 +209,61 @@ public interface GenericMapper {
     TicketsFollow toEntity(TicketFollowDTO dto);
 
     TicketFollowDTO toDTO(TicketsFollow entity);
+
     Payment toEntity(PaymentDTO dto);
+
     PaymentDTO toDTO(Payment entity);
+
     ActivitySOP toEntity(ActivitySOPDTO dto);
 
     ActivitySOPDTO toDTO(ActivitySOP entity);
+
     LocationSop toEntity(LocationSopDTO dto);
 
     LocationSopDTO toDTO(LocationSop entity);
 
     ProductVehicle toEntity(ProductVehicleDTO dto);
+
     ProductVehicleDTO toDTO(ProductVehicle entity);
+
     ProductInfo toEntity(ProductInfoDTO dto);
+
     ProductInfoDTO toDTO(ProductInfo entity);
+
     ProductEvalutions toEntity(ProductEvalutionsDTO dto);
+
     ProductEvalutionsDTO toDTO(ProductEvalutions entity);
+
     ProductDetails toEntity(ProductDetailsDTO dto);
+
     ProductDetailsDTO toDTO(ProductDetails entity);
+
     PackingMaterial toEntity(PackingMaterialDTO dto);
+
     PackingMaterialDTO toDTO(PackingMaterial entity);
-    LocationCenter toEntity(LocationCenterDTO dto);
-    LocationCenterDTO toDTO(LocationCenter entity);
+
+    ProductLocationCenter toEntity(ProductLocationCenterDTO dto);
+
+    ProductLocationCenterDTO toDTO(ProductLocationCenter entity);
+
     RegionSpecificLocation toEntity(RegionSpecificLocationDTO dto);
+
     RegionSpecificLocationDTO toDTO(RegionSpecificLocation entity);
+
     TAT toEntity(TATDTO dto);
+
     TATDTO toDTO(TAT entity);
+
     FirstMile toEntity(FirstMileDTO dto);
+
     FirstMileDTO toDTO(FirstMile entity);
+
     LastMile toEntity(LastMileDTO dto);
+
     LastMileDTO toDTO(LastMile entity);
+
     MiddleMile toEntity(MiddleMileDTO dto);
+
     MiddleMileDTO toDTO(MiddleMile entity);
-
-   
-
-   
 
 }

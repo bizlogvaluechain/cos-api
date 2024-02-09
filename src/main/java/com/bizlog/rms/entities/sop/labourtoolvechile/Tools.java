@@ -10,16 +10,14 @@ import lombok.Data;
 @Table(name = "Tools_tbl")
 @Data
 public class Tools extends BaseClientEntity {
-    @Column(name = "isToolsRequired", nullable = false)
-    private Boolean isToolsRequired;
-    @Column(name = "equipmentDetail")
-    private String equipmentDetail;
-    @Column(name = "equipmentProvideBy")
-    private String equipmentProvideBy;
-    @Column(name = "isTrainingProvide")
-    private Boolean isTrainingProvide;
+    @Column(name = "toolsRequired", nullable = false)
+    private Boolean toolsRequired;
+    @Column(name = "equipmentName")
+    private String equipmentName;
+    @Column(name = "equipmentProvidedBy")
+    private String equipmentProvidedBy;
+    @Column(name = "trainingProvided")
+    private Boolean trainingProvided;
     @Column(name = "toolProductSpecific")
     private Boolean toolProductSpecific;
-    @Column(name = "toolName")
-    private String toolName;
 }

@@ -10,14 +10,19 @@ import lombok.Data;
 @Table(name = "sop_product_tbl")
 @Data
 public class Product extends BaseClientEntity {
-    @Column(name = "noOfProduct", nullable = false)
-    private Long noOfProduct;
-    @Column(name = "UniqueIdentifier")
+    @Column(name = "numberOfProducts", nullable = false)
+    private Long numberOfProducts;
+    @Column(name = "SKUBarcodePresent", nullable = false)
+    private Boolean SKUBarcodePresent;
+    @Column(name = "uniqueIdentifierPresent")
+    private Boolean uniqueIdentifierPresent;
+    @Column(name = "uniqueIdentifier")
     private String uniqueIdentifier;
-    @Column(name = "isContainUniqueBarcodes")
-    private String isContainUniqueBarcodes;
-    @Column(name = "isLBH")
-    private String isLBH;
-    @Column(name = "IsInventoryManagementRequired")
-    private String IsInventoryManagementRequired;
+
+    @Column(name = "uniqueIdBarcodePresent")
+    private String uniqueIdBarcodePresent;
+    @Column(name = "productMetricsProvided")
+    private Boolean productMetricsProvided;
+    @Column(name = "inventoryManagementRequired")
+    private Boolean inventoryManagementRequired;
 }

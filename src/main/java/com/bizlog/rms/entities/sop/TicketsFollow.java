@@ -10,11 +10,11 @@ import lombok.Data;
 @Table(name = "ticket_follow_up_tbl")
 @Data
 public class TicketsFollow extends BaseClientEntity {
-    @Column(name = "searchTrack", nullable = false)
-    private String searchTrack;
-    @Column(name = "clientReport", nullable = false)
-    private String clientReport;
+    @Column(name = "searchAndTrack", nullable = false)
+    private String searchAndTrack;
+    @Column(name = "clientReports", nullable = false)
+    private Boolean clientReports;
     @Column(name = "LiveTicketScan", nullable = false)
-    private String LiveTicketScan;
+    private Boolean liveTicketScan;
 
 }

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LabourDTO extends BaseDTO {
-    private Boolean isLabourRequired;
-    private Long noOfLabour;
-    private Boolean isApprovalNeeded;
-    private Boolean isLabourRequiredParticularProducts;
-    private Long durationForActivity;
+    private Boolean manualLabourRequired;
+    private Long labourSize;
+    private Boolean priorApprovalNeedForLabour;
+    private Boolean labourForParticularProduct;
+    private Long durationOfActivity;
 }

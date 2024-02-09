@@ -8,22 +8,24 @@ import lombok.Data;
 @Data
 @Table(name = "frequency")
 public class Frequency extends BaseClientEntity {
-    @Column(name = "unit", nullable = false)
-    private FrequencyUnit unit;
-    @Column(name = "ticketsVolume", nullable = false)
-    private Long  ticketsVolume;
-    @Column(name = "FrequencyStartDate", nullable = false)
-    private Long startDate;
-    @Column(name = "FrequencyEndDate", nullable = false)
-    private Long endDate;
+    @Column(name = "Frequency", nullable = false)
+    private String frequency;
+    @Column(name = "frequencyUnit", nullable = false)
+    private Long frequencyUnit;
+    @Column(name = "activityStartDate", nullable = false)
+    private Long activityStartDate;
+    @Column(name = "activityEndDate", nullable = false)
+    private Long activityEndDate;
     @Column(name = "operationStartTime", nullable = false)
     private Long operationStartTime;
-
     @Column(name = "operationEndTime", nullable = false)
     private Long operationEndTime;
     @Column(name = "operationDay", nullable = false)
     private Long operationDay;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "holidayApplicableId", referencedColumnName = "id")
-    private HolidayApplicable holidayApplicable;
+    @Column(name = "operationsOnPublicHolidays", nullable = false)
+    private Boolean operationsOnPublicHolidays;
+    @Column(name = "operationsOnBizlogHolidays", nullable = false)
+    private Boolean operationsOnBizlogHolidays;
+    @Column(name = "operationsOnClientHolidays", nullable = false)
+    private Boolean operationsOnClientHolidays;
 }
