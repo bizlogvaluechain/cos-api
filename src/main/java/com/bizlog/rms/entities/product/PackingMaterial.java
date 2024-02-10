@@ -17,18 +17,9 @@ public class PackingMaterial {
     private Boolean isPackingMaterialRequiredReverse;
     @Column(name = "packingMaterialName", nullable = false)
     private String packingMaterialName;
-    @Column(name = "providerForward")
-    private String providerForward;
-    @Column(name = "providerReverse")
-    private String providerReverse;
+    @Column(name = "forwardPackingMaterial")
+    private String forwardPackingMaterial;
+    @Column(name = "reversePackingMaterial")
+    private String reversePackingMaterial;
 
-    // @JsonIgnore
-    // @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    // @JoinColumn(name = "Product_Info_Id", nullable = false, updatable = false)
-    // private ProductInfo productInfo;
-    //
-    // @JsonProperty("Product_Info_Id")
-    // public Long getProductInfoId() {
-    // return (productInfo != null) ? productInfo.getId() : null;
-    // }
 }

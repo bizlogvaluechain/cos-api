@@ -6,8 +6,8 @@ import lombok.Data;
 public class PackingMaterialDTO {
     public Long id;
     private Boolean isPackingMaterialRequiredForward;
-    private Boolean isPackingMaterialRequiredReversed;
+    private Boolean isPackingMaterialRequiredReverse;
     private String packingMaterialName;
-    private String providerForward;
-    private String providerReverse;
+    private String forwardPackingMaterial;
+    private String reversePackingMaterial;
 }

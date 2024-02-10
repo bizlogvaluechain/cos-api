@@ -12,6 +12,7 @@ import com.bizlog.rms.utils.OperationType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -82,5 +83,11 @@ public class ToolsResource extends BaseClientResource<Tools, ToolsDTO,ToolsDTO> 
     @Override
     protected ToolsDTO toDTO(Tools entity) {
         return getMapper().toDTO(entity);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<ToolsDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
     }
 }

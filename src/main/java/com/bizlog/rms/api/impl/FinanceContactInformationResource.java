@@ -10,6 +10,7 @@ import com.bizlog.rms.repository.BaseClientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,5 +71,11 @@ public class FinanceContactInformationResource extends BaseClientResource<Financ
     @Override
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<FinanceContactInformationDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
     }
 }

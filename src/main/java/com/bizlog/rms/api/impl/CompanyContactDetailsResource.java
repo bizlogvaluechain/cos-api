@@ -47,4 +47,5 @@ public class CompanyContactDetailsResource {
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
 }

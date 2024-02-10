@@ -24,4 +24,6 @@ public interface FinanceContactInformationAPI extends BaseAPI<FinanceContactInfo
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<FinanceContactInformationDTO> getByClientId(Long clientId);
 }

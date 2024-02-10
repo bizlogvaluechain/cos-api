@@ -25,4 +25,6 @@ public interface TATAdherenceAPI extends BaseAPI<TATAdherenceDTO, TATAdherenceDT
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id);
 
+    @GetMapping("/getByClientId")
+    ResponseEntity<TATAdherenceDTO> getByClientId(Long clientId);
 }

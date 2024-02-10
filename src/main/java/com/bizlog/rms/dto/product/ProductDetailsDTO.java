@@ -8,7 +8,8 @@ public class ProductDetailsDTO {
     private String skuName;
     private String skuBarcode;
     private String length;
-    private String breath;
+    private String breadth;
     private String height;
     private String actualWeight;
+    private String volumetricWeight;
 }

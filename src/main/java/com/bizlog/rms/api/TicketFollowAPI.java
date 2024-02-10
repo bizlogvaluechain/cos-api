@@ -23,4 +23,6 @@ public interface TicketFollowAPI extends BaseAPI<TicketFollowDTO, TicketFollowDT
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<TicketFollowDTO> getByClientId(Long clientId);
 }

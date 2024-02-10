@@ -22,4 +22,6 @@ public interface TicketInflowAPI extends BaseAPI<TicketInflowDTO, TicketInflowDT
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<TicketInflowDTO> getByClientId(Long clientId);
 }

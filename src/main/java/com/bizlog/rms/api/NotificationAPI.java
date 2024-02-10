@@ -22,4 +22,6 @@ public interface NotificationAPI extends BaseAPI<NotificationDTO, NotificationDT
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<NotificationDTO> getByClientId(Long clientId);
 }

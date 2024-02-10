@@ -26,4 +26,7 @@ public interface ToolsAPI extends BaseAPI<ToolsDTO,ToolsDTO>{
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    @GetMapping("/getByClientId")
+    ResponseEntity<ToolsDTO> getByClientId(Long clientId);
 }

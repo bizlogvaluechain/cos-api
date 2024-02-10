@@ -23,4 +23,6 @@ public interface MiddleMileAPI extends BaseAPI<MiddleMileDTO,MiddleMileDTO> {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<MiddleMileDTO> getByClientId(Long clientId);
 }

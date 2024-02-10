@@ -23,4 +23,6 @@ public interface PaymentAPI extends BaseAPI<PaymentDTO, PaymentDTO> {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<PaymentDTO> getByClientId(Long clientId);
 }

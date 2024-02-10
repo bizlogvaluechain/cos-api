@@ -23,4 +23,6 @@ public interface LabourAPI extends BaseAPI<LabourDTO, LabourDTO> {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<LabourDTO> getByClientId(Long clientId);
 }

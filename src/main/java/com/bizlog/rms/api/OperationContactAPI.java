@@ -24,4 +24,6 @@ public interface OperationContactAPI extends BaseAPI<OperationContactInformation
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<OperationContactInformationDTO> getByClientId(Long clientId);
 }

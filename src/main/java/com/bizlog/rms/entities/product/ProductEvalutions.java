@@ -15,28 +15,28 @@ public class ProductEvalutions {
     public Long id;
     @Column(name = "question", nullable = false)
     private List<String> question;
-    @Column(name = "isFragile", nullable = false)
-    private Boolean isFragile;
-    @Column(name = "isCompressed", nullable = false)
-    private Boolean isCompressed;
+    @Column(name = "fragile", nullable = false)
+    private Boolean fragile;
+    @Column(name = "compressed", nullable = false)
+    private Boolean compressed;
     @Column(name = "isColdStorageNeeded", nullable = false)
-    private Boolean isColdStorageNeeded;
+    private Boolean storage;
     @Column(name = "isLogisticRequired", nullable = false)
-    private Boolean isLogisticRequired;
+    private Boolean logistic;
     @Column(name = "isInsured", nullable = false)
     private Boolean isInsured;
     @Column(name = "insuranceName")
     private String insuranceName;
     @Column(name = "policyNo")
-    private String policyNo;
+    private String policy;
     @Column(name = "productValue")
     private String productValue;
     @Column(name = "isAccessories", nullable = false)
     private Boolean isAccessories;
     @Column(name = "length")
     private String length;
-    @Column(name = "breath")
-    private String breath;
+    @Column(name = "breadth")
+    private String breadth;
     @Column(name = "height")
     private String height;
     @Column(name = "isAdditionalLabourRequired", nullable = false)
@@ -47,20 +47,4 @@ public class ProductEvalutions {
     private Boolean isAdditionalEquipmentRequired;
     @Column(name = "noOfEquipment")
     private Long noOfEquipment;
-    // @Column(name = "isInstallationRequired", nullable = false)
-    // private Boolean isInstallationRequired;
-    // @Column(name = "isInventoryManagementRequired", nullable = false)
-    // private Boolean isInventoryManagementRequired;
-    // @Column(name = "isAdditionalInventoryNeeded", nullable = false)
-    // private Boolean isAdditionalInventoryNeeded;
-    //
-    // @JsonIgnore
-    // @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    // @JoinColumn(name = "Product_Info_Id", nullable = false, updatable = false)
-    // private ProductInfo productInfo;
-    //
-    // @JsonProperty("Product_Info_Id")
-    // public Long getProductInfoId() {
-    // return (productInfo != null) ? productInfo.getId() : null;
-    // }
 }
