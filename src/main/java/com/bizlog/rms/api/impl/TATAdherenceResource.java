@@ -4,10 +4,7 @@ import com.bizlog.rms.api.TATAdherenceAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.SOP_TAT.TATAdherenceDTO;
 import com.bizlog.rms.entities.sop.TATAdherence;
-import com.bizlog.rms.exception.AlreadyExistException;
-import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
-import com.bizlog.rms.utils.OperationType;
 import jakarta.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,18 +27,7 @@ public class TATAdherenceResource extends BaseClientResource<TATAdherence, TATAd
         super(baseClientRepository);
     }
 
-    @Override
-    protected void preValidate(Long clientId, TATAdherenceDTO payloadDTO, OperationType operationType) {
-        super.preValidate(clientId, payloadDTO, operationType);
-        if (operationType == OperationType.CREATE) {
-            getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
-                            .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
-                    .ifPresent(X -> {
-                        throw new AlreadyExistException(clientId);
-                    });
-        }
-    }
+
 
     @Transactional
     @Override
