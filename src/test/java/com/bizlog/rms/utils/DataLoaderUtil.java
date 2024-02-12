@@ -59,14 +59,14 @@ public class DataLoaderUtil {
         frequency.setClient(client);
         frequency.setFrequency("abc");
         frequency.setFrequencyUnit(100L);
-        frequency.setActivityStartDate(23122023L);
+        frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
         frequency.setOperationEndTime(23122023L);
-        frequency.setOperationsOnBizlogHolidays(true);
-        frequency.setOperationsOnPublicHolidays(false);
-        frequency.setOperationsOnClientHolidays(true);
-        frequency.setOperationDay(5L);
+        frequency.setOperationsOnbizlogHolidays(true);
+        frequency.setOperationsOnStatutoryHolidays(false);
+        frequency.setOperatoinsOnClientHolidays(true);
+        frequency.setOperationDays(5L);
         return List.of(frequency);
     }
 
