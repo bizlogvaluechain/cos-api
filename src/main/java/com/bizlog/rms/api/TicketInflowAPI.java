@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(value = "/api/v1/cos/{clientId}/ticket-creation-config")
+@RequestMapping(value = "/api/v1/cos/{clientId}/ticket_info")
 public interface TicketInflowAPI extends BaseAPI<TicketInflowDTO, TicketInflowDTO> {
     @PostMapping
     ResponseEntity<TicketInflowDTO> create(Long clientId, TicketInflowDTO ticketCreationConfigDTO);

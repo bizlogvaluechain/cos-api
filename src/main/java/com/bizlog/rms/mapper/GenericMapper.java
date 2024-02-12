@@ -106,7 +106,7 @@ public interface GenericMapper {
 
     // @Mapping(target = "ticketsVolume", source = "ticketsVolume")
     @Mapping(target = "id", expression = "java(toLong(row.get(\"id\")))")
-    @Mapping(target = "activityStartDate", expression = "java(toLong(row.get(\"activityStartDate\")))")
+    @Mapping(target = "activityStartdate", expression = "java(toLong(row.get(\"activityStartdate\")))")
     @Mapping(target = "frequencyUnit", expression = "java(toLong(row.get(\"frequencyUnit\")))")
     @Mapping(target = "frequency", expression = "java(row.get(\"frequency\"))")
     @Mapping(target = "activityEndDate", expression = "java(toLong(row.get(\"activityEndDate\")))")

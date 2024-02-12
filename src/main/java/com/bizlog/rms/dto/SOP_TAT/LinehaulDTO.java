@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LinehaulDTO extends BaseDTO {
     private String linehaulBy;
-    private String LogisticsMode;
-    private String LogisticsProvider;
+    private String logisticsMode;
+    private String logisticsProvider;
     private String vehicleType;
     private Boolean consolidationRequired;
     private Long duration;
-    private String size;
+    private Long size;
 }

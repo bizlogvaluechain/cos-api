@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class ActivitySOPDTO extends BaseDTO {
-    private List<String> Miles;
-    private List<String> MajorActivity;
-    private List<String> MinorActivity;
+    private List<String> miles;
+    private List<String> majorActivities;
+    private List<String> minorActivities;
 }

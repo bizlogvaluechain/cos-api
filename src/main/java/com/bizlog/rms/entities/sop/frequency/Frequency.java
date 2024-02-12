@@ -13,19 +13,19 @@ public class Frequency extends BaseClientEntity {
     @Column(name = "frequencyUnit", nullable = false)
     private Long frequencyUnit;
     @Column(name = "activityStartDate", nullable = false)
-    private Long activityStartDate;
+    private Long activityStartdate;
     @Column(name = "activityEndDate", nullable = false)
     private Long activityEndDate;
     @Column(name = "operationStartTime", nullable = false)
     private Long operationStartTime;
     @Column(name = "operationEndTime", nullable = false)
     private Long operationEndTime;
-    @Column(name = "operationDay", nullable = false)
-    private Long operationDay;
-    @Column(name = "operationsOnPublicHolidays", nullable = false)
-    private Boolean operationsOnPublicHolidays;
-    @Column(name = "operationsOnBizlogHolidays", nullable = false)
-    private Boolean operationsOnBizlogHolidays;
-    @Column(name = "operationsOnClientHolidays", nullable = false)
-    private Boolean operationsOnClientHolidays;
+    @Column(name = "operationDays", nullable = false)
+    private Long operationDays;
+    @Column(name = "operationsOnbizlogHolidays", nullable = false)
+    private Boolean operationsOnbizlogHolidays;
+    @Column(name = "operatoinsOnClientHolidays", nullable = false)
+    private Boolean operatoinsOnClientHolidays;
+    @Column(name = "operationsOnStatutoryHolidays", nullable = false)
+    private Boolean operationsOnStatutoryHolidays;
 }
