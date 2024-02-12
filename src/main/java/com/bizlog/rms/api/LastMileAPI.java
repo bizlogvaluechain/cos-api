@@ -22,4 +22,6 @@ public interface LastMileAPI  extends BaseAPI<LastMileDTO,LastMileDTO>{
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<LastMileDTO> getByClientId(Long clientId);
 }

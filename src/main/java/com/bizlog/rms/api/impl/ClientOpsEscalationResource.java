@@ -76,6 +76,12 @@ public class ClientOpsEscalationResource
     }
 
     @Override
+    @Transactional
+    public ResponseEntity<ClientOpsEscalationDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
+    }
+
+    @Override
     protected ClientOpsEscalation toEntity(ClientOpsEscalationDTO dto) {
         return getMapper().toEntity(dto);
     }

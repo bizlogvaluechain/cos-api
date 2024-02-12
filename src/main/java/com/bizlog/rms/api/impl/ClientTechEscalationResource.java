@@ -83,5 +83,9 @@ public class ClientTechEscalationResource
     protected ClientTechEscalationDTO toDTO(ClientTechEscalation entity) {
         return getMapper().toDTO(entity);
     }
-
+    @Override
+    @Transactional
+    public ResponseEntity<ClientTechEscalationDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
+    }
 }

@@ -61,6 +61,11 @@ public class LocationResource extends BaseClientResource<Location, LocationDTO, 
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+    @Override
+    @Transactional
+    public ResponseEntity<LocationDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
+    }
 
     @Override
     protected Location toEntity(LocationDTO dto) {

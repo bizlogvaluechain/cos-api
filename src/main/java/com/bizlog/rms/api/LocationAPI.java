@@ -22,4 +22,6 @@ public interface LocationAPI extends BaseAPI<LocationDTO, LocationDTO> {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<LocationDTO> getByClientId(Long clientId);
 }

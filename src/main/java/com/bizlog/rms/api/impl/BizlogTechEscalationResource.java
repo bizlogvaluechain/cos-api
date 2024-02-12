@@ -72,6 +72,11 @@ public class BizlogTechEscalationResource
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+    @Override
+    @Transactional
+    public ResponseEntity<BizlogTechEscalationDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
+    }
 
     @Override
     protected BizlogTechEscalation toEntity(BizlogTechEscalationDTO dto) {

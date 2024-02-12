@@ -7,6 +7,7 @@ import com.bizlog.rms.entities.product.ProductInfo;
 import com.bizlog.rms.repository.BaseClientRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,11 @@ public class ProductInfoResource extends BaseClientResource<ProductInfo, Product
     public ResponseEntity<PageResponse<ProductInfoDTO>> getAll(@PathVariable("clientId") Long clientId,
                                                             Pageable pageable) {
         return super.getAllConfig(clientId, pageable);
+    }
+    @Override
+    @Transactional
+    public ResponseEntity<ProductInfoDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
     }
 
     @Override

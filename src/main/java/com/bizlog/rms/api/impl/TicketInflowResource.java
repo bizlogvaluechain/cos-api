@@ -76,4 +76,10 @@ public class TicketInflowResource extends
     protected com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow toEntity(TicketInflowDTO dto) {
         return getMapper().toEntity(dto);
     }
+
+    @Override
+    @Transactional
+    public ResponseEntity<TicketInflowDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
+    }
 }

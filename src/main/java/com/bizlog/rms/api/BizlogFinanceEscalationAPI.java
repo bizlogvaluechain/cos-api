@@ -32,4 +32,6 @@ public interface BizlogFinanceEscalationAPI extends BaseAPI<BizlogFinanceEscalat
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<BizlogFinanceEscalationDTO> getByClientId(Long clientId);
 }

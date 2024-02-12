@@ -76,6 +76,11 @@ public class TATResource extends BaseClientResource<TAT, TATDTO,TATDTO> implemen
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+    @Override
+    @Transactional
+    public ResponseEntity<TATDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
+    }
 
     @Override
     protected TAT toEntity(TATDTO dto) {

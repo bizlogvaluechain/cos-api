@@ -30,13 +30,4 @@ public class ProductVehicle {
     @Column(name = "is3PLWarehouseRequired", nullable = false)
     private Boolean is3PLWarehouseRequired;
 
-    // @JsonIgnore
-    // @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    // @JoinColumn(name = "Product_Info_Id", nullable = false, updatable = false)
-    // private ProductInfo productInfo;
-    //
-    // @JsonProperty("Product_Info_Id")
-    // public Long getProductInfoId() {
-    // return (productInfo != null) ? productInfo.getId() : null;
-    // }
 }

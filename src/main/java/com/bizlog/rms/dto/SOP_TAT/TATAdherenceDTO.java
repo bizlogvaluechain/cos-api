@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TATAdherenceDTO extends BaseDTO {
     private Boolean tatAdherenceRequired;
-
     private String bizlog;
     private String customer;
     private String thirdPartyLogistics;

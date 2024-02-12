@@ -23,4 +23,6 @@ public interface VehicleAPI extends BaseAPI<VehicleDTO, VehicleDTO> {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<VehicleDTO> getByClientId(Long clientId);
 }

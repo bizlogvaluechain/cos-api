@@ -32,4 +32,7 @@ public interface BizlogTechEscalationAPI extends BaseAPI<BizlogTechEscalationDTO
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    @GetMapping("/getByClientId")
+    ResponseEntity<BizlogTechEscalationDTO> getByClientId(Long clientId);
 }

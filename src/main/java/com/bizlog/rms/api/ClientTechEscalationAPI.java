@@ -32,4 +32,7 @@ public interface ClientTechEscalationAPI extends BaseAPI<ClientTechEscalationDTO
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    @GetMapping("/getByClientId")
+    ResponseEntity<ClientTechEscalationDTO> getByClientId(Long clientId);
 }

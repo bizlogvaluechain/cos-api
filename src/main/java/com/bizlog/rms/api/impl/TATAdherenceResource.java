@@ -27,6 +27,8 @@ public class TATAdherenceResource extends BaseClientResource<TATAdherence, TATAd
         super(baseClientRepository);
     }
 
+
+
     @Transactional
     @Override
     public ResponseEntity<TATAdherenceDTO> create(@PathVariable("clientId") Long clientId,
@@ -63,6 +65,12 @@ public class TATAdherenceResource extends BaseClientResource<TATAdherence, TATAd
     @Override
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<TATAdherenceDTO> getByClientId(@PathVariable("clientId") Long clientId) {
+        return super.getByClientId(clientId);
     }
 
     @Override

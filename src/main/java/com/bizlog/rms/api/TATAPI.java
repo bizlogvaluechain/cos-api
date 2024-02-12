@@ -24,4 +24,6 @@ public interface TATAPI extends BaseAPI<TATDTO,TATDTO> {
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id);
 
+    @GetMapping("/getByClientId")
+    ResponseEntity<TATDTO> getByClientId(Long clientId);
 }

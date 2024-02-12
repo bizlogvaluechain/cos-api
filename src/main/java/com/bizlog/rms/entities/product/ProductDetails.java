@@ -17,21 +17,14 @@ public class ProductDetails {
     private String skuBarcode;
     @Column(name = "length", nullable = false)
     private String length;
-    @Column(name = "breath", nullable = false)
-    private String breath;
+    @Column(name = "breadth", nullable = false)
+    private String breadth;
     @Column(name = "height", nullable = false)
     private String height;
     @Column(name = "actualWeight", nullable = false)
     private String actualWeight;
+    @Column(name = "volumetricWeight", nullable = false)
+    private String volumetricWeight;
 
-    // @JsonIgnore
-    // @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    // @JoinColumn(name = "Product_Info_Id", nullable = false, updatable = false)
-    // private ProductInfo productInfo;
-    //
-    // @JsonProperty("Product_Info_Id")
-    // public Long getProductInfoId() {
-    // return (productInfo != null) ? productInfo.getId() : null;
-    // }
 
 }

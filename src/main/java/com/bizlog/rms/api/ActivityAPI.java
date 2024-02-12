@@ -23,4 +23,6 @@ public interface ActivityAPI extends BaseAPI<ActivitySOPDTO,ActivitySOPDTO>{
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<ActivitySOPDTO> getByClientId(Long clientId);
 }

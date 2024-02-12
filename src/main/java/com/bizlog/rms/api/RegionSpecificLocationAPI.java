@@ -23,5 +23,6 @@ public interface RegionSpecificLocationAPI extends BaseAPI<RegionSpecificLocatio
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
-
+    @GetMapping("/getByClientId")
+    ResponseEntity<RegionSpecificLocationDTO> getByClientId(Long clientId);
 }

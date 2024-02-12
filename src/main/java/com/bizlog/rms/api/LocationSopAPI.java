@@ -23,4 +23,7 @@ public interface LocationSopAPI extends BaseAPI<LocationSopDTO,LocationSopDTO>{
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
+    @GetMapping("/getByClientId")
+    ResponseEntity<LocationSopDTO> getByClientId(Long clientId);
 }

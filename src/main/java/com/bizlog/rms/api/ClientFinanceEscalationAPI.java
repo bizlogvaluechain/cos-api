@@ -32,4 +32,6 @@ public interface ClientFinanceEscalationAPI extends BaseAPI<ClientFinanceEscalat
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+    @GetMapping("/getByClientId")
+    ResponseEntity<ClientFinanceEscalationDTO> getByClientId(Long clientId);
 }
