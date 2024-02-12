@@ -12,9 +12,9 @@ public class Linehaul extends BaseClientEntity {
     @Column(name = "linehaulBy", nullable = false)
     private String linehaulBy;
     @Column(name = "LogisticsMode")
-    private String LogisticsMode;
+    private String logisticsMode;
     @Column(name = "LogisticsProvider")
-    private String LogisticsProvider;
+    private String logisticsProvider;
     @Column(name = "vehicleType")
     private String vehicleType;
     @Column(name = "consolidationRequired", nullable = false)
@@ -22,6 +22,6 @@ public class Linehaul extends BaseClientEntity {
     @Column(name = "Duration")
     private Long duration;
     @Column(name = "size")
-    private String size;
+    private Long size;
 
 }

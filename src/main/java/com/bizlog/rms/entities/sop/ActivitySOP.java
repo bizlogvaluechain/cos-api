@@ -11,12 +11,12 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "activity_sop_tbl")
-public class  ActivitySOP extends BaseClientEntity {
+public class   ActivitySOP extends BaseClientEntity {
 
     @Column(name = "Miles", nullable = false)
-    private List<String> Miles;
+    private List<String> miles;
     @Column(name = "MajorActivity", nullable = false)
-    private List<String> MajorActivity;
+    private List<String> majorActivities;
     @Column(name = "MinorActivity", nullable = false)
-    private List<String> MinorActivity;
+    private List<String> minorActivities;
 }

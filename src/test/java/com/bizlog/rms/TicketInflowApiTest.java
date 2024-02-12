@@ -47,7 +47,7 @@ public class TicketInflowApiTest extends BaseApiTest {
     void should_retrieve_with_valid_user_id() throws Exception {
         Long clientId = ticketCreationConfigRepository.findAll().get(0).getclientId();
         Long id = ticketCreationConfigRepository.findAll().get(0).getId();
-        this.mockMvc.perform(get("/api/v1/cos/{clientId}/ticket-creation-config/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/ticket_info/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -55,7 +55,7 @@ public class TicketInflowApiTest extends BaseApiTest {
     void should_not_retrieve_with_invalid_user_id() throws Exception {
         int clientId = 11;
         int id = 11;
-        this.mockMvc.perform(get("/api/v1/cos/{clientId}/ticket-creation-config/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/ticket_info/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -69,7 +69,7 @@ public class TicketInflowApiTest extends BaseApiTest {
         ticketCreationConfig.setTicketCreationThrough(creationThroughList);
         ticketCreationConfig.setTicketType(Arrays.asList("Api", "Lr", "excel"));
         this.mockMvc
-                .perform(post("/api/v1/cos/{clientId}/ticket-creation-config", client.getId())
+                .perform(post("/api/v1/cos/{clientId}/ticket_info", client.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(ticketCreationConfig).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
@@ -82,7 +82,7 @@ public class TicketInflowApiTest extends BaseApiTest {
         ticketCreationConfig.setTicketCreationThrough(creationThroughList);
 
         this.mockMvc
-                .perform(post("/api/v1/cos/{clientId}/ticket-creation-config", clientId)
+                .perform(post("/api/v1/cos/{clientId}/ticket_info", clientId)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(ticketCreationConfig).orElse("")))
                 .andDo(print()).andExpect(status().is4xxClientError());
     }
@@ -102,7 +102,7 @@ public class TicketInflowApiTest extends BaseApiTest {
         updatedTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "pr", "excelBizlog"));
 
         this.mockMvc
-                .perform(put("/api/v1/cos/{clientId}/ticket-creation-config/{id}", client.getId(),
+                .perform(put("/api/v1/cos/{clientId}/ticket_info/{id}", client.getId(),
                         existingTicketCreationConfig.getId()).contentType(MediaType.APPLICATION_JSON)
                                 .content(toJson(updatedTicketCreationConfig).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful())
@@ -116,7 +116,7 @@ public class TicketInflowApiTest extends BaseApiTest {
 
         TicketInflow updatedTicketCreationConfig = new com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow();
         updatedTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "Lr", "excel"));
-        this.mockMvc.perform(put("/api/v1/cos/{clientId}/ticket-creation-config/{id}", clientId, id)
+        this.mockMvc.perform(put("/api/v1/cos/{clientId}/ticket_info/{id}", clientId, id)
                 .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTicketCreationConfig).orElse("")))
                 .andDo(print()).andExpect(status().is4xxClientError());
     }
@@ -131,7 +131,7 @@ public class TicketInflowApiTest extends BaseApiTest {
         existingTicketCreationConfig.setClient(client);
         existingTicketCreationConfig = ticketCreationConfigRepository.save(existingTicketCreationConfig);
 
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/ticket-creation-config/{id}", client.getId(),
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/ticket_info/{id}", client.getId(),
                 existingTicketCreationConfig.getId())).andDo(print()).andExpect(status().isNoContent());
     }
 
@@ -139,7 +139,7 @@ public class TicketInflowApiTest extends BaseApiTest {
     void should_not_delete_nonexistent_ticket_in_flow() throws Exception {
         int clientId = 11;
         int nonexistentId = 999;
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/ticket-creation-config/{id}", clientId, nonexistentId))
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/ticket_info/{id}", clientId, nonexistentId))
                 .andDo(print()).andExpect(status().isNotFound());
     }
 }

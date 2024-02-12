@@ -43,7 +43,7 @@ public class TATAdherenceApiTest extends BaseApiTest {
     void should_retrieve_with_valid_user_id() throws Exception {
         Long clientId = tatAdherenceRepository.findAll().get(0).getclientId();
         Long id = tatAdherenceRepository.findAll().get(0).getId();
-        this.mockMvc.perform(get("/api/v1/cos/{clientId}/tatActivities/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/tat_adherence/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -51,7 +51,7 @@ public class TATAdherenceApiTest extends BaseApiTest {
     void should_not_retrieve_with_invalid_user_id() throws Exception {
         int clientId = 11;
         int id = 11;
-        this.mockMvc.perform(get("/api/v1/cos/{clientId}/tatActivities/{id}", clientId, id)).andDo(print())
+        this.mockMvc.perform(get("/api/v1/cos/{clientId}/tat_adherence/{id}", clientId, id)).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -65,9 +65,23 @@ public class TATAdherenceApiTest extends BaseApiTest {
         tatActivity.setCustomer("yes");
 
         this.mockMvc
-                .perform(post("/api/v1/cos/{clientId}/tatActivities", client.getId())
+                .perform(post("/api/v1/cos/{clientId}/tat_adherence", client.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(tatActivity).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
+    }
+    @Test
+    void should_not_create_new_tatAdherence() throws Exception {
+        Long clientId = 55L;
+
+        TATAdherence tatActivity = new TATAdherence();
+        tatActivity.setTatAdherenceRequired(true);
+        tatActivity.setBizlog("yes");
+        tatActivity.setCustomer("yes");
+
+        this.mockMvc
+                .perform(post("/api/v1/cos/{clientId}/tat_adherence", clientId)
+                        .contentType(MediaType.APPLICATION_JSON).content(toJson(tatActivity).orElse("")))
+                .andDo(print()).andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -85,7 +99,7 @@ public class TATAdherenceApiTest extends BaseApiTest {
         TATAdherenceDTO updatedTatActivity = getMapper().toDTO(initialTatActivity);
         updatedTatActivity.setTatAdherenceRequired(false);
         this.mockMvc
-                .perform(put("/api/v1/cos/{clientId}/tatActivities/{id}", client.getId(), initialTatActivity.getId())
+                .perform(put("/api/v1/cos/{clientId}/tat_adherence/{id}", client.getId(), initialTatActivity.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updatedTatActivity).orElse("")));
@@ -98,7 +112,7 @@ public class TATAdherenceApiTest extends BaseApiTest {
         TATAdherence updatedTatActivity = new TATAdherence();
         updatedTatActivity.setTatAdherenceRequired(false);
         this.mockMvc
-                .perform(put("/api/v1/cos/{clientId}/tatActivities/{id}", clientId, id)
+                .perform(put("/api/v1/cos/{clientId}/tat_adherence/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
                 .andDo(print()).andExpect(status().isNotFound());
     }
@@ -113,7 +127,7 @@ public class TATAdherenceApiTest extends BaseApiTest {
         tatActivity.setClient(client);
         tatActivity = tatAdherenceRepository.save(tatActivity);
 
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/tatActivities/{id}", client.getId(), tatActivity.getId()))
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/tat_adherence/{id}", client.getId(), tatActivity.getId()))
                 .andDo(print()).andExpect(status().isNoContent());
     }
 
@@ -121,7 +135,7 @@ public class TATAdherenceApiTest extends BaseApiTest {
     void should_not_delete_nonexistent_tatActivity() throws Exception {
         int clientId = 11;
         int nonexistentId = 999;
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/tatActivities/{id}", clientId, nonexistentId))
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/tat_adherence/{id}", clientId, nonexistentId))
                 .andDo(print()).andExpect(status().isNotFound());
     }
 }

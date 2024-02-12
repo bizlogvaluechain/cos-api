@@ -8,12 +8,12 @@ public class FrequencyDTO extends BaseDTO {
 
     private String frequency;
     private Long frequencyUnit;
-    private Long activityStartDate;
+    private Long activityStartdate;
     private Long activityEndDate;
     private Long operationStartTime;
     private Long operationEndTime;
-    private Long operationDay;
-    private Boolean operationsOnPublicHolidays;
-    private Boolean operationsOnBizlogHolidays;
-    private Boolean operationsOnClientHolidays;
+    private Long operationDays;
+    private Boolean operationsOnbizlogHolidays;
+    private Boolean operatoinsOnClientHolidays;
+    private Boolean operationsOnStatutoryHolidays;
 }
