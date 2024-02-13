@@ -5,20 +5,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "TAT")
+@Table(name = "TAT_Adherence_tbl")
 @Data
 public class TATAdherence extends BaseClientEntity {
 
     @Column(name = "tatAdherenceRequired", nullable = false)
     private Boolean tatAdherenceRequired;
 
-    @Column(name = "tatBreachDueToBizlog")
-    private String bizlog;
-    @Column(name = "tatBreachDueToCustomer")
-    private String customer;
-    @Column(name = "tatBreachDueToThirdPartyLogistics")
-    private String thirdPartyLogistics;
-    @Column(name = "tatBreachDueToUnavoidableCircumstances")
-    private String unavoidableCircumstances;
+    @Column(name = "BreachDueTo")
+    @Embedded
+    private BreachDueTo breachDueTo;
 
 }

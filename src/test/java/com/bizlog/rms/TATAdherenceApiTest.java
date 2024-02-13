@@ -2,6 +2,7 @@ package com.bizlog.rms;
 
 import com.bizlog.rms.dto.SOP_TAT.TATAdherenceDTO;
 import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.sop.BreachDueTo;
 import com.bizlog.rms.entities.sop.TATAdherence;
 import com.bizlog.rms.repository.TATAdherenceRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
@@ -58,11 +59,14 @@ public class TATAdherenceApiTest extends BaseApiTest {
     @Test
     void should_create_new_tatAdherence() throws Exception {
         Client client = getClient();
-
+        BreachDueTo breachDueTo = new BreachDueTo();
+        breachDueTo.setThirdPartyLogistics("yes");
+        breachDueTo.setUnavoidableCircumstances("yes");
+        breachDueTo.setCustomer("yes");
+        breachDueTo.setBizlog("yes");
         TATAdherence tatActivity = new TATAdherence();
         tatActivity.setTatAdherenceRequired(true);
-        tatActivity.setBizlog("yes");
-        tatActivity.setCustomer("yes");
+        tatActivity.setBreachDueTo(breachDueTo);
 
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/tat_adherence", client.getId())
@@ -72,11 +76,14 @@ public class TATAdherenceApiTest extends BaseApiTest {
     @Test
     void should_not_create_new_tatAdherence() throws Exception {
         Long clientId = 55L;
-
+        BreachDueTo breachDueTo = new BreachDueTo();
+        breachDueTo.setThirdPartyLogistics("yes");
+        breachDueTo.setUnavoidableCircumstances("yes");
+        breachDueTo.setCustomer("yes");
+        breachDueTo.setBizlog("yes");
         TATAdherence tatActivity = new TATAdherence();
         tatActivity.setTatAdherenceRequired(true);
-        tatActivity.setBizlog("yes");
-        tatActivity.setCustomer("yes");
+        tatActivity.setBreachDueTo(breachDueTo);
 
         this.mockMvc
                 .perform(post("/api/v1/cos/{clientId}/tat_adherence", clientId)
@@ -86,14 +93,18 @@ public class TATAdherenceApiTest extends BaseApiTest {
 
     @Test
     void should_update_existing_tatAdherence() throws Exception {
-
+        BreachDueTo breachDueTo = new BreachDueTo();
+        breachDueTo.setThirdPartyLogistics("yes");
+        breachDueTo.setUnavoidableCircumstances("yes");
+        breachDueTo.setCustomer("yes");
+        breachDueTo.setBizlog("yes");
         TATAdherence initialTatActivity = new TATAdherence();
         initialTatActivity.setTatAdherenceRequired(true);
 
         Client client = getClient();
         initialTatActivity.setClient(client);
         initialTatActivity.setTatAdherenceRequired(true);
-        initialTatActivity.setCustomer("yes");
+        initialTatActivity.setBreachDueTo(breachDueTo);
         initialTatActivity = tatAdherenceRepository.save(initialTatActivity);
 
         TATAdherenceDTO updatedTatActivity = getMapper().toDTO(initialTatActivity);
@@ -122,7 +133,6 @@ public class TATAdherenceApiTest extends BaseApiTest {
 
         TATAdherence tatActivity = new TATAdherence();
         tatActivity.setTatAdherenceRequired(false);
-        tatActivity.setCustomer("yes");
         Client client = getClient();
         tatActivity.setClient(client);
         tatActivity = tatAdherenceRepository.save(tatActivity);

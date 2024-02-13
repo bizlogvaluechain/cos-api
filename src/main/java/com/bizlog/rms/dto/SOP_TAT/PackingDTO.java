@@ -11,6 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PackingDTO extends BaseDTO {
-    private List<String> packingRequired;
-    private List<String> packingTypes;
+    private String packingRequired;
+    private String packingType;
 }

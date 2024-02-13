@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductDTO extends BaseDTO {
     private Long numberOfProducts;
-    private Boolean SKUBarcodePresent;
+    private Boolean SkuBarcodePresent;
     private Boolean uniqueIdentifierPresent;
     private String uniqueIdentifier;
     private String uniqueIdBarcodePresent;

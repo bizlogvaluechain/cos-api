@@ -13,12 +13,11 @@ public class Product extends BaseClientEntity {
     @Column(name = "numberOfProducts", nullable = false)
     private Long numberOfProducts;
     @Column(name = "SKUBarcodePresent", nullable = false)
-    private Boolean SKUBarcodePresent;
+    private Boolean SkuBarcodePresent;
     @Column(name = "uniqueIdentifierPresent")
     private Boolean uniqueIdentifierPresent;
     @Column(name = "uniqueIdentifier")
     private String uniqueIdentifier;
-
     @Column(name = "uniqueIdBarcodePresent")
     private String uniqueIdBarcodePresent;
     @Column(name = "productMetricsProvided")

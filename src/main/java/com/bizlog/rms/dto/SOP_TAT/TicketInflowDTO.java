@@ -13,5 +13,5 @@ import java.util.List;
 public class TicketInflowDTO extends BaseDTO {
 
     private List<String> ticketCreationThrough;
-    private List<String> ticketCreationBasedOn;
+    private List<String> ticketType;
 }
