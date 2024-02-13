@@ -31,6 +31,6 @@ jobs:
         run: |
             aws ssm send-command \
               --document-name "AWS-RunShellScript" \
-              --targets "Key=instanceids,Values=<Your-Instance-ID>" \
+              --targets "Key=instanceids,Values=i-0f4f99877f2fdd955" \
               --parameters commands=["cd /home/ubuntu","./bizlog-app-start.sh"] \
               --output text
