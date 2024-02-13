@@ -120,12 +120,18 @@ public class TATAdherenceApiTest extends BaseApiTest {
     void should_not_update_existing_tatAdherence() throws Exception {
         int clientId = 12;
         int id = 21;
+        BreachDueTo breachDueTo = new BreachDueTo();
+        breachDueTo.setThirdPartyLogistics("yes");
+        breachDueTo.setUnavoidableCircumstances("yes");
+        breachDueTo.setCustomer("yes");
+        breachDueTo.setBizlog("yes");
         TATAdherence updatedTatActivity = new TATAdherence();
-        updatedTatActivity.setTatAdherenceRequired(false);
+        updatedTatActivity.setTatAdherenceRequired(true);
+        updatedTatActivity.setBreachDueTo(breachDueTo);
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/tat_adherence/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
-                .andDo(print()).andExpect(status().isNotFound());
+                .andDo(print()).andExpect(status().is4xxClientError());
     }
 
     @Test
