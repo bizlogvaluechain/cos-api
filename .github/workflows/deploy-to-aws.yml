@@ -1,10 +1,6 @@
 name: Deploy to AWS
 
 on:
-  workflow_run:
-    workflows: [ "Push to ECR" ]
-    types:
-      - completed
   push:
     branches: [ "main" ]
 
