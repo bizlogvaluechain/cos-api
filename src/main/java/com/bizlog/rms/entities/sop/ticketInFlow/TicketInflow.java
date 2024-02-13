@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
-@Table(name = "ticket_creation_config")
+@Table(name = "ticket_In_flo_tbl")
 @Data
 public class TicketInflow extends BaseClientEntity {
 

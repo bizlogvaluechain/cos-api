@@ -70,8 +70,8 @@ public class FrequencyApiTest extends BaseApiTest {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequencyUnit("abc");
+        frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -81,7 +81,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperatoinsOnClientHolidays(true);
         frequency.setOperationDays(5L);
         frequencyRepository.save(frequency);
-        Node rootNode = new RSQLParser().parse("frequencyUnit==100");
+        Node rootNode = new RSQLParser().parse("frequency==100");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
         List<Frequency> results = frequencyRepository.findAll(spec);
         assertThat(frequency, isIn(results));
@@ -93,8 +93,8 @@ public class FrequencyApiTest extends BaseApiTest {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequencyUnit("abc");
+        frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -104,7 +104,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperatoinsOnClientHolidays(true);
         frequency.setOperationDays(5L);
         frequencyRepository.save(frequency);
-        Node rootNode = new RSQLParser().parse("frequencyUnit==100");
+        Node rootNode = new RSQLParser().parse("frequency==100");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
         List<Frequency> results = frequencyRepository.findAll(spec);
         assertThat(frequency, not(results));
@@ -117,8 +117,8 @@ public class FrequencyApiTest extends BaseApiTest {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequencyUnit("abc");
+        frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -128,7 +128,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperatoinsOnClientHolidays(true);
         frequency.setOperationDays(5L);
         frequencyRepository.save(frequency);
-        Node rootNode = new RSQLParser().parse("frequencyUnit!=500");
+        Node rootNode = new RSQLParser().parse("frequency!=500");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
         List<Frequency> results = frequencyRepository.findAll(spec);
 
@@ -142,8 +142,8 @@ public class FrequencyApiTest extends BaseApiTest {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequencyUnit("abc");
+        frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -153,7 +153,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperatoinsOnClientHolidays(true);
         frequency.setOperationDays(5L);
         frequencyRepository.save(frequency);
-        Node rootNode = new RSQLParser().parse("frequencyUnit!=500");
+        Node rootNode = new RSQLParser().parse("frequency!=500");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
         List<Frequency> results = frequencyRepository.findAll(spec);
 
@@ -167,8 +167,8 @@ public class FrequencyApiTest extends BaseApiTest {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequencyUnit("abc");
+        frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -178,7 +178,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperatoinsOnClientHolidays(true);
         frequency.setOperationDays(5L);
         frequencyRepository.save(frequency);
-        Node rootNode = new RSQLParser().parse("frequencyUnit>80");
+        Node rootNode = new RSQLParser().parse("frequency>80");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
         List<Frequency> results = frequencyRepository.findAll(spec);
 
@@ -192,8 +192,8 @@ public class FrequencyApiTest extends BaseApiTest {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequencyUnit("abc");
+        frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -203,7 +203,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperatoinsOnClientHolidays(true);
         frequency.setOperationDays(5L);
         frequencyRepository.save(frequency);
-        Node rootNode = new RSQLParser().parse("frequencyUnit<80");
+        Node rootNode = new RSQLParser().parse("frequency<80");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
         List<Frequency> results = frequencyRepository.findAll(spec);
 
@@ -217,8 +217,8 @@ public class FrequencyApiTest extends BaseApiTest {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequencyUnit("abc");
+        frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -228,7 +228,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperatoinsOnClientHolidays(true);
         frequency.setOperationDays(5L);
         frequencyRepository.save(frequency);
-        Node rootNode = new RSQLParser().parse("frequencyUnit==100");
+        Node rootNode = new RSQLParser().parse("frequency==100");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
         List<Frequency> results = frequencyRepository.findAll(spec);
 
@@ -242,8 +242,8 @@ public class FrequencyApiTest extends BaseApiTest {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequencyUnit("abc");
+        frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -253,7 +253,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperatoinsOnClientHolidays(true);
         frequency.setOperationDays(5L);
         frequencyRepository.save(frequency);
-        Node rootNode = new RSQLParser().parse("frequencyUnit==500");
+        Node rootNode = new RSQLParser().parse("frequency==500");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
         List<Frequency> results = frequencyRepository.findAll(spec);
 
@@ -267,8 +267,8 @@ public class FrequencyApiTest extends BaseApiTest {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequencyUnit("abc");
+        frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -278,7 +278,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperatoinsOnClientHolidays(true);
         frequency.setOperationDays(5L);
         frequencyRepository.save(frequency);
-        Node rootNode = new RSQLParser().parse("frequencyUnit=in=(100,150)");
+        Node rootNode = new RSQLParser().parse("frequency=in=(100,150)");
         Specification<Frequency> spec = rootNode.accept(new CustomRsqlVisitor<Frequency>());
         List<Frequency> results = frequencyRepository.findAll(spec);
 
@@ -292,8 +292,8 @@ public class FrequencyApiTest extends BaseApiTest {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequencyUnit("abc");
+        frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -316,8 +316,8 @@ public class FrequencyApiTest extends BaseApiTest {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequencyUnit("abc");
+        frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -338,8 +338,8 @@ public class FrequencyApiTest extends BaseApiTest {
         int clientId = 11;
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequencyUnit("abc");
+        frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -356,8 +356,8 @@ public class FrequencyApiTest extends BaseApiTest {
     void should_update_existing_frequency() throws Exception {
 
         Frequency intialFrequency = new Frequency();
-        intialFrequency.setFrequencyUnit(100L);
-        intialFrequency.setFrequency("abc");
+        intialFrequency.setFrequency(100L);
+        intialFrequency.setFrequencyUnit("abc");
         intialFrequency.setActivityEndDate(23122023L);
         intialFrequency.setActivityStartdate(23122023L);
         intialFrequency.setOperationStartTime(23122023L);
@@ -371,7 +371,7 @@ public class FrequencyApiTest extends BaseApiTest {
         intialFrequency = frequencyRepository.save(intialFrequency);
 
         FrequencyDTO updateFrequency = getMapper().toDTO(intialFrequency);
-        updateFrequency.setFrequencyUnit(50l);
+        updateFrequency.setFrequencyUnit("abc");
         updateFrequency.setActivityEndDate(232023L);
         updateFrequency.setActivityStartdate(231220L);
         updateFrequency.setOperationStartTime(23122023L);
@@ -389,11 +389,11 @@ public class FrequencyApiTest extends BaseApiTest {
         int clientId = 111;
         Long id = 999L;
         Frequency frequency = new Frequency();
-        frequency.setFrequencyUnit(50L);
+        frequency.setFrequencyUnit("Abc");
         frequency.setActivityEndDate(23122023L);
 
         frequency.setOperationDays(5L);
-        frequency.setFrequency("abc");
+        frequency.setFrequency(100L);
         this.mockMvc
                 .perform(put("/api/v1/cos/{clientId}/frequency/{id}", clientId, id)
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(frequency).orElse("")))
@@ -404,8 +404,8 @@ public class FrequencyApiTest extends BaseApiTest {
     void should_delete_existing_frequency() throws Exception {
 
         Frequency intialFrequency = new Frequency();
-        intialFrequency.setFrequencyUnit(100L);
-        intialFrequency.setFrequency("abc");
+        intialFrequency.setFrequency(100L);
+        intialFrequency.setFrequencyUnit("abc");
         intialFrequency.setActivityEndDate(23122023L);
         intialFrequency.setActivityStartdate(23122023L);
         intialFrequency.setOperationStartTime(23122023L);

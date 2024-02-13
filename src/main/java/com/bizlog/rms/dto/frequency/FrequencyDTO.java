@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class FrequencyDTO extends BaseDTO {
 
-    private String frequency;
-    private Long frequencyUnit;
+    private Long frequency;
+    private String frequencyUnit;
     private Long activityStartdate;
     private Long activityEndDate;
     private Long operationStartTime;

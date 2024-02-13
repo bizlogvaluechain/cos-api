@@ -17,6 +17,6 @@ public class Payment extends BaseClientEntity {
     @Column(name = "paymentMethods")
     private List<String> paymentMethods;
     @Column(name = "reconciliationFrequency")
-    private Long reconciliationFrequency;
+    private Long reconclliationFrequency;
 
 }

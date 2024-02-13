@@ -2,6 +2,7 @@ package com.bizlog.rms.utils;
 
 import com.bizlog.rms.entities.Client;
 import com.bizlog.rms.entities.escalationMatrix.BizlogFinanceEscalation;
+import com.bizlog.rms.entities.sop.BreachDueTo;
 import com.bizlog.rms.entities.sop.TATAdherence;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
 import com.bizlog.rms.entities.location.Location;
@@ -57,8 +58,8 @@ public class DataLoaderUtil {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
         frequency.setClient(client);
-        frequency.setFrequency("abc");
-        frequency.setFrequencyUnit(100L);
+        frequency.setFrequency(100l);
+        frequency.setFrequencyUnit("abc");
         frequency.setActivityStartdate(23122023L);
         frequency.setActivityEndDate(23122023L);
         frequency.setOperationStartTime(23122023L);
@@ -118,12 +119,16 @@ public class DataLoaderUtil {
     }
 
     public static List<TATAdherence> getTATActivity(Client client) {
+        BreachDueTo breachDueTo = new BreachDueTo();
+        breachDueTo.setThirdPartyLogistics("yes");
+        breachDueTo.setUnavoidableCircumstances("yes");
+        breachDueTo.setCustomer("yes");
+        breachDueTo.setBizlog("yes");
         TATAdherence tatActivity = new TATAdherence();
         tatActivity.setId(1L);
         tatActivity.setClient(client);
         tatActivity.setTatAdherenceRequired(true);
-        tatActivity.setBizlog("yes");
-        tatActivity.setCustomer("yes");
+        tatActivity.setBreachDueTo(breachDueTo);
         return List.of(tatActivity);
     }
 

@@ -8,10 +8,10 @@ import lombok.Data;
 @Data
 @Table(name = "frequency")
 public class Frequency extends BaseClientEntity {
-    @Column(name = "Frequency", nullable = false)
-    private String frequency;
-    @Column(name = "frequencyUnit", nullable = false)
-    private Long frequencyUnit;
+    @Column(name = "FrequencyUnit", nullable = false)
+    private String frequencyUnit;
+    @Column(name = "frequency", nullable = false)
+    private Long frequency;
     @Column(name = "activityStartDate", nullable = false)
     private Long activityStartdate;
     @Column(name = "activityEndDate", nullable = false)
