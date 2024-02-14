@@ -6,6 +6,10 @@
 name: "Code Quality Check"
 
 on:
+  workflow_run:
+    workflows: [ "Sonarcloud Analysis" ]
+    types:
+      - completed
   push:
     branches: [ "main" ]
   pull_request:
