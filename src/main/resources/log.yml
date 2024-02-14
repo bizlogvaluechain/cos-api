@@ -1,0 +1,17 @@
+#log.inputs:
+#- type: docker
+#enabled: true
+#
+##logging.files:
+##path: /home/ubuntu/bizlog
+##name: logs
+##ssl.verification_mode: none
+#
+#logging:
+#  file:
+#    name: /home/ubuntu/bizlog
+#    log:
+logging:
+  file: /home/ubuntu/bizlog/logs/cos-api.log
+  level:
+    root: INFO
