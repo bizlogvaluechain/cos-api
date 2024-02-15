@@ -28,6 +28,7 @@ public class BillingInfoResource implements BillingInfoAPI {
         this.billingInfoRepository = billingInfoRepository;
         this.genericMapper = genericMapper;
     }
+
     @Override
     public ResponseEntity<List<BillingInfoDTO>> create(@RequestBody List<BillingInfoDTO> payloadDTO) {
         List<BillingInfo> billingInfos = genericMapper.toEntity(payloadDTO);
@@ -36,11 +37,13 @@ public class BillingInfoResource implements BillingInfoAPI {
 
         return new ResponseEntity<>(billingInfoDTOS, HttpStatus.CREATED);
     }
+
     @Override
     public ResponseEntity<Void> delete(Long id) {
         billingInfoRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @Override
     public ResponseEntity<BillingInfoDTO> getById(Long id) {
         BillingInfo existingBillingInfo = billingInfoRepository.findById(id)
@@ -51,7 +54,8 @@ public class BillingInfoResource implements BillingInfoAPI {
     }
 
     @Override
-    public ResponseEntity<BillingInfoDTO> update(@PathVariable Long id, @RequestBody BillingInfoDTO updatedBillingInfoDTO) {
+    public ResponseEntity<BillingInfoDTO> update(@PathVariable Long id,
+            @RequestBody BillingInfoDTO updatedBillingInfoDTO) {
 
         BillingInfo existingBillingInfo = billingInfoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("BillingInfo not found with id", "id", id));
@@ -63,6 +67,5 @@ public class BillingInfoResource implements BillingInfoAPI {
         BillingInfoDTO updatedBillingInfoDTOs = genericMapper.toDTO(updatedBillingInfoEntity);
         return new ResponseEntity<>(updatedBillingInfoDTOs, HttpStatus.OK);
     }
-
 
 }

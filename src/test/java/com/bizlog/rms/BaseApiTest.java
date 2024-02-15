@@ -1,8 +1,8 @@
 package com.bizlog.rms;
 
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.mapper.GenericMapper;
-import com.bizlog.rms.repository.ClientRepository;
+import com.bizlog.rms.repository.OrganizationRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class BaseApiTest {
 
     @Autowired
-    public ClientRepository clientRepository;
+    public OrganizationRepository organizationRepository;
 
     @Autowired
     public MockMvc mockMvc;
@@ -24,11 +24,11 @@ public class BaseApiTest {
     @Autowired
     GenericMapper mapper;
 
-    private Client client = null;
+    private Organization organization = null;
 
     void beforeEach() {
-        client = DataLoaderUtil.getClient();
-        client = clientRepository.save(client);
+        organization = DataLoaderUtil.getClient();
+        organization = organizationRepository.save(organization);
     }
 
     public static Optional<String> toJson(Object obj) {

@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequestMapping(value = "/api/v1/cos/{clientId}/tools")
-public interface ToolsAPI extends BaseAPI<ToolsDTO,ToolsDTO>{
+public interface ToolsAPI extends BaseAPI<ToolsDTO, ToolsDTO> {
 
     @PostMapping
     ResponseEntity<List<ToolsDTO>> create(@PathVariable("clientId") Long clientId,
-                                          @RequestBody List<ToolsDTO> toolsDTO);
+            @RequestBody List<ToolsDTO> toolsDTO);
 
     @GetMapping("/{id}")
     ResponseEntity<ToolsDTO> getById(Long clientId, Long id);

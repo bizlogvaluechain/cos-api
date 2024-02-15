@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "client_Finance_Contact_info_table")
-public class FinanceContactInformation  extends BaseClientEntity {
+public class FinanceContactInformation extends BaseClientEntity {
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "title", nullable = false)

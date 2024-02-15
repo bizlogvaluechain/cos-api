@@ -1,6 +1,7 @@
 package com.bizlog.rms.utils;
 
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
+import com.bizlog.rms.entities.OrganizationType;
 import com.bizlog.rms.entities.escalationMatrix.BizlogFinanceEscalation;
 import com.bizlog.rms.entities.sop.BreachDueTo;
 import com.bizlog.rms.entities.sop.TATAdherence;
@@ -17,33 +18,33 @@ import java.util.List;
 
 public class DataLoaderUtil {
 
-    public static List<Client> getClients() {
-        Client client = new Client();
-        client.setId(1L);
-        client.setName("IDP");
-        client.setDateOfOnboarding(27122023L);
-        return List.of(client);
+    public static List<Organization> getClients() {
+        Organization organization = new Organization();
+        organization.setId(1L);
+        organization.setName("IDP");
+        organization.setDateOfOnboarding(27122023L);
+        return List.of(organization);
     }
 
-    public static Client getClient() {
-        Client client = new Client();
-        client.setId(1L);
-        client.setName("IDP");
-        client.setName("JOHN");
-        client.setDescription("DEVELOPEMENT");
-        client.setEmail("abc@gmail.com");
-        client.setPhoneNumber("7698524598");
-        client.setDomainName("abcdefghi");
-        client.setActive(true);
-        client.setType("abcde");
-        client.setDateOfOnboarding(23122023L);
-        return client;
+    public static Organization getClient() {
+        Organization organization = new Organization();
+        organization.setId(1L);
+        organization.setName("IDP");
+        organization.setName("JOHN");
+        organization.setDescription("DEVELOPEMENT");
+        organization.setEmail("abc@gmail.com");
+        organization.setPhoneNumber("7698524598");
+        organization.setDomainName("abcdefghi");
+        organization.setActive(true);
+        organization.setOrganizationType(OrganizationType.ROOT);
+        organization.setDateOfOnboarding(23122023L);
+        return organization;
     }
 
-    public static List<Location> getLocations(Client client) {
+    public static List<Location> getLocations(Organization organization) {
         Location location = new Location();
         location.setId(1L);
-        location.setClient(client);
+        location.setOrganization(organization);
         location.setCountries(Arrays.asList("India", "Usa"));
         location.setStates(Arrays.asList("Karnataka ", "up", "bihar"));
         location.setAreas(Arrays.asList("Urban", "costalarea"));
@@ -54,10 +55,10 @@ public class DataLoaderUtil {
         return List.of(location);
     }
 
-    public static List<Frequency> getFrequency(Client client) {
+    public static List<Frequency> getFrequency(Organization organization) {
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setClient(client);
+        frequency.setOrganization(organization);
         frequency.setFrequency(100l);
         frequency.setFrequencyUnit("abc");
         frequency.setActivityStartdate(23122023L);
@@ -71,10 +72,10 @@ public class DataLoaderUtil {
         return List.of(frequency);
     }
 
-    public static List<BizlogFinanceEscalation> getEscalationMatrix(Client client) {
+    public static List<BizlogFinanceEscalation> getEscalationMatrix(Organization organization) {
         BizlogFinanceEscalation escalationMatrix = new BizlogFinanceEscalation();
         escalationMatrix.setId(1L);
-        escalationMatrix.setClient(client);
+        escalationMatrix.setOrganization(organization);
         escalationMatrix.setDesignation("IDP");
         escalationMatrix.setFirstName("IDP");
         escalationMatrix.setLastName("IDP");
@@ -83,16 +84,16 @@ public class DataLoaderUtil {
         return List.of(escalationMatrix);
     }
 
-    public static List<Notification> getNotification(Client client) {
+    public static List<Notification> getNotification(Organization organization) {
         Notification notification = new Notification();
         notification.setId(1L);
-        notification.setClient(client);
+        notification.setOrganization(organization);
         notification.setSms(Arrays.asList("client", "customer"));
         notification.setEmail(Arrays.asList("client", "customer"));
         return List.of(notification);
     }
 
-    public static List<ProductInformation> getProductInformation(Client client) {
+    public static List<ProductInformation> getProductInformation(Organization organization) {
         ProductSize productSize = new ProductSize();
         productSize.setLarge("yes");
         productSize.setMini("no");
@@ -102,7 +103,7 @@ public class DataLoaderUtil {
 
         ProductInformation productInformation = new ProductInformation();
         productInformation.setId(1L);
-        productInformation.setClient(client);
+        productInformation.setOrganization(organization);
         productInformation.setProductCategory("electronics");
 
         List<ProductSize> productSizes = new ArrayList<>();
@@ -118,7 +119,7 @@ public class DataLoaderUtil {
         return List.of(productInformation);
     }
 
-    public static List<TATAdherence> getTATActivity(Client client) {
+    public static List<TATAdherence> getTATActivity(Organization organization) {
         BreachDueTo breachDueTo = new BreachDueTo();
         breachDueTo.setThirdPartyLogistics("yes");
         breachDueTo.setUnavoidableCircumstances("yes");
@@ -126,18 +127,18 @@ public class DataLoaderUtil {
         breachDueTo.setBizlog("yes");
         TATAdherence tatActivity = new TATAdherence();
         tatActivity.setId(1L);
-        tatActivity.setClient(client);
+        tatActivity.setOrganization(organization);
         tatActivity.setTatAdherenceRequired(true);
         tatActivity.setBreachDueTo(breachDueTo);
         return List.of(tatActivity);
     }
 
-    public static List<TicketInflow> getTicketCreationConfig(Client client) {
+    public static List<TicketInflow> getTicketCreationConfig(Organization organization) {
         List<String> creationThroughList = Arrays.asList("Api", "Lr", "excel");
 
         TicketInflow ticketCreationConfig = new TicketInflow();
         ticketCreationConfig.setId(1L);
-        ticketCreationConfig.setClient(client);
+        ticketCreationConfig.setOrganization(organization);
         ticketCreationConfig.setTicketCreationThrough(creationThroughList);
         ticketCreationConfig.setTicketType(Arrays.asList("Api", "Lr", "excel"));
         return List.of(ticketCreationConfig);

@@ -22,6 +22,7 @@ public interface ProductAPI extends BaseAPI<ProductDTO, ProductDTO> {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
     @GetMapping("/getByClientId")
     ResponseEntity<ProductDTO> getByClientId(Long clientId);
 }

@@ -16,6 +16,7 @@ public interface BillingInfoAPI {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long id);
+
     @PutMapping("/{id}")
     ResponseEntity<BillingInfoDTO> update(Long id, BillingInfoDTO updatedDTO);
 }

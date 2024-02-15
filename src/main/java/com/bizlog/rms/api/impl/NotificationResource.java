@@ -68,6 +68,7 @@ public class NotificationResource extends BaseClientResource<Notification, Notif
     public ResponseEntity<NotificationDTO> getByClientId(@PathVariable("clientId") Long clientId) {
         return super.getByClientId(clientId);
     }
+
     @Override
     protected Notification toEntity(NotificationDTO dto) {
         return getMapper().toEntity(dto);

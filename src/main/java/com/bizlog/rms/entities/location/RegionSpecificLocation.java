@@ -13,11 +13,11 @@ public class RegionSpecificLocation extends BaseClientEntity {
     @Column(name = "country")
     private String country;
     @Column(name = "state")
-    private  String state;
+    private String state;
     @Column(name = "City")
     private String City;
     @Column(name = "address1")
-    private  String address1;
+    private String address1;
     @Column(name = "address2")
     private String address2;
     @Column(name = "pinCode")
@@ -27,6 +27,6 @@ public class RegionSpecificLocation extends BaseClientEntity {
     @Column(name = "contact1")
     private String contact1;
     @Column(name = "contact2")
-    private String contact2 ;
+    private String contact2;
 
 }

@@ -1,7 +1,8 @@
 package com.bizlog.rms;
 
-import com.bizlog.rms.entities.Client;
-import com.bizlog.rms.repository.ClientRepository;
+import com.bizlog.rms.entities.Organization;
+import com.bizlog.rms.entities.OrganizationType;
+import com.bizlog.rms.repository.OrganizationRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,24 +25,24 @@ class ClientApiTest extends BaseApiTest {
 
     public static final String CLIENT_URL = "/api/v1/cos/client";
     @Autowired
-    private ClientRepository clientRepository;
+    private OrganizationRepository organizationRepository;
 
     @BeforeEach
     void beforeEach() {
         super.beforeEach();
-        DataLoaderUtil.getClients().forEach(clientRepository::save);
+        DataLoaderUtil.getClients().forEach(organizationRepository::save);
     }
 
     @AfterEach
     void afterEach() {
-        clientRepository.deleteAll();
+        organizationRepository.deleteAll();
     }
 
     @Test
     void should_retrieve_with_valid_user_id() throws Exception {
-        Client client = clientRepository.findAll().get(0);
+        Organization organization = organizationRepository.findAll().get(0);
         // String expected = toJson(client).orElse("");
-        this.mockMvc.perform(get(CLIENT_URL + "/{id}", client.getId())).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get(CLIENT_URL + "/{id}", organization.getId())).andDo(print()).andExpect(status().isOk());
     }
 
     @Test
@@ -51,17 +52,17 @@ class ClientApiTest extends BaseApiTest {
 
     @Test
     void should_create_new_client() throws Exception {
-        Client client = new Client();
-        client.setName("JOHN");
-        client.setDescription("DEVELOPEMENT");
-        client.setEmail("abc@gmail.com");
-        client.setPhoneNumber("7698524598");
-        client.setDomainName("abcdefghi");
-        client.setActive(true);
-        client.setType("abcde");
-        client.setDateOfOnboarding(27122023L);
-        this.mockMvc
-                .perform(post(CLIENT_URL).contentType(MediaType.APPLICATION_JSON).content(toJson(client).orElse("")))
+        Organization organization = new Organization();
+        organization.setName("JOHN");
+        organization.setDescription("DEVELOPEMENT");
+        organization.setEmail("abc@gmail.com");
+        organization.setPhoneNumber("7698524598");
+        organization.setDomainName("abcdefghi");
+        organization.setActive(true);
+        organization.setOrganizationType(OrganizationType.CLIENT);
+        organization.setDateOfOnboarding(27122023L);
+        this.mockMvc.perform(
+                post(CLIENT_URL).contentType(MediaType.APPLICATION_JSON).content(toJson(organization).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 
@@ -71,7 +72,7 @@ class ClientApiTest extends BaseApiTest {
      * Client existingClient = new Client(); existingClient.setName("ExistingClient");
      * existingClient.setDescription("ExistingDescription"); existingClient.setEmail("existing@gmail.com");
      * existingClient.setPhoneNumber("1234567890"); existingClient.setDomainName("existingdomain");
-     * existingClient.setActive(true); existingClient.setType("existingType"); existingClient =
+     * existingClient.setActive(true); existingClient.setOrganizationType("existingType"); existingClient =
      * clientRepository.save(existingClient);
      * 
      * existingClient.setActive(false);

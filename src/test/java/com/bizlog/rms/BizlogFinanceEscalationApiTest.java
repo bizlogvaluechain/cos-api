@@ -1,7 +1,7 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.dto.escalationMatrix.EscalationMatrixDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.escalationMatrix.BizlogFinanceEscalation;
 import com.bizlog.rms.repository.BizlogFinanceEscalationRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
@@ -33,13 +33,13 @@ public class BizlogFinanceEscalationApiTest extends BaseApiTest {
     @BeforeEach
     void beforeEach() {
         super.beforeEach();
-        DataLoaderUtil.getEscalationMatrix(getClient()).forEach(bizlogFinanceEscalationRepository::save);
+        DataLoaderUtil.getEscalationMatrix(getOrganization()).forEach(bizlogFinanceEscalationRepository::save);
     }
 
     @AfterEach
     void afterEach() {
         bizlogFinanceEscalationRepository.deleteAll();
-        clientRepository.deleteAll();
+        organizationRepository.deleteAll();
     }
 
     @Test
@@ -60,7 +60,7 @@ public class BizlogFinanceEscalationApiTest extends BaseApiTest {
 
     @Test
     void should_create_new_escalationMatrix() throws Exception {
-        Client client = getClient();
+        Organization organization = getOrganization();
         List<BizlogFinanceEscalation> escalationMatrixList = new ArrayList<>();
         BizlogFinanceEscalation escalationMatrix = new BizlogFinanceEscalation();
         escalationMatrix.setDesignation("IDP");
@@ -70,7 +70,7 @@ public class BizlogFinanceEscalationApiTest extends BaseApiTest {
         escalationMatrix.setMobile("IDP");
         escalationMatrixList.add(escalationMatrix);
         this.mockMvc
-                .perform(post("/api/v1/cos/{clientId}/bizlog-finance-escalation", client.getId())
+                .perform(post("/api/v1/cos/{clientId}/bizlog-finance-escalation", organization.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(escalationMatrixList).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
@@ -101,8 +101,8 @@ public class BizlogFinanceEscalationApiTest extends BaseApiTest {
         initialEscalationMatrix.setDesignation("InitialOpsInfo");
         initialEscalationMatrix.setFirstName("InitialEmergencyInfo");
         initialEscalationMatrix.setEmailAddress("initial@gmail.com");
-        Client client = getClient();
-        initialEscalationMatrix.setClient(client);
+        Organization organization = getOrganization();
+        initialEscalationMatrix.setOrganization(organization);
         initialEscalationMatrix = bizlogFinanceEscalationRepository.save(initialEscalationMatrix);
 
         EscalationMatrixDTO updatedEscalationMatrix = getMapper().toDTO(initialEscalationMatrix);
@@ -111,7 +111,7 @@ public class BizlogFinanceEscalationApiTest extends BaseApiTest {
         updatedEscalationMatrix.setDesignation("UpdatedOpsInfo");
 
         this.mockMvc
-                .perform(put("/api/v1/cos/{clientId}/bizlog-finance-escalation/{id}", client.getId(),
+                .perform(put("/api/v1/cos/{clientId}/bizlog-finance-escalation/{id}", organization.getId(),
                         initialEscalationMatrix.getId()).contentType(MediaType.APPLICATION_JSON)
                                 .content(toJson(updatedEscalationMatrix).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
@@ -144,11 +144,11 @@ public class BizlogFinanceEscalationApiTest extends BaseApiTest {
         escalationMatrix.setLastName("IDP");
         escalationMatrix.setEmailAddress("IDP");
         escalationMatrix.setMobile("IDP");
-        Client client = getClient();
-        escalationMatrix.setClient(client);
+        Organization organization = getOrganization();
+        escalationMatrix.setOrganization(organization);
         escalationMatrix = bizlogFinanceEscalationRepository.save(escalationMatrix);
 
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/bizlog-finance-escalation/{id}", client.getId(),
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/bizlog-finance-escalation/{id}", organization.getId(),
                 escalationMatrix.getId())).andDo(print()).andExpect(status().isNoContent());
 
     }

@@ -1,7 +1,7 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.dto.locationService.LocationDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.location.Location;
 import com.bizlog.rms.repository.LocationRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
@@ -32,13 +32,13 @@ public class LocationApiTest extends BaseApiTest {
     @BeforeEach
     void beforeEach() {
         super.beforeEach();
-        DataLoaderUtil.getLocations(getClient()).forEach(locationRepository::save);
+        DataLoaderUtil.getLocations(getOrganization()).forEach(locationRepository::save);
     }
 
     @AfterEach
     void afterEach() {
         locationRepository.deleteAll();
-        clientRepository.deleteAll();
+        organizationRepository.deleteAll();
 
     }
 
@@ -60,7 +60,7 @@ public class LocationApiTest extends BaseApiTest {
 
     @Test
     void should_create_new_location() throws Exception {
-        Client client = getClient();
+        Organization organization = getOrganization();
         Location location = new Location();
         location.setCountries(Arrays.asList("India", "Usa"));
         location.setStates(Arrays.asList("Karnataka ", "up", "bihar"));
@@ -69,9 +69,8 @@ public class LocationApiTest extends BaseApiTest {
         location.setVehicle(Arrays.asList("threeVelor", "fourVelor", "bike"));
         location.setPinCodes(Arrays.asList("560001", "560028", "560029"));
         location.setTransportLinehaul("bizlog");
-        this.mockMvc
-                .perform(post("/api/v1/cos/{clientId}/location", client.getId()).contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(location)))
+        this.mockMvc.perform(post("/api/v1/cos/{clientId}/location", organization.getId())
+                .contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(location)))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 
@@ -103,8 +102,8 @@ public class LocationApiTest extends BaseApiTest {
         initialLocation.setVehicle(Arrays.asList("threeVelor", "fourVelor", "bike"));
         initialLocation.setPinCodes(Arrays.asList("560001", "560028", "560029"));
         initialLocation.setTransportLinehaul("bizlog");
-        Client client = getClient();
-        initialLocation.setClient(client);
+        Organization organization = getOrganization();
+        initialLocation.setOrganization(organization);
         initialLocation = locationRepository.save(initialLocation);
 
         LocationDTO updatedLocation = getMapper().toDTO(initialLocation);
@@ -114,7 +113,7 @@ public class LocationApiTest extends BaseApiTest {
         updatedLocation.setTransportLinehaul("bizlog");
 
         this.mockMvc
-                .perform(put("/api/v1/cos/{clientId}/location/{id}", client.getId(), initialLocation.getId())
+                .perform(put("/api/v1/cos/{clientId}/location/{id}", organization.getId(), initialLocation.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedLocation).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updatedLocation).orElse("")));
@@ -148,10 +147,10 @@ public class LocationApiTest extends BaseApiTest {
         location.setVehicle(Arrays.asList("threeVelor", "fourVelor", "bike"));
         location.setPinCodes(Arrays.asList("560001", "560028", "560029"));
         location.setTransportLinehaul("bizlog");
-        Client client = getClient();
-        location.setClient(client);
+        Organization organization = getOrganization();
+        location.setOrganization(organization);
         location = locationRepository.save(location);
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/location/{id}", client.getId(), location.getId()))
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/location/{id}", organization.getId(), location.getId()))
                 .andDo(print()).andExpect(status().isNoContent());
     }
 

@@ -1,5 +1,6 @@
 package com.bizlog.rms.dto;
 
+import com.bizlog.rms.entities.OrganizationType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class ClientDTO {
+public class OrganizationDTO {
 
     private Long id;
 
@@ -31,7 +32,11 @@ public class ClientDTO {
     @NotNull(message = "active value should not be null")
     private Boolean active;
 
-    private String type;
+    @NotBlank(message = "organisation type must not be null")
+    private OrganizationType organisationType;
+
+    private Long parentOrganisationId;
+
     private Long dateOfOnboarding;
 
 }

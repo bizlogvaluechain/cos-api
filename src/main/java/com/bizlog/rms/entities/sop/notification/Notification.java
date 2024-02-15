@@ -11,12 +11,11 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "notification_tbl")
-public class  Notification extends BaseClientEntity {
+public class Notification extends BaseClientEntity {
     @Column(name = "sms", nullable = false)
     private List<String> sms;
 
     @Column(name = "email", nullable = false)
     private List<String> email;
-
 
 }

@@ -28,12 +28,13 @@ public class ProductResource extends BaseClientResource<Product, ProductDTO, Pro
         payloadDTO.setClientId(clientId);
         return super.create(clientId, payloadDTO);
     }
+
     @Override
     protected void preValidate(Long clientId, ProductDTO payloadDTO, OperationType operationType) {
         super.preValidate(clientId, payloadDTO, operationType);
         if (operationType == OperationType.CREATE) {
             getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
+                    .findByOrganization(getOrganizationRepository().findById(clientId)
                             .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
                     .ifPresent(X -> {
                         throw new AlreadyExistException(clientId);
@@ -61,6 +62,7 @@ public class ProductResource extends BaseClientResource<Product, ProductDTO, Pro
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+
     @Override
     @Transactional
     public ResponseEntity<ProductDTO> getByClientId(@PathVariable("clientId") Long clientId) {

@@ -40,7 +40,7 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
         super.preValidate(clientId, payloadDTO, operationType);
         if (operationType == OperationType.CREATE) {
             Optional<CustomerInfo> entity = getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
+                    .findByOrganization(getOrganizationRepository().findById(clientId)
                             .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)));
             entity.ifPresent(X -> {
                 throw new AlreadyExistException(clientId);
@@ -60,7 +60,7 @@ public class CustomerInfoResource extends BaseClientResource<CustomerInfo, Custo
     public ResponseEntity<String> uploadFile(@PathVariable Long clientId,
             @RequestParam(value = "file") MultipartFile file, @RequestParam String fileName) {
         CustomerInfo customerInfo = getBaseClientRepository()
-                .findByClient(getClientRepository().findById(clientId)
+                .findByOrganization(getOrganizationRepository().findById(clientId)
                         .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
                 .orElseThrow(() -> new ResourceNotFoundException("entity not found", "id", clientId));
         String s3Key = createResourceInS3(file);

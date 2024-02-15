@@ -4,11 +4,11 @@ import com.bizlog.rms.dto.BaseDTO;
 import com.bizlog.rms.dto.PageResponse;
 
 import com.bizlog.rms.entities.BaseClientEntity;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.BaseClientRepository;
-import com.bizlog.rms.repository.ClientRepository;
+import com.bizlog.rms.repository.OrganizationRepository;
 import com.bizlog.rms.rsql.CustomRsqlVisitor;
 import com.bizlog.rms.utils.OperationType;
 
@@ -47,7 +47,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     private final BaseClientRepository<V, Long> baseClientRepository;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private OrganizationRepository organizationRepository;
 
     @Autowired
     private EntityManager entityManager;
@@ -86,11 +86,11 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
     @Transactional
     public ResponseEntity<O> create(Long clientId, I payloadDTO) {
-        Client client = clientRepository.findById(clientId)
+        Organization organization = organizationRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("  Client not found", "id", clientId));
         preValidate(clientId, payloadDTO, OperationType.CREATE);
         V entity = toEntity(payloadDTO);
-        entity.setClient(client);
+        entity.setOrganization(organization);
         validate(clientId, payloadDTO, entity, OperationType.CREATE);
         // other logic if any
         prePersist(clientId, payloadDTO, OperationType.CREATE);
@@ -102,11 +102,11 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     }
 
     public ResponseEntity<O> update(Long clientId, Long id, I payloadDTO) {
-        Client client = clientRepository.findById(clientId)
+        Organization organization = organizationRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
         preValidate(clientId, payloadDTO, OperationType.UPDATE);
         V entity = toEntity(payloadDTO);
-        entity.setClient(client);
+        entity.setOrganization(organization);
         validate(clientId, payloadDTO, entity, OperationType.UPDATE);
         // other logic if any
         prePersist(clientId, payloadDTO, OperationType.UPDATE);
@@ -118,9 +118,9 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
     public ResponseEntity<O> get(Long clientId, Long id) {
         log.info("Request recived to process with client id: {} and id:{} ", clientId, id);
-        Client client = clientRepository.findById(clientId)
+        Organization organization = organizationRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
-        log.info("Client: {}", client);
+        log.info("Client: {}", organization);
         preValidate(clientId, null, OperationType.GET);
 
         validate(clientId, null, null, OperationType.GET);
@@ -132,13 +132,13 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
     public ResponseEntity<PageResponse<O>> getAllConfig(Long clientId, Pageable pageable) {
         log.debug("Request to fetch entities for clientId {} and pageable {}", clientId, pageable);
-        Client client = clientRepository.findById(clientId)
+        Organization organization = organizationRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
         preValidate(clientId, null, OperationType.GET);
 
         validate(clientId, null, null, OperationType.GET);
         // other logic if any
-        Page<V> pageData = getBaseClientRepository().findAllByClient(client, pageable);
+        Page<V> pageData = getBaseClientRepository().findAllByOrganization(organization, pageable);
         List<O> outPutDTO = pageData.getContent().stream().map(this::toDTO).collect(Collectors.toList());
         Map<String, Object> meta = getMetaData(pageData);
         PageResponse<O> pageResponse = new PageResponse<>(meta, outPutDTO);
@@ -155,9 +155,9 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     }
 
     public ResponseEntity<Void> delete(Long clientId, Long id) {
-        Client client = clientRepository.findById(clientId)
+        Organization organization = organizationRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
-        log.info("Client: {}", client);
+        log.info("Client: {}", organization);
         preValidate(clientId, null, OperationType.DELETE);
         validate(clientId, null, null, OperationType.DELETE);
         // other logic if any
@@ -169,7 +169,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
     public ResponseEntity<O> getByClientId(Long clientId) {
         V entity = baseClientRepository
-                .findByClient(clientRepository.findById(clientId)
+                .findByOrganization(organizationRepository.findById(clientId)
                         .orElseThrow(() -> new ResourceNotFoundException("client", "clientId", clientId)))
                 .orElseThrow(() -> new ResourceNotFoundException("entity", "clientId", clientId));
         O response = toDTO(entity);

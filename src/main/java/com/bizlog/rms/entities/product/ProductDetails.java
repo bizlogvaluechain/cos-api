@@ -26,5 +26,4 @@ public class ProductDetails {
     @Column(name = "volumetricWeight", nullable = false)
     private String volumetricWeight;
 
-
 }

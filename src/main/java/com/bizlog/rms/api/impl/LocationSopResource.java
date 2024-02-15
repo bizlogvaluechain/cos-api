@@ -17,48 +17,50 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @Slf4j
-public class LocationSopResource extends BaseClientResource<LocationSop, LocationSopDTO,LocationSopDTO> implements LocationSopAPI {
+public class LocationSopResource extends BaseClientResource<LocationSop, LocationSopDTO, LocationSopDTO>
+        implements LocationSopAPI {
     public LocationSopResource(BaseClientRepository<LocationSop, Long> baseClientRepository) {
         super(baseClientRepository);
     }
+
     @Override
     protected void preValidate(Long clientId, LocationSopDTO payloadDTO, OperationType operationType) {
         super.preValidate(clientId, payloadDTO, operationType);
         if (operationType == OperationType.CREATE) {
             getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
+                    .findByOrganization(getOrganizationRepository().findById(clientId)
                             .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
                     .ifPresent(X -> {
                         throw new AlreadyExistException(clientId);
                     });
         }
     }
+
     @Transactional
     @Override
     public ResponseEntity<LocationSopDTO> create(@PathVariable("clientId") Long clientId,
-                                                  @RequestBody @Valid LocationSopDTO locationSopDTO) {
+            @RequestBody @Valid LocationSopDTO locationSopDTO) {
         locationSopDTO.setClientId(clientId);
         return super.create(clientId, locationSopDTO);
     }
 
     @Override
     public ResponseEntity<LocationSopDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
-                                                  @RequestBody @Valid LocationSopDTO locationSopDTO) {
+            @RequestBody @Valid LocationSopDTO locationSopDTO) {
         return super.update(clientId, id, locationSopDTO);
     }
 
     @Override
     public ResponseEntity<LocationSopDTO> getById(@PathVariable("clientId") Long clientId,
-                                                   @PathVariable("id") Long id) {
+            @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
     public ResponseEntity<PageResponse<LocationSopDTO>> getAll(@PathVariable("clientId") Long clientId,
-                                                                Pageable pageable) {
+            Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
     }
@@ -68,6 +70,7 @@ public class LocationSopResource extends BaseClientResource<LocationSop, Locatio
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+
     @Override
     @Transactional
     public ResponseEntity<LocationSopDTO> getByClientId(@PathVariable("clientId") Long clientId) {

@@ -26,7 +26,7 @@ public class VehicleResource extends BaseClientResource<Vehicle, VehicleDTO, Veh
         super.preValidate(clientId, payloadDTO, operationType);
         if (operationType == OperationType.CREATE) {
             getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
+                    .findByOrganization(getOrganizationRepository().findById(clientId)
                             .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
                     .ifPresent(X -> {
                         throw new AlreadyExistException(clientId);
@@ -61,6 +61,7 @@ public class VehicleResource extends BaseClientResource<Vehicle, VehicleDTO, Veh
             @RequestBody VehicleDTO payloadDTO) {
         return super.update(clientId, id, payloadDTO);
     }
+
     @Override
     @Transactional
     public ResponseEntity<VehicleDTO> getByClientId(@PathVariable("clientId") Long clientId) {

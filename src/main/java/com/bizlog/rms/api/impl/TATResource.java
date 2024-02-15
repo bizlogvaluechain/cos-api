@@ -21,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
-public class TATResource extends BaseClientResource<TAT, TATDTO,TATDTO> implements TATAPI {
+public class TATResource extends BaseClientResource<TAT, TATDTO, TATDTO> implements TATAPI {
     public TATResource(BaseClientRepository<TAT, Long> baseClientRepository) {
         super(baseClientRepository);
     }
@@ -31,7 +31,7 @@ public class TATResource extends BaseClientResource<TAT, TATDTO,TATDTO> implemen
         super.preValidate(clientId, payloadDTO, operationType);
         if (operationType == OperationType.CREATE) {
             getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
+                    .findByOrganization(getOrganizationRepository().findById(clientId)
                             .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
                     .ifPresent(X -> {
                         throw new AlreadyExistException(clientId);
@@ -41,33 +41,30 @@ public class TATResource extends BaseClientResource<TAT, TATDTO,TATDTO> implemen
 
     @Transactional
     @Override
-    public ResponseEntity<TATDTO> create(@PathVariable("clientId") Long clientId,
-                                                 @Valid TATDTO tatdto) {
+    public ResponseEntity<TATDTO> create(@PathVariable("clientId") Long clientId, @Valid TATDTO tatdto) {
         return super.create(clientId, tatdto);
     }
 
     @Override
-    public ResponseEntity<TATDTO> getById(@PathVariable("clientId") Long clientId,
-                                                  @PathVariable("id") Long id) {
+    public ResponseEntity<TATDTO> getById(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
-    public ResponseEntity<PageResponse<TATDTO>> getAll(@PathVariable("clientId") Long clientId,
-                                                               Pageable pageable) {
+    public ResponseEntity<PageResponse<TATDTO>> getAll(@PathVariable("clientId") Long clientId, Pageable pageable) {
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
     }
 
     @Override
     public ResponseEntity<PageResponse<TATDTO>> search(Long clientId, Map<String, String> searchCriteria,
-                                                               Pageable pageable) {
+            Pageable pageable) {
         return super.search(clientId, searchCriteria, pageable);
     }
 
     @Override
     public ResponseEntity<TATDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
-                                                 @RequestBody @Valid TATDTO tatdto) {
+            @RequestBody @Valid TATDTO tatdto) {
         return super.update(clientId, id, tatdto);
     }
 
@@ -76,6 +73,7 @@ public class TATResource extends BaseClientResource<TAT, TATDTO,TATDTO> implemen
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+
     @Override
     @Transactional
     public ResponseEntity<TATDTO> getByClientId(@PathVariable("clientId") Long clientId) {

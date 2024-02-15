@@ -1,7 +1,7 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.dto.productInformation.ProductInformationDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.productInformation.ProductInformation;
 import com.bizlog.rms.entities.productInformation.ProductSize;
 import com.bizlog.rms.repository.ProductInformatiomRepository;
@@ -34,14 +34,14 @@ public class ProductionInformationApiTest extends BaseApiTest {
     @BeforeEach
     void beforeEach() {
         super.beforeEach();
-        DataLoaderUtil.getProductInformation(getClient()).forEach(productInformatiomRepository::save);
+        DataLoaderUtil.getProductInformation(getOrganization()).forEach(productInformatiomRepository::save);
     }
 
     @AfterEach
     void afterEach() {
 
         productInformatiomRepository.deleteAll();
-        clientRepository.deleteAll();
+        organizationRepository.deleteAll();
 
     }
 
@@ -63,7 +63,7 @@ public class ProductionInformationApiTest extends BaseApiTest {
 
     @Test
     void should_create_new_productInformation() throws Exception {
-        Client client = getClient();
+        Organization organization = getOrganization();
         ProductSize productSize = new ProductSize();
         productSize.setLarge("yes");
         productSize.setMini("no");
@@ -85,7 +85,7 @@ public class ProductionInformationApiTest extends BaseApiTest {
         productInformation.setIsVehicleNeeded(true);
         productInformation.setIsWareHousingNeeded(true);
         this.mockMvc
-                .perform(post("/api/v1/cos/{clientId}/product-information", client.getId())
+                .perform(post("/api/v1/cos/{clientId}/product-information", organization.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(productInformation)))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
@@ -142,8 +142,8 @@ public class ProductionInformationApiTest extends BaseApiTest {
         initialProductInformation.setIsPackingNeeded(true);
         initialProductInformation.setIsVehicleNeeded(true);
         initialProductInformation.setIsWareHousingNeeded(true);
-        Client client = getClient();
-        initialProductInformation.setClient(client);
+        Organization organization = getOrganization();
+        initialProductInformation.setOrganization(organization);
         initialProductInformation = productInformatiomRepository.save(initialProductInformation);
 
         ProductInformationDTO updateProductInformation = getMapper().toDTO(initialProductInformation);
@@ -155,7 +155,7 @@ public class ProductionInformationApiTest extends BaseApiTest {
         updateProductInformation.setIsVehicleNeeded(true);
 
         this.mockMvc
-                .perform(put("/api/v1/cos/{clientId}/product-information/{id}", client.getId(),
+                .perform(put("/api/v1/cos/{clientId}/product-information/{id}", organization.getId(),
                         initialProductInformation.getId()).contentType(MediaType.APPLICATION_JSON)
                                 .content(toJson(updateProductInformation).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
@@ -205,12 +205,11 @@ public class ProductionInformationApiTest extends BaseApiTest {
         productInformation.setIsPackingNeeded(true);
         productInformation.setIsVehicleNeeded(true);
         productInformation.setIsWareHousingNeeded(true);
-        Client client = getClient();
-        productInformation.setClient(client);
+        Organization organization = getOrganization();
+        productInformation.setOrganization(organization);
         productInformation = productInformatiomRepository.save(productInformation);
-        this.mockMvc.perform(
-                delete("/api/v1/cos/{clientId}/product-information/{id}", client.getId(), productInformation.getId()))
-                .andDo(print()).andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/product-information/{id}", organization.getId(),
+                productInformation.getId())).andDo(print()).andExpect(status().isNoContent());
     }
 
     @Test

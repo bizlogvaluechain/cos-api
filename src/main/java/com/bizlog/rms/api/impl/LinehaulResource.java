@@ -27,13 +27,14 @@ public class LinehaulResource extends BaseClientResource<Linehaul, LinehaulDTO, 
         super.preValidate(clientId, payloadDTO, operationType);
         if (operationType == OperationType.CREATE) {
             getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
+                    .findByOrganization(getOrganizationRepository().findById(clientId)
                             .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
                     .ifPresent(X -> {
                         throw new AlreadyExistException(clientId);
                     });
         }
     }
+
     @Override
     public ResponseEntity<LinehaulDTO> create(@PathVariable("clientId") Long clientId,
             @RequestBody LinehaulDTO payloadDTO) {

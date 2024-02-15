@@ -9,9 +9,9 @@ import lombok.Data;
 @Data
 public class Packing extends BaseClientEntity {
 
-    @Column(name = "packingRequired",nullable = false)
+    @Column(name = "packingRequired", nullable = false)
     private String packingRequired;
 
-    @Column(name = "packingType",nullable = false)
+    @Column(name = "packingType", nullable = false)
     private String packingType;
 }

@@ -3,7 +3,7 @@ package com.bizlog.rms.api.impl;
 import com.bizlog.rms.api.BizlogOpsEscalationAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.escalationMatrix.BizlogOpsEscalationDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.escalationMatrix.BizlogOpsEscalation;
 import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
@@ -32,10 +32,10 @@ public class BizlogOpsEscalationResource
     public ResponseEntity<List<BizlogOpsEscalationDTO>> create(@PathVariable("clientId") Long clientId,
             @RequestBody @Valid List<BizlogOpsEscalationDTO> inputDTOs) {
         List<BizlogOpsEscalationDTO> outputDTOs = inputDTOs.stream().map(inputDTO -> {
-            Client client = getClientRepository().findById(clientId)
+            Organization organization = getOrganizationRepository().findById(clientId)
                     .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
             BizlogOpsEscalation entity = toEntity(inputDTO);
-            entity.setClient(client);
+            entity.setOrganization(organization);
             BizlogOpsEscalation createdEntity = getBaseClientRepository().save(entity);
             BizlogOpsEscalationDTO outPutDTO = toDTO(createdEntity);
             return outPutDTO;
@@ -72,6 +72,7 @@ public class BizlogOpsEscalationResource
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+
     @Override
     @Transactional
     public ResponseEntity<BizlogOpsEscalationDTO> getByClientId(@PathVariable("clientId") Long clientId) {

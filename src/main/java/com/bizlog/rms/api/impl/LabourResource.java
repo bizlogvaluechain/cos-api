@@ -27,7 +27,7 @@ public class LabourResource extends BaseClientResource<Labour, LabourDTO, Labour
         super.preValidate(clientId, payloadDTO, operationType);
         if (operationType == OperationType.CREATE) {
             getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
+                    .findByOrganization(getOrganizationRepository().findById(clientId)
                             .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
                     .ifPresent(X -> {
                         throw new AlreadyExistException(clientId);
@@ -67,6 +67,7 @@ public class LabourResource extends BaseClientResource<Labour, LabourDTO, Labour
             @RequestBody LabourDTO payloadDTO) {
         return super.update(clientId, id, payloadDTO);
     }
+
     @Override
     @Transactional
     public ResponseEntity<LabourDTO> getByClientId(@PathVariable("clientId") Long clientId) {

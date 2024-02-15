@@ -27,7 +27,6 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
         super(baseClientRepository);
     }
 
-
     @Transactional
     @Override
     public ResponseEntity<FrequencyDTO> create(@PathVariable("clientId") Long clientId,
@@ -53,6 +52,7 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
         log.info("get all data");
         return super.getAllConfig(clientId, pageable);
     }
+
     @Override
     @Transactional
     public ResponseEntity<FrequencyDTO> getByClientId(@PathVariable("clientId") Long clientId) {

@@ -1,7 +1,7 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.dto.frequency.FrequencyDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
 import com.bizlog.rms.repository.FrequencyRepository;
 import com.bizlog.rms.rsql.CustomRsqlVisitor;
@@ -38,13 +38,13 @@ public class FrequencyApiTest extends BaseApiTest {
     @BeforeEach
     void beforeEach() {
         super.beforeEach();
-        DataLoaderUtil.getFrequency(getClient()).forEach(frequencyRepository::save);
+        DataLoaderUtil.getFrequency(getOrganization()).forEach(frequencyRepository::save);
     }
 
     @AfterEach
     void afterEach() {
         frequencyRepository.deleteAll();
-        clientRepository.deleteAll();
+        organizationRepository.deleteAll();
 
     }
 
@@ -66,10 +66,10 @@ public class FrequencyApiTest extends BaseApiTest {
 
     @Test
     void givenTicketsVolume_whenGettingListOf_thenCorrect() {
-        Client client = getClient();
+        Organization organization = getOrganization();
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setClient(client);
+        frequency.setOrganization(organization);
         frequency.setFrequencyUnit("abc");
         frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
@@ -89,10 +89,10 @@ public class FrequencyApiTest extends BaseApiTest {
 
     @Test
     void givenTicketsVolume_whenGettingListOf_thenInCorrect() {
-        Client client = getClient();
+        Organization organization = getOrganization();
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setClient(client);
+        frequency.setOrganization(organization);
         frequency.setFrequencyUnit("abc");
         frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
@@ -113,10 +113,10 @@ public class FrequencyApiTest extends BaseApiTest {
     @Test
     public void givenTicketsVolume_whenGettingListOfUsers_thenCorrect() {
 
-        Client client = getClient();
+        Organization organization = getOrganization();
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setClient(client);
+        frequency.setOrganization(organization);
         frequency.setFrequencyUnit("abc");
         frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
@@ -138,10 +138,10 @@ public class FrequencyApiTest extends BaseApiTest {
     @Test
     public void givenTicketsVolume_whenGettingListOfUsers_thenInCorrect() {
 
-        Client client = getClient();
+        Organization organization = getOrganization();
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setClient(client);
+        frequency.setOrganization(organization);
         frequency.setFrequencyUnit("abc");
         frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
@@ -163,10 +163,10 @@ public class FrequencyApiTest extends BaseApiTest {
     @Test
     public void givenMinTicketsVolume_whenGettingListOfUsers_thenCorrect() {
 
-        Client client = getClient();
+        Organization organization = getOrganization();
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setClient(client);
+        frequency.setOrganization(organization);
         frequency.setFrequencyUnit("abc");
         frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
@@ -188,10 +188,10 @@ public class FrequencyApiTest extends BaseApiTest {
     @Test
     public void givenMaxTicketsVolume_whenGettingListOfUsers_thenCorrect() {
 
-        Client client = getClient();
+        Organization organization = getOrganization();
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setClient(client);
+        frequency.setOrganization(organization);
         frequency.setFrequencyUnit("abc");
         frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
@@ -213,10 +213,10 @@ public class FrequencyApiTest extends BaseApiTest {
     @Test
     public void givenTicketsVolumePrefix_whenGettingListOfUsers_thenCorrect() {
 
-        Client client = getClient();
+        Organization organization = getOrganization();
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setClient(client);
+        frequency.setOrganization(organization);
         frequency.setFrequencyUnit("abc");
         frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
@@ -238,10 +238,10 @@ public class FrequencyApiTest extends BaseApiTest {
     @Test
     public void givenTicketsVolumePrefix_whenGettingListOfUsers_thenInCorrect() {
 
-        Client client = getClient();
+        Organization organization = getOrganization();
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setClient(client);
+        frequency.setOrganization(organization);
         frequency.setFrequencyUnit("abc");
         frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
@@ -263,10 +263,10 @@ public class FrequencyApiTest extends BaseApiTest {
     @Test
     public void ListOfTicketsVolume_whenGettingListOfUsers_thenCorrect() {
 
-        Client client = getClient();
+        Organization organization = getOrganization();
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setClient(client);
+        frequency.setOrganization(organization);
         frequency.setFrequencyUnit("abc");
         frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
@@ -288,10 +288,10 @@ public class FrequencyApiTest extends BaseApiTest {
     @Test
     public void ListOfTicketsVolume_whenGettingListOfUsers_thenInCorrect() {
 
-        Client client = getClient();
+        Organization organization = getOrganization();
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setClient(client);
+        frequency.setOrganization(organization);
         frequency.setFrequencyUnit("abc");
         frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
@@ -312,10 +312,10 @@ public class FrequencyApiTest extends BaseApiTest {
 
     @Test
     void should_create_new_frequency() throws Exception {
-        Client client = getClient();
+        Organization organization = getOrganization();
         Frequency frequency = new Frequency();
         frequency.setId(1L);
-        frequency.setClient(client);
+        frequency.setOrganization(organization);
         frequency.setFrequencyUnit("abc");
         frequency.setFrequency(100L);
         frequency.setActivityStartdate(23122023L);
@@ -328,7 +328,7 @@ public class FrequencyApiTest extends BaseApiTest {
         frequency.setOperationDays(5L);
 
         this.mockMvc
-                .perform(post("/api/v1/cos/{clientId}/frequency", client.getId())
+                .perform(post("/api/v1/cos/{clientId}/frequency", organization.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(frequency).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
@@ -366,8 +366,8 @@ public class FrequencyApiTest extends BaseApiTest {
         intialFrequency.setOperationsOnStatutoryHolidays(false);
         intialFrequency.setOperatoinsOnClientHolidays(true);
         intialFrequency.setOperationDays(5L);
-        Client client = getClient();
-        intialFrequency.setClient(client);
+        Organization organization = getOrganization();
+        intialFrequency.setOrganization(organization);
         intialFrequency = frequencyRepository.save(intialFrequency);
 
         FrequencyDTO updateFrequency = getMapper().toDTO(intialFrequency);
@@ -378,7 +378,7 @@ public class FrequencyApiTest extends BaseApiTest {
         updateFrequency.setOperationEndTime(23122023L);
 
         this.mockMvc
-                .perform(put("/api/v1/cos/{clientId}/frequency/{id}", client.getId(), intialFrequency.getId())
+                .perform(put("/api/v1/cos/{clientId}/frequency/{id}", organization.getId(), intialFrequency.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateFrequency).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful())
                 .andExpect(content().json(toJson(updateFrequency).orElse("")));
@@ -414,11 +414,12 @@ public class FrequencyApiTest extends BaseApiTest {
         intialFrequency.setOperationsOnStatutoryHolidays(false);
         intialFrequency.setOperatoinsOnClientHolidays(true);
         intialFrequency.setOperationDays(5L);
-        Client client = getClient();
-        intialFrequency.setClient(client);
+        Organization organization = getOrganization();
+        intialFrequency.setOrganization(organization);
         intialFrequency = frequencyRepository.save(intialFrequency);
 
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/frequency/{id}", client.getId(), intialFrequency.getId()))
+        this.mockMvc
+                .perform(delete("/api/v1/cos/{clientId}/frequency/{id}", organization.getId(), intialFrequency.getId()))
                 .andDo(print()).andExpect(status().isNoContent());
     }
 

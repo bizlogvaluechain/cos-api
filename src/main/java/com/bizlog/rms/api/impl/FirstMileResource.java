@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class FirstMileResource extends BaseClientResource<FirstMile, FirstMileDTO,FirstMileDTO> implements FirstMileAPI {
+public class FirstMileResource extends BaseClientResource<FirstMile, FirstMileDTO, FirstMileDTO>
+        implements FirstMileAPI {
     public FirstMileResource(BaseClientRepository<FirstMile, Long> baseClientRepository) {
         super(baseClientRepository);
     }
+
     @Override
     public ResponseEntity<FirstMileDTO> getById(Long clientId, Long id) {
         return super.get(clientId, id);
@@ -40,14 +42,14 @@ public class FirstMileResource extends BaseClientResource<FirstMile, FirstMileDT
 
     @Override
     public ResponseEntity<FirstMileDTO> create(@PathVariable("clientId") Long clientId,
-                                            @RequestBody @Valid FirstMileDTO payloadDTO) {
+            @RequestBody @Valid FirstMileDTO payloadDTO) {
         payloadDTO.setClientId(clientId);
         return super.create(clientId, payloadDTO);
     }
 
     @Override
     public ResponseEntity<FirstMileDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
-                                            @RequestBody FirstMileDTO payloadDTO) {
+            @RequestBody FirstMileDTO payloadDTO) {
         return super.update(clientId, id, payloadDTO);
     }
 
@@ -55,6 +57,7 @@ public class FirstMileResource extends BaseClientResource<FirstMile, FirstMileDT
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+
     @Override
     @Transactional
     public ResponseEntity<FirstMileDTO> getByClientId(@PathVariable("clientId") Long clientId) {

@@ -1,6 +1,6 @@
 package com.bizlog.rms.mapper;
 
-import com.bizlog.rms.dto.ClientDTO;
+import com.bizlog.rms.dto.OrganizationDTO;
 import com.bizlog.rms.dto.ClientSettingDTO;
 import com.bizlog.rms.dto.SOP_TAT.*;
 import com.bizlog.rms.dto.TAT.TATDTO;
@@ -20,7 +20,7 @@ import com.bizlog.rms.dto.product.*;
 import com.bizlog.rms.dto.productInformation.ProductInformationDTO;
 import com.bizlog.rms.dto.users.UserDTO;
 import com.bizlog.rms.entities.ClientSetting;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 
 import com.bizlog.rms.entities.TAT.TAT;
 
@@ -56,9 +56,9 @@ import java.util.Map;
 @Mapper(componentModel = "spring")
 public interface GenericMapper {
 
-    ClientDTO toDTO(Client entity);
+    OrganizationDTO toDTO(Organization entity);
 
-    Client toEntity(ClientDTO dto);
+    Organization toEntity(OrganizationDTO dto);
 
     ClientSettingDTO toDTO(ClientSetting entity);
 

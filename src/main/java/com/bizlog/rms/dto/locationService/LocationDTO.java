@@ -16,6 +16,6 @@ public class LocationDTO extends BaseDTO {
     private List<String> cities;
     private List<String> areas;
     private List<String> pinCodes;
-    private  String transportLinehaul;
-    private  List<String> vehicle;
+    private String transportLinehaul;
+    private List<String> vehicle;
 }

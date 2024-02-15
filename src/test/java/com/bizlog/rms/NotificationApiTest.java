@@ -1,7 +1,7 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.dto.notification.NotificationDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 
 import com.bizlog.rms.entities.sop.notification.Notification;
 import com.bizlog.rms.repository.NotificationRepository;
@@ -33,13 +33,13 @@ public class NotificationApiTest extends BaseApiTest {
     @BeforeEach
     void beforeEach() {
         super.beforeEach();
-        DataLoaderUtil.getNotification(getClient()).forEach(notificationRepository::save);
+        DataLoaderUtil.getNotification(getOrganization()).forEach(notificationRepository::save);
     }
 
     @AfterEach
     void afterEach() {
         notificationRepository.deleteAll();
-        clientRepository.deleteAll();
+        organizationRepository.deleteAll();
 
     }
 
@@ -61,13 +61,13 @@ public class NotificationApiTest extends BaseApiTest {
 
     @Test
     void should_create_new_notification() throws Exception {
-        Client client = getClient();
+        Organization organization = getOrganization();
         Notification notification = new Notification();
         notification.setSms(Arrays.asList("client", "customer"));
         notification.setEmail(Arrays.asList("client", "customer"));
 
         this.mockMvc
-                .perform(post("/api/v1/cos/{clientId}/notification", client.getId())
+                .perform(post("/api/v1/cos/{clientId}/notification", organization.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(notification).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
@@ -91,14 +91,14 @@ public class NotificationApiTest extends BaseApiTest {
         Notification initialNotification = new Notification();
         initialNotification.setSms(Arrays.asList("client", "customer"));
         initialNotification.setEmail(Arrays.asList("client", "customer"));
-        Client client = getClient();
-        initialNotification.setClient(client);
+        Organization organization = getOrganization();
+        initialNotification.setOrganization(organization);
         initialNotification = notificationRepository.save(initialNotification);
 
         NotificationDTO updateNotification = getMapper().toDTO(initialNotification);
         updateNotification.setSms(Arrays.asList("client"));
-        this.mockMvc
-                .perform(put("/api/v1/cos/{clientId}/notification/{id}", client.getId(), initialNotification.getId())
+        this.mockMvc.perform(
+                put("/api/v1/cos/{clientId}/notification/{id}", organization.getId(), initialNotification.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updateNotification).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updateNotification).orElse("")));
@@ -123,10 +123,11 @@ public class NotificationApiTest extends BaseApiTest {
         Notification notification = new Notification();
         notification.setSms(Arrays.asList("client"));
         notification.setEmail(Arrays.asList("customer"));
-        Client client = getClient();
-        notification.setClient(client);
+        Organization organization = getOrganization();
+        notification.setOrganization(organization);
         notification = notificationRepository.save(notification);
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/notification/{id}", client.getId(), notification.getId()))
+        this.mockMvc
+                .perform(delete("/api/v1/cos/{clientId}/notification/{id}", organization.getId(), notification.getId()))
                 .andDo(print()).andExpect(status().isNoContent());
     }
 

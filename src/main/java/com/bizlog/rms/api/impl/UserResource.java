@@ -3,7 +3,7 @@ package com.bizlog.rms.api.impl;
 import com.bizlog.rms.api.UserAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.users.UserDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.role.Role;
 import com.bizlog.rms.entities.users.User;
 import com.bizlog.rms.exception.ResourceNotFoundException;
@@ -61,10 +61,10 @@ public class UserResource extends BaseClientResource<User, UserDTO, UserDTO> imp
     @Transactional
     @Override
     public ResponseEntity<UserDTO> create(@Valid @RequestBody UserDTO userDTO) {
-        Client client = getClientRepository().findById(userDTO.getClientId())
+        Organization organization = getOrganizationRepository().findById(userDTO.getClientId())
                 .orElseThrow(() -> new ResourceNotFoundException("  Client not found", "id", userDTO.getClientId()));
         User user = getMapper().toEntity(userDTO);
-        user.setClient(client);
+        user.setOrganization(organization);
         user = userRepository.save(user);
         UserDTO userDTO1 = getMapper().toDTO(user);
         return ResponseEntity.ok().body(userDTO1);
@@ -83,7 +83,7 @@ public class UserResource extends BaseClientResource<User, UserDTO, UserDTO> imp
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found", "id", id));
 
-        if (!user.getClient().getId().equals(clientId)) {
+        if (!user.getOrganization().getId().equals(clientId)) {
             throw new ResourceNotFoundException("User not found for client", "id", id);
         }
         userRepository.delete(user);

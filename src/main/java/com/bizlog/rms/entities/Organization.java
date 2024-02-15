@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "client")
+@Table(name = "organization")
 @Data
-public class Client {
+public class Organization {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +30,12 @@ public class Client {
     @Column(name = "active")
     private Boolean active;
 
-    @Column(name = "type")
-    private String type;
-
     @Column(name = "dateOfOnboarding")
     private Long dateOfOnboarding;
 
+    @Column(name = "organizationType")
+    private OrganizationType organizationType;
+
+    @Column(name = "organisationId")
+    private Long parentOrganizationId;
 }
