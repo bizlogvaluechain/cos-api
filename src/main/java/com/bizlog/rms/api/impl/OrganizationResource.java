@@ -82,13 +82,10 @@ public class OrganizationResource implements OrganizationAPI {
             Optional.ofNullable(organizationDTO.getParentOrganizationId()).ifPresentOrElse(orgId->{
                 OrganizationType organizationType=organizationRepository.findById(orgId).map(Organization::getOrganizationType)
                         .orElseThrow(()->new RuntimeException());
-                if(organizationDTO.getOrganizationType().equals(OrganizationType.CLIENT)&&organizationType.equals(OrganizationType.LOGISTIC_PROVIDER)){
-
-                } else if (organizationDTO.getOrganizationType().equals(OrganizationType.LOGISTIC_PROVIDER)&&organizationType.equals(OrganizationType.ROOT)) {
-
-                }
-                else {
-                    throw  new RuntimeException();
+                if(!(organizationDTO.getOrganizationType().equals(OrganizationType.CLIENT)&&organizationType.equals(OrganizationType.LOGISTIC_PROVIDER))){
+                    if (!(organizationDTO.getOrganizationType().equals(OrganizationType.LOGISTIC_PROVIDER)&&organizationType.equals(OrganizationType.ROOT))) {
+                        throw  new RuntimeException();
+                    }
                 }
                     }
                     ,()->{
