@@ -3,19 +3,24 @@ package com.bizlog.rms.api.impl;
 import com.bizlog.rms.api.OrganizationAPI;
 import com.bizlog.rms.dto.OrganizationDTO;
 import com.bizlog.rms.entities.Organization;
+import com.bizlog.rms.entities.OrganizationType;
 import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.OrganizationRepository;
 import com.bizlog.rms.service.ClientService;
+import com.bizlog.rms.utils.OperationType;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,7 +34,7 @@ public class OrganizationResource implements OrganizationAPI {
     @Transactional
     @Override
     public ResponseEntity<OrganizationDTO> create(@RequestBody OrganizationDTO organizationDTO) {
-
+        preValidate(organizationDTO,OperationType.CREATE);
         Organization organization = mapper.toEntity(organizationDTO);
         organization = organizationRepository.save(organization);
         OrganizationDTO organizationDTO1 = mapper.toDTO(organization);
@@ -54,5 +59,42 @@ public class OrganizationResource implements OrganizationAPI {
         log.info("Request processed successfully. ");
         return ResponseEntity.ok().body(organizationDTO);
     }
+    @Override
+    public ResponseEntity<List<OrganizationDTO>> findByOrgType(@PathVariable("orgType") OrganizationType orgType){
+      List<Organization> organizations = organizationRepository.findByOrganizationType(orgType);
+        List<OrganizationDTO> organizationDTOs = organizations.stream()
+                .map(organization-> mapper.toDTO(organization))
+                .collect(Collectors.toList());
+      return new ResponseEntity<>(organizationDTOs, HttpStatus.OK);
+    }
 
+    @Override
+    public ResponseEntity<List<OrganizationDTO>> findByOrgTypeAndParentOrgId(@PathVariable("orgType") OrganizationType orgType, @PathVariable("parentOrgId") Long parentOrgId){
+        List<Organization> organizations = organizationRepository.findByOrganizationTypeAndParentOrganizationId(orgType,parentOrgId);
+        List<OrganizationDTO> organizationDTOs = organizations.stream()
+                .map(organization-> mapper.toDTO(organization))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(organizationDTOs, HttpStatus.OK);
+    }
+
+    private void preValidate(OrganizationDTO organizationDTO, OperationType operationType){
+        if(operationType.equals(OperationType.CREATE) && organizationDTO.getOrganizationType().equals(OrganizationType.CLIENT) ||organizationDTO.getOrganizationType().equals(OrganizationType.LOGISTIC_PROVIDER)){
+            Optional.ofNullable(organizationDTO.getParentOrganizationId()).ifPresentOrElse(orgId->{
+                OrganizationType organizationType=organizationRepository.findById(orgId).map(Organization::getOrganizationType)
+                        .orElseThrow(()->new RuntimeException());
+                if(organizationDTO.getOrganizationType().equals(OrganizationType.CLIENT)&&organizationType.equals(OrganizationType.LOGISTIC_PROVIDER)){
+
+                } else if (organizationDTO.getOrganizationType().equals(OrganizationType.LOGISTIC_PROVIDER)&&organizationType.equals(OrganizationType.ROOT)) {
+
+                }
+                else {
+                    throw  new RuntimeException();
+                }
+                    }
+                    ,()->{
+                        throw  new RuntimeException();
+
+                    });
+        }
+    }
 }

@@ -32,10 +32,10 @@ public class OrganizationDTO {
     @NotNull(message = "active value should not be null")
     private Boolean active;
 
-    @NotBlank(message = "organisation type must not be null")
-    private OrganizationType organisationType;
+    @NotBlank(message = "organization type must not be null")
+    private OrganizationType organizationType;
 
-    private Long parentOrganisationId;
+    private Long parentOrganizationId;
 
     private Long dateOfOnboarding;
 
