@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping(value = "/api/v1/cos/organiztion")
+@RequestMapping(value = "/api/v1/cos/organization")
 public interface OrganizationAPI {
 
     @PostMapping

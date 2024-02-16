@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 class ClientApiTest extends BaseApiTest {
 
-    public static final String CLIENT_URL = "/api/v1/cos/client";
+    public static final String CLIENT_URL = "/api/v1/cos/organization";
     @Autowired
     private OrganizationRepository organizationRepository;
 
@@ -51,7 +51,7 @@ class ClientApiTest extends BaseApiTest {
     }
 
     @Test
-    void should_create_new_client() throws Exception {
+    void should_create_new_root() throws Exception {
         Organization organization = new Organization();
         organization.setName("JOHN");
         organization.setDescription("DEVELOPEMENT");
@@ -59,7 +59,7 @@ class ClientApiTest extends BaseApiTest {
         organization.setPhoneNumber("7698524598");
         organization.setDomainName("abcdefghi");
         organization.setActive(true);
-        organization.setOrganizationType(OrganizationType.CLIENT);
+        organization.setOrganizationType(OrganizationType.ROOT);
         organization.setDateOfOnboarding(27122023L);
         this.mockMvc.perform(
                 post(CLIENT_URL).contentType(MediaType.APPLICATION_JSON).content(toJson(organization).orElse("")))
