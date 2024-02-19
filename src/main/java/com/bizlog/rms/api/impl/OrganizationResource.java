@@ -34,7 +34,7 @@ public class OrganizationResource implements OrganizationAPI {
     @Transactional
     @Override
     public ResponseEntity<OrganizationDTO> create(@RequestBody OrganizationDTO organizationDTO) {
-        preValidate(organizationDTO,OperationType.CREATE);
+        preValidate(organizationDTO, OperationType.CREATE);
         Organization organization = mapper.toEntity(organizationDTO);
         organization = organizationRepository.save(organization);
         OrganizationDTO organizationDTO1 = mapper.toDTO(organization);
@@ -51,7 +51,7 @@ public class OrganizationResource implements OrganizationAPI {
     }
 
     @Override
-    public ResponseEntity<OrganizationDTO> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<OrganizationDTO> getById(@PathVariable Long id) {
         log.info("Request received to get client by id:{}", id);
         Organization organization = organizationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", id));
@@ -59,39 +59,48 @@ public class OrganizationResource implements OrganizationAPI {
         log.info("Request processed successfully. ");
         return ResponseEntity.ok().body(organizationDTO);
     }
-    @Override
-    public ResponseEntity<List<OrganizationDTO>> findByOrgType(@PathVariable("orgType") OrganizationType orgType){
-      List<Organization> organizations = organizationRepository.findByOrganizationType(orgType);
-        List<OrganizationDTO> organizationDTOs = organizations.stream()
-                .map(organization-> mapper.toDTO(organization))
-                .collect(Collectors.toList());
-      return new ResponseEntity<>(organizationDTOs, HttpStatus.OK);
-    }
 
     @Override
-    public ResponseEntity<List<OrganizationDTO>> findByOrgTypeAndParentOrgId(@PathVariable("orgType") OrganizationType orgType, @PathVariable("parentOrgId") Long parentOrgId){
-        List<Organization> organizations = organizationRepository.findByOrganizationTypeAndParentOrganizationId(orgType,parentOrgId);
-        List<OrganizationDTO> organizationDTOs = organizations.stream()
-                .map(organization-> mapper.toDTO(organization))
+    public ResponseEntity<List<OrganizationDTO>> findByOrgType(@PathVariable("orgType") OrganizationType orgType) {
+        List<Organization> organizations = organizationRepository.findByOrganizationType(orgType);
+        List<OrganizationDTO> organizationDTOs = organizations.stream().map(organization -> mapper.toDTO(organization))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(organizationDTOs, HttpStatus.OK);
     }
 
-    private void preValidate(OrganizationDTO organizationDTO, OperationType operationType){
-        if(operationType.equals(OperationType.CREATE) && organizationDTO.getOrganizationType().equals(OrganizationType.CLIENT) ||organizationDTO.getOrganizationType().equals(OrganizationType.LOGISTIC_PROVIDER)){
-            Optional.ofNullable(organizationDTO.getParentOrganizationId()).ifPresentOrElse(orgId->{
-                OrganizationType organizationType=organizationRepository.findById(orgId).map(Organization::getOrganizationType)
-                        .orElseThrow(()->new RuntimeException());
-                if(!(organizationDTO.getOrganizationType().equals(OrganizationType.CLIENT)&&organizationType.equals(OrganizationType.LOGISTIC_PROVIDER))){
-                    if (!(organizationDTO.getOrganizationType().equals(OrganizationType.LOGISTIC_PROVIDER)&&organizationType.equals(OrganizationType.ROOT))) {
-                        throw  new RuntimeException();
-                    }
-                }
-                    }
-                    ,()->{
-                        throw  new RuntimeException();
+    @Override
+    public ResponseEntity<List<OrganizationDTO>> findByOrgTypeAndParentOrgId(
+            @PathVariable("orgType") OrganizationType orgType, @PathVariable("parentOrgId") Long parentOrgId) {
+        List<Organization> organizations = organizationRepository.findByOrganizationTypeAndParentOrganizationId(orgType,
+                parentOrgId);
+        List<OrganizationDTO> organizationDTOs = organizations.stream().map(organization -> mapper.toDTO(organization))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(organizationDTOs, HttpStatus.OK);
+    }
 
-                    });
+    private void preValidate(OrganizationDTO organizationDTO, OperationType operationType) {
+        if (operationType.equals(OperationType.CREATE)
+                && (organizationDTO.getOrganizationType().equals(OrganizationType.CLIENT)
+                        || organizationDTO.getOrganizationType().equals(OrganizationType.LOGISTIC_PROVIDER))) {
+
+            Optional.ofNullable(organizationDTO.getParentOrganizationId()).ifPresentOrElse(orgId -> {
+                OrganizationType parentOrganizationType = organizationRepository.findById(orgId)
+                        .map(Organization::getOrganizationType)
+                        .orElseThrow(() -> new RuntimeException("Parent organization not found"));
+
+                OrganizationType currentOrganizationType = organizationDTO.getOrganizationType();
+
+                if (currentOrganizationType.equals(OrganizationType.CLIENT)
+                        && !parentOrganizationType.equals(OrganizationType.LOGISTIC_PROVIDER)
+                        || currentOrganizationType.equals(OrganizationType.LOGISTIC_PROVIDER)
+                                && !parentOrganizationType.equals(OrganizationType.ROOT)) {
+                    throw new RuntimeException("Invalid organization type for parent");
+                }
+
+            }, () -> {
+                throw new RuntimeException("Parent organization ID is required");
+            });
         }
     }
+
 }
