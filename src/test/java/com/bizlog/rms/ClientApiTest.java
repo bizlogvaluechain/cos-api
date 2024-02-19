@@ -46,7 +46,7 @@ class ClientApiTest extends BaseApiTest {
 
     @Test
     void should_not_retrieve_with_invalid_user_id() throws Exception {
-        this.mockMvc.perform(get(CLIENT_URL + "/{id}", 11)).andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc.perform(get(CLIENT_URL + "/{id}", 1099)).andDo(print()).andExpect(status().isNotFound());
     }
 
 //    @Test
