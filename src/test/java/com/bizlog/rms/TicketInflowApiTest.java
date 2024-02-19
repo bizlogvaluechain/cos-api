@@ -1,7 +1,7 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.dto.SOP_TAT.TicketInflowDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow;
 import com.bizlog.rms.repository.TicketInflowRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
@@ -33,13 +33,13 @@ public class TicketInflowApiTest extends BaseApiTest {
     @BeforeEach
     void beforeEach() {
         super.beforeEach();
-        DataLoaderUtil.getTicketCreationConfig(getClient()).forEach(ticketCreationConfigRepository::save);
+        DataLoaderUtil.getTicketCreationConfig(getOrganization()).forEach(ticketCreationConfigRepository::save);
     }
 
     @AfterEach
     void afterEach() {
         ticketCreationConfigRepository.deleteAll();
-        clientRepository.deleteAll();
+        organizationRepository.deleteAll();
 
     }
 
@@ -61,15 +61,15 @@ public class TicketInflowApiTest extends BaseApiTest {
 
     @Test
     void should_create_new_ticket_creation_config() throws Exception {
-        Client client = getClient();
+        Organization organization = getOrganization();
         List<String> creationThroughList = Arrays.asList("Api", "Lr", "excel");
         TicketInflow ticketCreationConfig = new com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow();
         ticketCreationConfig.setId(1L);
-        ticketCreationConfig.setClient(client);
+        ticketCreationConfig.setOrganization(organization);
         ticketCreationConfig.setTicketCreationThrough(creationThroughList);
         ticketCreationConfig.setTicketType(Arrays.asList("Api", "Lr", "excel"));
         this.mockMvc
-                .perform(post("/api/v1/cos/{clientId}/ticket_info", client.getId())
+                .perform(post("/api/v1/cos/{clientId}/ticket_info", organization.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(ticketCreationConfig).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
@@ -82,8 +82,8 @@ public class TicketInflowApiTest extends BaseApiTest {
         ticketCreationConfig.setTicketCreationThrough(creationThroughList);
 
         this.mockMvc
-                .perform(post("/api/v1/cos/{clientId}/ticket_info", clientId)
-                        .contentType(MediaType.APPLICATION_JSON).content(toJson(ticketCreationConfig).orElse("")))
+                .perform(post("/api/v1/cos/{clientId}/ticket_info", clientId).contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(ticketCreationConfig).orElse("")))
                 .andDo(print()).andExpect(status().is4xxClientError());
     }
 
@@ -94,15 +94,15 @@ public class TicketInflowApiTest extends BaseApiTest {
 
         existingTicketCreationConfig.setTicketType(Arrays.asList("Api", "Lr", "excel"));
         existingTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "Lr", "excel"));
-        Client client = getClient();
-        existingTicketCreationConfig.setClient(client);
+        Organization organization = getOrganization();
+        existingTicketCreationConfig.setOrganization(organization);
         existingTicketCreationConfig = ticketCreationConfigRepository.save(existingTicketCreationConfig);
 
         TicketInflowDTO updatedTicketCreationConfig = getMapper().toDTO(existingTicketCreationConfig);
         updatedTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "pr", "excelBizlog"));
 
         this.mockMvc
-                .perform(put("/api/v1/cos/{clientId}/ticket_info/{id}", client.getId(),
+                .perform(put("/api/v1/cos/{clientId}/ticket_info/{id}", organization.getId(),
                         existingTicketCreationConfig.getId()).contentType(MediaType.APPLICATION_JSON)
                                 .content(toJson(updatedTicketCreationConfig).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful())
@@ -127,11 +127,11 @@ public class TicketInflowApiTest extends BaseApiTest {
         TicketInflow existingTicketCreationConfig = new com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow();
         existingTicketCreationConfig.setTicketType(Arrays.asList("Api", "Lr", "excel"));
         existingTicketCreationConfig.setTicketCreationThrough(Arrays.asList("Api", "Lr", "excel"));
-        Client client = getClient();
-        existingTicketCreationConfig.setClient(client);
+        Organization organization = getOrganization();
+        existingTicketCreationConfig.setOrganization(organization);
         existingTicketCreationConfig = ticketCreationConfigRepository.save(existingTicketCreationConfig);
 
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/ticket_info/{id}", client.getId(),
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/ticket_info/{id}", organization.getId(),
                 existingTicketCreationConfig.getId())).andDo(print()).andExpect(status().isNoContent());
     }
 
@@ -139,7 +139,7 @@ public class TicketInflowApiTest extends BaseApiTest {
     void should_not_delete_nonexistent_ticket_in_flow() throws Exception {
         int clientId = 11;
         int nonexistentId = 999;
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/ticket_info/{id}", clientId, nonexistentId))
-                .andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/ticket_info/{id}", clientId, nonexistentId)).andDo(print())
+                .andExpect(status().isNotFound());
     }
 }

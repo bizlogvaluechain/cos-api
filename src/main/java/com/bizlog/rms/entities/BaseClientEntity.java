@@ -26,16 +26,16 @@ public class BaseClientEntity {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = CLIENT_ID, nullable = false, updatable = false)
-    public Client client;
+    public Organization organization;
 
     @JsonProperty("clientId")
     public Long getclientId() {
-        if (Objects.nonNull(client)) {
-            if (HibernateProxy.class.isInstance(client)) {
-                String s = ((HibernateProxy) client).getHibernateLazyInitializer().getIdentifier().toString();
+        if (Objects.nonNull(organization)) {
+            if (HibernateProxy.class.isInstance(organization)) {
+                String s = ((HibernateProxy) organization).getHibernateLazyInitializer().getIdentifier().toString();
                 return Long.getLong(s);
             }
-            return client.getId();
+            return organization.getId();
         }
         return null;
     }

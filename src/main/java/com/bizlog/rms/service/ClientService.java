@@ -1,7 +1,7 @@
 package com.bizlog.rms.service;
 
-import com.bizlog.rms.entities.Client;
-import com.bizlog.rms.repository.ClientRepository;
+import com.bizlog.rms.entities.Organization;
+import com.bizlog.rms.repository.OrganizationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -9,13 +9,13 @@ import java.util.Objects;
 @Service
 public class ClientService {
 
-    private final ClientRepository repository;
+    private final OrganizationRepository repository;
 
-    public ClientService(final ClientRepository repository) {
+    public ClientService(final OrganizationRepository repository) {
         this.repository = Objects.requireNonNull(repository);
     }
 
-    public Client save(Client client) {
-        return repository.save(client);
+    public Organization save(Organization organization) {
+        return repository.save(organization);
     }
 }

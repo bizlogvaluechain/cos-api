@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "/api/v1/cos/{clientId}/sop/activity")
-public interface ActivityAPI extends BaseAPI<ActivitySOPDTO,ActivitySOPDTO>{
+public interface ActivityAPI extends BaseAPI<ActivitySOPDTO, ActivitySOPDTO> {
 
     @PostMapping
     ResponseEntity<ActivitySOPDTO> create(Long clientId, ActivitySOPDTO inputDTOS);
@@ -23,6 +23,7 @@ public interface ActivityAPI extends BaseAPI<ActivitySOPDTO,ActivitySOPDTO>{
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
     @GetMapping("/getByClientId")
     ResponseEntity<ActivitySOPDTO> getByClientId(Long clientId);
 }

@@ -3,7 +3,7 @@ package com.bizlog.rms.api.impl;
 import com.bizlog.rms.api.ClientTechEscalationAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.escalationMatrix.ClientTechEscalationDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.escalationMatrix.ClientTechEscalation;
 import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
@@ -32,10 +32,10 @@ public class ClientTechEscalationResource
     public ResponseEntity<List<ClientTechEscalationDTO>> create(@PathVariable("clientId") Long clientId,
             @RequestBody @Valid List<ClientTechEscalationDTO> inputDTOs) {
         List<ClientTechEscalationDTO> outputDTOs = inputDTOs.stream().map(inputDTO -> {
-            Client client = getClientRepository().findById(clientId)
+            Organization organization = getOrganizationRepository().findById(clientId)
                     .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
             ClientTechEscalation entity = toEntity(inputDTO);
-            entity.setClient(client);
+            entity.setOrganization(organization);
             ClientTechEscalation createdEntity = getBaseClientRepository().save(entity);
             ClientTechEscalationDTO outPutDTO = toDTO(createdEntity);
             return outPutDTO;
@@ -83,6 +83,7 @@ public class ClientTechEscalationResource
     protected ClientTechEscalationDTO toDTO(ClientTechEscalation entity) {
         return getMapper().toDTO(entity);
     }
+
     @Override
     @Transactional
     public ResponseEntity<ClientTechEscalationDTO> getByClientId(@PathVariable("clientId") Long clientId) {

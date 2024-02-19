@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "activity_sop_tbl")
-public class   ActivitySOP extends BaseClientEntity {
+public class ActivitySOP extends BaseClientEntity {
 
     @Column(name = "Miles", nullable = false)
     private List<String> miles;

@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "/api/v1/cos/{clientId}/sop/location")
-public interface LocationSopAPI extends BaseAPI<LocationSopDTO,LocationSopDTO>{
+public interface LocationSopAPI extends BaseAPI<LocationSopDTO, LocationSopDTO> {
 
     @PostMapping
     ResponseEntity<LocationSopDTO> create(Long clientId, LocationSopDTO locationSopDTO);

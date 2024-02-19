@@ -3,6 +3,7 @@ package com.bizlog.rms.dto.product;
 import com.bizlog.rms.dto.BaseDTO;
 import com.bizlog.rms.entities.product.*;
 import lombok.Data;
+
 @Data
 public class ProductInfoDTO extends BaseDTO {
     private String products;

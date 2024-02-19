@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "/api/v1/cos/{clientId}/product_info")
-public interface ProductInfoAPI extends BaseAPI<ProductInfoDTO,ProductInfoDTO>{
+public interface ProductInfoAPI extends BaseAPI<ProductInfoDTO, ProductInfoDTO> {
     @PostMapping
     ResponseEntity<ProductInfoDTO> create(Long clientId, ProductInfoDTO productInfoDTO);
 

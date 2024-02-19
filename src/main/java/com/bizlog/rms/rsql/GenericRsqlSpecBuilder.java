@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-
 public class GenericRsqlSpecBuilder<T> {
 
     public Specification<T> createSpecification(Node node) {

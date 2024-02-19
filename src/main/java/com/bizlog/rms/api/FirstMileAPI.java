@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "/api/v1/cos/{clientId}/first_mile")
-public interface FirstMileAPI extends BaseAPI<FirstMileDTO,FirstMileDTO>{
+public interface FirstMileAPI extends BaseAPI<FirstMileDTO, FirstMileDTO> {
 
     @PostMapping
     ResponseEntity<FirstMileDTO> create(Long clientId, FirstMileDTO firstMileDTO);
@@ -23,6 +23,7 @@ public interface FirstMileAPI extends BaseAPI<FirstMileDTO,FirstMileDTO>{
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
     @GetMapping("/getByClientId")
     ResponseEntity<FirstMileDTO> getByClientId(Long clientId);
 }

@@ -27,8 +27,6 @@ public class TATAdherenceResource extends BaseClientResource<TATAdherence, TATAd
         super(baseClientRepository);
     }
 
-
-
     @Transactional
     @Override
     public ResponseEntity<TATAdherenceDTO> create(@PathVariable("clientId") Long clientId,

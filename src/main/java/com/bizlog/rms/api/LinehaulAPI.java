@@ -23,6 +23,7 @@ public interface LinehaulAPI extends BaseAPI<LinehaulDTO, LinehaulDTO> {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
     @GetMapping("/getByClientId")
     ResponseEntity<LinehaulDTO> getByClientId(Long clientId);
 }

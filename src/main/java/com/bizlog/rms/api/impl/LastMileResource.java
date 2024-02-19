@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class LastMileResource extends BaseClientResource<LastMile, LastMileDTO,LastMileDTO> implements LastMileAPI {
+public class LastMileResource extends BaseClientResource<LastMile, LastMileDTO, LastMileDTO> implements LastMileAPI {
     public LastMileResource(BaseClientRepository<LastMile, Long> baseClientRepository) {
         super(baseClientRepository);
     }
+
     @Override
     public ResponseEntity<LastMileDTO> getById(Long clientId, Long id) {
         return super.get(clientId, id);
@@ -40,14 +41,14 @@ public class LastMileResource extends BaseClientResource<LastMile, LastMileDTO,L
 
     @Override
     public ResponseEntity<LastMileDTO> create(@PathVariable("clientId") Long clientId,
-                                            @RequestBody @Valid LastMileDTO payloadDTO) {
+            @RequestBody @Valid LastMileDTO payloadDTO) {
         payloadDTO.setClientId(clientId);
         return super.create(clientId, payloadDTO);
     }
 
     @Override
     public ResponseEntity<LastMileDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
-                                            @RequestBody LastMileDTO payloadDTO) {
+            @RequestBody LastMileDTO payloadDTO) {
         return super.update(clientId, id, payloadDTO);
     }
 
@@ -55,6 +56,7 @@ public class LastMileResource extends BaseClientResource<LastMile, LastMileDTO,L
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+
     @Override
     @Transactional
     public ResponseEntity<LastMileDTO> getByClientId(@PathVariable("clientId") Long clientId) {

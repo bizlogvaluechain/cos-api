@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class MiddleMileResource extends BaseClientResource<MiddleMile, MiddleMileDTO,MiddleMileDTO> implements MiddleMileAPI {
+public class MiddleMileResource extends BaseClientResource<MiddleMile, MiddleMileDTO, MiddleMileDTO>
+        implements MiddleMileAPI {
     public MiddleMileResource(BaseClientRepository<MiddleMile, Long> baseClientRepository) {
         super(baseClientRepository);
     }
+
     @Override
     public ResponseEntity<MiddleMileDTO> getById(Long clientId, Long id) {
         return super.get(clientId, id);
@@ -40,14 +42,14 @@ public class MiddleMileResource extends BaseClientResource<MiddleMile, MiddleMil
 
     @Override
     public ResponseEntity<MiddleMileDTO> create(@PathVariable("clientId") Long clientId,
-                                            @RequestBody @Valid MiddleMileDTO payloadDTO) {
+            @RequestBody @Valid MiddleMileDTO payloadDTO) {
         payloadDTO.setClientId(clientId);
         return super.create(clientId, payloadDTO);
     }
 
     @Override
     public ResponseEntity<MiddleMileDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
-                                            @RequestBody MiddleMileDTO payloadDTO) {
+            @RequestBody MiddleMileDTO payloadDTO) {
         return super.update(clientId, id, payloadDTO);
     }
 

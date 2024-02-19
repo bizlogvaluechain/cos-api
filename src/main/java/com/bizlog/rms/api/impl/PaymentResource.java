@@ -21,18 +21,20 @@ public class PaymentResource extends BaseClientResource<Payment, PaymentDTO, Pay
     public PaymentResource(BaseClientRepository<Payment, Long> baseClientRepository) {
         super(baseClientRepository);
     }
+
     @Override
     protected void preValidate(Long clientId, PaymentDTO payloadDTO, OperationType operationType) {
         super.preValidate(clientId, payloadDTO, operationType);
         if (operationType == OperationType.CREATE) {
             getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
+                    .findByOrganization(getOrganizationRepository().findById(clientId)
                             .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
                     .ifPresent(X -> {
                         throw new AlreadyExistException(clientId);
                     });
         }
     }
+
     @Override
     public ResponseEntity<PaymentDTO> create(@PathVariable("clientId") Long clientId,
             @RequestBody @Valid PaymentDTO payloadDTO) {
@@ -60,6 +62,7 @@ public class PaymentResource extends BaseClientResource<Payment, PaymentDTO, Pay
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+
     @Override
     @Transactional
     public ResponseEntity<PaymentDTO> getByClientId(@PathVariable("clientId") Long clientId) {

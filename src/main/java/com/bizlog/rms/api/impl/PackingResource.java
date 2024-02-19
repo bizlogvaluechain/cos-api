@@ -20,18 +20,20 @@ public class PackingResource extends BaseClientResource<Packing, PackingDTO, Pac
     public PackingResource(BaseClientRepository<Packing, Long> baseClientRepository) {
         super(baseClientRepository);
     }
+
     @Override
     protected void preValidate(Long clientId, PackingDTO payloadDTO, OperationType operationType) {
         super.preValidate(clientId, payloadDTO, operationType);
         if (operationType == OperationType.CREATE) {
             getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
+                    .findByOrganization(getOrganizationRepository().findById(clientId)
                             .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
                     .ifPresent(X -> {
                         throw new AlreadyExistException(clientId);
                     });
         }
     }
+
     @Override
     protected Packing toEntity(PackingDTO dto) {
         return getMapper().toEntity(dto);
@@ -69,6 +71,7 @@ public class PackingResource extends BaseClientResource<Packing, PackingDTO, Pac
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+
     @Override
     @Transactional
     public ResponseEntity<PackingDTO> getByClientId(@PathVariable("clientId") Long clientId) {

@@ -1,7 +1,7 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.dto.SOP_TAT.TATAdherenceDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.sop.BreachDueTo;
 import com.bizlog.rms.entities.sop.TATAdherence;
 import com.bizlog.rms.repository.TATAdherenceRepository;
@@ -30,13 +30,13 @@ public class TATAdherenceApiTest extends BaseApiTest {
     @BeforeEach
     void beforeEach() {
         super.beforeEach();
-        DataLoaderUtil.getTATActivity(getClient()).forEach(tatAdherenceRepository::save);
+        DataLoaderUtil.getTATActivity(getOrganization()).forEach(tatAdherenceRepository::save);
     }
 
     @AfterEach
     void afterEach() {
         tatAdherenceRepository.deleteAll();
-        clientRepository.deleteAll();
+        organizationRepository.deleteAll();
 
     }
 
@@ -58,7 +58,7 @@ public class TATAdherenceApiTest extends BaseApiTest {
 
     @Test
     void should_create_new_tatAdherence() throws Exception {
-        Client client = getClient();
+        Organization organization = getOrganization();
         BreachDueTo breachDueTo = new BreachDueTo();
         breachDueTo.setThirdPartyLogistics("yes");
         breachDueTo.setUnavoidableCircumstances("yes");
@@ -69,10 +69,11 @@ public class TATAdherenceApiTest extends BaseApiTest {
         tatActivity.setBreachDueTo(breachDueTo);
 
         this.mockMvc
-                .perform(post("/api/v1/cos/{clientId}/tat_adherence", client.getId())
+                .perform(post("/api/v1/cos/{clientId}/tat_adherence", organization.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(tatActivity).orElse("")))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
     }
+
     @Test
     void should_not_create_new_tatAdherence() throws Exception {
         Long clientId = 55L;
@@ -85,10 +86,9 @@ public class TATAdherenceApiTest extends BaseApiTest {
         tatActivity.setTatAdherenceRequired(true);
         tatActivity.setBreachDueTo(breachDueTo);
 
-        this.mockMvc
-                .perform(post("/api/v1/cos/{clientId}/tat_adherence", clientId)
-                        .contentType(MediaType.APPLICATION_JSON).content(toJson(tatActivity).orElse("")))
-                .andDo(print()).andExpect(status().is4xxClientError());
+        this.mockMvc.perform(post("/api/v1/cos/{clientId}/tat_adherence", clientId)
+                .contentType(MediaType.APPLICATION_JSON).content(toJson(tatActivity).orElse(""))).andDo(print())
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -101,16 +101,16 @@ public class TATAdherenceApiTest extends BaseApiTest {
         TATAdherence initialTatActivity = new TATAdherence();
         initialTatActivity.setTatAdherenceRequired(true);
 
-        Client client = getClient();
-        initialTatActivity.setClient(client);
+        Organization organization = getOrganization();
+        initialTatActivity.setOrganization(organization);
         initialTatActivity.setTatAdherenceRequired(true);
         initialTatActivity.setBreachDueTo(breachDueTo);
         initialTatActivity = tatAdherenceRepository.save(initialTatActivity);
 
         TATAdherenceDTO updatedTatActivity = getMapper().toDTO(initialTatActivity);
         updatedTatActivity.setTatAdherenceRequired(false);
-        this.mockMvc
-                .perform(put("/api/v1/cos/{clientId}/tat_adherence/{id}", client.getId(), initialTatActivity.getId())
+        this.mockMvc.perform(
+                put("/api/v1/cos/{clientId}/tat_adherence/{id}", organization.getId(), initialTatActivity.getId())
                         .contentType(MediaType.APPLICATION_JSON).content(toJson(updatedTatActivity).orElse("")))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(toJson(updatedTatActivity).orElse("")));
@@ -139,11 +139,12 @@ public class TATAdherenceApiTest extends BaseApiTest {
 
         TATAdherence tatActivity = new TATAdherence();
         tatActivity.setTatAdherenceRequired(false);
-        Client client = getClient();
-        tatActivity.setClient(client);
+        Organization organization = getOrganization();
+        tatActivity.setOrganization(organization);
         tatActivity = tatAdherenceRepository.save(tatActivity);
 
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/tat_adherence/{id}", client.getId(), tatActivity.getId()))
+        this.mockMvc
+                .perform(delete("/api/v1/cos/{clientId}/tat_adherence/{id}", organization.getId(), tatActivity.getId()))
                 .andDo(print()).andExpect(status().isNoContent());
     }
 

@@ -29,7 +29,7 @@ public class ClientStagingResource extends BaseClientResource<ClientStaging, Cli
         super.preValidate(clientId, payloadDTO, operationType);
         if (operationType == OperationType.CREATE) {
             Optional<ClientStaging> entity = getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
+                    .findByOrganization(getOrganizationRepository().findById(clientId)
                             .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)));
             entity.ifPresent(X -> {
                 throw new AlreadyExistException(clientId);

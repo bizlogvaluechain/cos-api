@@ -3,7 +3,7 @@ package com.bizlog.rms.api.impl;
 import com.bizlog.rms.api.ClientOpsEscalationAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.escalationMatrix.ClientOpsEscalationDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.escalationMatrix.ClientOpsEscalation;
 import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
@@ -32,10 +32,10 @@ public class ClientOpsEscalationResource
     public ResponseEntity<List<ClientOpsEscalationDTO>> create(@PathVariable("clientId") Long clientId,
             @RequestBody @Valid List<ClientOpsEscalationDTO> inputDTOs) {
         List<ClientOpsEscalationDTO> outputDTOs = inputDTOs.stream().map(inputDTO -> {
-            Client client = getClientRepository().findById(clientId)
+            Organization organization = getOrganizationRepository().findById(clientId)
                     .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
             ClientOpsEscalation entity = toEntity(inputDTO);
-            entity.setClient(client);
+            entity.setOrganization(organization);
             ClientOpsEscalation createdEntity = getBaseClientRepository().save(entity);
             ClientOpsEscalationDTO outPutDTO = toDTO(createdEntity);
             return outPutDTO;

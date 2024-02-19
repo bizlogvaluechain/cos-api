@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-public class ActivityResource extends BaseClientResource<ActivitySOP, ActivitySOPDTO,ActivitySOPDTO> implements ActivityAPI {
+public class ActivityResource extends BaseClientResource<ActivitySOP, ActivitySOPDTO, ActivitySOPDTO>
+        implements ActivityAPI {
     public ActivityResource(BaseClientRepository<ActivitySOP, Long> baseClientRepository) {
         super(baseClientRepository);
     }
 
     @Override
-    public ResponseEntity<ActivitySOPDTO> getById(@PathVariable("clientId") Long clientId,@PathVariable("id") Long id) {
+    public ResponseEntity<ActivitySOPDTO> getById(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
@@ -43,14 +45,14 @@ public class ActivityResource extends BaseClientResource<ActivitySOP, ActivitySO
 
     @Override
     public ResponseEntity<ActivitySOPDTO> create(@PathVariable("clientId") Long clientId,
-                                            @RequestBody @Valid ActivitySOPDTO payloadDTO) {
+            @RequestBody @Valid ActivitySOPDTO payloadDTO) {
         payloadDTO.setClientId(clientId);
         return super.create(clientId, payloadDTO);
     }
 
     @Override
     public ResponseEntity<ActivitySOPDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
-                                            @RequestBody ActivitySOPDTO payloadDTO) {
+            @RequestBody ActivitySOPDTO payloadDTO) {
         return super.update(clientId, id, payloadDTO);
     }
 
@@ -58,6 +60,7 @@ public class ActivityResource extends BaseClientResource<ActivitySOP, ActivitySO
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+
     @Override
     @Transactional
     public ResponseEntity<ActivitySOPDTO> getByClientId(@PathVariable("clientId") Long clientId) {

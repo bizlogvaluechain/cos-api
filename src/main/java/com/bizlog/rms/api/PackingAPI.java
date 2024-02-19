@@ -22,6 +22,7 @@ public interface PackingAPI extends BaseAPI<PackingDTO, PackingDTO> {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
     @GetMapping("/getByClientId")
     ResponseEntity<PackingDTO> getByClientId(Long clientId);
 }

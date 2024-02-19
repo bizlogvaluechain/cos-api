@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "/api/v1/cos/{clientId}/last_mile")
-public interface LastMileAPI  extends BaseAPI<LastMileDTO,LastMileDTO>{
+public interface LastMileAPI extends BaseAPI<LastMileDTO, LastMileDTO> {
     @PostMapping
     ResponseEntity<LastMileDTO> create(Long clientId, LastMileDTO lastMileDTO);
 
@@ -22,6 +22,7 @@ public interface LastMileAPI  extends BaseAPI<LastMileDTO,LastMileDTO>{
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
     @GetMapping("/getByClientId")
     ResponseEntity<LastMileDTO> getByClientId(Long clientId);
 }

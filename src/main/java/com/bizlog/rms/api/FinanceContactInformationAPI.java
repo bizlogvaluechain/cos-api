@@ -7,11 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RequestMapping(value = "/api/v1/cos/client/{clientId}/contact-info/finance")
-public interface FinanceContactInformationAPI extends BaseAPI<FinanceContactInformationDTO,FinanceContactInformationDTO>{
+public interface FinanceContactInformationAPI
+        extends BaseAPI<FinanceContactInformationDTO, FinanceContactInformationDTO> {
 
     @PostMapping
-    ResponseEntity<List<FinanceContactInformationDTO>> create(Long clientId, List<FinanceContactInformationDTO> inputDTO);
+    ResponseEntity<List<FinanceContactInformationDTO>> create(Long clientId,
+            List<FinanceContactInformationDTO> inputDTO);
 
     @GetMapping("/{id}")
     ResponseEntity<FinanceContactInformationDTO> getById(Long clientId, Long id);
@@ -24,6 +27,7 @@ public interface FinanceContactInformationAPI extends BaseAPI<FinanceContactInfo
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(Long clientId, Long id);
+
     @GetMapping("/getByClientId")
     ResponseEntity<FinanceContactInformationDTO> getByClientId(Long clientId);
 }

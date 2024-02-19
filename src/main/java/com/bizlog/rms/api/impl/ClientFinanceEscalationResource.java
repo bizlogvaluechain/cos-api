@@ -3,7 +3,7 @@ package com.bizlog.rms.api.impl;
 import com.bizlog.rms.api.ClientFinanceEscalationAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.escalationMatrix.ClientFinanceEscalationDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.escalationMatrix.ClientFinanceEscalation;
 import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
@@ -32,10 +32,10 @@ public class ClientFinanceEscalationResource
     public ResponseEntity<List<ClientFinanceEscalationDTO>> create(@PathVariable("clientId") Long clientId,
             @RequestBody @Valid List<ClientFinanceEscalationDTO> inputDTOs) {
         List<ClientFinanceEscalationDTO> outputDTOs = inputDTOs.stream().map(inputDTO -> {
-            Client client = getClientRepository().findById(clientId)
+            Organization organization = getOrganizationRepository().findById(clientId)
                     .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
             ClientFinanceEscalation entity = toEntity(inputDTO);
-            entity.setClient(client);
+            entity.setOrganization(organization);
             ClientFinanceEscalation createdEntity = getBaseClientRepository().save(entity);
             ClientFinanceEscalationDTO outPutDTO = toDTO(createdEntity);
             return outPutDTO;
@@ -74,6 +74,7 @@ public class ClientFinanceEscalationResource
     public ResponseEntity<Void> delete(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
         return super.delete(clientId, id);
     }
+
     @Override
     @Transactional
     public ResponseEntity<ClientFinanceEscalationDTO> getByClientId(@PathVariable("clientId") Long clientId) {

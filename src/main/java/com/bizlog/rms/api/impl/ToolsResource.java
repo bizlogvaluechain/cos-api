@@ -3,7 +3,7 @@ package com.bizlog.rms.api.impl;
 import com.bizlog.rms.api.ToolsAPI;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.SOP_TAT.ToolsDTO;
-import com.bizlog.rms.entities.Client;
+import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.sop.labourtoolvechile.Tools;
 import com.bizlog.rms.exception.AlreadyExistException;
 import com.bizlog.rms.exception.ResourceNotFoundException;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-public class ToolsResource extends BaseClientResource<Tools, ToolsDTO,ToolsDTO> implements ToolsAPI {
+public class ToolsResource extends BaseClientResource<Tools, ToolsDTO, ToolsDTO> implements ToolsAPI {
     public ToolsResource(BaseClientRepository<Tools, Long> baseClientRepository) {
         super(baseClientRepository);
     }
@@ -31,7 +31,7 @@ public class ToolsResource extends BaseClientResource<Tools, ToolsDTO,ToolsDTO> 
         super.preValidate(clientId, payloadDTO, operationType);
         if (operationType == OperationType.CREATE) {
             getBaseClientRepository()
-                    .findByClient(getClientRepository().findById(clientId)
+                    .findByOrganization(getOrganizationRepository().findById(clientId)
                             .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId)))
                     .ifPresent(X -> {
                         throw new AlreadyExistException(clientId);
@@ -56,12 +56,12 @@ public class ToolsResource extends BaseClientResource<Tools, ToolsDTO,ToolsDTO> 
 
     @Override
     public ResponseEntity<List<ToolsDTO>> create(@PathVariable("clientId") Long clientId,
-                                             @RequestBody List<ToolsDTO> toolsDTO) {
+            @RequestBody List<ToolsDTO> toolsDTO) {
         List<ToolsDTO> toolsDTOS = toolsDTO.stream().map(inputDTO -> {
-            Client client = getClientRepository().findById(clientId)
+            Organization organization = getOrganizationRepository().findById(clientId)
                     .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
             Tools tools = toEntity(inputDTO);
-            tools.setClient(client);
+            tools.setOrganization(organization);
             Tools createdTools = getBaseClientRepository().save(tools);
             ToolsDTO createdToolsDTO = toDTO(createdTools);
             return createdToolsDTO;
@@ -71,7 +71,7 @@ public class ToolsResource extends BaseClientResource<Tools, ToolsDTO,ToolsDTO> 
 
     @Override
     public ResponseEntity<ToolsDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
-                                             @RequestBody ToolsDTO toolsDTO) {
+            @RequestBody ToolsDTO toolsDTO) {
         return super.update(clientId, id, toolsDTO);
     }
 

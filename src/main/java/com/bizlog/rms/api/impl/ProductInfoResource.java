@@ -13,20 +13,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ProductInfoResource extends BaseClientResource<ProductInfo, ProductInfoDTO,ProductInfoDTO> implements ProductInfoAPI {
+public class ProductInfoResource extends BaseClientResource<ProductInfo, ProductInfoDTO, ProductInfoDTO>
+        implements ProductInfoAPI {
     public ProductInfoResource(BaseClientRepository<ProductInfo, Long> baseClientRepository) {
         super(baseClientRepository);
     }
+
     @Override
     public ResponseEntity<ProductInfoDTO> create(@PathVariable("clientId") Long clientId,
-                                              @RequestBody ProductInfoDTO payloadDTO) {
+            @RequestBody ProductInfoDTO payloadDTO) {
         payloadDTO.setClientId(clientId);
         return super.create(clientId, payloadDTO);
     }
 
     @Override
     public ResponseEntity<ProductInfoDTO> update(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id,
-                                              @RequestBody ProductInfoDTO payloadDTO) {
+            @RequestBody ProductInfoDTO payloadDTO) {
         return super.update(clientId, id, payloadDTO);
     }
 
@@ -36,15 +38,17 @@ public class ProductInfoResource extends BaseClientResource<ProductInfo, Product
     }
 
     @Override
-    public ResponseEntity<ProductInfoDTO> getById(@PathVariable("clientId") Long clientId, @PathVariable("id") Long id) {
+    public ResponseEntity<ProductInfoDTO> getById(@PathVariable("clientId") Long clientId,
+            @PathVariable("id") Long id) {
         return super.get(clientId, id);
     }
 
     @Override
     public ResponseEntity<PageResponse<ProductInfoDTO>> getAll(@PathVariable("clientId") Long clientId,
-                                                            Pageable pageable) {
+            Pageable pageable) {
         return super.getAllConfig(clientId, pageable);
     }
+
     @Override
     @Transactional
     public ResponseEntity<ProductInfoDTO> getByClientId(@PathVariable("clientId") Long clientId) {
