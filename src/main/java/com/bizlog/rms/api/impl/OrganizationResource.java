@@ -41,7 +41,7 @@ public class OrganizationResource implements OrganizationAPI {
         Organization organization = mapper.toEntity(organizationDTO);
         organization = organizationRepository.save(organization);
         OrganizationDTO organizationDTO1 = mapper.toDTO(organization);
-        kafkaService.sendMessage(TOPIC,organizationDTO1);
+        kafkaService.sendMessage(TOPIC,organization);
         return ResponseEntity.ok().body(organizationDTO1);
     }
 
