@@ -8,6 +8,7 @@ import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.OrganizationRepository;
 import com.bizlog.rms.service.ClientService;
+import com.bizlog.rms.service.KafkaService;
 import com.bizlog.rms.utils.OperationType;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.transaction.Transactional;
@@ -30,6 +31,8 @@ public class OrganizationResource implements OrganizationAPI {
     private final GenericMapper mapper;
     private final ClientService clientService;
     private final OrganizationRepository organizationRepository;
+    private final KafkaService kafkaService;
+    private static final String TOPIC="Organization";
 
     @Transactional
     @Override
@@ -38,6 +41,7 @@ public class OrganizationResource implements OrganizationAPI {
         Organization organization = mapper.toEntity(organizationDTO);
         organization = organizationRepository.save(organization);
         OrganizationDTO organizationDTO1 = mapper.toDTO(organization);
+        kafkaService.sendMessage(TOPIC,organizationDTO1);
         return ResponseEntity.ok().body(organizationDTO1);
     }
 
