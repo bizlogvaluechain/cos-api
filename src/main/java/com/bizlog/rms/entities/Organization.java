@@ -34,8 +34,9 @@ public class Organization {
     private Long dateOfOnboarding;
 
     @Column(name = "organizationType")
+    @Enumerated(value = EnumType.STRING)
     private OrganizationType organizationType;
 
-    @Column(name = "organisationId")
+    @Column(name = "parentOrganizationId")
     private Long parentOrganizationId;
 }
