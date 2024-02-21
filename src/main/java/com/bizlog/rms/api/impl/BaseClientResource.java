@@ -86,7 +86,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
     @Transactional
     public ResponseEntity<O> create(Long clientId, I payloadDTO) {
-        log.info("Request received to create an entity with entity id: {} and payload: {} ",clientId, payloadDTO);
+        log.info("Request received to create an entity with org id: {} and payload: {} ",clientId, payloadDTO);
         Organization organization = organizationRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("  Client not found", "id", clientId));
         preValidate(clientId, payloadDTO, OperationType.CREATE);

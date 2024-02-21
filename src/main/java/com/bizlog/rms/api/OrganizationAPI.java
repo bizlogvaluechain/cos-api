@@ -16,8 +16,8 @@ public interface OrganizationAPI {
     @GetMapping("/{id}")
     ResponseEntity<OrganizationDTO> getById(@PathVariable("id") Long id);
 
-    @GetMapping("/{id}/is-client-exist")
-    ResponseEntity<Boolean> checkClientId(@PathVariable("id") Long id);
+    @GetMapping("/{id}/is-org-exist")
+    ResponseEntity<Boolean> checkOrgId(@PathVariable("id") Long id);
 
     @GetMapping("/type/{orgType}")
     ResponseEntity<List<OrganizationDTO>> findByOrgType(@PathVariable("orgType") OrganizationType orgType);
