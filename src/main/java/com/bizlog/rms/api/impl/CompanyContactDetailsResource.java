@@ -28,6 +28,7 @@ public class CompanyContactDetailsResource {
     }
 
     public ResponseEntity<CompanyContactDetailsDTO> create(CompanyContactDetailsDTO payloadDTO) {
+        log.info("Request received to create an entity with payload: {} ", payloadDTO);
         CompanyContactDetails entityToSave = genericMapper.toEntity(payloadDTO);
         CompanyContactDetails savedEntity = companyContactDetailsRepository.save(entityToSave);
         CompanyContactDetailsDTO savedDTO = genericMapper.toDTO(savedEntity);
@@ -36,11 +37,13 @@ public class CompanyContactDetailsResource {
     }
 
     public ResponseEntity<Void> delete(Long id) {
+        log.info("Request received to delete an entity with entity id: {} ", id);
         companyContactDetailsRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     public ResponseEntity<CompanyContactDetailsDTO> getById(Long id) {
+        log.info("Request received to create an entity with entity id: {}",getById(id));
         CompanyContactDetails existingEntity = companyContactDetailsRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("BillingInfo not found with  ", "id", id));
         CompanyContactDetailsDTO dto = genericMapper.toDTO(existingEntity);

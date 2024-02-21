@@ -34,6 +34,7 @@ public class OrganizationResource implements OrganizationAPI {
     @Transactional
     @Override
     public ResponseEntity<OrganizationDTO> create(@RequestBody OrganizationDTO organizationDTO) {
+        log.info("Request received to create an entity with organizationDTO: {} ", organizationDTO);
         preValidate(organizationDTO, OperationType.CREATE);
         Organization organization = mapper.toEntity(organizationDTO);
         organization = organizationRepository.save(organization);
@@ -42,7 +43,8 @@ public class OrganizationResource implements OrganizationAPI {
     }
 
     @Override
-    public ResponseEntity<Boolean> checkClientId(@PathVariable("id") Long id) {
+    public ResponseEntity<Boolean> checkOrgId(@PathVariable("id") Long id) {
+        log.info("Request received to checkOrgId an entity with entity id: {} ", id);
         List<Long> organizationIds = organizationRepository.getOrganizationIds();
         if (organizationIds.contains(id)) {
             return ResponseEntity.ok().body(true);
@@ -52,7 +54,7 @@ public class OrganizationResource implements OrganizationAPI {
 
     @Override
     public ResponseEntity<OrganizationDTO> getById(@PathVariable Long id) {
-        log.info("Request received to get client by id:{}", id);
+        log.info("Request received to get org by id:{}", id);
         Organization organization = organizationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", id));
         OrganizationDTO organizationDTO = mapper.toDTO(organization);
