@@ -34,7 +34,7 @@ public class OrganizationResource implements OrganizationAPI {
     @Transactional
     @Override
     public ResponseEntity<OrganizationDTO> create(@RequestBody OrganizationDTO organizationDTO) {
-        log.info("Request received to create an entity with organizationDTO: {} ", organizationDTO);
+        log.info("Request received to create an entity with organizationDTO : {} ", organizationDTO);
         preValidate(organizationDTO, OperationType.CREATE);
         Organization organization = mapper.toEntity(organizationDTO);
         organization = organizationRepository.save(organization);
@@ -44,7 +44,7 @@ public class OrganizationResource implements OrganizationAPI {
 
     @Override
     public ResponseEntity<Boolean> checkOrgId(@PathVariable("id") Long id) {
-        log.info("Request received to checkOrgId an entity with entity id: {} ", id);
+        log.info("Request received to checkOrgId an entity with id : {} ", id);
         List<Long> organizationIds = organizationRepository.getOrganizationIds();
         if (organizationIds.contains(id)) {
             return ResponseEntity.ok().body(true);
@@ -64,6 +64,7 @@ public class OrganizationResource implements OrganizationAPI {
 
     @Override
     public ResponseEntity<List<OrganizationDTO>> findByOrgType(@PathVariable("orgType") OrganizationType orgType) {
+        log.info("Request received to findOrgType by orgType : {}", orgType);
         List<Organization> organizations = organizationRepository.findByOrganizationType(orgType);
         List<OrganizationDTO> organizationDTOs = organizations.stream().map(organization -> mapper.toDTO(organization))
                 .collect(Collectors.toList());
@@ -73,6 +74,7 @@ public class OrganizationResource implements OrganizationAPI {
     @Override
     public ResponseEntity<List<OrganizationDTO>> findByOrgTypeAndParentOrgId(
             @PathVariable("orgType") OrganizationType orgType, @PathVariable("parentOrgId") Long parentOrgId) {
+        log.info("Request received to findOrgType and parentOrgId by orgType : {} and parentOrgId : {}",orgType, parentOrgId);
         List<Organization> organizations = organizationRepository.findByOrganizationTypeAndParentOrganizationId(orgType,
                 parentOrgId);
         List<OrganizationDTO> organizationDTOs = organizations.stream().map(organization -> mapper.toDTO(organization))
