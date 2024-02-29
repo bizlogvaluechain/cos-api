@@ -86,6 +86,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
     @Transactional
     public ResponseEntity<O> create(Long clientId, I payloadDTO) {
+        log.info("Request received to create an entity with org id: {} and payload: {} ",clientId, payloadDTO);
         Organization organization = organizationRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("  Client not found", "id", clientId));
         preValidate(clientId, payloadDTO, OperationType.CREATE);
@@ -102,6 +103,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     }
 
     public ResponseEntity<O> update(Long clientId, Long id, I payloadDTO) {
+        log.info("Request received to update with org id: {} and entity id: {} and payloadDTO: {} ", clientId, id, payloadDTO);
         Organization organization = organizationRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
         preValidate(clientId, payloadDTO, OperationType.UPDATE);
@@ -117,7 +119,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     }
 
     public ResponseEntity<O> get(Long clientId, Long id) {
-        log.info("Request recived to process with client id: {} and id:{} ", clientId, id);
+        log.info("Request received to get entity with org id: {} and entity id:{} ", clientId, id);
         Organization organization = organizationRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
         log.info("Client: {}", organization);
@@ -131,7 +133,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     }
 
     public ResponseEntity<PageResponse<O>> getAllConfig(Long clientId, Pageable pageable) {
-        log.debug("Request to fetch entities for clientId {} and pageable {}", clientId, pageable);
+        log.info("Request received to fetch entities with org id: {} and pageable:{} ", clientId, pageable);
         Organization organization = organizationRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
         preValidate(clientId, null, OperationType.GET);
@@ -155,6 +157,7 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
     }
 
     public ResponseEntity<Void> delete(Long clientId, Long id) {
+        log.info("Request received to delete entity with org id: {} and id:{} ", clientId, id);
         Organization organization = organizationRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found", "id", clientId));
         log.info("Client: {}", organization);
