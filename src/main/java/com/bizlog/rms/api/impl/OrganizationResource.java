@@ -45,8 +45,8 @@ public class OrganizationResource implements OrganizationAPI {
     @Override
     public ResponseEntity<Boolean> checkOrgId(@PathVariable("id") Long id) {
         log.info("Request received to checkOrgId an entity with id : {} ", id);
-        List<Long> organizationIds = organizationRepository.getOrganizationIds();
-        if (organizationIds.contains(id)) {
+        Organization organization = organizationRepository.findById(id).orElseThrow();
+        if (organization.getActive()) {
             return ResponseEntity.ok().body(true);
         }
         return ResponseEntity.ok().body(false);
