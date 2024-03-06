@@ -1,24 +1,20 @@
 package com.bizlog.rms.service;
 
-
-import com.bizlog.rms.entities.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class KafkaService {
-
+public class KafkaService<T> {
 
     @Autowired
-    private final KafkaTemplate<String, Organization> kafkaTemplate;
+    private final KafkaTemplate<String, T> kafkaTemplate;
 
-    public KafkaService(KafkaTemplate<String, Organization> kafkaTemplate) {
+    public KafkaService(KafkaTemplate<String, T> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-
-    public void sendMessage(String topic,Organization yourObject) {
-        kafkaTemplate.send(topic, yourObject);
+    public void sendMessage(String topic, T message) {
+        kafkaTemplate.send(topic, message);
     }
 }
