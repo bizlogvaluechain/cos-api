@@ -31,4 +31,5 @@ public interface UserAPI {
     @GetMapping("/users")
     ResponseEntity<PageResponse<UserDTO>> findUserByRole(@PathVariable Long clientId, @RequestParam String role,
             Pageable pageable);
+
 }

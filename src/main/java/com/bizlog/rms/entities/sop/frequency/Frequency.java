@@ -3,9 +3,11 @@ package com.bizlog.rms.entities.sop.frequency;
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Data
+@Audited
 @Table(name = "frequency")
 public class Frequency extends BaseClientEntity {
     @Column(name = "FrequencyUnit", nullable = false)

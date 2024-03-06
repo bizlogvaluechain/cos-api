@@ -5,9 +5,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 @Data
 @Entity
+@Audited
 @Table(name = "client_hierarchy_tbl")
 public class ClientHierarchy extends BaseClientEntity {
     @Column(name = "name", nullable = false)

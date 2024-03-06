@@ -3,11 +3,13 @@ package com.bizlog.rms.entities.location;
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 import java.util.List;
 
 @Entity
 @Data
+@Audited
 @Table(name = "bizlog_locations_tbl")
 public class Location extends BaseClientEntity {
     @Column(name = "countries", nullable = false)

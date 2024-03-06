@@ -5,10 +5,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "labour_tbl")
 @Data
+@Audited
 public class Labour extends BaseClientEntity {
 
     @Column(name = "manualLabourRequired", nullable = false)

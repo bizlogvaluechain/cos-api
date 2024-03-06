@@ -2,9 +2,11 @@ package com.bizlog.rms.entities.clientinfo;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 @Data
 @Entity
+@Audited
 @Table(name = "client_billing_info_table")
 public class BillingInfo {
     @Column(name = "id", nullable = false)
