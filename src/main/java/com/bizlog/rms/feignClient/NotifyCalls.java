@@ -1,6 +1,4 @@
 package com.bizlog.rms.feignClient;
-
-import com.bizlog.rms.dto.CreationDTO;
 import com.bizlog.rms.dto.NotifyDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
