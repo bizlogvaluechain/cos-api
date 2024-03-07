@@ -36,7 +36,7 @@ public class OrganizationResource implements OrganizationAPI {
 
     @Autowired
     private NotifyCalls notifyCalls;
-
+    @SuppressWarnings("PMD")
     @Transactional
     @Override
     public ResponseEntity<OrganizationDTO> create(@RequestBody OrganizationDTO organizationDTO) {
