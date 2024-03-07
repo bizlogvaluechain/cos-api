@@ -1,10 +1,12 @@
 package com.bizlog.rms.api.impl;
 
 import com.bizlog.rms.api.OrganizationAPI;
+import com.bizlog.rms.dto.NotifyDTO;
 import com.bizlog.rms.dto.OrganizationDTO;
 import com.bizlog.rms.entities.Organization;
 import com.bizlog.rms.entities.OrganizationType;
 import com.bizlog.rms.exception.ResourceNotFoundException;
+import com.bizlog.rms.feignClient.NotifyCalls;
 import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.OrganizationRepository;
 import com.bizlog.rms.service.ClientService;
@@ -13,6 +15,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +34,9 @@ public class OrganizationResource implements OrganizationAPI {
     private final ClientService clientService;
     private final OrganizationRepository organizationRepository;
 
+    @Autowired
+    private NotifyCalls notifyCalls;
+
     @Transactional
     @Override
     public ResponseEntity<OrganizationDTO> create(@RequestBody OrganizationDTO organizationDTO) {
@@ -39,6 +45,11 @@ public class OrganizationResource implements OrganizationAPI {
         Organization organization = mapper.toEntity(organizationDTO);
         organization = organizationRepository.save(organization);
         OrganizationDTO organizationDTO1 = mapper.toDTO(organization);
+        NotifyDTO notifyDTO = new NotifyDTO();
+        notifyDTO.setToEmail(organizationDTO.getEmail());
+        notifyDTO.setMobile(organizationDTO.getPhoneNumber());
+        notifyDTO.setUserName(organizationDTO.getName());
+        String response = notifyCalls.postOrg(notifyDTO);
         return ResponseEntity.ok().body(organizationDTO1);
     }
 
