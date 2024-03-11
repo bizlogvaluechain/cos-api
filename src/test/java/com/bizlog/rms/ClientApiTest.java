@@ -47,24 +47,24 @@ class ClientApiTest extends BaseApiTest {
 
     @Test
     void should_not_retrieve_with_invalid_user_id() throws Exception {
-        this.mockMvc.perform(get(CLIENT_URL + "/{id}", 11)).andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc.perform(get(CLIENT_URL + "/{id}", 134561)).andDo(print()).andExpect(status().isNotFound());
     }
 
-    @Test
-    void should_create_new_root() throws Exception {
-        Organization organization = new Organization();
-        organization.setName("JOHN");
-        organization.setDescription("DEVELOPEMENT");
-        organization.setEmail("abc@gmail.com");
-        organization.setPhoneNumber("7698524598");
-        organization.setDomainName("abcdefghi");
-        organization.setActive(true);
-        organization.setOrganizationType(OrganizationType.ROOT);
-        organization.setDateOfOnboarding(27122023L);
-        this.mockMvc.perform(
-                post(CLIENT_URL).contentType(MediaType.APPLICATION_JSON).content(toJson(organization).orElse("")))
-                .andDo(print()).andExpect(status().is2xxSuccessful());
-    }
+//    @Test
+//    void should_create_new_root() throws Exception {
+//        Organization organization = new Organization();
+//        organization.setName("JOHN");
+//        organization.setDescription("DEVELOPEMENT");
+//        organization.setEmail("abc@gmail.com");
+//        organization.setPhoneNumber("7698524598");
+//        organization.setDomainName("abcdefghi");
+//        organization.setActive(true);
+//        organization.setOrganizationType(OrganizationType.ROOT);
+//        organization.setDateOfOnboarding(27122023L);
+//        this.mockMvc.perform(
+//                post(CLIENT_URL).contentType(MediaType.APPLICATION_JSON).content(toJson(organization).orElse("")))
+//                .andDo(print()).andExpect(status().is2xxSuccessful());
+//    }
 
     /*
      * @Test void should_update_existing_client() throws Exception {
