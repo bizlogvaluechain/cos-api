@@ -1,6 +1,8 @@
 package com.bizlog.rms.api.impl;
 
 import com.bizlog.rms.api.OrganizationAPI;
+import com.bizlog.rms.auditlogs.MyRevisionEntity;
+import com.bizlog.rms.dto.AuditLogsDTO;
 import com.bizlog.rms.dto.NotifyDTO;
 import com.bizlog.rms.dto.OrganizationDTO;
 import com.bizlog.rms.entities.Organization;
@@ -12,15 +14,23 @@ import com.bizlog.rms.repository.OrganizationRepository;
 import com.bizlog.rms.service.ClientService;
 import com.bizlog.rms.utils.OperationType;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,6 +43,9 @@ public class OrganizationResource implements OrganizationAPI {
     private final GenericMapper mapper;
     private final ClientService clientService;
     private final OrganizationRepository organizationRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Autowired
     private NotifyCalls notifyCalls;
@@ -116,6 +129,97 @@ public class OrganizationResource implements OrganizationAPI {
                 throw new RuntimeException("Parent organization ID is required");
             });
         }
+    }
+
+    @Transactional
+    @GetMapping("/getAudits")
+    public ResponseEntity<List<AuditLogsDTO>> getAllAudits(Pageable pageable) {
+        log.info("Request received to get audit entity with entity pageable: {}", pageable);
+        List<Object[]> revisions = queryAuditRevisions(Organization.class, pageable);
+        return ResponseEntity.ok().body(mapRevisionsToDTOs(revisions));
+    }
+    @Transactional
+    @GetMapping("/getAudits/{id}")
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsWithId( Pageable pageable, Long id) {
+        log.info("Request received to get audit entity with entity id: {} and pageable: {}", id, pageable);
+        List<Object[]> revisions = queryAuditRevisionsForUser(Organization.class, id, pageable);
+        return ResponseEntity.ok().body(mapRevisionsToDTOs(revisions));
+    }
+
+    @Transactional
+    @GetMapping("/getAuditsByDate")
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDate(Pageable pageable, Date startDate, Date endDate) {
+        log.info("Request received to get audit entity with pageable: {}, startDate: {} and endDate: {}", pageable, startDate, endDate);
+        List<Object[]> revisions = queryAuditRevisionsByDate(Organization.class,pageable, startDate, endDate);
+        return ResponseEntity.ok().body(mapRevisionsToDTOs(revisions));
+    }
+
+    @Transactional
+    @GetMapping("/getAuditsByDate/{id}")
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDateWithId(Pageable pageable, Date startDate, Date endDate, Long id) {
+        log.info("Request received to get audit entity with entity id: {}, pageable: {}, startDate: {}, endDate: {}", id, pageable, startDate, endDate);
+        List<Object[]> revisions  = queryAuditRevisionsById(Organization.class,pageable, startDate, endDate, id);
+        return ResponseEntity.ok().body(mapRevisionsToDTOs(revisions));
+    }
+
+
+    public List<Object[]> queryAuditRevisionsForUser(Class entityClass, Long id, Pageable pageable) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManager);
+        return auditReader.createQuery()
+                .forRevisionsOfEntity(entityClass, false, true)
+                .add(AuditEntity.id().eq(id))
+                .setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+    }
+    public List<Object[]> queryAuditRevisions(Class entityClass, Pageable pageable) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManager);
+        return auditReader.createQuery()
+                .forRevisionsOfEntity(entityClass, false, true)
+                .setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+    }
+    public List<Object[]> queryAuditRevisionsByDate(Class entityClass,Pageable pageable, Date startDate, Date endDate) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManager);
+        return auditReader.createQuery()
+                .forRevisionsOfEntity(entityClass, false, true)
+                .add(AuditEntity.revisionProperty("timestamp").ge(startDate.getTime()))
+                .add(AuditEntity.revisionProperty("timestamp").lt(endDate.getTime()))
+                .setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+    }
+
+    public List<Object[]> queryAuditRevisionsById(Class entityClass,Pageable pageable, Date startDate, Date endDate, Long id) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManager);
+        return auditReader.createQuery()
+                .forRevisionsOfEntity(entityClass, false, true)
+                .add(AuditEntity.revisionProperty("timestamp").ge(startDate.getTime()))
+                .add(AuditEntity.revisionProperty("timestamp").lt(endDate.getTime()))
+                .add(AuditEntity.id().eq(id))
+                .setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+    }
+
+
+
+    private List<AuditLogsDTO> mapRevisionsToDTOs(List<Object[]> revisions) {
+        List<AuditLogsDTO> auditLogsDTO = new ArrayList<>();
+        revisions.forEach(x -> {
+            AuditLogsDTO y = new AuditLogsDTO();
+            Organization entity = (Organization) x[0];
+            y.setEntityId(entity.getId());
+            y.setEntity(entity.toString());
+            y.setOperation(x[2].toString());
+            MyRevisionEntity revisionEntity = (MyRevisionEntity) x[1];
+            y.setUserName(revisionEntity.getUserName());
+            y.setTimeStamp(String.valueOf(revisionEntity.getRevisionDate()));
+            y.setRevisionId(String.valueOf(revisionEntity.getId()));
+            auditLogsDTO.add(y);
+        });
+        return auditLogsDTO;
     }
 
 }
