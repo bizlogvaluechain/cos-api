@@ -25,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -132,14 +131,12 @@ public class OrganizationResource implements OrganizationAPI {
     }
 
     @Transactional
-    @GetMapping("/getAudits")
     public ResponseEntity<List<AuditLogsDTO>> getAllAudits(Pageable pageable) {
         log.info("Request received to get audit entity with entity pageable: {}", pageable);
         List<Object[]> revisions = queryAuditRevisions(Organization.class, pageable);
         return ResponseEntity.ok().body(mapRevisionsToDTOs(revisions));
     }
     @Transactional
-    @GetMapping("/getAudits/{id}")
     public ResponseEntity<List<AuditLogsDTO>> getAllAuditsWithId( Pageable pageable, Long id) {
         log.info("Request received to get audit entity with entity id: {} and pageable: {}", id, pageable);
         List<Object[]> revisions = queryAuditRevisionsForUser(Organization.class, id, pageable);
@@ -147,7 +144,6 @@ public class OrganizationResource implements OrganizationAPI {
     }
 
     @Transactional
-    @GetMapping("/getAuditsByDate")
     public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDate(Pageable pageable, Date startDate, Date endDate) {
         log.info("Request received to get audit entity with pageable: {}, startDate: {} and endDate: {}", pageable, startDate, endDate);
         List<Object[]> revisions = queryAuditRevisionsByDate(Organization.class,pageable, startDate, endDate);
@@ -155,7 +151,6 @@ public class OrganizationResource implements OrganizationAPI {
     }
 
     @Transactional
-    @GetMapping("/getAuditsByDate/{id}")
     public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDateWithId(Pageable pageable, Date startDate, Date endDate, Long id) {
         log.info("Request received to get audit entity with entity id: {}, pageable: {}, startDate: {}, endDate: {}", id, pageable, startDate, endDate);
         List<Object[]> revisions  = queryAuditRevisionsById(Organization.class,pageable, startDate, endDate, id);
