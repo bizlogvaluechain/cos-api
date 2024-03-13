@@ -5,9 +5,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 @Data
 @Entity
+@Audited
 @Table(name = "client_engagement_table")
 public class ClientEngagement extends BaseClientEntity {
     @Column(name = "areaOfOperationLocation", nullable = false)

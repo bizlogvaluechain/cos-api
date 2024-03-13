@@ -3,11 +3,14 @@ package com.bizlog.rms.entities.clientinfo;
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 import java.util.List;
 
 @Entity
 @Data
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 @Table(name = "client_info", uniqueConstraints = @UniqueConstraint(columnNames = { "id", "client_id" }))
 public class CustomerInfo extends BaseClientEntity {
     @Column(name = "clientName", nullable = false)

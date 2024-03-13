@@ -1,6 +1,7 @@
 package com.bizlog.rms.api.impl;
 
 import com.bizlog.rms.api.ProductInfoAPI;
+import com.bizlog.rms.dto.AuditLogsDTO;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.product.ProductInfoDTO;
 import com.bizlog.rms.entities.product.ProductInfo;
@@ -11,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
+import java.util.List;
 
 @RestController
 public class ProductInfoResource extends BaseClientResource<ProductInfo, ProductInfoDTO, ProductInfoDTO>
@@ -63,5 +67,30 @@ public class ProductInfoResource extends BaseClientResource<ProductInfo, Product
     @Override
     protected ProductInfo toEntity(ProductInfoDTO dto) {
         return getMapper().toEntity(dto);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAudits(Pageable pageable) {
+
+        return super.getAllAudits(ProductInfo.class,pageable);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsWithId(Pageable pageable, Long id) {
+        return super.getAllAuditsWithId(ProductInfo.class,pageable,id);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDate(Pageable pageable, Date startDate, Date endDate) {
+        return super.getAllAuditsByDate(ProductInfo.class,pageable,startDate,endDate);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDateWithId(Pageable pageable, Date startDate, Date endDate, Long id) {
+        return super.getAllAuditsByDateWithId(ProductInfo.class,pageable,startDate,endDate,id);
     }
 }

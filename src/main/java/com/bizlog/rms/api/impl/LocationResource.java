@@ -1,6 +1,7 @@
 package com.bizlog.rms.api.impl;
 
 import com.bizlog.rms.api.LocationAPI;
+import com.bizlog.rms.dto.AuditLogsDTO;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.locationService.LocationDTO;
 import com.bizlog.rms.entities.location.Location;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -76,5 +79,30 @@ public class LocationResource extends BaseClientResource<Location, LocationDTO, 
     @Override
     protected LocationDTO toDTO(Location entity) {
         return getMapper().toDTO(entity);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAudits(Pageable pageable) {
+
+        return super.getAllAudits(Location.class,pageable);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsWithId(Pageable pageable, Long id) {
+        return super.getAllAuditsWithId(Location.class,pageable,id);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDate(Pageable pageable, Date startDate, Date endDate) {
+        return super.getAllAuditsByDate(Location.class,pageable,startDate,endDate);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDateWithId(Pageable pageable, Date startDate, Date endDate, Long id) {
+        return super.getAllAuditsByDateWithId(Location.class,pageable,startDate,endDate,id);
     }
 }

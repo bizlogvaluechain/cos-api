@@ -1,6 +1,7 @@
 package com.bizlog.rms.api.impl;
 
 import com.bizlog.rms.api.TicketInflowAPI;
+import com.bizlog.rms.dto.AuditLogsDTO;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.SOP_TAT.TicketInflowDTO;
 import com.bizlog.rms.repository.BaseClientRepository;
@@ -81,5 +82,30 @@ public class TicketInflowResource extends
     @Transactional
     public ResponseEntity<TicketInflowDTO> getByClientId(@PathVariable("clientId") Long clientId) {
         return super.getByClientId(clientId);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAudits(Pageable pageable) {
+
+        return super.getAllAudits(com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow.class,pageable);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsWithId(Pageable pageable, Long id) {
+        return super.getAllAuditsWithId(com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow.class,pageable,id);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDate(Pageable pageable, Date startDate, Date endDate) {
+        return super.getAllAuditsByDate(com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow.class,pageable,startDate,endDate);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDateWithId(Pageable pageable, Date startDate, Date endDate, Long id) {
+        return super.getAllAuditsByDateWithId(com.bizlog.rms.entities.sop.ticketInFlow.TicketInflow.class,pageable,startDate,endDate,id);
     }
 }

@@ -1,6 +1,7 @@
 package com.bizlog.rms.api.impl;
 
 import com.bizlog.rms.api.FrequencyAPI;
+import com.bizlog.rms.dto.AuditLogsDTO;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.frequency.FrequencyDTO;
 import com.bizlog.rms.entities.sop.frequency.Frequency;
@@ -15,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @Slf4j
@@ -96,5 +95,31 @@ public class FrequencyResource extends BaseClientResource<Frequency, FrequencyDT
         // dto.setTicketsVolume(row.get("ticketsVolume"));
         // return dto;
         return getMapper().toDTO(row);
+    }
+
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAudits(Pageable pageable) {
+
+        return super.getAllAudits(Frequency.class,pageable);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsWithId(Pageable pageable, Long id) {
+        return super.getAllAuditsWithId(Frequency.class,pageable,id);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDate(Pageable pageable, Date startDate, Date endDate) {
+        return super.getAllAuditsByDate(Frequency.class,pageable,startDate,endDate);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDateWithId(Pageable pageable, Date startDate, Date endDate, Long id) {
+        return super.getAllAuditsByDateWithId(Frequency.class,pageable,startDate,endDate,id);
     }
 }

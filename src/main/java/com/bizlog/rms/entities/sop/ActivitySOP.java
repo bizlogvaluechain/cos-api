@@ -5,11 +5,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 import java.util.List;
 
 @Entity
 @Data
+@Audited
 @Table(name = "activity_sop_tbl")
 public class ActivitySOP extends BaseClientEntity {
 

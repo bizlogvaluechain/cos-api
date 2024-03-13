@@ -5,11 +5,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 import java.util.List;
 
 @Entity
 @Table(name = "payment_tbl")
+@Audited
 @Data
 public class Payment extends BaseClientEntity {
     @Column(name = "collectRequired", nullable = false)
