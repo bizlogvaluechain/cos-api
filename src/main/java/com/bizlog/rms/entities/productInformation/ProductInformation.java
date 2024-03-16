@@ -3,11 +3,13 @@ package com.bizlog.rms.entities.productInformation;
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 import java.util.List;
 
 @Entity
 @Data
+@Audited
 @Table(name = "product_information_tbl")
 public class ProductInformation extends BaseClientEntity {
     @Column(name = "isProductInformationRequiredForTicketCreation", nullable = false)

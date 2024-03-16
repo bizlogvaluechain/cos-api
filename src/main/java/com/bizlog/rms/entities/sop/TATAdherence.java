@@ -3,9 +3,11 @@ package com.bizlog.rms.entities.sop;
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "TAT_Adherence_tbl")
+@Audited
 @Data
 public class TATAdherence extends BaseClientEntity {
 

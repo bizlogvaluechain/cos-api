@@ -18,6 +18,7 @@ spring:
       "[hibernate.dialect]": org.hibernate.dialect.MySQLDialect
       "[hibernate.generate.statistics]": false
       "[hibernate.connection.provider_disables_autocommit]": true
+      "[org.hibernate.envers.store_data_at_delete]": true
     generate-ddl: true
     hibernate:
       ddl-auto: update

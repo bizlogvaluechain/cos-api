@@ -3,10 +3,12 @@ package com.bizlog.rms.entities.sop.linehaul;
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "linehaul_tbl")
 @Data
+@Audited
 public class Linehaul extends BaseClientEntity {
 
     @Column(name = "linehaulBy", nullable = false)

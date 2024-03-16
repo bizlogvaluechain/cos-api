@@ -1,5 +1,7 @@
 package com.bizlog.rms.api.impl;
 
+import com.bizlog.rms.auditlogs.MyRevisionEntity;
+import com.bizlog.rms.dto.AuditLogsDTO;
 import com.bizlog.rms.dto.BaseDTO;
 import com.bizlog.rms.dto.PageResponse;
 
@@ -23,6 +25,9 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -238,13 +243,6 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         return new PageResponse<>(meta, outPutDTO);
     }
 
-    // @GetMapping("/search")
-    // List<User> search(@RequestParam(value = "search") String search) {
-    // Node rootNode = new RSQLParser().parse(search);
-    // Specification<User> spec = rootNode.accept(new CustomRsqlVisitor<>());
-    // return repository.findAll(spec);
-    // }
-
     public ResponseEntity<PageResponse<O>> advanceSearch(String search, Optional<Set<String>> attributesOpt,
             Pageable pageable) {
         Node rootNode = new RSQLParser().parse(search);
@@ -272,4 +270,78 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
 
+
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAudits(Class<V> entityClass, Pageable pageable) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManager);
+        List<Object[]> revisions = (List<Object[]>) auditReader.createQuery()
+                .forRevisionsOfEntity(entityClass, false, true)
+                .setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+
+
+        return ResponseEntity.ok().body(mapRevisionsToDTOs(revisions));
+    }
+
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDate(Class<V> entityClass,
+                                                                 Pageable pageable, Date startDate, Date endDate) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManager);
+        List<Object[]> revisions = (List<Object[]>) auditReader.createQuery()
+                .forRevisionsOfEntity(entityClass, false, true)
+                .add(AuditEntity.revisionProperty("timestamp").ge(startDate.getTime()))
+                .add(AuditEntity.revisionProperty("timestamp").lt(endDate.getTime()))
+                .setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+
+        return ResponseEntity.ok().body(mapRevisionsToDTOs(revisions));
+    }
+
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDateWithId(Class<V> entityClass
+            ,Pageable pageable, Date startDate, Date endDate, Long id) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManager);
+        List<Object[]> revisions = (List<Object[]>) auditReader.createQuery()
+                .forRevisionsOfEntity(entityClass,false,true)
+                .add(AuditEntity.revisionProperty("timestamp").ge(startDate.getTime()))
+                .add(AuditEntity.revisionProperty("timestamp").lt(endDate.getTime()))
+                .add(AuditEntity.id().eq(id))
+                .setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+        List<AuditLogsDTO> auditLogsDTO=mapRevisionsToDTOs(revisions);
+        return ResponseEntity.ok().body(auditLogsDTO);
+    }
+
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsWithId(Class<V> entityClass, Pageable pageable, Long id) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManager);
+        List<Object[]> revisions = (List<Object[]>) auditReader.createQuery()
+                .forRevisionsOfEntity(entityClass, false, true)
+                .add(AuditEntity.id().eq(id))
+                .setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+
+        return ResponseEntity.ok().body(mapRevisionsToDTOs(revisions));
+    }
+
+    private List<AuditLogsDTO> mapRevisionsToDTOs(List<Object[]> revisions) {
+        List<AuditLogsDTO> auditLogsDTO = new ArrayList<>();
+        revisions.forEach(x -> {
+            AuditLogsDTO y = new AuditLogsDTO();
+            V entity = (V) x[0];
+            y.setEntityId(entity.getId());
+            y.setEntity(entity.toString());
+            y.setOperation(x[2].toString());
+            MyRevisionEntity revisionEntity = (MyRevisionEntity) x[1];
+            y.setUserName(revisionEntity.getUserName());
+            y.setRevisionId(String.valueOf(revisionEntity.getId()));
+            y.setTimeStamp(String.valueOf(revisionEntity.getRevisionDate()));
+            auditLogsDTO.add(y);
+        });
+        return auditLogsDTO;
+    }
 }

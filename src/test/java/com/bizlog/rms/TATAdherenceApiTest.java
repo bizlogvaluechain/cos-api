@@ -76,7 +76,7 @@ public class TATAdherenceApiTest extends BaseApiTest {
 
     @Test
     void should_not_create_new_tatAdherence() throws Exception {
-        Long clientId = 55L;
+        Long clientId = 11199L;
         BreachDueTo breachDueTo = new BreachDueTo();
         breachDueTo.setThirdPartyLogistics("yes");
         breachDueTo.setUnavoidableCircumstances("yes");

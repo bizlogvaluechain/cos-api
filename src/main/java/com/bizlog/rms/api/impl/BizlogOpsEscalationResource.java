@@ -1,6 +1,7 @@
 package com.bizlog.rms.api.impl;
 
 import com.bizlog.rms.api.BizlogOpsEscalationAPI;
+import com.bizlog.rms.dto.AuditLogsDTO;
 import com.bizlog.rms.dto.PageResponse;
 import com.bizlog.rms.dto.escalationMatrix.BizlogOpsEscalationDTO;
 import com.bizlog.rms.entities.Organization;
@@ -15,10 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 public class BizlogOpsEscalationResource
@@ -87,6 +85,30 @@ public class BizlogOpsEscalationResource
     @Override
     protected BizlogOpsEscalationDTO toDTO(BizlogOpsEscalation entity) {
         return getMapper().toDTO(entity);
+    }
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAudits(Pageable pageable) {
+
+        return super.getAllAudits(BizlogOpsEscalation.class,pageable);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsWithId(Pageable pageable, Long id) {
+        return super.getAllAuditsWithId(BizlogOpsEscalation.class,pageable,id);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDate(Pageable pageable, Date startDate, Date endDate) {
+        return super.getAllAuditsByDate(BizlogOpsEscalation.class,pageable,startDate,endDate);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDateWithId(Pageable pageable, Date startDate, Date endDate, Long id) {
+        return super.getAllAuditsByDateWithId(BizlogOpsEscalation.class,pageable,startDate,endDate,id);
     }
 
 }

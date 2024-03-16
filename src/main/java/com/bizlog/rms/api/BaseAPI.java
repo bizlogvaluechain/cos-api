@@ -1,13 +1,13 @@
 package com.bizlog.rms.api;
 
+import com.bizlog.rms.dto.AuditLogsDTO;
 import com.bizlog.rms.dto.BaseDTO;
 import com.bizlog.rms.dto.PageResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public interface BaseAPI<I extends BaseDTO, O extends BaseDTO> {
 
@@ -27,4 +27,17 @@ public interface BaseAPI<I extends BaseDTO, O extends BaseDTO> {
     ResponseEntity<Void> delete(Long clientId, Long id);
 
     ResponseEntity<O> getByClientId(Long clientId);
+
+    @GetMapping("/getAudits")
+    ResponseEntity<List<AuditLogsDTO>> getAllAudits(Pageable pageable);
+
+    @GetMapping("/getAudits/{id}")
+    ResponseEntity<List<AuditLogsDTO>> getAllAuditsWithId(Pageable pageable, Long id);
+
+    @GetMapping("getAuditsByDate")
+    ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDate(Pageable pageable, Date startDate, Date endDate);
+
+    @GetMapping("getAuditsByDate/{id}")
+    ResponseEntity<List<AuditLogsDTO>> getAllAuditsByDateWithId(Pageable pageable, Date startDate, Date endDate,
+                                                                Long id);
 }

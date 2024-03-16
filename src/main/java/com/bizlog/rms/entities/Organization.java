@@ -2,10 +2,12 @@ package com.bizlog.rms.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "organization")
 @Data
+@Audited
 public class Organization {
 
     @Id

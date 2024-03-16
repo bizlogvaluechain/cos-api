@@ -3,9 +3,12 @@ package com.bizlog.rms.entities.product;
 import com.bizlog.rms.entities.BaseClientEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 @Data
 @Entity
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 @Table(name = "ProductInfo _table")
 public class ProductInfo extends BaseClientEntity {
     @Column(name = "products", nullable = false)

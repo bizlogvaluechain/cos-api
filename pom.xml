@@ -135,6 +135,11 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.13.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-envers</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
 <!--        rsql jre file-->
         <dependency>
             <groupId>cz.jirutka.rsql</groupId>
