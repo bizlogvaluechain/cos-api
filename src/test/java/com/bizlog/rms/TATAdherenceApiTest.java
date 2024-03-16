@@ -152,7 +152,7 @@ public class TATAdherenceApiTest extends BaseApiTest {
     void should_not_delete_nonexistent_tatActivity() throws Exception {
         int clientId = 11;
         int nonexistentId = 999;
-        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/tat_adherence/{id}", clientId, nonexistentId))
-                .andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc.perform(delete("/api/v1/cos/{clientId}/tat_adherence/{id}", clientId, nonexistentId)).andDo(print())
+                .andExpect(status().isNotFound());
     }
 }

@@ -12,6 +12,7 @@ import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.BaseClientRepository;
 import com.bizlog.rms.repository.OrganizationRepository;
 import com.bizlog.rms.rsql.CustomRsqlVisitor;
+import com.bizlog.rms.service.KafkaService;
 import com.bizlog.rms.utils.OperationType;
 
 import com.bizlog.rms.utils.ProjectionRow;
@@ -28,6 +29,7 @@ import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -44,10 +46,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public abstract class BaseClientResource<V extends BaseClientEntity, I extends BaseDTO, O extends BaseDTO> {
 
-    public static final String TX_MGR_NAME = "chainedGxT";
-
     @Autowired
     private GenericMapper mapper;
+    @Value("${spring.kafka.enabled}")
+    private  boolean kafkaEnabled;
 
     private final BaseClientRepository<V, Long> baseClientRepository;
 
@@ -56,6 +58,10 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
     @Autowired
     private EntityManager entityManager;
+    @Autowired
+    private KafkaService kafkaService;
+
+    private static final String TOPIC="On-board";
 
     public BaseClientResource(BaseClientRepository<V, Long> baseClientRepository) {
         this.baseClientRepository = baseClientRepository;
@@ -102,6 +108,9 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         prePersist(clientId, payloadDTO, OperationType.CREATE);
         log.info("entity--------->" + entity.toString());
         V createdEntity = getBaseClientRepository().save(entity);
+        if (kafkaEnabled) {
+            kafkaService.sendMessage(TOPIC, createdEntity);
+        }
         postPersist(clientId, payloadDTO, OperationType.CREATE);
         O outPutDTO = toDTO(createdEntity);
         return new ResponseEntity<>(outPutDTO, HttpStatus.CREATED);
@@ -118,6 +127,9 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         // other logic if any
         prePersist(clientId, payloadDTO, OperationType.UPDATE);
         V updatedEntity = getBaseClientRepository().save(entity);
+        if (kafkaEnabled) {
+            kafkaService.sendMessage(TOPIC, updatedEntity);
+        }
         postPersist(clientId, payloadDTO, OperationType.UPDATE);
         O outPutDTO = toDTO(updatedEntity);
         return new ResponseEntity<>(outPutDTO, HttpStatus.OK);

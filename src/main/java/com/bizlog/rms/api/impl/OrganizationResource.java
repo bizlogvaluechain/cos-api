@@ -12,12 +12,15 @@ import com.bizlog.rms.feignClient.NotifyCalls;
 import com.bizlog.rms.mapper.GenericMapper;
 import com.bizlog.rms.repository.OrganizationRepository;
 import com.bizlog.rms.service.ClientService;
+import com.bizlog.rms.service.KafkaService;
 import com.bizlog.rms.utils.OperationType;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
@@ -41,7 +44,12 @@ public class OrganizationResource implements OrganizationAPI {
 
     private final GenericMapper mapper;
     private final ClientService clientService;
+
+    @Value("${spring.kafka.enabled}")
+    private  boolean kafkaEnabled;
     private final OrganizationRepository organizationRepository;
+    private final KafkaService kafkaService;
+    private static final String TOPIC="Organization";
 
     @Autowired
     private EntityManager entityManager;
@@ -57,6 +65,10 @@ public class OrganizationResource implements OrganizationAPI {
         Organization organization = mapper.toEntity(organizationDTO);
         organization = organizationRepository.save(organization);
         OrganizationDTO organizationDTO1 = mapper.toDTO(organization);
+        if(kafkaEnabled) {
+            kafkaService.sendMessage(TOPIC, organization);
+        }
+
         NotifyDTO notifyDTO = new NotifyDTO();
         notifyDTO.setToEmail(organizationDTO.getEmail());
         notifyDTO.setMobile(organizationDTO.getPhoneNumber());

@@ -1,7 +1,7 @@
 package com.bizlog.rms;
 
 import com.bizlog.rms.entities.Organization;
-import com.bizlog.rms.entities.OrganizationType;
+
 import com.bizlog.rms.repository.OrganizationRepository;
 import com.bizlog.rms.utils.DataLoaderUtil;
 import org.junit.jupiter.api.*;
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -48,6 +47,7 @@ class ClientApiTest extends BaseApiTest {
     @Test
     void should_not_retrieve_with_invalid_user_id() throws Exception {
         this.mockMvc.perform(get(CLIENT_URL + "/{id}", 134561)).andDo(print()).andExpect(status().isNotFound());
+
     }
 
 //    @Test
