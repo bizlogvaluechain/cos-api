@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,9 @@ public class OrganizationResource implements OrganizationAPI {
 
     private final GenericMapper mapper;
     private final ClientService clientService;
+
+    @Value("${spring.kafka.enabled}")
+    private  boolean kafkaEnabled;
     private final OrganizationRepository organizationRepository;
     private final KafkaService kafkaService;
     private static final String TOPIC="Organization";
@@ -42,7 +46,9 @@ public class OrganizationResource implements OrganizationAPI {
         Organization organization = mapper.toEntity(organizationDTO);
         organization = organizationRepository.save(organization);
         OrganizationDTO organizationDTO1 = mapper.toDTO(organization);
-        kafkaService.sendMessage(TOPIC,organization);
+        if(kafkaEnabled) {
+            kafkaService.sendMessage(TOPIC, organization);
+        }
         return ResponseEntity.ok().body(organizationDTO1);
     }
 
