@@ -24,6 +24,7 @@ import jakarta.persistence.criteria.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -42,6 +43,8 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
 
     @Autowired
     private GenericMapper mapper;
+    @Value("${spring.kafka.enabled}")
+    private  boolean kafkaEnabled;
 
     private final BaseClientRepository<V, Long> baseClientRepository;
 
@@ -100,7 +103,9 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         prePersist(clientId, payloadDTO, OperationType.CREATE);
         log.info("entity--------->" + entity.toString());
         V createdEntity = getBaseClientRepository().save(entity);
-        kafkaService.sendMessage(TOPIC,createdEntity);
+        if (kafkaEnabled) {
+            kafkaService.sendMessage(TOPIC, createdEntity);
+        }
         postPersist(clientId, payloadDTO, OperationType.CREATE);
         O outPutDTO = toDTO(createdEntity);
         return new ResponseEntity<>(outPutDTO, HttpStatus.CREATED);
@@ -117,7 +122,9 @@ public abstract class BaseClientResource<V extends BaseClientEntity, I extends B
         // other logic if any
         prePersist(clientId, payloadDTO, OperationType.UPDATE);
         V updatedEntity = getBaseClientRepository().save(entity);
-        kafkaService.sendMessage(TOPIC,updatedEntity);
+        if (kafkaEnabled) {
+            kafkaService.sendMessage(TOPIC, updatedEntity);
+        }
         postPersist(clientId, payloadDTO, OperationType.UPDATE);
         O outPutDTO = toDTO(updatedEntity);
         return new ResponseEntity<>(outPutDTO, HttpStatus.OK);
