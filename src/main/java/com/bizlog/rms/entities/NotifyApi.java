@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
 
+import java.util.List;
+
 @Data
 @Entity
 @Audited
@@ -21,6 +23,6 @@ public class NotifyApi extends BaseClientEntity{
     @Column(name = "authKey")
     private String authKey;
 
-    @Column(name = "payload")
-    private String payload;
+    @Column(name = "fields")
+    private List<String> fields;
 }

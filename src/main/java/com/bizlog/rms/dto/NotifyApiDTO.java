@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class NotifyApiDTO extends BaseDTO{
     private String endPoint;
     private String authKey;
-    private String payload;
+    private List<String> fields;
 }
