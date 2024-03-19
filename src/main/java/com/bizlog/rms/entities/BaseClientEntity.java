@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Objects;
 
 @MappedSuperclass
@@ -39,5 +41,24 @@ public class BaseClientEntity {
         }
         return null;
     }
+
+    @Column(name = "createdOn")
+    private Long createdOn;
+    @Column(name = "updatedOn")
+    private Long updatedOn;
+
+
+    @PrePersist
+    protected void onCreate() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        createdOn = localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        updatedOn = localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
+
 
 }
