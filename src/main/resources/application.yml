@@ -96,6 +96,15 @@ springdoc:
     disable-swagger-default-url: true
     groups-order: DESC
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
 elasticsearch:
   cluster-name: spring-boot-cluster
   host: localhost
