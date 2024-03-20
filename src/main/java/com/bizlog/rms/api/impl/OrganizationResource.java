@@ -73,7 +73,12 @@ public class OrganizationResource implements OrganizationAPI {
         notifyDTO.setToEmail(organizationDTO.getEmail());
         notifyDTO.setMobile(organizationDTO.getPhoneNumber());
         notifyDTO.setUserName(organizationDTO.getName());
-        String response = notifyCalls.postOrg(notifyDTO);
+        try{
+            String response = notifyCalls.postOrg(notifyDTO);
+        }
+        catch (Exception e){
+            log.error("Organization Onboarding Email UnSuccessFull", e);
+        }
         return ResponseEntity.ok().body(organizationDTO1);
     }
 
