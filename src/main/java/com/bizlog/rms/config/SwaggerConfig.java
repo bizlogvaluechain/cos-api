@@ -21,7 +21,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi customApi() {
-        return GroupedOpenApi.builder().group("api").pathsToMatch("/api/**").build();
+        return GroupedOpenApi.builder().group("cos").pathsToMatch("/api/**").build();
     }
 
     @Bean
