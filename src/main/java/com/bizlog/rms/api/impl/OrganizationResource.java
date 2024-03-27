@@ -25,6 +25,8 @@ import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +61,7 @@ public class OrganizationResource implements OrganizationAPI {
     @SuppressWarnings("PMD")
     @Transactional
     @Override
+    @CacheEvict(value = "organization", allEntries = true)
     public ResponseEntity<OrganizationDTO> create(@RequestBody OrganizationDTO organizationDTO) {
         log.info("Request received to create an entity with organizationDTO : {} ", organizationDTO);
         preValidate(organizationDTO, OperationType.CREATE);
@@ -83,6 +86,7 @@ public class OrganizationResource implements OrganizationAPI {
     }
 
     @Override
+    @Cacheable(value = "organization", key = "#id")
     public ResponseEntity<Boolean> checkOrgId(@PathVariable("id") Long id) {
         log.info("Request received to checkOrgId an entity with id : {} ", id);
         Organization organization = organizationRepository.findById(id).orElseThrow();
@@ -93,6 +97,7 @@ public class OrganizationResource implements OrganizationAPI {
     }
 
     @Override
+    @Cacheable(value = "organization", key ="#id" )
     public ResponseEntity<OrganizationDTO> getById(@PathVariable Long id) {
         log.info("Request received to get org by id:{}", id);
         Organization organization = organizationRepository.findById(id)
@@ -103,6 +108,7 @@ public class OrganizationResource implements OrganizationAPI {
     }
 
     @Override
+    @Cacheable(value = "organization")
     public ResponseEntity<List<OrganizationDTO>> findByOrgType(@PathVariable("orgType") OrganizationType orgType) {
         log.info("Request received to findOrgType by orgType : {}", orgType);
         List<Organization> organizations = organizationRepository.findByOrganizationType(orgType);
@@ -112,6 +118,7 @@ public class OrganizationResource implements OrganizationAPI {
     }
 
     @Override
+    @Cacheable(value = "organization")
     public ResponseEntity<List<OrganizationDTO>> findByOrgTypeAndParentOrgId(
             @PathVariable("orgType") OrganizationType orgType, @PathVariable("parentOrgId") Long parentOrgId) {
         log.info("Request received to findOrgType and parentOrgId by orgType : {} and parentOrgId : {}",orgType, parentOrgId);
