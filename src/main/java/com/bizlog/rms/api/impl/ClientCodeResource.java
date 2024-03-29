@@ -8,13 +8,16 @@ import com.bizlog.rms.entities.clientinfo.ClientCode;
 import com.bizlog.rms.exception.AlreadyExistException;
 import com.bizlog.rms.exception.ResourceNotFoundException;
 import com.bizlog.rms.repository.BaseClientRepository;
+import com.bizlog.rms.repository.ClientCodeRepository;
 import com.bizlog.rms.utils.OperationType;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -27,6 +30,9 @@ public class ClientCodeResource extends BaseClientResource<ClientCode, ClientCod
     public ClientCodeResource(BaseClientRepository<ClientCode, Long> baseClientRepository) {
         super(baseClientRepository);
     }
+
+    @Autowired
+    private ClientCodeRepository clientCodeRepository;
 
     @Override
     protected void preValidate(Long clientId, ClientCodeDTO payloadDTO, OperationType operationType) {
@@ -80,6 +86,14 @@ public class ClientCodeResource extends BaseClientResource<ClientCode, ClientCod
     public ResponseEntity<PageResponse<ClientCodeDTO>> getAll(@PathVariable("clientId") Long clientId,
             Pageable pageable) {
         return super.getAllConfig(clientId, pageable);
+    }
+
+    @Override
+    public ResponseEntity<ClientCodeDTO> getOrgId(@RequestParam String clientCode) {
+        ClientCode entity=clientCodeRepository.findByClientCode(clientCode).orElseThrow(()->
+                new RuntimeException("Client Code '"+clientCode+"' not found")
+        );
+        return ResponseEntity.ok(getMapper().toDTO(entity));
     }
 
     @Override

@@ -16,6 +16,8 @@ public interface ClientCodeAPI extends BaseAPI<ClientCodeDTO, ClientCodeDTO> {
 
     @GetMapping
     ResponseEntity<PageResponse<ClientCodeDTO>> getAll(Long clientId, Pageable pageable);
+    @GetMapping("/orgId")
+    ResponseEntity<ClientCodeDTO> getOrgId(String clientCode);
 
     @PutMapping("/{id}")
     ResponseEntity<ClientCodeDTO> update(Long clientId, Long id, ClientCodeDTO inputDTO);
