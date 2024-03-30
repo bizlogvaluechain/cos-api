@@ -90,7 +90,7 @@ public class OrganizationResource implements OrganizationAPI {
     public ResponseEntity<Boolean> checkOrgId(@PathVariable("id") Long id) {
         log.info("Request received to checkOrgId an entity with id : {} ", id);
         Organization organization = organizationRepository.findById(id).orElseThrow();
-        if (organization.getActive()) {
+        if (organization.getOrganizationType().equals(OrganizationType.CLIENT)&&organization.getActive()) {
             return ResponseEntity.ok().body(true);
         }
         return ResponseEntity.ok().body(false);
